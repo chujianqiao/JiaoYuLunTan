@@ -5,13 +5,13 @@
 </div>
 
 <div id="myContiner" style="height: 100%">
-    <div class="ui-layout-west">
+    <!--<div class="ui-layout-west">
         <div class="box box-main">
             <div class="ui-layout-content">
                 <div id="deptTree"></div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="ui-layout-center">
         <div class="layui-fluid">
             <div class="layui-row">
@@ -30,7 +30,8 @@
                                     <div class="layui-inline">
                                         <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get("BTN_SEARCH","搜索")}</button>
                                         @if(shiro.hasPermission("/mgr/add")){
-                                        <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>${lang.get("BTN_ADD","添加")}</button>
+                                        <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加个人</button>
+                                        <button id="btnAddU" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加单位</button>
                                         @}
                                         <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>${lang.get("BTN_EXPORT","导出")}</button>
                                     </div>

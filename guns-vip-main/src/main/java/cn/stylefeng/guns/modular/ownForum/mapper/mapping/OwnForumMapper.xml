@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.ownForum.mapper.OwnForumMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.ownForum.entity.OwnForum">
+        <id column="forum_id" property="forumId" />
+        <result column="forum_name" property="forumName" />
+        <result column="forum_desc" property="forumDesc" />
+        <result column="apply_type" property="applyType" />
+        <result column="apply_status" property="applyStatus" />
+        <result column="manager" property="manager" />
+        <result column="mana_phone" property="manaPhone" />
+        <result column="mana_email" property="manaEmail" />
+        <result column="sub_id" property="subId" />
+        <result column="issubject" property="issubject" />
+        <result column="subject_lev" property="subjectLev" />
+        <result column="subject_name" property="subjectName" />
+        <result column="plan_path" property="planPath" />
+        <result column="relation" property="relation" />
+        <result column="meaning" property="meaning" />
+        <result column="expert_name" property="expertName" />
+        <result column="staff_type" property="staffType" />
+        <result column="org_type" property="orgType" />
+        <result column="divide_path" property="dividePath" />
+        <result column="agree_rule" property="agreeRule" />
+        <result column="apply_id" property="applyId" />
+        <result column="apply_time" property="applyTime" />
+        <result column="divide_name" property="divideName" />
+        <result column="plan_name" property="planName" />
+        <result column="forum_topic" property="forumTopic" />
+        <result column="forum_size" property="forumSize" />
+        <result column="unit_name" property="unitName" />
+        <result column="direction" property="direction" />
+        <result column="title" property="title" />
+        <result column="post" property="post" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        forum_id AS "forumId", forum_name AS "forumName", forum_desc AS "forumDesc", apply_type AS "applyType", apply_status AS "applyStatus", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", sub_id AS "subId", issubject AS "issubject", subject_lev AS "subjectLev", subject_name AS "subjectName", plan_path AS "planPath", relation AS "relation", meaning AS "meaning", expert_name AS "expertName", staff_type AS "staffType", org_type AS "orgType", divide_path AS "dividePath", agree_rule AS "agreeRule", apply_id AS "applyId", apply_time AS "applyTime", divide_name AS "divideName", plan_name AS "planName", forum_topic AS "forumTopic", forum_size AS "forumSize", unit_name AS "unitName", direction AS "direction", title AS "title", post AS "post"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.ownForum.model.result.OwnForumResult" parameterType="cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from own_forum where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from own_forum where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.ownForum.model.result.OwnForumResult" parameterType="cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from own_forum where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from own_forum where 1 = 1
+    </select>
+
+</mapper>

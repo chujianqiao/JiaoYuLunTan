@@ -1,0 +1,196 @@
+@layout("/common/_form.html",{js:["/assets/greatResult/greatResult_edit.js"]}){
+
+<form class="layui-form" id="greatResultForm" lay-filter="greatResultForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="resultId" type="hidden"/>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">成果名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="resultName" name="resultName" placeholder="请输入成果名称" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请方式; 1-个人, 2-单位<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="applyType" name="applyType" placeholder="请输入申请方式; 1-个人, 2-单位" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">负责人姓名<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="manager" name="manager" placeholder="请输入负责人姓名" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">负责人电话<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="manaPhone" name="manaPhone" placeholder="请输入负责人电话" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">负责人邮箱<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="manaEmail" name="manaEmail" placeholder="请输入负责人邮箱" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">负责人职称/职务<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="manaPost" name="manaPost" placeholder="请输入负责人职称/职务" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">负责人研究方向<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="manaDirect" name="manaDirect" placeholder="请输入负责人研究方向" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">成果意义<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="resultMean" name="resultMean" placeholder="请输入成果意义" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">应用价值<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="value" name="value" placeholder="请输入应用价值" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">应用范围<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="range" name="range" placeholder="请输入应用范围" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">服务对象<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="object" name="object" placeholder="请输入服务对象" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">攻关团队<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="team" name="team" placeholder="请输入攻关团队" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">研究结论与成果<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="conclusion" name="conclusion" placeholder="请输入研究结论与成果" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">过程简介<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="introduce" name="introduce" placeholder="请输入过程简介" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">成果影响力<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="influence" name="influence" placeholder="请输入成果影响力" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">宣传口号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="slogan" name="slogan" placeholder="请输入宣传口号" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">易拉宝设计图路径<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="designImg" name="designImg" placeholder="请输入易拉宝设计图路径" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">关键词<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="keyword" name="keyword" placeholder="请输入关键词" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">专家推荐信附件路径<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="letterPath" name="letterPath" placeholder="请输入专家推荐信附件路径" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">原创承诺书路径<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="commitPath" name="commitPath" placeholder="请输入原创承诺书路径" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">成果形式<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="form" name="form" placeholder="请输入成果形式" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">成果内容<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="detail" name="detail" placeholder="请输入成果内容" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="checkStatus" name="checkStatus" placeholder="请输入申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请人/单位ID<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="applyId" name="applyId" placeholder="请输入申请人/单位ID" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请提交时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="applyTime" name="applyTime" placeholder="请输入申请提交时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请驳回时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="refuseTime" name="refuseTime" placeholder="请输入申请驳回时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">审核通过时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="passTime" name="passTime" placeholder="请输入审核通过时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">取消申请时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="cancelTime" name="cancelTime" placeholder="请输入取消申请时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">归属单位/个人<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="belongName" name="belongName" placeholder="请输入归属单位/个人" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

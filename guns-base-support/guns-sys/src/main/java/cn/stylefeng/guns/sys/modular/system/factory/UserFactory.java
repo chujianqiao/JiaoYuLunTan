@@ -84,6 +84,24 @@ public class UserFactory {
             if (ToolUtil.isNotEmpty(newUser.getPhone())) {
                 oldUser.setPhone(newUser.getPhone());
             }
+            if (ToolUtil.isNotEmpty(newUser.getVip())) {
+                oldUser.setVip(newUser.getVip());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getWorkUnit())) {
+                oldUser.setWorkUnit(newUser.getWorkUnit());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getTitle())) {
+                oldUser.setTitle(newUser.getTitle());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getPost())) {
+                oldUser.setPost(newUser.getPost());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getEducation())) {
+                oldUser.setEducation(newUser.getEducation());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getDirection())) {
+                oldUser.setDirection(newUser.getDirection());
+            }
             return oldUser;
         }
     }

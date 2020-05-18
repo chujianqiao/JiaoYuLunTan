@@ -1,27 +1,30 @@
 package cn.stylefeng.guns.sys.modular.system.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
 
 /**
  * <p>
  * 管理员表
  * </p>
  *
- * @author stylefeng
- * @since 2019-04-01
+ * @author CHUJIANQIAO
+ * @since 2020-05-12
  */
 @TableName("sys_user")
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * 主键id
      */
-    @TableId(value = "user_id", type = IdType.ID_WORKER)
+      @TableId(value = "user_id", type = IdType.ID_WORKER)
     private Long userId;
 
     /**
@@ -99,25 +102,25 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
+      @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 创建人
      */
-    @TableField(value = "create_user", fill = FieldFill.INSERT)
+      @TableField(value = "create_user", fill = FieldFill.INSERT)
     private Long createUser;
 
     /**
      * 更新时间
      */
-    @TableField(value = "update_time", fill = FieldFill.UPDATE)
+      @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Date updateTime;
 
     /**
      * 更新人
      */
-    @TableField(value = "update_user", fill = FieldFill.UPDATE)
+      @TableField(value = "update_user", fill = FieldFill.UPDATE)
     private Long updateUser;
 
     /**
@@ -125,6 +128,42 @@ public class User implements Serializable {
      */
     @TableField("version")
     private Integer version;
+
+    /**
+     * 是否为会员  0-非会员   1-会员
+     */
+    @TableField("vip")
+    private Integer vip;
+
+    /**
+     * 工作单位
+     */
+    @TableField("work_unit")
+    private String workUnit;
+
+    /**
+     * 职称
+     */
+    @TableField("title")
+    private String title;
+
+    /**
+     * 职务
+     */
+    @TableField("post")
+    private String post;
+
+    /**
+     * 学历
+     */
+    @TableField("education")
+    private String education;
+
+    /**
+     * 研究方向
+     */
+    @TableField("direction")
+    private String direction;
 
 
     public Long getUserId() {
@@ -271,6 +310,54 @@ public class User implements Serializable {
         this.version = version;
     }
 
+    public Integer getVip() {
+        return vip;
+    }
+
+    public void setVip(Integer vip) {
+        this.vip = vip;
+    }
+
+    public String getWorkUnit() {
+        return workUnit;
+    }
+
+    public void setWorkUnit(String workUnit) {
+        this.workUnit = workUnit;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -292,6 +379,12 @@ public class User implements Serializable {
         ", updateTime=" + updateTime +
         ", updateUser=" + updateUser +
         ", version=" + version +
+        ", vip=" + vip +
+        ", workUnit=" + workUnit +
+        ", title=" + title +
+        ", post=" + post +
+        ", education=" + education +
+        ", direction=" + direction +
         "}";
     }
 }

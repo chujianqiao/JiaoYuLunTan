@@ -71,10 +71,10 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
         return false;
     });
 
-    //初始化所有的职位列表
+    /*//初始化所有的职位列表
     formSelects.config('selPosition', {
         searchUrl: Feng.ctxPath + "/position/listPositions",
         keyName: 'name',
         keyVal: 'positionId'
-    });
+    });*/
 });

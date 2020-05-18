@@ -1,0 +1,148 @@
+@layout("/common/_form.html",{js:["/assets/holdForum/holdForum_add.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+
+<form class="layui-form" id="holdForumForm" lay-filter="holdForumForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="forumId" type="hidden"/>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">论坛名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="forumName" name="forumName" placeholder="请输入论坛名称" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">论坛描述<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="forumDesc" name="forumDesc" placeholder="请输入论坛描述" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="applyStatus" name="applyStatus" placeholder="请输入申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">单位名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="unitName" name="unitName" placeholder="请输入单位名称" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">单位简介<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="unitDesc" name="unitDesc" placeholder="请输入单位简介" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">级别<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="level" name="level" placeholder="请输入级别" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">承办年份<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="year" name="year" placeholder="请输入承办年份" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">承办能力(会议规模)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="ability" name="ability" placeholder="请输入承办能力(会议规模)" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">论坛主题<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="topic" name="topic" placeholder="请输入论坛主题" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">负责人<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="manager" name="manager" placeholder="请输入负责人" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">负责人电话<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="manaPhone" name="manaPhone" placeholder="请输入负责人电话" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">负责人邮箱<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="manaEmail" name="manaEmail" placeholder="请输入负责人邮箱" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">组织保障<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="orgSup" name="orgSup" placeholder="请输入组织保障" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">经费保障<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="fundsSup" name="fundsSup" placeholder="请输入经费保障" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">人员保障<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="staffSup" name="staffSup" placeholder="请输入人员保障" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">办会经验<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="experience" name="experience" placeholder="请输入办会经验" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">是否同意论坛章程; 0-不同意,1-同意<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="agreeRule" name="agreeRule" placeholder="请输入是否同意论坛章程; 0-不同意,1-同意" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">承办方案附件路径<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="planPath" name="planPath" placeholder="请输入承办方案附件路径" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">承诺书路径<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="commitPath" name="commitPath" placeholder="请输入承诺书路径" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申报时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="applyTime" name="applyTime" placeholder="请输入申报时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申报人ID<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="applyUser" name="applyUser" placeholder="请输入申报人ID" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

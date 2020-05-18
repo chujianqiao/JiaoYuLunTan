@@ -32,6 +32,14 @@ public class NoneAuthedResources {
             //主页
             "/",
 
+            //注册
+            "/mgr/add",
+            "/mgr/user_registe",
+            "/mgr/user_registeUnit",
+
+            //加载当前语言字典并缓存
+            "/translation/getUserTranslation",
+
             // 锁屏
             "/system/lock",
 
@@ -52,6 +60,7 @@ public class NoneAuthedResources {
             // 登录接口放开过滤
             "/login",
 
+            //微信Token
             "/check/checkToken",
 
             // session登录失效之后的跳转

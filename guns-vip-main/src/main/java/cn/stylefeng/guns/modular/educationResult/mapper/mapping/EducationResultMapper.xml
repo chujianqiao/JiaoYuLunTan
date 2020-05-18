@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.educationResult.mapper.EducationResultMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.educationResult.entity.EducationResult">
+        <id column="result_id" property="resultId" />
+        <result column="result_name" property="resultName" />
+        <result column="apply_type" property="applyType" />
+        <result column="manager" property="manager" />
+        <result column="mana_phone" property="manaPhone" />
+        <result column="mana_email" property="manaEmail" />
+        <result column="mana_post" property="manaPost" />
+        <result column="mana_direct" property="manaDirect" />
+        <result column="result_mean" property="resultMean" />
+        <result column="value" property="value" />
+        <result column="range" property="range" />
+        <result column="object" property="object" />
+        <result column="team" property="team" />
+        <result column="conclusion" property="conclusion" />
+        <result column="introduce" property="introduce" />
+        <result column="influence" property="influence" />
+        <result column="slogan" property="slogan" />
+        <result column="design_img" property="designImg" />
+        <result column="keyword" property="keyword" />
+        <result column="letter_path" property="letterPath" />
+        <result column="commit_path" property="commitPath" />
+        <result column="form" property="form" />
+        <result column="detail" property="detail" />
+        <result column="check_status" property="checkStatus" />
+        <result column="apply_id" property="applyId" />
+        <result column="apply_time" property="applyTime" />
+        <result column="refuse_time" property="refuseTime" />
+        <result column="pass_time" property="passTime" />
+        <result column="cancel_time" property="cancelTime" />
+        <result column="belong_name" property="belongName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        result_id AS "resultId", result_name AS "resultName", apply_type AS "applyType", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", mana_post AS "manaPost", mana_direct AS "manaDirect", result_mean AS "resultMean", value AS "value", range AS "range", object AS "object", team AS "team", conclusion AS "conclusion", introduce AS "introduce", influence AS "influence", slogan AS "slogan", design_img AS "designImg", keyword AS "keyword", letter_path AS "letterPath", commit_path AS "commitPath", form AS "form", detail AS "detail", check_status AS "checkStatus", apply_id AS "applyId", apply_time AS "applyTime", refuse_time AS "refuseTime", pass_time AS "passTime", cancel_time AS "cancelTime", belong_name AS "belongName"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.educationResult.model.result.EducationResultResult" parameterType="cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam">
+        select
+        <include refid="Base_Column_List"/>
+        from education_result where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam">
+        select
+        <include refid="Base_Column_List"/>
+        from education_result where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.educationResult.model.result.EducationResultResult" parameterType="cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam">
+        select
+        <include refid="Base_Column_List"/>
+        from education_result where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam">
+        select
+        <include refid="Base_Column_List"/>
+        from education_result where 1 = 1
+    </select>
+
+</mapper>

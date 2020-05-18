@@ -75,7 +75,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         this.save(newUser);
 
         //添加职位关联
-        addPosition(user.getPosition(), newUser.getUserId());
+        /*addPosition(user.getPosition(), newUser.getUserId());*/
     }
 
     /**
@@ -104,7 +104,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         userPosService.remove(new QueryWrapper<UserPos>().eq("user_id", user.getUserId()));
 
         //添加职位关联
-        addPosition(user.getPosition(), user.getUserId());
+        /*addPosition(user.getPosition(), user.getUserId());*/
     }
 
     /**

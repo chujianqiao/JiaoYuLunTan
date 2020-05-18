@@ -93,6 +93,21 @@ public class UserMgrController extends BaseController {
     }
 
     /**
+     * 跳转到注册的页面
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:43
+     */
+    @RequestMapping("/user_registe")
+    public String registeView() {
+        return PREFIX + "user_add.html";
+    }
+    @RequestMapping("/user_registeUnit")
+    public String registeUnitView() {
+        return PREFIX + "user_addUnit.html";
+    }
+
+    /**
      * 跳转到角色分配页面
      *
      * @author fengshuonan
@@ -116,6 +131,12 @@ public class UserMgrController extends BaseController {
     public String userEdit(@RequestParam Long userId) {
         User user = this.userService.getById(userId);
         LogObjectHolder.me().set(user);
+        String[] roles = user.getRoleId().split(",");
+        for (String role : roles){
+            if (role.equals("3")){
+                return PREFIX + "user_editUnit.html";
+            }
+        }
         return PREFIX + "user_edit.html";
     }
 
@@ -194,7 +215,6 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/add")
     @BussinessLog(value = "添加管理员", key = "account", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData add(@Valid UserDto user) {
         this.userService.addUser(user);
