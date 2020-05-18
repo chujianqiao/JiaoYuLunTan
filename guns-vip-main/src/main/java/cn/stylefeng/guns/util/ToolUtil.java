@@ -3,6 +3,8 @@ package cn.stylefeng.guns.util;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,5 +26,20 @@ public class ToolUtil {
 			return false;
 		}
 	}
+
+	/**
+	 * 随机生成19位ID
+	 * @return
+	 */
+	public static  long getNum19(){
+		String numStr = "" ;
+		String trandStr = String.valueOf((Math.random() * 9 + 1) * 1000000);
+		String dataStr = new SimpleDateFormat("yyyyMMddHHMMSS").format(new Date());
+		numStr = trandStr.toString().substring(0, 4);
+		numStr = numStr + dataStr ;
+		long intId = Long.parseLong(numStr);
+		return intId ;
+	}
+
 
 }

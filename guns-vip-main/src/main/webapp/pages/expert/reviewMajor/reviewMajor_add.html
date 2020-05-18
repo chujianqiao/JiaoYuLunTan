@@ -1,0 +1,88 @@
+@layout("/common/_form.html",{js:["/assets/expert/reviewMajor/reviewMajor_add.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+
+<form class="layui-form" id="reviewMajorForm" lay-filter="reviewMajorForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="reviewId" type="hidden"/>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">研究方向和专长<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="direct" name="direct" placeholder="请输入研究方向和专长" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">论文分配数量<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="thesisCount" name="thesisCount" placeholder="请输入论文分配数量" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">论文评审数量<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="reviewCount" name="reviewCount" placeholder="请输入论文评审数量" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">退回数量<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="refuseCount" name="refuseCount" placeholder="请输入退回数量" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">专家分类<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="majorType" name="majorType" placeholder="请输入专家分类" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">来源<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="applyFrom" name="applyFrom" placeholder="请输入来源" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="checkStatus" name="checkStatus" placeholder="请输入申报状态" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">提交申请时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="applyTime" name="applyTime" placeholder="请输入提交申请时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">通过时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="agreeTime" name="agreeTime" placeholder="请输入通过时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">驳回时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="refuseTime" name="refuseTime" placeholder="请输入驳回时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">取消时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="cancelTime" name="cancelTime" placeholder="请输入取消时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

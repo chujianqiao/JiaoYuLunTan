@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.expert.mapper.ReviewMajorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.expert.entity.ReviewMajor">
+        <id column="review_id" property="reviewId" />
+        <result column="direct" property="direct" />
+        <result column="thesis_count" property="thesisCount" />
+        <result column="review_count" property="reviewCount" />
+        <result column="refuse_count" property="refuseCount" />
+        <result column="major_type" property="majorType" />
+        <result column="apply_from" property="applyFrom" />
+        <result column="check_status" property="checkStatus" />
+        <result column="apply_time" property="applyTime" />
+        <result column="agree_time" property="agreeTime" />
+        <result column="refuse_time" property="refuseTime" />
+        <result column="cancel_time" property="cancelTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        review_id AS "reviewId", direct AS "direct", thesis_count AS "thesisCount", review_count AS "reviewCount", refuse_count AS "refuseCount", major_type AS "majorType", apply_from AS "applyFrom", check_status AS "checkStatus", apply_time AS "applyTime", agree_time AS "agreeTime", refuse_time AS "refuseTime", cancel_time AS "cancelTime"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.expert.model.result.ReviewMajorResult" parameterType="cn.stylefeng.guns.expert.model.params.ReviewMajorParam">
+        select
+        <include refid="Base_Column_List"/>
+        from review_major where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.expert.model.params.ReviewMajorParam">
+        select
+        <include refid="Base_Column_List"/>
+        from review_major where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.expert.model.result.ReviewMajorResult" parameterType="cn.stylefeng.guns.expert.model.params.ReviewMajorParam">
+        select
+        <include refid="Base_Column_List"/>
+        from review_major where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.expert.model.params.ReviewMajorParam">
+        select
+        <include refid="Base_Column_List"/>
+        from review_major where 1 = 1
+        <if test="userId != null and userId != '' and userId != 0">
+            and review_id = #{userId}
+        </if>
+        <if test="paramIds != null and paramIds != ''">
+            and review_id in (#{paramIds})
+        </if>
+
+    </select>
+
+</mapper>
