@@ -73,7 +73,7 @@ public class RestUserService extends ServiceImpl<RestUserMapper, RestUser> {
         this.save(newUser);
 
         //添加职位关联
-        addPosition(user.getPosition(), newUser.getUserId());
+        /*addPosition(user.getPosition(), newUser.getUserId());*/
     }
 
     /**
@@ -106,7 +106,7 @@ public class RestUserService extends ServiceImpl<RestUserMapper, RestUser> {
         restUserPosService.remove(new QueryWrapper<RestUserPos>().eq("user_id", user.getUserId()));
 
         //添加职位关联
-        addPosition(user.getPosition(), user.getUserId());
+        /*addPosition(user.getPosition(), user.getUserId());*/
     }
 
     /**

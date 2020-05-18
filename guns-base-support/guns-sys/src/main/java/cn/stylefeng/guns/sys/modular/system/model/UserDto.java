@@ -39,7 +39,7 @@ public class UserDto {
     @NotBlank
     private String password;
 
-    @NotBlank
+
     private String name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -54,14 +54,25 @@ public class UserDto {
 
     private String roleId;
 
-    @NotNull
     private Long deptId;
 
     private String status;
 
     private String avatar;
 
-    @NotBlank
-    private String position;
+    private Integer vip;
+
+    private String workUnit;
+
+    private String title;
+
+    private String post;
+
+    private String education;
+
+    private String direction;
+
+    /*@NotBlank
+    private String position;*/
 
 }

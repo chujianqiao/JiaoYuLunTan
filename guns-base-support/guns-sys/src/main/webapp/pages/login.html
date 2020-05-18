@@ -46,17 +46,23 @@
 <!--            <a href="javascript:;" class="layui-link pull-right">注册账号</a>-->
 <!--        </div>-->
         <div class="layui-form-item">
-            <button class="layui-btn layui-btn-fluid" id="submit">登录</button>
+            <button class="layui-btn layui-btn-submit layui-btn-fluid" id="submit">登录</button>
         </div>
-        <div class="layui-form-item login-oauth-group text-center">
+        <div class="layui-form-item-registe-person">
+            <button class="layui-btn layui-btn-registe layui-btn-fluid" id="registePerson">个人注册</button>
+        </div>
+        <div class="layui-form-item-registe-unit">
+            <button class="layui-btn layui-btn-registe layui-btn-fluid" id="registeUnit">单位注册</button>
+        </div>
+        <!--<div class="layui-form-item login-oauth-group text-center">
             <a href="${ctxPath}/oauth/render/qq"><i class="layui-icon layui-icon-login-qq" style="color:#3492ed;"></i></a>&emsp;
             <a href="${ctxPath}/oauth/render/gitee">
                 <img class="layui-icon" style="height: 28px;width: 28px; margin-top: -12px !important;" src="${ctxPath}/assets/expand/images/git.png" />
             </a>
-        </div>
+        </div>-->
     </div>
 </div>
-<div class="login-copyright">copyright © 2020 stylefeng.cn all rights reserved.</div>
+<!--<div class="login-copyright">copyright © 2020 stylefeng.cn all rights reserved.</div>-->
 <style>
     body {
         background-image: url("${ctxPath}/assets/common/images/bg-login.jpg");
@@ -85,6 +91,7 @@
     }
 
     .login-wrapper > .layui-form {
+        height: 360px;
         padding: 25px 30px;
         background-color: #fff;
         box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.19);
@@ -102,6 +109,22 @@
     .login-wrapper > .layui-form > .layui-form-item {
         margin-bottom: 25px;
         position: relative;
+    }
+
+    .login-wrapper > .layui-form > .layui-form-item-registe-person {
+        margin-bottom: 25px;
+        position: relative;
+        width: 150px;
+        display: block;
+        float: left;
+    }
+
+    .login-wrapper > .layui-form > .layui-form-item-registe-unit {
+        margin-bottom: 25px;
+        position: relative;
+        width: 150px;
+        display: block;
+        float: right;
     }
 
     .login-wrapper > .layui-form > .layui-form-item:last-child {
@@ -193,7 +216,7 @@
         }
     }
 
-    .layui-btn {
+    .layui-btn-submit {
         background-color: #5FB878;
         border-color: #5FB878;
     }
@@ -215,7 +238,7 @@
 <script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
 <script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
 <script>
-    layui.use(['layer', 'form', 'index', 'ax', 'notice'], function () {
+    layui.use(['layer', 'form', 'index', 'ax', 'func', 'notice'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;
@@ -265,6 +288,70 @@
                 ajax.set("kaptcha", $("#kaptcha").val());
             @}
             ajax.start();
+        });
+
+
+        // 加载当前语言字典并缓存
+        var getUserTranslationAjax = new $ax(Feng.ctxPath + "/translation/getUserTranslation", function (data) {
+            layui.data('system', {
+                key: "lang",
+                value: data.data
+            });
+        }, function (data) {
+            layer.msg("加载语言字典失败！" + data.responseJSON.message, {icon: 5, anim: 6});
+        });
+        getUserTranslationAjax.start();
+
+        var func = layui.func;
+        var MgrUser = {
+            tableId: "userTable",    //表格id
+            condition: {
+                name: "",
+                deptId: "",
+                timeLimit: ""
+            }
+        };
+        var MgrUnit = {
+            tableId: "unitTable",    //表格id
+            condition: {
+                name: "",
+                deptId: "",
+                timeLimit: ""
+            }
+        };
+        /**
+         * 弹出添加用户对话框
+         */
+        MgrUser.openAddUser = function () {
+
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            console.log(langs);
+            func.open({
+                title: langs.TITLE_ADD_USER,
+                content: Feng.ctxPath + '/mgr/user_registe',
+                tableId: MgrUser.tableId
+            });
+        };
+        MgrUnit.openAddUser = function () {
+
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            console.log(langs);
+            func.open({
+                title: langs.TITLE_ADD_USER,
+                content: Feng.ctxPath + '/mgr/user_registeUnit',
+                tableId: MgrUnit.tableId
+            });
+        };
+        //注册操作
+        $('#registePerson').click(function () {
+            MgrUser.openAddUser();
+        });
+        $('#registeUnit').click(function () {
+            MgrUnit.openAddUser();
         });
 
     });

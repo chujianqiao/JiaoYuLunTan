@@ -31,17 +31,17 @@
                             <i class="layui-icon layui-icon-cellphone"></i>
                             <p>${phone!}</p>
                         </div>
-                        <div class="info-list-item">
+                        <!--<div class="info-list-item">
                             <i class="layui-icon layui-icon-location"></i>
                             <p>中国 北京市 朝阳区 xxx街道 000号</p>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="dash"></div>
-                    <h3>标签</h3>
+                    <!--<h3>标签</h3>
                     <div class="layui-badge-list" style="padding-top: 6px;">
                         <span class="layui-badge layui-bg-gray">Guns</span>
                         <span class="layui-badge layui-bg-gray">Roses</span>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                     <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
                         <ul class="layui-tab-title">
                             <li class="layui-this">${lang.get("MENU_BASE_INFO","基本信息")}</li>
-                            <li>${lang.get("MENU_OTHER","其他")}</li>
+                            <!--<li>${lang.get("MENU_OTHER","其他")}</li>-->
                         </ul>
                         <div class="layui-tab-content">
                             <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
@@ -85,15 +85,46 @@
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">${lang.get("FIELD_BIRTHDAY","生日")}:</label>
+                                        <label class="layui-form-label">${lang.get("FIELD_BIRTHDAY","生日")}:<span style="color: red;">*</span></label>
                                         <div class="layui-input-block">
-                                            <input type="text" id="birthday" name="birthday" class="layui-input"/>
+                                            <input type="text" id="birthday" name="birthday" class="layui-input" lay-verify="required" required/>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">${lang.get("FIELD_PHONE","电话")}:</label>
+                                        <label class="layui-form-label">${lang.get("FIELD_WORK_UNIT","工作单位")}:<span style="color: red;">*</span></label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="phone" class="layui-input"/>
+                                            <input type="text" name="workUnit" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">${lang.get("FIELD_TITLE","职称")}:<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">${lang.get("FIELD_POST","职务")}:<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="post" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">${lang.get("FIELD_EDUCATION","学历")}:<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="education" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">${lang.get("FIELD_DIRECTION","研究方向")}:<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="direction" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">${lang.get("FIELD_PHONE","电话")}:<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="phone" class="layui-input" lay-verify="required|phone" required/>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">

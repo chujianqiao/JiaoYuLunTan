@@ -22,6 +22,7 @@ import cn.stylefeng.guns.base.oshi.SystemHardwareInfo;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.core.util.DefaultImages;
+import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.Notice;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
@@ -193,6 +194,14 @@ public class SystemController extends BaseController {
         model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
         LogObjectHolder.me().set(user);
 
+        String[] roles = user.getRoleId().split(",");
+        for (String role : roles){
+            if (role.equals("3")){
+                return "/modular/frame/unit_info.html";
+            }else {
+                return "/modular/frame/user_info.html";
+            }
+        }
         return "/modular/frame/user_info.html";
     }
 
@@ -300,5 +309,23 @@ public class SystemController extends BaseController {
         return ResponseData.success(0, "上传成功", map);
     }
 
+    /**
+     * 下载文件
+     *
+     * @author fengshuonan
+     * @Date 2019-2-23 10:48:29
+     */
+    @RequestMapping(path = "/download")
+    @ResponseBody
+    public void download(String name, String path, HttpServletResponse httpServletResponse) {
+
+
+        try {
+            FileDownload.fileDownload(httpServletResponse, path, name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

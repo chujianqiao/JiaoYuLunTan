@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.holdforum.mapper.HoldForumMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.holdforum.entity.HoldForum">
+        <id column="forum_id" property="forumId" />
+        <result column="forum_name" property="forumName" />
+        <result column="forum_desc" property="forumDesc" />
+        <result column="apply_status" property="applyStatus" />
+        <result column="unit_name" property="unitName" />
+        <result column="unit_desc" property="unitDesc" />
+        <result column="level" property="level" />
+        <result column="year" property="year" />
+        <result column="ability" property="ability" />
+        <result column="topic" property="topic" />
+        <result column="manager" property="manager" />
+        <result column="mana_phone" property="manaPhone" />
+        <result column="mana_email" property="manaEmail" />
+        <result column="org_sup" property="orgSup" />
+        <result column="funds_sup" property="fundsSup" />
+        <result column="staff_sup" property="staffSup" />
+        <result column="experience" property="experience" />
+        <result column="agree_rule" property="agreeRule" />
+        <result column="plan_path" property="planPath" />
+        <result column="commit_path" property="commitPath" />
+        <result column="apply_time" property="applyTime" />
+        <result column="apply_user" property="applyUser" />
+        <result column="plan_name" property="planName" />
+        <result column="commit_name" property="commitName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        forum_id AS "forumId", forum_name AS "forumName", forum_desc AS "forumDesc", apply_status AS "applyStatus", unit_name AS "unitName", unit_desc AS "unitDesc", level AS "level", year AS "year", ability AS "ability", topic AS "topic", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", org_sup AS "orgSup", funds_sup AS "fundsSup", staff_sup AS "staffSup", experience AS "experience", agree_rule AS "agreeRule", plan_path AS "planPath", commit_path AS "commitPath", apply_time AS "applyTime", apply_user AS "applyUser", plan_name AS "planName", commit_name AS "commitName"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.holdforum.model.result.HoldForumResult" parameterType="cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from hold_forum where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from hold_forum where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.holdforum.model.result.HoldForumResult" parameterType="cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from hold_forum where apply_user = #{paramCondition.applyUser} and forum_name like #{paramCondition.forumName}
+    </select>
+
+    <select id="customPageListAdmin" resultType="cn.stylefeng.guns.modular.holdforum.model.result.HoldForumResult" parameterType="cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from hold_forum where 1 = 1 and forum_name like #{paramCondition.forumName}
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from hold_forum where 1 = 1
+    </select>
+
+</mapper>

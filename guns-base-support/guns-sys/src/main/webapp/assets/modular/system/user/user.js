@@ -35,8 +35,9 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
             {field: 'userId', hide: true, sort: true, title: '用户id'},
             {field: 'account', align: "center", sort: true, title: langs.FIELD_ACCOUNT},
             {field: 'name', align: "center", sort: true, title: langs.FIELD_NAME},
-            {field: 'deptName', align: "center", sort: true, title: langs.FIELD_DEPT},
-            {field: 'positionName', align: "center", sort: true, title: langs.FIELD_POST},
+            {field: 'vip', align: "center", sort: true, title: "是否会员", templet: function(data){
+                return data.vip == '1' ? '是' : '否';
+                }},
             {field: 'phone', align: "center", sort: true, title: langs.FIELD_PHONE, minWidth: 117},
             {field: 'createTime', align: "center", sort: true, title: langs.FIELD_CREATE_TIME, minWidth: 160},
             {field: 'status', align: "center", sort: true, templet: '#statusTpl', title: langs.FIELD_STATUS},
@@ -76,6 +77,20 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
         func.open({
             title: langs.TITLE_ADD_USER,
             content: Feng.ctxPath + '/mgr/user_add',
+            tableId: MgrUser.tableId
+        });
+    };
+    /**
+     * 弹出添加用户对话框
+     */
+    MgrUser.openAddUnit = function () {
+
+        //获取多语言
+        var langs = layui.data('system').lang;
+
+        func.open({
+            title: langs.TITLE_ADD_USER,
+            content: Feng.ctxPath + '/mgr/user_registeUnit',
             tableId: MgrUser.tableId
         });
     };
@@ -231,6 +246,10 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
     // 添加按钮点击事件
     $('#btnAdd').click(function () {
         MgrUser.openAddUser();
+    });
+    // 添加按钮点击事件
+    $('#btnAddU').click(function () {
+        MgrUser.openAddUnit();
     });
 
     // 导出excel

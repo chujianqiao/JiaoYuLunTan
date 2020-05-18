@@ -3,8 +3,7 @@ package cn.stylefeng.guns.sys.core.util;
 import cn.stylefeng.roses.core.util.FileUtil;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URLEncoder;
 
 /**
@@ -21,18 +20,24 @@ public class FileDownload {
      * @param fileName 下载后看到的文件名
      * @return 文件名
      */
-    public static void fileDownload(final HttpServletResponse response, String filePath, String fileName) throws Exception {
-        byte[] bytes = FileUtil.toByteArray(filePath);
+    public static HttpServletResponse fileDownload(final HttpServletResponse response, String filePath, String fileName) throws Exception {
+        /*byte[] bytes = FileUtil.toByteArray(filePath);*/
+        InputStream fis = new BufferedInputStream(new FileInputStream(filePath));
+        byte[] buffer = new byte[fis.available()];
+        fis.read(buffer);
+        fis.close();
+
         fileName = URLEncoder.encode(fileName, "UTF-8");
         response.reset();
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        response.addHeader("Content-Length", "" + bytes.length);
+        response.addHeader("Content-Length", "" + buffer.length);
         response.setContentType("application/octet-stream;charset=UTF-8");
         OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-        outputStream.write(bytes);
+        outputStream.write(buffer);
         outputStream.flush();
         outputStream.close();
-        response.flushBuffer();
+
+        return response;
     }
 
 }

@@ -35,8 +35,8 @@ public enum DefaultDicts {
     FIELD_OPERATION_1("FIELD_OPERATION", TranslationEnum.CHINESE, "操作"),
     FIELD_OPERATION_2("FIELD_OPERATION", TranslationEnum.ENGLISH, "operation"),
 
-    TITLE_ADD_USER_1("FIELD_NAME", TranslationEnum.CHINESE, "添加用户"),
-    TITLE_ADD_USER_2("FIELD_NAME", TranslationEnum.ENGLISH, "add user"),
+    TITLE_ADD_USER_1("FIELD_ADD_NAME", TranslationEnum.CHINESE, "添加用户"),
+    TITLE_ADD_USER_2("FIELD_ADD_NAME", TranslationEnum.ENGLISH, "add user"),
 
     TITLE_EDIT_USER_1("TITLE_EDIT_USER", TranslationEnum.CHINESE, "编辑用户"),
     TITLE_EDIT_USER_2("TITLE_EDIT_USER", TranslationEnum.ENGLISH, "edit user"),
