@@ -36,3 +36,6 @@ mybatis-plus:
 
 log:
   path: _app_logs
+
+file:
+  uploadFolder: D:/tmp/
