@@ -86,7 +86,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         tableId: "holdForumTable"
     };
     // 添加按钮点击事件
-    $('#downloadPlan').click(function () {downloadCommit
+    $('#downloadPlan').click(function () {
         var form=$("<form>");    // 定义一个form表单
         form.attr("style","display:none");
         //form.attr("target","_blank");

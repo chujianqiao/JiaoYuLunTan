@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.modular.ownForum.service.impl;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
@@ -59,7 +61,22 @@ public class OwnForumServiceImpl extends ServiceImpl<OwnForumMapper, OwnForum> i
     @Override
     public LayuiPageInfo findPageBySpec(OwnForumParam param){
         Page pageContext = getPageContext();
-        IPage page = this.baseMapper.customPageList(pageContext, param);
+        if (param.getForumName()==null){
+            param.setForumName("%%");
+        }else {
+            param.setForumName("%" + param.getForumName() + "%");
+        }
+
+        IPage page = null;
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roleIds = user.getRoleList();
+        long adminRole = 1;
+        if(roleIds.contains(adminRole)){
+            page = this.baseMapper.customPageListAdmin(pageContext, param);
+        }else {
+            page = this.baseMapper.customPageList(pageContext, param);
+        }
+
         return LayuiPageFactory.createPageInfo(page);
     }
 

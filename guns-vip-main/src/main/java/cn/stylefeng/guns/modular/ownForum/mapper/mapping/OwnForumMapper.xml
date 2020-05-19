@@ -57,7 +57,13 @@
     <select id="customPageList" resultType="cn.stylefeng.guns.modular.ownForum.model.result.OwnForumResult" parameterType="cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam">
         select
         <include refid="Base_Column_List"/>
-        from own_forum where 1 = 1
+        from own_forum where apply_id = #{paramCondition.applyId} and forum_name like #{paramCondition.forumName}
+    </select>
+
+    <select id="customPageListAdmin" resultType="cn.stylefeng.guns.modular.ownForum.model.result.OwnForumResult" parameterType="cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from own_forum where 1 = 1 and forum_name like #{paramCondition.forumName}
     </select>
 
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam">

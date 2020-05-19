@@ -46,6 +46,14 @@ public interface OwnForumMapper extends BaseMapper<OwnForum> {
     Page<OwnForumResult> customPageList(@Param("page") Page page, @Param("paramCondition") OwnForumParam paramCondition);
 
     /**
+     * 获取admin分页实体列表
+     *
+     * @author
+     * @Date 2020-05-13
+     */
+    Page<OwnForumResult> customPageListAdmin(@Param("page") Page page, @Param("paramCondition") OwnForumParam paramCondition);
+
+    /**
      * 获取分页map列表
      *
      * @author CHUJIANQIAO

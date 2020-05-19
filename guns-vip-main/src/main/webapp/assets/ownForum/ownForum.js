@@ -99,7 +99,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
       OwnForum.openEditDlg = function (data) {
           func.open({
               title: '修改自设论坛表',
-              content: Feng.ctxPath + '/ownForum/edit?forumId=' + data.forumId,
+              content: Feng.ctxPath + '/ownForum/edit?forumId=' + data.forumId + '&applyType=' + data.applyType,
               tableId: OwnForum.tableId
           });
       };
@@ -113,7 +113,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     OwnForum.openApprove = function (data) {
         func.open({
             title: '详情信息',
-            content: Feng.ctxPath + '/ownForum/approve?forumId=' + data.forumId,
+            content: Feng.ctxPath + '/ownForum/approve?forumId=' + data.forumId + '&applyType=' + data.applyType,
             tableId: OwnForum.tableId
         });
     };
@@ -125,7 +125,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     OwnForum.openDetail = function (data) {
         func.open({
             title: '详情信息',
-            content: Feng.ctxPath + '/ownForum/detailAdmin?forumId=' + data.forumId,
+            content: Feng.ctxPath + '/ownForum/detailAdmin?forumId=' + data.forumId + '&applyType=' + data.applyType,
             tableId: OwnForum.tableId
         });
     };
