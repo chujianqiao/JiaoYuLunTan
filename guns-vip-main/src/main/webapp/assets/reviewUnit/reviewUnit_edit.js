@@ -19,6 +19,13 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var form = layui.form;
     var admin = layui.admin;
 
+    //渲染时间选择框
+    var laydate = layui.laydate;
+    laydate.render({
+         elem: '#year' //指定元素
+        ,type: 'year'
+    });
+
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/reviewUnit/detail?reviewId=" + Feng.getUrlParam("reviewId"));
     var result = ajax.start();
@@ -26,6 +33,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
+        debugger;
         var ajax = new $ax(Feng.ctxPath + "/reviewUnit/editItem", function (data) {
             Feng.success("更新成功！");
             window.location.href = Feng.ctxPath + '/reviewUnit'
@@ -41,9 +49,9 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         window.location.href = Feng.ctxPath + '/reviewUnit'
     });
 
-    $(function(){
-        createSelectOption();
-    });
+    // $(function(){
+    //     createSelectOption();
+    // });
 
     function createSelectOption(){
         debugger;
