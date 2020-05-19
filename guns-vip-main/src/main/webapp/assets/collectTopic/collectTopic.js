@@ -23,11 +23,14 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'topicName', sort: true, title: '大会主题'},
             {field: 'topicDesc', sort: true, title: '选题意义'},
             {field: 'subTopic', sort: true, title: '分论坛主题'},
-            {field: 'voteNum', sort: true, title: '票数'},
-            {field: 'createTime', sort: true, title: '创建日期'},
+            // {field: 'voteNum', sort: true, title: '票数'},
+            {field: 'userName', sort: true, title: '填报人'},
+            {field: 'unitName', sort: true, title: '所在单位'},
+            {field: 'userPost', sort: true, title: '职称/职务'},
+            // {field: 'createTime', sort: true, title: '创建日期'},
             // {field: 'diy1', sort: true, title: '管理员自定义备用字段1'},
             // {field: 'diy2', sort: true, title: '管理员自定义备用字段2'},
-            {align: 'center', toolbar: '#tableBar', title: '操作'}
+            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 120}
         ]];
     };
 
@@ -58,7 +61,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
      /**
       * 点击编辑
-      *
       * @param data 点击按钮时候的行数据
       */
       CollectTopic.openEditDlg = function (data) {
@@ -84,7 +86,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
     /**
      * 点击删除
-     *
      * @param data 点击按钮时候的行数据
      */
     CollectTopic.onDeleteItem = function (data) {
@@ -104,7 +105,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + CollectTopic.tableId,
-        url: Feng.ctxPath + '/collectTopic/list',
+        url: Feng.ctxPath + '/collectTopic/wraplist',
         page: true,
         height: "full-158",
         cellMinWidth: 100,

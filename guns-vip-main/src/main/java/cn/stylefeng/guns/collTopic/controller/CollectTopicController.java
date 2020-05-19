@@ -1,15 +1,21 @@
 package cn.stylefeng.guns.collTopic.controller;
 
+import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.collTopic.entity.CollectTopic;
 import cn.stylefeng.guns.collTopic.model.params.CollectTopicParam;
 import cn.stylefeng.guns.collTopic.service.CollectTopicService;
+import cn.stylefeng.guns.collTopic.wrapper.CollectTopicWrapper;
+import cn.stylefeng.guns.expert.wrapper.ReviewMajorWrapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 
 /**
@@ -29,7 +35,6 @@ public class CollectTopicController extends BaseController {
 
     /**
      * 跳转到主页面
-     *
      * @author wucy
      * @Date 2020-05-18
      */
@@ -40,7 +45,6 @@ public class CollectTopicController extends BaseController {
 
     /**
      * 新增页面
-     *
      * @author wucy
      * @Date 2020-05-18
      */
@@ -51,7 +55,6 @@ public class CollectTopicController extends BaseController {
 
     /**
      * 编辑页面
-     *
      * @author wucy
      * @Date 2020-05-18
      */
@@ -62,7 +65,6 @@ public class CollectTopicController extends BaseController {
 
     /**
      * 新增接口
-     *
      * @author wucy
      * @Date 2020-05-18
      */
@@ -75,7 +77,6 @@ public class CollectTopicController extends BaseController {
 
     /**
      * 编辑接口
-     *
      * @author wucy
      * @Date 2020-05-18
      */
@@ -88,7 +89,6 @@ public class CollectTopicController extends BaseController {
 
     /**
      * 删除接口
-     *
      * @author wucy
      * @Date 2020-05-18
      */
@@ -101,7 +101,6 @@ public class CollectTopicController extends BaseController {
 
     /**
      * 查看详情接口
-     *
      * @author wucy
      * @Date 2020-05-18
      */
@@ -114,7 +113,6 @@ public class CollectTopicController extends BaseController {
 
     /**
      * 查询列表
-     *
      * @author wucy
      * @Date 2020-05-18
      */
@@ -122,6 +120,19 @@ public class CollectTopicController extends BaseController {
     @RequestMapping("/list")
     public LayuiPageInfo list(CollectTopicParam collectTopicParam) {
         return this.collectTopicService.findPageBySpec(collectTopicParam);
+    }
+
+    /**
+     * 查询列表（拼接字段）
+     * @author wucy
+     * @Date 2020-05-18
+     */
+    @ResponseBody
+    @RequestMapping("/wraplist")
+    public Object wrapList(CollectTopicParam collectTopicParam) {
+        Page<Map<String, Object>> topics = this.collectTopicService.findPageWrap(collectTopicParam);
+        Page wrapped = new CollectTopicWrapper(topics).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
     }
 
 }
