@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.modular.greatResult.service.impl;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.modular.greatResult.entity.GreatResult;
@@ -22,7 +24,7 @@ import java.util.List;
  * </p>
  *
  * @author CHUJIANQIAO
- * @since 2020-05-18
+ * @since 2020-05-19
  */
 @Service
 public class GreatResultServiceImpl extends ServiceImpl<GreatResultMapper, GreatResult> implements GreatResultService {
@@ -59,7 +61,22 @@ public class GreatResultServiceImpl extends ServiceImpl<GreatResultMapper, Great
     @Override
     public LayuiPageInfo findPageBySpec(GreatResultParam param){
         Page pageContext = getPageContext();
-        IPage page = this.baseMapper.customPageList(pageContext, param);
+        if (param.getResultName()==null){
+            param.setResultName("%%");
+        }else {
+            param.setResultName("%" + param.getResultName() + "%");
+        }
+
+        IPage page = null;
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roleIds = user.getRoleList();
+        long adminRole = 1;
+        if(roleIds.contains(adminRole)){
+            page = this.baseMapper.customPageListAdmin(pageContext, param);
+        }else {
+            page = this.baseMapper.customPageList(pageContext, param);
+        }
+
         return LayuiPageFactory.createPageInfo(page);
     }
 

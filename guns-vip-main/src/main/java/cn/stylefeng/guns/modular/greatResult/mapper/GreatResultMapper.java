@@ -17,7 +17,7 @@ import java.util.Map;
  * </p>
  *
  * @author CHUJIANQIAO
- * @since 2020-05-18
+ * @since 2020-05-19
  */
 public interface GreatResultMapper extends BaseMapper<GreatResult> {
 
@@ -25,7 +25,7 @@ public interface GreatResultMapper extends BaseMapper<GreatResult> {
      * 获取列表
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     List<GreatResultResult> customList(@Param("paramCondition") GreatResultParam paramCondition);
 
@@ -33,7 +33,7 @@ public interface GreatResultMapper extends BaseMapper<GreatResult> {
      * 获取map列表
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     List<Map<String, Object>> customMapList(@Param("paramCondition") GreatResultParam paramCondition);
 
@@ -41,15 +41,22 @@ public interface GreatResultMapper extends BaseMapper<GreatResult> {
      * 获取分页实体列表
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     Page<GreatResultResult> customPageList(@Param("page") Page page, @Param("paramCondition") GreatResultParam paramCondition);
+    /**
+     * 获取admin分页实体列表
+     *
+     * @author
+     * @Date 2020-05-13
+     */
+    Page<GreatResultResult> customPageListAdmin(@Param("page") Page page, @Param("paramCondition") GreatResultParam paramCondition);
 
     /**
      * 获取分页map列表
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") GreatResultParam paramCondition);
 

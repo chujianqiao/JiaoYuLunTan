@@ -149,9 +149,9 @@ public class OwnForumController extends BaseController {
      */
     @RequestMapping("/approveForum")
     @ResponseBody
-    public ResponseData approveForum(OwnForumParam holdForumParam) {
-        holdForumParam.setApplyStatus(2);
-        this.ownForumService.update(holdForumParam);
+    public ResponseData approveForum(OwnForumParam ownForumParam) {
+        ownForumParam.setApplyStatus(2);
+        this.ownForumService.update(ownForumParam);
         return ResponseData.success();
     }
 
@@ -163,9 +163,9 @@ public class OwnForumController extends BaseController {
      */
     @RequestMapping("/rejectForum")
     @ResponseBody
-    public ResponseData rejectForum(OwnForumParam holdForumParam) {
-        holdForumParam.setApplyStatus(3);
-        this.ownForumService.update(holdForumParam);
+    public ResponseData rejectForum(OwnForumParam ownForumParam) {
+        ownForumParam.setApplyStatus(3);
+        this.ownForumService.update(ownForumParam);
         return ResponseData.success();
     }
 
@@ -177,9 +177,9 @@ public class OwnForumController extends BaseController {
      */
     @RequestMapping("/cancel")
     @ResponseBody
-    public ResponseData cancel(OwnForumParam holdForumParam) {
-        holdForumParam.setApplyStatus(0);
-        this.ownForumService.update(holdForumParam);
+    public ResponseData cancel(OwnForumParam ownForumParam) {
+        ownForumParam.setApplyStatus(0);
+        this.ownForumService.update(ownForumParam);
         return ResponseData.success();
     }
 
@@ -191,9 +191,9 @@ public class OwnForumController extends BaseController {
      */
     @RequestMapping("/editNew")
     @ResponseBody
-    public ResponseData editNew(OwnForumParam holdForumParam) {
-        holdForumParam.setApplyStatus(1);
-        this.ownForumService.update(holdForumParam);
+    public ResponseData editNew(OwnForumParam ownForumParam) {
+        ownForumParam.setApplyStatus(1);
+        this.ownForumService.update(ownForumParam);
         return ResponseData.success();
     }
 

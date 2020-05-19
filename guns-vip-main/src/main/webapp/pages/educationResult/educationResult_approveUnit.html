@@ -1,6 +1,6 @@
-@layout("/common/_form.html",{js:["/assets/greatResult/greatResult_edit.js"]}){
+@layout("/common/_form.html",{js:["/assets/educationResult/educationResult_approve.js"]}){
 
-<form class="layui-form" id="greatResultForm" lay-filter="greatResultForm">
+<form class="layui-form" id="educationResultForm" lay-filter="educationResultForm">
     <div class="layui-fluid" style="padding-bottom: 75px;">
         <div class="layui-card">
             <div class="layui-card-header">基本信息</div>
@@ -11,53 +11,53 @@
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">成果名称<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="resultName" name="resultName" placeholder="请输入成果名称" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="resultName" disabled name="resultName" placeholder="请输入成果名称" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">单位名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="belongName" disabled name="belongName" placeholder="请输入负责人姓名" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人姓名<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">单位名称<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="belongName" name="belongName" placeholder="请输入负责人姓名" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="manager" disabled name="manager" placeholder="请输入负责人姓名" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人电话<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">负责人电话<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manaPhone" name="manaPhone" placeholder="请输入负责人电话" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="manaPhone" disabled name="manaPhone" placeholder="请输入负责人电话" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人邮箱<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">负责人邮箱<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manaEmail" name="manaEmail" placeholder="请输入负责人邮箱" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="manaEmail" disabled name="manaEmail" placeholder="请输入负责人邮箱" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">负责人职称/职务<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="team" name="team" placeholder="请输入攻关团队" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="manaPost" disabled name="manaPost" placeholder="请输入负责人职称/职务" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人职称/职务<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">负责人研究方向<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manaPost" name="manaPost" placeholder="请输入负责人职称/职务" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人研究方向<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="manaDirect" name="manaDirect" placeholder="请输入负责人研究方向" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="manaDirect" disabled name="manaDirect" placeholder="请输入负责人研究方向" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
 
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">关键词<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="keyword" name="keyword" placeholder="请输入关键词" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="keyword" disabled name="keyword" placeholder="请输入关键词" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
-
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">优秀成果简介附件<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
@@ -65,7 +65,7 @@
                             <input id="introducePath" name="introducePath" type="hidden" class="layui-input"/>
                             <input id="introduceName" name="introduceName" type="hidden" class="layui-input"/>
                             <div style="float: left;">
-                                <button type="button" class="layui-btn layui-btn-sm" id="introducefileBtn"><i class="layui-icon"></i>选择文件</button>
+                                <button type="button" class="layui-btn layui-btn-sm" id="downloadintroduce"><i class="layui-icon"></i>附件下载</button>
                             </div>
                             <div style="float: left;">
                                 <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
@@ -86,7 +86,7 @@
                             <input id="letterPath" name="letterPath" type="hidden" class="layui-input"/>
                             <input id="letterName" name="letterName" type="hidden" class="layui-input"/>
                             <div style="float: left;">
-                                <button type="button" class="layui-btn layui-btn-sm" id="letterfileBtn"><i class="layui-icon"></i>选择文件</button>
+                                <button type="button" class="layui-btn layui-btn-sm" id="downloadletter"><i class="layui-icon"></i>附件下载</button>
                             </div>
                             <div style="float: left;">
                                 <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
@@ -108,7 +108,7 @@
                             <input id="commitPath" name="commitPath" type="hidden" class="layui-input"/>
                             <input id="commitName" name="commitName" type="hidden" class="layui-input"/>
                             <div style="float: left;">
-                                <button type="button" class="layui-btn layui-btn-sm" id="commitfileBtn"><i class="layui-icon"></i>选择文件</button>
+                                <button type="button" class="layui-btn layui-btn-sm" id="downloadcommit"><i class="layui-icon"></i>附件下载</button>
                             </div>
                             <div style="float: left;">
                                 <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
@@ -122,13 +122,13 @@
                             <input id="commitPath" name="commitPath" placeholder="请输入原创承诺书路径" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>-->
-
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group-bottom text-center">
-        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+    <div id="buttonDiv" class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;通过&emsp;</button>
+        <button class="layui-btn layui-btn-danger" lay-filter="rejSubmit" lay-submit>&emsp;驳回&emsp;</button>
         <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
     </div>
 

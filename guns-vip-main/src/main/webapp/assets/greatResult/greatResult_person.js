@@ -8,8 +8,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     /**
      * 优秀成果表管理
      */
-    var EducationResult = {
-        tableId: "educationResultTable",
+    var GreatResult = {
+        tableId: "greatResultTable",
         condition: {
             resultName: "",
         }
@@ -18,7 +18,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     /**
      * 初始化表格的列
      */
-    EducationResult.initColumn = function () {
+    GreatResult.initColumn = function () {
         return [[
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
@@ -56,11 +56,13 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'refuseTime', sort: true, title: '申请驳回时间'},
             {field: 'passTime', sort: true, title: '审核通过时间'},
             {field: 'cancelTime', sort: true, title: '取消申请时间'},*/
-            {align: 'center', title: '操作', templet: function(data){
-                    if (data.checkStatus == 1) {
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"approve\">审批</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+            {align: 'center', title: '操作',minWidth: 180, templet: function(data){
+                    if (data.applyStatus == 0) {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew'>申请</a>";
+                    }else if(data.applyStatus == 2 || data.applyStatus == 3){
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
                     }else {
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</a>";
                     }
                 }}
         ]];
@@ -69,11 +71,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     /**
      * 点击查询按钮
      */
-    EducationResult.search = function () {
+    GreatResult.search = function () {
         var queryData = {};
 
         queryData['resultName'] = $("#resultName").val();
-        table.reload(EducationResult.tableId, {
+        table.reload(GreatResult.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
@@ -81,11 +83,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     /**
      * 弹出添加对话框
      */
-    EducationResult.openAddDlg = function () {
+    GreatResult.openAddDlg = function () {
         func.open({
             title: '添加优秀成果表',
-            content: Feng.ctxPath + '/educationResult/add',
-            tableId: EducationResult.tableId
+            content: Feng.ctxPath + '/greatResult/add',
+            tableId: GreatResult.tableId
         });
     };
 
@@ -94,45 +96,32 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
       *
       * @param data 点击按钮时候的行数据
       */
-      EducationResult.openEditDlg = function (data) {
+      GreatResult.openEditDlg = function (data) {
           func.open({
               title: '修改优秀成果表',
-              content: Feng.ctxPath + '/educationResult/edit?resultId=' + data.resultId + '&applyType=' + data.applyType,
-              tableId: EducationResult.tableId
+              content: Feng.ctxPath + '/greatResult/edit?resultId=' + data.resultId + '&applyType=' + data.applyType,
+              tableId: GreatResult.tableId
           });
       };
 
-    /**
-     * 点击审批
-     *
-     * @param data 点击按钮时候的行数据
-     */
-    EducationResult.openApprove = function (data) {
-        func.open({
-            title: '详情信息',
-            content: Feng.ctxPath + '/educationResult/approve?forumId=' + data.forumId + '&applyType=' + data.applyType,
-            tableId: EducationResult.tableId
-        });
-    };
     /**
      * 点击详情
      *
      * @param data 点击按钮时候的行数据
      */
-    EducationResult.openDetail = function (data) {
+    GreatResult.openDetail = function (data) {
         func.open({
             title: '详情信息',
-            content: Feng.ctxPath + '/educationResult/detailAdmin?forumId=' + data.forumId + '&applyType=' + data.applyType,
-            tableId: EducationResult.tableId
+            content: Feng.ctxPath + '/greatResult/detailAdmin?forumId=' + data.forumId + '&applyType=' + data.applyType,
+            tableId: GreatResult.tableId
         });
     };
-
 
     /**
      * 导出excel按钮
      */
-    EducationResult.exportExcel = function () {
-        var checkRows = table.checkStatus(EducationResult.tableId);
+    GreatResult.exportExcel = function () {
+        var checkRows = table.checkStatus(GreatResult.tableId);
         if (checkRows.data.length === 0) {
             Feng.error("请选择要导出的数据");
         } else {
@@ -145,11 +134,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      *
      * @param data 点击按钮时候的行数据
      */
-    EducationResult.onDeleteItem = function (data) {
+    GreatResult.onDeleteItem = function (data) {
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/educationResult/delete", function (data) {
+            var ajax = new $ax(Feng.ctxPath + "/greatResult/delete", function (data) {
                 Feng.success("删除成功!");
-                table.reload(EducationResult.tableId);
+                table.reload(GreatResult.tableId);
             }, function (data) {
                 Feng.error("删除失败!" + data.responseJSON.message + "!");
             });
@@ -159,46 +148,86 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         Feng.confirm("是否删除?", operation);
     };
 
+    /**
+     * 点击取消
+     *
+     * @param data 点击按钮时候的行数据
+     */
+    OwnForum.onCancel = function (data) {
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/ownForum/cancel", function (data) {
+                Feng.success("取消成功!");
+                table.reload(OwnForum.tableId);
+            }, function (data) {
+                Feng.error("取消失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("forumId", data.forumId);
+            ajax.start();
+        };
+        Feng.confirm("是否取消?", operation);
+    };
+
+    /**
+     * 点击申请
+     *
+     * @param data 点击按钮时候的行数据
+     */
+    OwnForum.onEditNew = function (data) {
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/ownForum/editNew", function (data) {
+                Feng.success("申请成功!");
+                table.reload(OwnForum.tableId);
+            }, function (data) {
+                Feng.error("申请失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("forumId", data.forumId);
+            ajax.start();
+        };
+        Feng.confirm("是否申请?", operation);
+    };
+
     // 渲染表格
     var tableResult = table.render({
-        elem: '#' + EducationResult.tableId,
-        url: Feng.ctxPath + '/educationResult/list',
+        elem: '#' + GreatResult.tableId,
+        url: Feng.ctxPath + '/greatResult/list',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
-        cols: EducationResult.initColumn()
+        cols: GreatResult.initColumn()
     });
 
     // 搜索按钮点击事件
     $('#btnSearch').click(function () {
-        EducationResult.search();
+        GreatResult.search();
     });
 
     // 添加按钮点击事件
     $('#btnAdd').click(function () {
 
-    EducationResult.openAddDlg();
+    GreatResult.openAddDlg();
 
     });
 
     // 导出excel
     $('#btnExp').click(function () {
-        EducationResult.exportExcel();
+        GreatResult.exportExcel();
     });
 
     // 工具条点击事件
-    table.on('tool(' + EducationResult.tableId + ')', function (obj) {
+    table.on('tool(' + GreatResult.tableId + ')', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
 
         if (layEvent === 'edit') {
-            EducationResult.openEditDlg(data);
+            GreatResult.openEditDlg(data);
         } else if (layEvent === 'delete') {
-            EducationResult.onDeleteItem(data);
-        } else if (layEvent === 'approve') {
-            EducationResult.openApprove(data);
+            GreatResult.onDeleteItem(data);
+        } else if (layEvent === 'cancel') {
+            GreatResult.onCancel(data);
+        } else if (layEvent === 'editNew') {
+            GreatResult.onEditNew(data);
         } else if (layEvent === 'detail') {
-            EducationResult.openDetail(data);
+            GreatResult.openDetail(data);
         }
     });
 });

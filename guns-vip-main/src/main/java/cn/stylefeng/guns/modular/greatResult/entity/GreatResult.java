@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CHUJIANQIAO
- * @since 2020-05-18
+ * @since 2020-05-19
  */
 @TableName("great_result")
 public class GreatResult implements Serializable {
@@ -83,8 +83,8 @@ public class GreatResult implements Serializable {
     /**
      * 应用范围
      */
-    @TableField("range")
-    private String range;
+    @TableField("result_range")
+    private String resultRange;
 
     /**
      * 服务对象
@@ -200,6 +200,30 @@ public class GreatResult implements Serializable {
     @TableField("belong_name")
     private String belongName;
 
+    /**
+     * 专家推荐信附件名称
+     */
+    @TableField("letter_name")
+    private String letterName;
+
+    /**
+     * 原创承诺书名称
+     */
+    @TableField("commit_name")
+    private String commitName;
+
+    /**
+     * 优秀成果简介附件路径
+     */
+    @TableField("introduce_path")
+    private String introducePath;
+
+    /**
+     * 优秀成果简介附件名称
+     */
+    @TableField("introduce_name")
+    private String introduceName;
+
 
     public Long getResultId() {
         return resultId;
@@ -281,12 +305,12 @@ public class GreatResult implements Serializable {
         this.value = value;
     }
 
-    public String getRange() {
-        return range;
+    public String getResultRange() {
+        return resultRange;
     }
 
-    public void setRange(String range) {
-        this.range = range;
+    public void setResultRange(String resultRange) {
+        this.resultRange = resultRange;
     }
 
     public String getObject() {
@@ -441,6 +465,38 @@ public class GreatResult implements Serializable {
         this.belongName = belongName;
     }
 
+    public String getLetterName() {
+        return letterName;
+    }
+
+    public void setLetterName(String letterName) {
+        this.letterName = letterName;
+    }
+
+    public String getCommitName() {
+        return commitName;
+    }
+
+    public void setCommitName(String commitName) {
+        this.commitName = commitName;
+    }
+
+    public String getIntroducePath() {
+        return introducePath;
+    }
+
+    public void setIntroducePath(String introducePath) {
+        this.introducePath = introducePath;
+    }
+
+    public String getIntroduceName() {
+        return introduceName;
+    }
+
+    public void setIntroduceName(String introduceName) {
+        this.introduceName = introduceName;
+    }
+
     @Override
     public String toString() {
         return "GreatResult{" +
@@ -454,7 +510,7 @@ public class GreatResult implements Serializable {
         ", manaDirect=" + manaDirect +
         ", resultMean=" + resultMean +
         ", value=" + value +
-        ", range=" + range +
+        ", resultRange=" + resultRange +
         ", object=" + object +
         ", team=" + team +
         ", conclusion=" + conclusion +
@@ -474,6 +530,10 @@ public class GreatResult implements Serializable {
         ", passTime=" + passTime +
         ", cancelTime=" + cancelTime +
         ", belongName=" + belongName +
+        ", letterName=" + letterName +
+        ", commitName=" + commitName +
+        ", introducePath=" + introducePath +
+        ", introduceName=" + introduceName +
         "}";
     }
 }

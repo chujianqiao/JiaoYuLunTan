@@ -14,7 +14,7 @@ import java.util.List;
  * </p>
  *
  * @author CHUJIANQIAO
- * @since 2020-05-18
+ * @since 2020-05-19
  */
 public interface GreatResultService extends IService<GreatResult> {
 
@@ -22,7 +22,7 @@ public interface GreatResultService extends IService<GreatResult> {
      * 新增
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     void add(GreatResultParam param);
 
@@ -30,7 +30,7 @@ public interface GreatResultService extends IService<GreatResult> {
      * 删除
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     void delete(GreatResultParam param);
 
@@ -38,7 +38,7 @@ public interface GreatResultService extends IService<GreatResult> {
      * 更新
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     void update(GreatResultParam param);
 
@@ -46,7 +46,7 @@ public interface GreatResultService extends IService<GreatResult> {
      * 查询单条数据，Specification模式
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     GreatResultResult findBySpec(GreatResultParam param);
 
@@ -54,7 +54,7 @@ public interface GreatResultService extends IService<GreatResult> {
      * 查询列表，Specification模式
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     List<GreatResultResult> findListBySpec(GreatResultParam param);
 
@@ -62,7 +62,7 @@ public interface GreatResultService extends IService<GreatResult> {
      * 查询分页数据，Specification模式
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
      LayuiPageInfo findPageBySpec(GreatResultParam param);
 

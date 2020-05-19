@@ -17,7 +17,7 @@ import java.util.Map;
  * </p>
  *
  * @author CHUJIANQIAO
- * @since 2020-05-18
+ * @since 2020-05-19
  */
 public interface EducationResultMapper extends BaseMapper<EducationResult> {
 
@@ -25,7 +25,7 @@ public interface EducationResultMapper extends BaseMapper<EducationResult> {
      * 获取列表
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     List<EducationResultResult> customList(@Param("paramCondition") EducationResultParam paramCondition);
 
@@ -33,7 +33,7 @@ public interface EducationResultMapper extends BaseMapper<EducationResult> {
      * 获取map列表
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     List<Map<String, Object>> customMapList(@Param("paramCondition") EducationResultParam paramCondition);
 
@@ -41,15 +41,22 @@ public interface EducationResultMapper extends BaseMapper<EducationResult> {
      * 获取分页实体列表
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     Page<EducationResultResult> customPageList(@Param("page") Page page, @Param("paramCondition") EducationResultParam paramCondition);
+    /**
+     * 获取admin分页实体列表
+     *
+     * @author
+     * @Date 2020-05-13
+     */
+    Page<EducationResultResult> customPageListAdmin(@Param("page") Page page, @Param("paramCondition") EducationResultParam paramCondition);
 
     /**
      * 获取分页map列表
      *
      * @author CHUJIANQIAO
-     * @Date 2020-05-18
+     * @Date 2020-05-19
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") EducationResultParam paramCondition);
 

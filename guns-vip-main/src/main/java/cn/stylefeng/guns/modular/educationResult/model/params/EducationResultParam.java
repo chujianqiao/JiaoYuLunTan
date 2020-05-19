@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * </p>
  *
  * @author CHUJIANQIAO
- * @since 2020-05-18
+ * @since 2020-05-19
  */
 @Data
 public class EducationResultParam implements Serializable, BaseValidatingParam {
@@ -73,7 +73,7 @@ public class EducationResultParam implements Serializable, BaseValidatingParam {
     /**
      * 应用范围
      */
-    private String range;
+    private String resultRange;
 
     /**
      * 服务对象
@@ -169,6 +169,26 @@ public class EducationResultParam implements Serializable, BaseValidatingParam {
      * 归属单位/个人
      */
     private String belongName;
+
+    /**
+     * 专家推荐信附件名称
+     */
+    private String letterName;
+
+    /**
+     * 原创承诺书名称
+     */
+    private String commitName;
+
+    /**
+     * 优秀成果简介附件路径
+     */
+    private String introducePath;
+
+    /**
+     * 优秀成果简介附件名称
+     */
+    private String introduceName;
 
     @Override
     public String checkParam() {

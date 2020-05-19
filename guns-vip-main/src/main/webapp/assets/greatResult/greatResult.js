@@ -9,7 +9,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * 优秀成果表管理
      */
     var GreatResult = {
-        tableId: "greatResultTable"
+        tableId: "greatResultTable",
+        condition: {
+            resultName: "",
+        }
     };
 
     /**
@@ -43,10 +46,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'form', sort: true, title: '成果形式'},
             {field: 'detail', sort: true, title: '成果内容'},*/
             {field: 'checkStatus', sort: true, title: '申报状态', templet: function(data){
-                    if (data.applyStatus == 1) return '申请中';
-                    if (data.applyStatus == 2) return '已通过';
-                    if (data.applyStatus == 3) return '未通过';
-                    if (data.applyStatus == 0) return '已取消';
+                    if (data.checkStatus == 1) return '申请中';
+                    if (data.checkStatus == 2) return '已通过';
+                    if (data.checkStatus == 3) return '未通过';
+                    if (data.checkStatus == 0) return '已取消';
                 }},//; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
             /*{field: 'applyId', sort: true, title: '申请人/单位ID'},
             {field: 'applyTime', sort: true, title: '申请提交时间'},
@@ -54,7 +57,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'passTime', sort: true, title: '审核通过时间'},
             {field: 'cancelTime', sort: true, title: '取消申请时间'},*/
             {align: 'center', title: '操作', templet: function(data){
-                    if (data.applyStatus == 1) {
+                    if (data.checkStatus == 1) {
                         return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"approve\">审批</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
                     }else {
                         return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
@@ -69,7 +72,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     GreatResult.search = function () {
         var queryData = {};
 
-
+        queryData['resultName'] = $("#resultName").val();
         table.reload(GreatResult.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -94,10 +97,35 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
       GreatResult.openEditDlg = function (data) {
           func.open({
               title: '修改优秀成果表',
-              content: Feng.ctxPath + '/greatResult/edit?resultId=' + data.resultId,
+              content: Feng.ctxPath + '/greatResult/edit?resultId=' + data.resultId + '&applyType=' + data.applyType,
               tableId: GreatResult.tableId
           });
       };
+
+    /**
+     * 点击审批
+     *
+     * @param data 点击按钮时候的行数据
+     */
+    GreatResult.openApprove = function (data) {
+        func.open({
+            title: '详情信息',
+            content: Feng.ctxPath + '/greatResult/approve?forumId=' + data.forumId + '&applyType=' + data.applyType,
+            tableId: GreatResult.tableId
+        });
+    };
+    /**
+     * 点击详情
+     *
+     * @param data 点击按钮时候的行数据
+     */
+    GreatResult.openDetail = function (data) {
+        func.open({
+            title: '详情信息',
+            content: Feng.ctxPath + '/greatResult/detailAdmin?forumId=' + data.forumId + '&applyType=' + data.applyType,
+            tableId: GreatResult.tableId
+        });
+    };
 
 
     /**
@@ -167,6 +195,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             GreatResult.openEditDlg(data);
         } else if (layEvent === 'delete') {
             GreatResult.onDeleteItem(data);
+        } else if (layEvent === 'approve') {
+            GreatResult.openApprove(data);
+        } else if (layEvent === 'detail') {
+            GreatResult.openDetail(data);
         }
     });
 });

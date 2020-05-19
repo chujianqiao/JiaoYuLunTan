@@ -56,11 +56,13 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'refuseTime', sort: true, title: '申请驳回时间'},
             {field: 'passTime', sort: true, title: '审核通过时间'},
             {field: 'cancelTime', sort: true, title: '取消申请时间'},*/
-            {align: 'center', title: '操作', templet: function(data){
-                    if (data.checkStatus == 1) {
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"approve\">审批</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+            {align: 'center', title: '操作',minWidth: 180, templet: function(data){
+                    if (data.applyStatus == 0) {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew'>申请</a>";
+                    }else if(data.applyStatus == 2 || data.applyStatus == 3){
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
                     }else {
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</a>";
                     }
                 }}
         ]];
@@ -103,18 +105,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
       };
 
     /**
-     * 点击审批
-     *
-     * @param data 点击按钮时候的行数据
-     */
-    EducationResult.openApprove = function (data) {
-        func.open({
-            title: '详情信息',
-            content: Feng.ctxPath + '/educationResult/approve?forumId=' + data.forumId + '&applyType=' + data.applyType,
-            tableId: EducationResult.tableId
-        });
-    };
-    /**
      * 点击详情
      *
      * @param data 点击按钮时候的行数据
@@ -126,7 +116,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             tableId: EducationResult.tableId
         });
     };
-
 
     /**
      * 导出excel按钮
@@ -157,6 +146,44 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             ajax.start();
         };
         Feng.confirm("是否删除?", operation);
+    };
+
+    /**
+     * 点击取消
+     *
+     * @param data 点击按钮时候的行数据
+     */
+    EducationResult.onCancel = function (data) {
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/educationResult/cancel", function (data) {
+                Feng.success("取消成功!");
+                table.reload(EducationResult.tableId);
+            }, function (data) {
+                Feng.error("取消失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("forumId", data.forumId);
+            ajax.start();
+        };
+        Feng.confirm("是否取消?", operation);
+    };
+
+    /**
+     * 点击申请
+     *
+     * @param data 点击按钮时候的行数据
+     */
+    EducationResult.onEditNew = function (data) {
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/educationResult/editNew", function (data) {
+                Feng.success("申请成功!");
+                table.reload(EducationResult.tableId);
+            }, function (data) {
+                Feng.error("申请失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("forumId", data.forumId);
+            ajax.start();
+        };
+        Feng.confirm("是否申请?", operation);
     };
 
     // 渲染表格
@@ -195,8 +222,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             EducationResult.openEditDlg(data);
         } else if (layEvent === 'delete') {
             EducationResult.onDeleteItem(data);
-        } else if (layEvent === 'approve') {
-            EducationResult.openApprove(data);
+        } else if (layEvent === 'cancel') {
+            EducationResult.onCancel(data);
+        } else if (layEvent === 'editNew') {
+            EducationResult.onEditNew(data);
         } else if (layEvent === 'detail') {
             EducationResult.openDetail(data);
         }

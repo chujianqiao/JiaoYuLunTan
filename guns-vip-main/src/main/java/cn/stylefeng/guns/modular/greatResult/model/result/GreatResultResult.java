@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * </p>
  *
  * @author CHUJIANQIAO
- * @since 2020-05-18
+ * @since 2020-05-19
  */
 @Data
 public class GreatResultResult implements Serializable {
@@ -72,7 +72,7 @@ public class GreatResultResult implements Serializable {
     /**
      * 应用范围
      */
-    private String range;
+    private String resultRange;
 
     /**
      * 服务对象
@@ -168,5 +168,25 @@ public class GreatResultResult implements Serializable {
      * 归属单位/个人
      */
     private String belongName;
+
+    /**
+     * 专家推荐信附件名称
+     */
+    private String letterName;
+
+    /**
+     * 原创承诺书名称
+     */
+    private String commitName;
+
+    /**
+     * 优秀成果简介附件路径
+     */
+    private String introducePath;
+
+    /**
+     * 优秀成果简介附件名称
+     */
+    private String introduceName;
 
 }
