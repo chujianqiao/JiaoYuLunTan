@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.collTopic.controller;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.collTopic.entity.CollectTopic;
@@ -7,6 +9,7 @@ import cn.stylefeng.guns.collTopic.model.params.CollectTopicParam;
 import cn.stylefeng.guns.collTopic.service.CollectTopicService;
 import cn.stylefeng.guns.collTopic.wrapper.CollectTopicWrapper;
 import cn.stylefeng.guns.expert.wrapper.ReviewMajorWrapper;
+import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -130,6 +133,16 @@ public class CollectTopicController extends BaseController {
     @ResponseBody
     @RequestMapping("/wraplist")
     public Object wrapList(CollectTopicParam collectTopicParam) {
+        //普通用户查询自己创建的主题，
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        long userId = user.getId();
+        boolean isAdmin = ToolUtil.isAdminRole();
+        if(isAdmin){
+            //为0时忽略该条件
+            userId = 0;
+        }
+        collectTopicParam.setCreateUser(userId);
+
         Page<Map<String, Object>> topics = this.collectTopicService.findPageWrap(collectTopicParam);
         Page wrapped = new CollectTopicWrapper(topics).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);

@@ -61,8 +61,8 @@
         select
         <include refid="Base_Column_List"/>
         from collect_topic where 1 = 1
-            <if test="paramCondition.createUser != null and paramCondition.createUser != ''">
-                and create_user like CONCAT('%',#{paramCondition.createUser},'%')
+            <if test="paramCondition.createUser != null and paramCondition.createUser != '' and paramCondition.createUser != 0">
+                and create_user = #{paramCondition.createUser}
             </if>
             <if test="paramCondition.topicName != null and paramCondition.topicName != ''">
                 and topic_name like CONCAT('%',#{paramCondition.topicName},'%')
