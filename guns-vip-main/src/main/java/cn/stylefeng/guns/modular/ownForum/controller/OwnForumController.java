@@ -246,6 +246,17 @@ public class OwnForumController extends BaseController {
     }
 
     /**
+     * 查询所有
+     * @author CHUJIANQIAO
+     * @Date 2020-05-18
+     */
+    @ResponseBody
+    @RequestMapping("/listAll")
+    public LayuiPageInfo listAll(OwnForumParam ownForumParam) {
+        return this.ownForumService.findPageBySpec(ownForumParam);
+    }
+
+    /**
      * 上传文件
      *
      * @author fengshuonan
