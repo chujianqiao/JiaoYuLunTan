@@ -1,10 +1,13 @@
 package cn.stylefeng.guns.modular.greatResult.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.ResultDict;
 import cn.stylefeng.guns.modular.greatResult.entity.GreatResult;
 import cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam;
 import cn.stylefeng.guns.modular.greatResult.service.GreatResultService;
+import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
@@ -13,10 +16,7 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -106,7 +106,9 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/edit")
-    public String edit(Integer applyType) {
+    public String edit(Integer applyType,@RequestParam Long resultId) {
+        GreatResult greatResult = greatResultService.getById(resultId);
+        LogObjectHolder.me().set(greatResult);
         if (applyType == 1){
             return PREFIX + "/greatResult_edit.html";
         }else {
@@ -134,6 +136,7 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/editItem")
+    @BussinessLog(value = "修改优秀论著申报信息", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData editItem(GreatResultParam greatResultParam) {
         this.greatResultService.update(greatResultParam);
@@ -147,6 +150,7 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/approveForum")
+    @BussinessLog(value = "优秀论著申报审批通过", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData approveForum(GreatResultParam greatResultParam) {
         greatResultParam.setCheckStatus(2);
@@ -161,6 +165,7 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/rejectForum")
+    @BussinessLog(value = "优秀论著申报审批驳回", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData rejectForum(GreatResultParam greatResultParam) {
         greatResultParam.setCheckStatus(3);
@@ -175,6 +180,7 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/cancel")
+    @BussinessLog(value = "优秀论著申报取消", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData cancel(GreatResultParam greatResultParam) {
         greatResultParam.setCheckStatus(0);
@@ -189,6 +195,7 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/editNew")
+    @BussinessLog(value = "优秀论著申报申请", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData editNew(GreatResultParam greatResultParam) {
         greatResultParam.setCheckStatus(1);
@@ -203,6 +210,7 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/delete")
+    @BussinessLog(value = "删除优秀论著申报信息", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData delete(GreatResultParam greatResultParam) {
         this.greatResultService.delete(greatResultParam);

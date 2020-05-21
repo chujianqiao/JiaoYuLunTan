@@ -1,10 +1,13 @@
 package cn.stylefeng.guns.modular.educationResult.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.ResultDict;
 import cn.stylefeng.guns.modular.educationResult.entity.EducationResult;
 import cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam;
 import cn.stylefeng.guns.modular.educationResult.service.EducationResultService;
+import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
@@ -13,10 +16,7 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -106,7 +106,9 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/edit")
-    public String edit(Integer applyType) {
+    public String edit(Integer applyType,@RequestParam Long resultId) {
+        EducationResult educationResult = educationResultService.getById(resultId);
+        LogObjectHolder.me().set(educationResult);
         if (applyType == 1){
             return PREFIX + "/educationResult_edit.html";
         }else {
@@ -134,6 +136,7 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/editItem")
+    @BussinessLog(value = "修改教改实验申报信息", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData editItem(EducationResultParam educationResultParam) {
         this.educationResultService.update(educationResultParam);
@@ -148,6 +151,7 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/approveForum")
+    @BussinessLog(value = "教改实验申报审批通过", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData approveForum(EducationResultParam educationResultParam) {
         educationResultParam.setCheckStatus(2);
@@ -162,6 +166,7 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/rejectForum")
+    @BussinessLog(value = "教改实验申报审批驳回", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData rejectForum(EducationResultParam educationResultParam) {
         educationResultParam.setCheckStatus(3);
@@ -176,6 +181,7 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/cancel")
+    @BussinessLog(value = "教改实验申报取消", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData cancel(EducationResultParam educationResultParam) {
         educationResultParam.setCheckStatus(0);
@@ -190,6 +196,7 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/editNew")
+    @BussinessLog(value = "教改实验申报申请", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData editNew(EducationResultParam educationResultParam) {
         educationResultParam.setCheckStatus(1);
@@ -205,6 +212,7 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/delete")
+    @BussinessLog(value = "删除教改实验申报信息", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData delete(EducationResultParam educationResultParam) {
         this.educationResultService.delete(educationResultParam);
