@@ -70,7 +70,7 @@ public class LogController extends BaseController {
      * @Date 2018/12/23 5:34 PM
      */
     @RequestMapping("/list")
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object list(@RequestParam(required = false) String beginTime,
                        @RequestParam(required = false) String endTime,
@@ -95,7 +95,7 @@ public class LogController extends BaseController {
      * @Date 2018/12/23 5:34 PM
      */
     @RequestMapping("/detail/{id}")
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object detail(@PathVariable Long id) {
         OperationLog operationLog = operationLogService.getById(id);

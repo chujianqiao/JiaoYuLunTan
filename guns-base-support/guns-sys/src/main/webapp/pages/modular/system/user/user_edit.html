@@ -7,6 +7,7 @@
             <div class="layui-card-body">
                 <div class="layui-form-item layui-row">
                     <input name="userId" type="hidden"/>
+                    <input name="account" type="hidden"/>
                     <input name="roleId" value="2" type="hidden"/>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">${lang.get("FIELD_NAME","名称")}<span style="color: red;">*</span></label>
@@ -15,7 +16,7 @@
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">${lang.get("FIELD_BIRTHDAY","生日")<span style="color: red;">*</span>}</label>
+                        <label class="layui-form-label">${lang.get("FIELD_BIRTHDAY","生日")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="birthday" name="birthday" placeholder="请输入生日" type="text" class="layui-input date-icon" autocomplete="off" lay-verify="required" required/>
                         </div>

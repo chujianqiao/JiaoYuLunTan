@@ -2,10 +2,13 @@ package cn.stylefeng.guns.modular.holdforum.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.HoldForumDict;
 import cn.stylefeng.guns.modular.holdforum.entity.HoldForum;
 import cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam;
 import cn.stylefeng.guns.modular.holdforum.service.HoldForumService;
+import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.FileInfo;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
@@ -102,7 +105,9 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/edit")
-    public String edit() {
+    public String edit(@RequestParam Long forumId) {
+        HoldForum holdForum = holdForumService.getById(forumId);
+        LogObjectHolder.me().set(holdForum);
         return PREFIX + "/holdForum_edit.html";
     }
 
@@ -126,6 +131,7 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/editItem")
+    @BussinessLog(value = "修改承办单位申报信息", key = "forumId", dict = HoldForumDict.class)
     @ResponseBody
     public ResponseData editItem(HoldForumParam holdForumParam) {
         this.holdForumService.update(holdForumParam);
@@ -139,6 +145,7 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/approveForum")
+    @BussinessLog(value = "承办单位申报审批通过", key = "forumId", dict = HoldForumDict.class)
     @ResponseBody
     public ResponseData approveForum(HoldForumParam holdForumParam) {
         holdForumParam.setApplyStatus(2);
@@ -153,6 +160,7 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/rejectForum")
+    @BussinessLog(value = "承办单位申报审批驳回", key = "forumId", dict = HoldForumDict.class)
     @ResponseBody
     public ResponseData rejectForum(HoldForumParam holdForumParam) {
         holdForumParam.setApplyStatus(3);
@@ -167,6 +175,7 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/delete")
+    @BussinessLog(value = "删除承办单位申报信息", key = "forumId", dict = HoldForumDict.class)
     @ResponseBody
     public ResponseData delete(HoldForumParam holdForumParam) {
         this.holdForumService.delete(holdForumParam);
@@ -180,6 +189,7 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/cancel")
+    @BussinessLog(value = "承办单位申报取消", key = "forumId", dict = HoldForumDict.class)
     @ResponseBody
     public ResponseData cancel(HoldForumParam holdForumParam) {
         holdForumParam.setApplyStatus(0);
@@ -194,6 +204,7 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/editNew")
+    @BussinessLog(value = "承办单位申报申请", key = "forumId", dict = HoldForumDict.class)
     @ResponseBody
     public ResponseData editNew(HoldForumParam holdForumParam) {
         holdForumParam.setApplyStatus(1);

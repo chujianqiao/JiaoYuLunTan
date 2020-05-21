@@ -44,6 +44,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             /*{field: 'letterPath', sort: true, title: '专家推荐信附件路径'},
             {field: 'commitPath', sort: true, title: '原创承诺书路径'},
             {field: 'form', sort: true, title: '成果形式'},
+
             {field: 'detail', sort: true, title: '成果内容'},*/
             {field: 'checkStatus', sort: true, title: '申报状态', templet: function(data){
                     if (data.checkStatus == 1) return '申请中';
@@ -57,9 +58,9 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'passTime', sort: true, title: '审核通过时间'},
             {field: 'cancelTime', sort: true, title: '取消申请时间'},*/
             {align: 'center', title: '操作',minWidth: 180, templet: function(data){
-                    if (data.applyStatus == 0) {
+                    if (data.checkStatus == 0) {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew'>申请</a>";
-                    }else if(data.applyStatus == 2 || data.applyStatus == 3){
+                    }else if(data.checkStatus == 2 || data.checkStatus == 3){
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
                     }else {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</a>";
@@ -112,7 +113,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     GreatResult.openDetail = function (data) {
         func.open({
             title: '详情信息',
-            content: Feng.ctxPath + '/greatResult/detailAdmin?forumId=' + data.forumId + '&applyType=' + data.applyType,
+            content: Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType,
             tableId: GreatResult.tableId
         });
     };
@@ -153,15 +154,15 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      *
      * @param data 点击按钮时候的行数据
      */
-    OwnForum.onCancel = function (data) {
+    GreatResult.onCancel = function (data) {
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/ownForum/cancel", function (data) {
+            var ajax = new $ax(Feng.ctxPath + "/greatResult/cancel", function (data) {
                 Feng.success("取消成功!");
-                table.reload(OwnForum.tableId);
+                table.reload(GreatResult.tableId);
             }, function (data) {
                 Feng.error("取消失败!" + data.responseJSON.message + "!");
             });
-            ajax.set("forumId", data.forumId);
+            ajax.set("resultId", data.resultId);
             ajax.start();
         };
         Feng.confirm("是否取消?", operation);
@@ -172,15 +173,15 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      *
      * @param data 点击按钮时候的行数据
      */
-    OwnForum.onEditNew = function (data) {
+    GreatResult.onEditNew = function (data) {
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/ownForum/editNew", function (data) {
+            var ajax = new $ax(Feng.ctxPath + "/greatResult/editNew", function (data) {
                 Feng.success("申请成功!");
-                table.reload(OwnForum.tableId);
+                table.reload(GreatResult.tableId);
             }, function (data) {
                 Feng.error("申请失败!" + data.responseJSON.message + "!");
             });
-            ajax.set("forumId", data.forumId);
+            ajax.set("resultId", data.resultId);
             ajax.start();
         };
         Feng.confirm("是否申请?", operation);

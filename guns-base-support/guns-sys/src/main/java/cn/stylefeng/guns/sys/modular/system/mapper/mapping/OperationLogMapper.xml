@@ -33,6 +33,7 @@
         <if test="logType != null and logType !=''">
             and log_type like CONCAT('%',#{logType},'%')
         </if>
+        order by create_time desc
     </select>
 
     <select id="getOperationLogs" resultType="map" databaseId="pgsql">

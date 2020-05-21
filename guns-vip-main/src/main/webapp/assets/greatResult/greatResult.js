@@ -110,7 +110,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     GreatResult.openApprove = function (data) {
         func.open({
             title: '详情信息',
-            content: Feng.ctxPath + '/greatResult/approve?forumId=' + data.forumId + '&applyType=' + data.applyType,
+            content: Feng.ctxPath + '/greatResult/approve?resultId=' + data.resultId + '&applyType=' + data.applyType,
             tableId: GreatResult.tableId
         });
     };
@@ -122,7 +122,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     GreatResult.openDetail = function (data) {
         func.open({
             title: '详情信息',
-            content: Feng.ctxPath + '/greatResult/detailAdmin?forumId=' + data.forumId + '&applyType=' + data.applyType,
+            content: Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType,
             tableId: GreatResult.tableId
         });
     };

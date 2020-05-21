@@ -1,10 +1,13 @@
 package cn.stylefeng.guns.modular.ownForum.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.OwnForumDict;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
 import cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam;
 import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
+import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
@@ -14,10 +17,7 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -107,7 +107,9 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-18
      */
     @RequestMapping("/edit")
-    public String edit(Integer applyType) {
+    public String edit(Integer applyType,@RequestParam Long forumId) {
+        OwnForum ownForum = ownForumService.getById(forumId);
+        LogObjectHolder.me().set(ownForum);
         if (applyType == 1){
             return PREFIX + "/ownForum_edit.html";
         }else {
@@ -135,6 +137,7 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-18
      */
     @RequestMapping("/editItem")
+    @BussinessLog(value = "修改自设论坛申报信息", key = "forumId", dict = OwnForumDict.class)
     @ResponseBody
     public ResponseData editItem(OwnForumParam ownForumParam) {
         this.ownForumService.update(ownForumParam);
@@ -148,6 +151,7 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/approveForum")
+    @BussinessLog(value = "自设论坛申报审批通过", key = "forumId", dict = OwnForumDict.class)
     @ResponseBody
     public ResponseData approveForum(OwnForumParam ownForumParam) {
         ownForumParam.setApplyStatus(2);
@@ -162,6 +166,7 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/rejectForum")
+    @BussinessLog(value = "自设论坛申报审批驳回", key = "forumId", dict = OwnForumDict.class)
     @ResponseBody
     public ResponseData rejectForum(OwnForumParam ownForumParam) {
         ownForumParam.setApplyStatus(3);
@@ -176,6 +181,7 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/cancel")
+    @BussinessLog(value = "自设论坛申报取消", key = "forumId", dict = OwnForumDict.class)
     @ResponseBody
     public ResponseData cancel(OwnForumParam ownForumParam) {
         ownForumParam.setApplyStatus(0);
@@ -190,6 +196,7 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/editNew")
+    @BussinessLog(value = "自设论坛申报申请", key = "forumId", dict = OwnForumDict.class)
     @ResponseBody
     public ResponseData editNew(OwnForumParam ownForumParam) {
         ownForumParam.setApplyStatus(1);
@@ -204,6 +211,7 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-18
      */
     @RequestMapping("/delete")
+    @BussinessLog(value = "删除自设论坛申报信息", key = "forumId", dict = OwnForumDict.class)
     @ResponseBody
     public ResponseData delete(OwnForumParam ownForumParam) {
         this.ownForumService.delete(ownForumParam);

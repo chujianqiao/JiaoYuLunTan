@@ -171,4 +171,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             Feng.error("上传图片失败！");
         }
     });
+
+
+    $('#downloadPlan').click(function () {
+        var form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        //form.attr("target","_blank");
+        form.attr("method","post");
+        form.attr("action",Feng.ctxPath + "/system/downloadTemp");    // 此处填写文件下载提交路径
+        var input1=$("<input>");
+        input1.attr("type","hidden");
+        input1.attr("name","name");    // 后台接收参数名
+        input1.attr("value","承办方案.docx");
+        $("body").append(form);    // 将表单放置在web中
+        form.append(input1);
+        form.submit();    // 表单提交
+
+    });
 });

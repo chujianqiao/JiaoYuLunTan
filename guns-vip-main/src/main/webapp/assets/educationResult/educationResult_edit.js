@@ -163,18 +163,18 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     //上传文件
     upload.render({
-        elem: '#fileBtn'
+        elem: '#introducefileBtn'
         , url: Feng.ctxPath + '/educationResult/upload'
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
-                $("#fileNameTip").val(file.name);
+                $("#introducefileNameTip").val(file.name);
             });
         }
         , done: function (res) {
-            $("#fileInputHidden").val(res.data.fileId);
-            $("#planPath").val(res.data.path);
-            $("#planName").val($("#fileNameTip").val());
+            $("#introducefileInputHidden").val(res.data.fileId);
+            $("#introducePath").val(res.data.path);
+            $("#introduceName").val($("#introducefileNameTip").val());
             Feng.success(res.message);
         }
         , error: function () {
@@ -182,4 +182,61 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }
     });
 
+    //上传文件
+    upload.render({
+        elem: '#letterfileBtn'
+        , url: Feng.ctxPath + '/educationResult/upload'
+        , accept: 'file'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                $("#letterfileNameTip").val(file.name);
+            });
+        }
+        , done: function (res) {
+            $("#letterfileInputHidden").val(res.data.fileId);
+            $("#letterPath").val(res.data.path);
+            $("#letterName").val($("#letterfileNameTip").val());
+            Feng.success(res.message);
+        }
+        , error: function () {
+            Feng.error("上传图片失败！");
+        }
+    });
+
+    //上传文件
+    upload.render({
+        elem: '#commitfileBtn'
+        , url: Feng.ctxPath + '/educationResult/upload'
+        , accept: 'file'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                $("#commitfileNameTip").val(file.name);
+            });
+        }
+        , done: function (res) {
+            $("#commitfileInputHidden").val(res.data.fileId);
+            $("#commitPath").val(res.data.path);
+            $("#commitName").val($("#commitfileNameTip").val());
+            Feng.success(res.message);
+        }
+        , error: function () {
+            Feng.error("上传图片失败！");
+        }
+    });
+
+    $('#downloadPlan').click(function () {
+        var form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        //form.attr("target","_blank");
+        form.attr("method","post");
+        form.attr("action",Feng.ctxPath + "/system/downloadTemp");    // 此处填写文件下载提交路径
+        var input1=$("<input>");
+        input1.attr("type","hidden");
+        input1.attr("name","name");    // 后台接收参数名
+        input1.attr("value","优秀成果简介.docx");
+        $("body").append(form);    // 将表单放置在web中
+        form.append(input1);
+        form.submit();    // 表单提交
+
+    });
 });

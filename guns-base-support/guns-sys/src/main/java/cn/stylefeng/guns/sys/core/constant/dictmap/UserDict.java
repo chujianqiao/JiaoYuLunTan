@@ -38,6 +38,13 @@ public class UserDict extends AbstractDictMap {
         put("roleId", "角色名称");
         put("deptId", "部门名称");
         put("roleIds", "角色名称集合");
+
+        put("workUnit", "工作单位");
+        put("title", "职称");
+        put("post", "职务");
+        put("education", "学历");
+        put("vip", "是否成为会员");
+        put("direction", "研究方向");
     }
 
     @Override

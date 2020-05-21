@@ -62,7 +62,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/mgr")
-@Validated
+    @Validated
 public class UserMgrController extends BaseController {
 
     private static String PREFIX = "/modular/system/user/";

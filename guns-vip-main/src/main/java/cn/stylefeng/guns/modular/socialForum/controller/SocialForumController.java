@@ -1,10 +1,13 @@
 package cn.stylefeng.guns.modular.socialForum.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.SocialForumDict;
 import cn.stylefeng.guns.modular.socialForum.entity.SocialForum;
 import cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam;
 import cn.stylefeng.guns.modular.socialForum.service.SocialForumService;
+import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
@@ -13,10 +16,7 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -98,7 +98,9 @@ public class SocialForumController extends BaseController {
      * @Date 2020-05-15
      */
     @RequestMapping("/edit")
-    public String edit() {
+    public String edit(@RequestParam Long forumId) {
+        SocialForum socialForum = socialForumService.getById(forumId);
+        LogObjectHolder.me().set(socialForum);
         return PREFIX + "/socialForum_edit.html";
     }
 
@@ -122,6 +124,7 @@ public class SocialForumController extends BaseController {
      * @Date 2020-05-15
      */
     @RequestMapping("/editItem")
+    @BussinessLog(value = "修改论坛资助申报信息", key = "forumId", dict = SocialForumDict.class)
     @ResponseBody
     public ResponseData editItem(SocialForumParam socialForumParam) {
         this.socialForumService.update(socialForumParam);
@@ -135,6 +138,7 @@ public class SocialForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/approveForum")
+    @BussinessLog(value = "论坛资助申报审批通过", key = "forumId", dict = SocialForumDict.class)
     @ResponseBody
     public ResponseData approveForum(SocialForumParam socialForumParam) {
         socialForumParam.setApplyStatus(2);
@@ -149,6 +153,7 @@ public class SocialForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/rejectForum")
+    @BussinessLog(value = "论坛资助申报审批驳回", key = "forumId", dict = SocialForumDict.class)
     @ResponseBody
     public ResponseData rejectForum(SocialForumParam socialForumParam) {
         socialForumParam.setApplyStatus(3);
@@ -163,6 +168,7 @@ public class SocialForumController extends BaseController {
      * @Date 2020-05-15
      */
     @RequestMapping("/delete")
+    @BussinessLog(value = "删除论坛资助申报信息", key = "forumId", dict = SocialForumDict.class)
     @ResponseBody
     public ResponseData delete(SocialForumParam socialForumParam) {
         this.socialForumService.delete(socialForumParam);
@@ -176,6 +182,7 @@ public class SocialForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/cancel")
+    @BussinessLog(value = "论坛资助申报取消", key = "forumId", dict = SocialForumDict.class)
     @ResponseBody
     public ResponseData cancel(SocialForumParam socialForumParam) {
         socialForumParam.setApplyStatus(0);
@@ -190,6 +197,7 @@ public class SocialForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/editNew")
+    @BussinessLog(value = "论坛资助申报申请", key = "forumId", dict = SocialForumDict.class)
     @ResponseBody
     public ResponseData editNew(SocialForumParam socialForumParam) {
         socialForumParam.setApplyStatus(1);

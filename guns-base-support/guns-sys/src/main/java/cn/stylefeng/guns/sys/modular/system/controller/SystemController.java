@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -322,6 +323,28 @@ public class SystemController extends BaseController {
 
         try {
             FileDownload.fileDownload(httpServletResponse, path, name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     * 下载文件
+     *
+     * @author fengshuonan
+     * @Date 2019-2-23 10:48:29
+     */
+    @RequestMapping(path = "/downloadTemp")
+    @ResponseBody
+    public void downloadTemp(String name, HttpServletResponse httpServletResponse) {
+
+        String proPath = System.getProperty("user.dir");
+        String parentPath = proPath + File.separator + "template";
+        String allPath = parentPath + File.separator + name;
+        try {
+            FileDownload.fileDownload(httpServletResponse, allPath, name);
         } catch (Exception e) {
             e.printStackTrace();
         }

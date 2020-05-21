@@ -57,9 +57,9 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'passTime', sort: true, title: '审核通过时间'},
             {field: 'cancelTime', sort: true, title: '取消申请时间'},*/
             {align: 'center', title: '操作',minWidth: 180, templet: function(data){
-                    if (data.applyStatus == 0) {
+                    if (data.checkStatus == 0) {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew'>申请</a>";
-                    }else if(data.applyStatus == 2 || data.applyStatus == 3){
+                    }else if(data.checkStatus == 2 || data.checkStatus == 3){
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
                     }else {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</a>";
@@ -112,7 +112,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     EducationResult.openDetail = function (data) {
         func.open({
             title: '详情信息',
-            content: Feng.ctxPath + '/educationResult/detailAdmin?forumId=' + data.forumId + '&applyType=' + data.applyType,
+            content: Feng.ctxPath + '/educationResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType,
             tableId: EducationResult.tableId
         });
     };
@@ -161,7 +161,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             }, function (data) {
                 Feng.error("取消失败!" + data.responseJSON.message + "!");
             });
-            ajax.set("forumId", data.forumId);
+            ajax.set("resultId", data.resultId);
             ajax.start();
         };
         Feng.confirm("是否取消?", operation);
@@ -180,7 +180,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             }, function (data) {
                 Feng.error("申请失败!" + data.responseJSON.message + "!");
             });
-            ajax.set("forumId", data.forumId);
+            ajax.set("resultId", data.resultId);
             ajax.start();
         };
         Feng.confirm("是否申请?", operation);
