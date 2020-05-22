@@ -1,11 +1,8 @@
 package cn.stylefeng.guns.reviewunit.controller;
 
-import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
-import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
-import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.wrapper.ReviewMajorWrapper;
 import cn.stylefeng.guns.reviewunit.entity.ReviewUnit;
 import cn.stylefeng.guns.reviewunit.model.params.ReviewUnitParam;
@@ -38,10 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * 理事单位表控制器
- *
  * @author wucy
  * @Date 2020-05-14 13:58:30
  */
@@ -174,8 +169,28 @@ public class ReviewUnitController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/wraplist")
-    public Object wrapList(ReviewUnitParam reviewUnitParam) {
-        Page<Map<String, Object>> units = this.reviewUnitService.findPageWrap(reviewUnitParam);
+    public Object wrapList(ReviewUnitParam reviewUnitParam,
+                           @RequestParam(required = false) String reviewName) {
+        //按照用户姓名查询出用户id
+        String paramIds = "";
+        if(reviewName != null && !reviewName.equals("")){
+            Page<Map<String, Object>> users = userService.selectUsers(null, reviewName, null, null, null);
+            List<Map<String,Object>> usersRecords = users.getRecords();
+            StringBuilder userIds = new StringBuilder();
+            for(int i = 0;i < usersRecords.size();i++){
+                String userid = usersRecords.get(i).get("userId").toString();
+                userIds.append(userid);
+                if (i != usersRecords.size() - 1){
+                    userIds.append(",");
+                }
+            }
+            paramIds = userIds.toString();
+            if(paramIds.length() == 0){
+                paramIds = "0";
+            }
+        }
+
+        Page<Map<String, Object>> units = this.reviewUnitService.findPageWrap(reviewUnitParam,paramIds);
         Page wrapped = new ReviewMajorWrapper(units).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }

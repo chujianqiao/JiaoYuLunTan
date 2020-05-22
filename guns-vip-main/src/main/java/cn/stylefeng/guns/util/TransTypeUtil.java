@@ -20,7 +20,16 @@ public class TransTypeUtil {
 	 */
 	public static Map<Object,Integer> applyStatusNum = new HashMap <>();
 
+	/**
+	 * 是否
+	 * 状态码 → 字符串
+	 */
+	public static Map<Object,Object> isOrNo = new HashMap();
 
+	/**
+	 * 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
+	 * @return
+	 */
 	public static Map<Object, Object> getApplyStatus() {
 		//1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
 		applyStatus.put(0,"已取消");
@@ -36,5 +45,15 @@ public class TransTypeUtil {
 		applyStatus.put("已通过",2);
 		applyStatus.put("未通过",3);
 		return applyStatusNum;
+	}
+
+	/**
+	 * 0-否，1-是
+	 * @return
+	 */
+	public static Map<Object, Object> getIsOrNo() {
+		isOrNo.put(0,"否");
+		isOrNo.put(1,"是");
+		return isOrNo;
 	}
 }

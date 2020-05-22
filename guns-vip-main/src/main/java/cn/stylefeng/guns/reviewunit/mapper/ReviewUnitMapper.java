@@ -53,6 +53,8 @@ public interface ReviewUnitMapper extends BaseMapper<ReviewUnit> {
      * @author wucy
      * @Date 2020-05-14
      */
-    Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") ReviewUnitParam paramCondition);
+    Page<Map<String, Object>> customPageMapList(@Param("page") Page page,
+                                                @Param("paramCondition") ReviewUnitParam paramCondition,
+                                                @Param("paramIds") String paramIds);
 
 }

@@ -66,6 +66,6 @@ public interface ReviewUnitService extends IService<ReviewUnit> {
      * 查询数据（用于拼接字段）
      * @return
      */
-    Page<Map<String, Object>> findPageWrap(ReviewUnitParam param);
+    Page<Map<String, Object>> findPageWrap(ReviewUnitParam param ,String paramIds);
 
 }

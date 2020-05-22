@@ -149,6 +149,7 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     public ResponseData checkApplyStatus(ReviewMajorParam reviewMajorParam) {
         reviewMajorParam.setCheckStatus(1);
+        reviewMajorParam.setApplyTime(new Date());
         this.reviewMajorService.update(reviewMajorParam);
         return ResponseData.success();
     }
@@ -164,7 +165,6 @@ public class ReviewMajorController extends BaseController {
         reviewMajorParam.setCheckStatus(0);
         Date date = new Date();
         reviewMajorParam.setCancelTime(date);
-
         this.reviewMajorService.update(reviewMajorParam);
         return ResponseData.success();
     }
@@ -178,6 +178,7 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     public ResponseData agreeApply(ReviewMajorParam reviewMajorParam) {
         reviewMajorParam.setCheckStatus(2);
+        reviewMajorParam.setAgreeTime(new Date());
         this.reviewMajorService.update(reviewMajorParam);
         return ResponseData.success();
     }
@@ -191,6 +192,7 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     public ResponseData disAgreeApply(ReviewMajorParam reviewMajorParam) {
         reviewMajorParam.setCheckStatus(3);
+        reviewMajorParam.setRefuseTime(new Date());
         this.reviewMajorService.update(reviewMajorParam);
         return ResponseData.success();
     }
@@ -240,12 +242,11 @@ public class ReviewMajorController extends BaseController {
     @RequestMapping("/wraplist")
     public Object wrapList(ReviewMajorParam reviewMajorParam ,
                            @RequestParam(required = false) String reviewName) {
-        //按照用户姓名查询
+        //按照用户姓名模糊查询出用户id
         String paramIds = null;
         if(reviewName != null && !reviewName.equals("")){
             Page<Map<String, Object>> users = userService.selectUsers(null, reviewName, null, null, null);
             List<Map<String,Object>> usersRecords = users.getRecords();
-
             StringBuilder userIds = new StringBuilder();
             for(int i = 0;i < usersRecords.size();i++){
                 String userid = usersRecords.get(i).get("userId").toString();
@@ -255,6 +256,9 @@ public class ReviewMajorController extends BaseController {
                 }
             }
             paramIds = userIds.toString();
+            if(paramIds.length() == 0){
+                paramIds = "0";
+            }
         }
         Page<Map<String, Object>> majors = this.reviewMajorService.findPageWrap(reviewMajorParam ,paramIds);
         Page wrapped = new ReviewMajorWrapper(majors).wrap();
@@ -323,7 +327,7 @@ public class ReviewMajorController extends BaseController {
                     ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
                     reviewMajorParam.setReviewId(userId);
                     reviewMajorParam.setDirect(dataCols.get(3));
-
+                    reviewMajorParam.setApplyFrom("邀请");
 
                     this.userService.addUser(user);
                     this.reviewMajorService.add(reviewMajorParam);

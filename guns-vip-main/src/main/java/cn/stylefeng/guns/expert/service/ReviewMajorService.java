@@ -70,7 +70,7 @@ public interface ReviewMajorService extends IService<ReviewMajor> {
 
 
     /**
-     * 查询分页数据，Specification模式
+     * 查询分页数据
      *
      * @author wucy
      * @Date 2020-05-11

@@ -1,0 +1,81 @@
+@layout("/common/_form.html",{js:["/assets/meetMember/meetMember_edit.js"]}){
+
+<form class="layui-form" id="meetMemberForm" lay-filter="meetMemberForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="memberId" type="hidden"/>
+
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">参会人员ID<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="userId" name="userId" placeholder="请输入参会人员ID" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">参会论文ID<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="thesisId" name="thesisId" placeholder="请输入参会论文ID" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">自设论坛<span style="color: red;">*</span></label>
+                        <!--<div class="layui-input-block">-->
+                        <!--<input id="ownForumName" name="ownForumName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                        <div class="layui-input-block">
+                        <select id="ownForumid" disabled="disabled" name="ownForumid" lay-verify="" lay-search></select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">参会论文<span style="color: red;">*</span></label>
+                        <!--<div class="layui-input-block">-->
+                        <!--<input id="thesisName" name="thesisName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                            <!--<button class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;附件&emsp;</button>-->
+                        <!--</div>-->
+                        <div class="layui-input-block">
+                            <select id="thesisId" name="thesisId" disabled="disabled" lay-verify="" lay-search></select>
+                            <button id="btnDownload" class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;下载论文附件&emsp;</button>
+
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">是否申请发言<span style="color: red;">*</span></label>
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="speak" name="speak" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                        <div class="layui-input-block">
+                            <input type="radio" name="speak" value="1" title="是"  checked/>
+                            <input type="radio" name="speak" value="0" title="否"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12" id="professor">
+                        <label class="layui-form-label">是否参加形势研判会<span style="color: red;">*</span></label>
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="judge" name="judge" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                        <div class="layui-input-block">
+                            <input type="radio" name="judge" value="1" title="是" checked/>
+                            <input type="radio" name="judge" value="0" title="否"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">注册时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="regTime" name="regTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <!--<button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>-->
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

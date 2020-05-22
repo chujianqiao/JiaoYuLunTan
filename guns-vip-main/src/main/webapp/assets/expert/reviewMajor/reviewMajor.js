@@ -52,9 +52,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * 点击查询按钮
      */
     ReviewMajor.search = function () {
-        debugger;
         var queryData = {};
-
         queryData['reviewName'] = $("#reviewName").val();
         table.reload(ReviewMajor.tableId, {
             where: queryData, page: {curr: 1}

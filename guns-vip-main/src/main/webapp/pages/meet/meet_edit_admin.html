@@ -1,0 +1,127 @@
+@layout("/common/_form.html",{js:["/assets/meet/meet_edit_admin.js"]}){
+
+<form class="layui-form" id="meetForm" lay-filter="meetForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="meetId" type="hidden"/>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">会议主题<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="meetTopic" name="meetTopic" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">会议描述<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="meetDesc" name="meetDesc" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">会议地点<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="place" name="place" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">开始时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input" id="beginTime" name="beginTime" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">结束时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input" id="endTime" name="endTime" disabled="disabled">
+                        </div>
+                    </div>
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">申请人ID<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="applyUser" name="applyUser" placeholder="请输入申请人ID" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">注册时间<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="registerTime" name="registerTime" placeholder="请输入注册时间" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">分论坛ID<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="subForm" name="subForm" placeholder="请输入分论坛ID" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">论文ID<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="thesisId" name="thesisId" placeholder="请输入论文ID" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">注册人参会论文题目<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="thesisTitle" name="thesisTitle" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">英文题目<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="engTitle" name="engTitle" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">中文关键词<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="cnKeyword" name="cnKeyword" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">英文关键词<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="engKeyword" name="engKeyword" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">中文摘要<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="cnAbstract" name="cnAbstract" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">英文摘要<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="engAbstract" name="engAbstract" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">参会论文研究方向<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="thesisDirect" name="thesisDirect" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请发言<span style="color: red;">*</span></label>
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="speak" name="speak" placeholder="请输入是否申请发言" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                        <div class="layui-input-block">
+                            <input id="speak" name="speak" placeholder="" disabled="disabled" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <!--<button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>-->
+        <button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

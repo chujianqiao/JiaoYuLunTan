@@ -76,9 +76,9 @@ public class ReviewUnitServiceImpl extends ServiceImpl<ReviewUnitMapper, ReviewU
     }
 
     @Override
-    public Page<Map<String, Object>> findPageWrap(ReviewUnitParam param) {
+    public Page<Map<String, Object>> findPageWrap(ReviewUnitParam param ,String paramIds) {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.customPageMapList(page,param);
+        return this.baseMapper.customPageMapList(page,param,paramIds);
     }
 
     private Serializable getKey(ReviewUnitParam param){

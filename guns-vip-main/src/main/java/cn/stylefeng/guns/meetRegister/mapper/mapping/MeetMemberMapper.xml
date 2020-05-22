@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.meetRegister.mapper.MeetMemberMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.meetRegister.entity.MeetMember">
+        <id column="member_id" property="memberId" />
+        <result column="user_id" property="userId" />
+        <result column="thesis_id" property="thesisId" />
+        <result column="speak" property="speak" />
+        <result column="judge" property="judge" />
+        <result column="own_forumid" property="ownForumid" />
+        <result column="reg_time" property="regTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_member where 1 = 1
+            <if test="paramCondition.userId != null and paramCondition.userId != ''">
+                and user_id like CONCAT('%',#{paramCondition.userId},'%')
+            </if>
+            <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
+                and thesis_id like CONCAT('%',#{paramCondition.thesisId},'%')
+            </if>
+            <if test="paramCondition.ownForumid != null and paramCondition.ownForumid != ''">
+                and own_forumid like CONCAT('%',#{paramCondition.ownForumid},'%')
+            </if>
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_member where 1 = 1
+            <if test="paramCondition.userId != null and paramCondition.userId != ''">
+                and user_id like CONCAT('%',#{paramCondition.userId},'%')
+            </if>
+            <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
+                and thesis_id like CONCAT('%',#{paramCondition.thesisId},'%')
+            </if>
+            <if test="paramCondition.ownForumid != null and paramCondition.ownForumid != ''">
+                and own_forumid like CONCAT('%',#{paramCondition.ownForumid},'%')
+            </if>
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_member where 1 = 1
+            <if test="paramCondition.userId != null and paramCondition.userId != ''">
+                and user_id like CONCAT('%',#{paramCondition.userId},'%')
+            </if>
+            <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
+                and thesis_id like CONCAT('%',#{paramCondition.thesisId},'%')
+            </if>
+            <if test="paramCondition.ownForumid != null and paramCondition.ownForumid != ''">
+                and own_forumid like CONCAT('%',#{paramCondition.ownForumid},'%')
+            </if>
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_member where 1 = 1
+            <if test="paramCondition.userId != null and paramCondition.userId != ''">
+                and user_id like CONCAT('%',#{paramCondition.userId},'%')
+            </if>
+            <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
+                and thesis_id like CONCAT('%',#{paramCondition.thesisId},'%')
+            </if>
+            <if test="paramCondition.ownForumid != null and paramCondition.ownForumid != ''">
+                and own_forumid like CONCAT('%',#{paramCondition.ownForumid},'%')
+            </if>
+            <if test="userIds != null and userIds != ''">
+                and user_id in (#{userIds})
+            </if>
+    </select>
+
+</mapper>
