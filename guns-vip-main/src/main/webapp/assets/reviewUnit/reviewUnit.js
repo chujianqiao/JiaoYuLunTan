@@ -27,7 +27,7 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
             {field: 'post', sort: true, title: '代表职称/职务'},
             {field: 'education', sort: true, title: '学历'},
             {field: 'createTime', sort: true, title: '导入时间'},
-            {align: 'center', toolbar: '#tableBar', title: '操作'}
+            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180}
         ]];
     };
 

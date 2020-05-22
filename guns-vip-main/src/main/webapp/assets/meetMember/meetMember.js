@@ -33,7 +33,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             // {field: 'judge', sort: true, title: '是否同意参加形势研判会'},
             // {field: 'ownForumid', sort: true, title: '自设论坛ID'},
             // {field: 'regTime', sort: true, title: '注册时间'},
-            {align: 'center', toolbar: '#tableBar', title: '操作'}
+            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180}
         ]];
     };
 

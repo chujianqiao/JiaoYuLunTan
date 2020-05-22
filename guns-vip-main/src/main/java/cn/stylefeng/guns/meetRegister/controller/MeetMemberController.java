@@ -1,7 +1,5 @@
 package cn.stylefeng.guns.meetRegister.controller;
 
-import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
-import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.meetRegister.entity.MeetMember;
@@ -11,7 +9,6 @@ import cn.stylefeng.guns.meetRegister.wrapper.MeetMemberWrapper;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
 import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
-import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.thesis.entity.Thesis;
 import cn.stylefeng.guns.thesis.service.ThesisService;
@@ -87,18 +84,6 @@ public class MeetMemberController extends BaseController {
      */
     @RequestMapping("/edit")
     public String edit() {
-//        LoginUser logUser = LoginContextHolder.getContext().getUser();
-//        long userId = logUser.getId();
-//        User user = this.userService.getById(userId);
-//        //职称
-//        String title = user.getTitle();
-//        String param = "教授";
-//        if(param.equals(title)){
-//            //如果是教授，可以选择是否参与研判会
-//            return PREFIX + "/meetMember_edit_review.html";
-//        }else{
-//            return PREFIX + "/meetMember_edit.html";
-//        }
         return PREFIX + "/meetMember_edit.html";
     }
 
