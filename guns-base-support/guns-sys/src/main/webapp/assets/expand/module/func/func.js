@@ -94,10 +94,11 @@ layui.define(['jquery', 'layer', 'admin', 'table', 'ax', 'form'], function (expo
                 param.fixed = false;
             }
 
-            if (!param.resize) {
+            /*if (!param.resize) {
                 param.resize = false;
-            }
-
+            }*/
+            param.resize = true;
+            param.maxmin = true;
             if (!param.shade) {
                 param.shade = .1;
             }

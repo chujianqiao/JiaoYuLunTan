@@ -30,6 +30,7 @@
         <if test="logName != null and logName !=''">
             and log_name like CONCAT('%',#{logName},'%')
         </if>
+        order by create_time desc
     </select>
 
     <select id="getLoginLogs" resultType="map"
