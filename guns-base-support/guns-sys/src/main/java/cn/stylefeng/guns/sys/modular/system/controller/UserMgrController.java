@@ -29,6 +29,7 @@ import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.core.util.SaltUtil;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
+import cn.stylefeng.guns.sys.modular.system.model.params.UserPosParam;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.sys.modular.system.warpper.UserWrapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
@@ -48,6 +49,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.File;
@@ -386,5 +388,14 @@ public class UserMgrController extends BaseController {
         Page pageContext = LayuiPageFactory.defaultPage();
         IPage page = userService.listUserAndRoleExpectAdmin(pageContext);
         return LayuiPageFactory.createPageInfo(page);
+    }
+
+    @RequestMapping("/detail")
+    @ResponseBody
+    public ResponseData selectUser(HttpServletRequest request){
+        String idStr = request.getParameter("userId");
+        long userId = Long.parseLong(idStr);
+        User user = userService.getById(userId);
+        return ResponseData.success(user);
     }
 }
