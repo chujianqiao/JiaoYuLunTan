@@ -72,7 +72,7 @@ public class ToolUtil {
 		}
 		paramIds = userIds.toString();
 		if(paramIds.length() == 0){
-			paramIds = "";
+			paramIds = "0";
 		}
 		return paramIds;
 	}
