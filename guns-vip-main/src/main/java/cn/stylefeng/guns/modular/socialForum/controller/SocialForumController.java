@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.modular.socialForum.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.SocialForumDict;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -66,7 +68,14 @@ public class SocialForumController extends BaseController {
      */
     @RequestMapping("/add")
     public String add() {
-        return PREFIX + "/socialForum_add.html";
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roles = user.getRoleList();
+        long unit = 3;
+        if (roles.contains(unit)){
+            return "/unitForum.html";
+        } else {
+            return "/forum.html";
+        }
     }
 
     /**
@@ -111,9 +120,13 @@ public class SocialForumController extends BaseController {
      * @Date 2020-05-15
      */
     @RequestMapping("/addItem")
+    @BussinessLog(value = "新增论坛资助申报信息", key = "forumId", dict = SocialForumDict.class)
     @ResponseBody
     public ResponseData addItem(SocialForumParam socialForumParam) {
-        this.socialForumService.add(socialForumParam);
+        Long userId = LoginContextHolder.getContext().getUserId();
+        socialForumParam.setApplyStatus(1);
+        socialForumParam.setApplyId(userId);
+        //this.socialForumService.add(socialForumParam);
         return ResponseData.success();
     }
 

@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.modular.educationResult.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.ResultDict;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -66,7 +68,14 @@ public class EducationResultController extends BaseController {
      */
     @RequestMapping("/add")
     public String add() {
-        return PREFIX + "/educationResult_add.html";
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roles = user.getRoleList();
+        long unit = 3;
+        if (roles.contains(unit)){
+            return "/unitResult.html";
+        } else {
+            return "/result.html";
+        }
     }
 
     /**
@@ -123,8 +132,12 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/addItem")
+    @BussinessLog(value = "新增教改实验申报信息", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData addItem(EducationResultParam educationResultParam) {
+        Long userId = LoginContextHolder.getContext().getUserId();
+        educationResultParam.setApplyId(userId);
+        educationResultParam.setCheckStatus(1);
         this.educationResultService.add(educationResultParam);
         return ResponseData.success();
     }

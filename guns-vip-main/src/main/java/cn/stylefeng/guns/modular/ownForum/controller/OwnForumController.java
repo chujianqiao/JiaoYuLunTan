@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.modular.ownForum.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.OwnForumDict;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -67,7 +69,14 @@ public class OwnForumController extends BaseController {
      */
     @RequestMapping("/add")
     public String add() {
-        return PREFIX + "/ownForum_add.html";
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roles = user.getRoleList();
+        long unit = 3;
+        if (roles.contains(unit)){
+            return "/unitForum.html";
+        } else {
+            return "/forum.html";
+        }
     }
 
     /**
@@ -124,8 +133,12 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-18
      */
     @RequestMapping("/addItem")
+    @BussinessLog(value = "新增自设论坛申报信息", key = "forumId", dict = OwnForumDict.class)
     @ResponseBody
     public ResponseData addItem(OwnForumParam ownForumParam) {
+        Long userId = LoginContextHolder.getContext().getUserId();
+        ownForumParam.setApplyStatus(1);
+        ownForumParam.setApplyId(userId);
         this.ownForumService.add(ownForumParam);
         return ResponseData.success();
     }

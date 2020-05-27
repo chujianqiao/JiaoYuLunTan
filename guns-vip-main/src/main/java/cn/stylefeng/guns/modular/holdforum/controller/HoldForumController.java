@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.modular.holdforum.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
 import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 
 import static cn.stylefeng.guns.excel.consts.ExcelConstants.EXCEL_FILE_TEMPLATE_PATH;
 
@@ -73,7 +75,14 @@ public class HoldForumController extends BaseController {
      */
     @RequestMapping("/add")
     public String add() {
-        return PREFIX + "/holdForum_add.html";
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roles = user.getRoleList();
+        long unit = 3;
+        if (roles.contains(unit)){
+            return "/unitForum.html";
+        } else {
+            return "/forum.html";
+        }
     }
 
     /**
@@ -118,8 +127,12 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/addItem")
+    @BussinessLog(value = "新增承办单位申报信息", key = "forumId", dict = HoldForumDict.class)
     @ResponseBody
     public ResponseData addItem(HoldForumParam holdForumParam) {
+        Long userId = LoginContextHolder.getContext().getUserId();
+        holdForumParam.setApplyStatus(1);
+        holdForumParam.setApplyUser(userId);
         this.holdForumService.add(holdForumParam);
         return ResponseData.success();
     }

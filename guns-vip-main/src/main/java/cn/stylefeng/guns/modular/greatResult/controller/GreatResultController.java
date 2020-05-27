@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.modular.greatResult.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.ResultDict;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -66,7 +68,14 @@ public class GreatResultController extends BaseController {
      */
     @RequestMapping("/add")
     public String add() {
-        return PREFIX + "/greatResult_add.html";
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roles = user.getRoleList();
+        long unit = 3;
+        if (roles.contains(unit)){
+            return "/unitResult.html";
+        } else {
+            return "/result.html";
+        }
     }
 
     /**
@@ -123,8 +132,12 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/addItem")
+    @BussinessLog(value = "新增优秀论著申报信息", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData addItem(GreatResultParam greatResultParam) {
+        Long userId = LoginContextHolder.getContext().getUserId();
+        greatResultParam.setApplyId(userId);
+        greatResultParam.setCheckStatus(1);
         this.greatResultService.add(greatResultParam);
         return ResponseData.success();
     }

@@ -60,19 +60,32 @@
                         <label class="layui-form-label">已资助的会议<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="alreadyMeet" name="alreadyMeet" placeholder="请输入已资助的会议" type="text" class="layui-input" lay-verify="required" required/>
+                            <div class="layui-form-mid layui-word-aux">不超过3条</div>
                         </div>
+
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">拟资助版块<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="supPlate" name="supPlate" placeholder="请输入拟资助版块" type="text" class="layui-input" lay-verify="required" required/>
+                            <div style="padding-left: 10px">
+                                <input type="checkbox" name="supPlates" value="开幕式" title="开幕式">
+                                <input type="checkbox" name="supPlates" value="论文资助" title="论文资助">
+                                <input type="checkbox" name="supPlates" value="优秀成果展" title="优秀成果展">
+                                <br><br>
+                                <input type="checkbox" name="supPlates" value="闭幕式" title="闭幕式">
+                                <input type="checkbox" name="supPlates" value="自设论坛" title="自设论坛">
+                                <input type="checkbox" name="supPlates" value="形势研判会" title="形势研判会">
+                            </div>
+                            <input type="text" id="supPlate" name="supPlate" hidden value="">
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">资助金额<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="supMoney" name="supMoney" placeholder="请输入资助金额" type="text" class="layui-input" lay-verify="required" required/>
+                            <div class="layui-form-mid layui-word-aux">不超过5万</div>
                         </div>
+
                     </div>
                     <!--<div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">合同条件附件路径<span style="color: red;">*</span></label>

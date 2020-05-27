@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit" />
+    <meta name ="viewport" content ="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/common.css" />
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/border-1px.css" />
+    <link rel="stylesheet" media="screen and (min-width:751px)" href="${ctxPath}/assets/common/css/custom_pc.css">
+    <link rel="stylesheet" media="screen and (max-width:751px)" href="${ctxPath}/assets/common/css/custom_mobile.css" />
+
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}" media="all"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>
+
+</head>
+<body>
+<div class="page">
+    <header>
+        <div class="head mCenter widthC pr">
+            <img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
+            <div class="language-select pa">
+                <img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
+                <div class="language-select-box pr">
+                    <div class="language fontSize16">
+                        <a href="#">中文</a>
+                        <a href="#" class="hover">英文</a>
+                    </div>
+                    <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn pa" id="langSelect" />
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="widthC mCenter pr">
+        <div class="inlineBlock"><a href="首页.html" class="fontSize18 item" target="_blank">首页</a></div>
+        <div class="inlineBlock"><a href="关于论坛.html" class="fontSize18 item" target="_blank">关于论坛</a></div>
+        <div class="inlineBlock"><a href="论坛活动.html" class="fontSize18 item" target="_blank">论坛活动</a></div>
+        <div>
+            <a href="javascript:void(0)" class="fontSize18 item" target="_blank">论坛之声</a>
+            <div class="childNav pa fontSize16 hide">
+                <div class="childNav-items inlineBlock">
+                    <a href="" target="_blank">参会嘉宾</a>
+                    <a href="" target="_blank">参会学者</a>
+                    <a href="" target="_blank">青年之声</a>
+                    <a href="" target="_blank">科研战线</a>
+                </div>
+            </div>
+        </div>
+        <div><a href="论坛成果.html" class="fontSize18 item" target="_blank">论坛成果</a></div>
+        <div><a href="javascript:void(0)" class="fontSize18 item" target="_blank">国内外会议信息</a></div>
+        <div><a href="javascript:void(0)" class="fontSize18 item" target="_blank">联系我们</a></div>
+    </nav>
+    <div class="func-column-container widthC mCenter mb40">
+        <div class="func-column-content mCenter mb20">
+            <div  class="form-title mCenter">
+                <span class="line inlineBlock"></span>
+                <span class="fontSize20 inlineBlock mCenter title">论坛申报</span>
+                <span class='line inlineBlock'></span>
+            </div>
+        </div>
+        <div class="forms">
+            <div class="form-tab fontSize16 mb30" id="formTab">
+                <span class="inlineBlock hover">承办单位申报</span>
+                <span class="inlineBlock">自设论坛申报</span>
+                <span class="inlineBlock">论坛资助申报</span>
+            </div>
+            <div class="form-box" id="formList">
+                <div class="form">
+                    <form class="layui-form" id="holdForumForm" lay-filter="holdForumForm">
+                        <table class="sb-table fontSize16" width="100%">
+                            <tr>
+                                <td class="sb-table-name">论坛名称<span style="color: red;">*</span>：</td><td><input name="forumName" placeholder="请输入论坛名称" class="layui-input" type="text" lay-verify="required" required/></td>
+                                <td class="sb-table-gap"></td>
+                                <td class="sb-table-name">单位名称<span style="color: red;">*</span>：</td><td><input name="unitName" placeholder="请输入单位名称" class="layui-input" type="text" lay-verify="required" required/></td>
+                            </tr>
+                            <tr>
+                                <td class="sb-table-name">承办年份<span style="color: red;">*</span>：</td><td><input name="year" placeholder="请输入承办年份" class="layui-input" type="text" lay-verify="required" required/></td>
+                                <td class="sb-table-gap"></td>
+                                <td class="sb-table-name">承办能力(会议规模)<span style="color: red;">*</span>：</td><td><input name="ability" placeholder="请输入承办能力(会议规模)" class="layui-input" type="text" lay-verify="required" required/></td>
+                            </tr>
+                            <tr>
+                                <td class="sb-table-name">负责人<span style="color: red;">*</span>：</td><td><input name="manager" type="text" placeholder="请输入负责人" class="layui-input" lay-verify="required" required/></td>
+                                <td class="sb-table-gap"></td>
+                                <td class="sb-table-name">负责人电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" type="text" placeholder="请输入负责人电话" class="layui-input" lay-verify="required" required/></td>
+                            </tr>
+                            <tr>
+                                <td class="sb-table-name">负责人邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" type="text" placeholder="请输入负责人邮箱" class="layui-input" lay-verify="required" required/></td>
+                                <td class="sb-table-gap"></td>
+                                <td class="sb-table-name">承办方案附件<span style="color: red;">*</span>：</td>
+                                <td>
+
+                                    <input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
+                                    <input id="planPath" name="planPath" type="hidden" class="layui-input"/>
+                                    <input id="planName" name="planName" type="hidden" class="layui-input"/>
+
+                                    <div style="float: left;">
+                                        <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+                                        <input name="planName" id="fileNameTip" placeholder="请上传承办方案附件" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+                                    </div>
+                                    <div style="float: left;">
+                                        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="fileBtn"><i class="layui-icon"></i>选择文件</button>
+                                    </div>
+                                    <div style="float: left;">
+                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadPlan"><i class="layui-icon"></i>模板下载</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="btns sb-btns fontSize16">
+                            <div class="btn submit" lay-filter="holdSubmit" lay-submit>提交</div><div class="btn cancel">取消</div>
+                        </div>
+                    </form>
+                </div><!--end of form-->
+                <div class="form hide">
+                    <div class="form-box" id="typeList">
+                        <div class="type">
+                            <form class="layui-form" id="ownUnitForumForm" lay-filter="holdForumForm">
+                                <input name="applyType" value="1" type="hidden"/>
+                                <table class="sb-table fontSize16" width="100%">
+                                    <tr>
+                                        <td class="sb-table-name">论坛名称<span style="color: red;">*</span>：</td><td><input name="forumName" placeholder="请输入论坛名称" class="layui-input" type="text" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">单位名称<span style="color: red;">*</span>：</td><td><input name="unitName" type="text" placeholder="请输入单位名称" class="layui-input" lay-verify="required" required/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">负责人姓名<span style="color: red;">*</span>：</td><td><input name="manager" placeholder="请输入负责人姓名" class="layui-input" type="text" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">负责人电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" placeholder="请输入负责人电话" class="layui-input" type="text" lay-verify="required" required/></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" placeholder="请输入邮箱" class="layui-input" type="text" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">论坛主题名称<span style="color: red;">*</span>：</td><td><input name="forumTopic" type="text" placeholder="请输入论坛主题名称" class="layui-input" lay-verify="required" required/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">论坛计划规模<span style="color: red;">*</span>：</td><td><input name="forumSize" type="text" placeholder="请输入论坛计划规模（不超过100人）" class="layui-input" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">是否有课题团队<span style="color: red;">*</span>：</td>
+                                        <td>
+                                            <div class="layui-input-inline">
+                                                &nbsp;&nbsp;<input type="radio" name="issubject" value="1" title="是" checked/>
+                                                <input type="radio" name="issubject" value="0" title="否"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">课题级别<span style="color: red;">*</span>：</td><td><input name="subjectLev" type="text" placeholder="请输入课题级别" class="layui-input" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">论坛申报方案附件<span style="color: red;">*</span>：</td>
+                                        <td>
+
+                                            <input id="unitfileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
+                                            <input id="unitplanPath" name="planPath" type="hidden" class="layui-input"/>
+                                            <input id="unitplanName" name="planName" type="hidden" class="layui-input"/>
+
+                                            <div style="float: left;">
+                                                <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+                                                <input name="planName" id="unitfileNameTip" placeholder="请上传承办方案附件" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+                                            </div>
+                                            <div style="float: left;">
+                                                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="unitfileBtn"><i class="layui-icon"></i>选择文件</button>
+                                            </div>
+                                            <div style="float: left;">
+                                                <button type="button" class="layui-btn layui-btn-sm" id="unitdownloadPlan"><i class="layui-icon"></i>模板下载</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">课题名称<span style="color: red;">*</span>：</td><td><input name="subjectName" type="text" placeholder="请输入课题名称" class="layui-input" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+
+                                    </tr>
+                                </table>
+                                <div class="btns sb-btns fontSize16">
+                                    <div class="btn submit" lay-filter="unitSubmit" lay-submit>提交</div><div class="btn cancel">取消</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div><!--end of form-->
+                <div class="form hide">
+                    <form class="layui-form" id="socialForumForm" lay-filter="holdForumForm">
+                        <table class="sb-table fontSize16" width="100%">
+                            <tr>
+                                <td class="sb-table-name">论坛名称<span style="color: red;">*</span>：</td><td><input name="forumName" placeholder="请输入论坛名称" class="layui-input" type="text" lay-verify="required" required/></td>
+                                <td class="sb-table-gap"></td>
+                                <td class="sb-table-name">申报企业/单位名称<span style="color: red;">*</span>：</td><td><input name="unitName" placeholder="请输入申报企业/单位名称" class="layui-input" type="text" lay-verify="required" required/></td>
+                            </tr>
+                            <tr>
+                                <td class="sb-table-name">企业/单位所在地<span style="color: red;">*</span>：</td><td><input name="unitPlace" placeholder="请输入企业/单位所在地" class="layui-input" type="text" lay-verify="required" required/></td>
+                                <td class="sb-table-gap"></td>
+                                <td class="sb-table-name">负责人<span style="color: red;">*</span>：</td><td><input name="manager" placeholder="请输入负责人" class="layui-input" type="text" lay-verify="required" required/></td>
+                            </tr>
+                            <tr>
+                                <td class="sb-table-name">负责人电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" type="text" placeholder="请输入负责人电话" class="layui-input" lay-verify="required" required/></td>
+                                <td class="sb-table-gap"></td>
+                                <td class="sb-table-name">负责人邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" type="text" placeholder="请输入负责人邮箱" class="layui-input" lay-verify="required" required/></td>
+                            </tr>
+                            <tr>
+                                <td class="sb-table-name">已资助的会议<span style="color: red;">*</span>：</td><td><input name="alreadyMeet" type="text" placeholder="请输入已资助的会议（不超过3条）" class="layui-input" lay-verify="required" required/></td>
+                                <td class="sb-table-gap"></td>
+                                <td class="sb-table-name">拟资助版块<span style="color: red;">*</span>：</td>
+                                <td>
+                                    <div style="padding-left: 10px">
+                                        <input type="checkbox" name="supPlates" value="开幕式" title="开幕式">
+                                        <input type="checkbox" name="supPlates" value="论文资助" title="论文资助">
+                                        <input type="checkbox" name="supPlates" value="优秀成果展" title="优秀成果展">
+                                        <br><br>
+                                        <input type="checkbox" name="supPlates" value="闭幕式" title="闭幕式">
+                                        <input type="checkbox" name="supPlates" value="自设论坛" title="自设论坛">
+                                        <input type="checkbox" name="supPlates" value="形势研判会" title="形势研判会">
+                                    </div>
+                                    <input type="text" id="supPlate" name="supPlate" hidden value="">
+                                    <!--<input name="supPlate" type="text" placeholder="开幕式、闭幕式、优秀成果展、论文资助、自设论坛、形势研判会" class="layui-input" lay-verify="required" required/>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="sb-table-name">资助金额<span style="color: red;">*</span>：</td><td><input name="supMoney" type="text" placeholder="请输入资助金额（不超过五万）" class="layui-input" lay-verify="required" required/></td>
+                                <td class="sb-table-gap"></td>
+                                <td class="sb-table-name">合同条件<span style="color: red;">*</span>：</td>
+                                <td>
+
+                                    <input id="socialfileInputHidden" name="socialfileInputHidden" type="hidden" class="layui-input"/>
+                                    <input id="contractPath" name="contractPath" type="hidden" class="layui-input"/>
+                                    <input id="contractName" name="contractName" type="hidden" class="layui-input"/>
+
+                                    <div style="float: left;">
+                                        <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+                                        <input name="contractName" id="socialfileNameTip" placeholder="请上传承办方案附件" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+                                    </div>
+                                    <div style="float: left;">
+                                        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="socialfileBtn"><i class="layui-icon"></i>选择文件</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="btns sb-btns fontSize16">
+                            <div class="btn submit" lay-filter="socialSubmit" lay-submit>提交</div><div class="btn cancel">取消</div>
+                        </div>
+                    </form>
+                </div><!--end of form-->
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="widthC mCenter foot fontSize14">
+            <div class="inlineBlock d1">
+                <img src="${ctxPath}/assets/common/images/icon2_10.png" class="fl" />
+                <div class="fr">
+                    <p>中国教育科学研究院</p>
+                    <p>地址：北京市海淀区北三环中路46号 100088</p>
+                    <p>邮编：100871</p>
+                </div>
+            </div>
+            <div class="inlineBlock d2 clearfix">
+                <div class="weixin fl">
+                    <img src="${ctxPath}/assets/common/images/icon2_05.png" />
+                    <div>微信公众平台</div>
+                </div>
+                <div class="xinlang fr">
+                    <img src="${ctxPath}/assets/common/images/icon2_07.png" />
+                    <div>新浪微博</div>
+                </div>
+            </div>
+            <div class="inlineBlock d3">
+                <p>电话：010-6200XXXX</p>
+                <p>传真：010-6200XXXX</p>
+                <p>邮箱：123456</p>
+            </div>
+            <div class="inlineBlock d4">
+                <p>中国教育科学论坛 版权所有</p>
+                <p>Copyroght  2002-2020</p>
+                <p>京公网安备   110402430096</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
+<script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
+<script src="${ctxPath}/assets/common/js/custom.js"></script>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="/assets/holdForum/holdForum_report.js"></script>
+<script>
+    $(document).ready(function(){
+        myJs.navTab();
+        myJs.formTab();
+        myJs.typeTab();
+    });
+</script>
+
+<script>
+    /**
+     * 按键监听esc
+     */
+    layui.use(['admin'], function () {
+        var admin = layui.admin;
+        var $ = layui.jquery;
+
+        $(window).keydown(function (event) {
+            if (event.keyCode === 27) {
+                admin.closeThisDialog();
+            }
+        });
+    });
+</script>
+</body>
+</html>

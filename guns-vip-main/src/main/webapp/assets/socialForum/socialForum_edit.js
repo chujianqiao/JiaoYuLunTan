@@ -83,9 +83,28 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var ajax = new $ax(Feng.ctxPath + "/socialForum/detail?forumId=" + Feng.getUrlParam("forumId"));
     var result = ajax.start();
     form.val('socialForumForm', result.data);
+    var supPlate = result.data.supPlate;
+    $("input:checkbox[name = supPlates]").each(function(i){
+        //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
+        console.log($(this).val());
+        console.log(supPlate);
+        if (supPlate.indexOf($(this).val()) > -1) {
+            $(this).attr("checked",true);
+        }
+    })
+    form.render('checkbox');
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
+
+        var supPlate = "";
+        $("input:checkbox[name = supPlates]:checked").each(function(i){
+            //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
+            console.log($(this).val());
+            supPlate = supPlate + $(this).val() + ";";
+        })
+        data.field.supPlate = supPlate;
+
         if (result.data.applyStatus == 0) {
             var ajax = new $ax(Feng.ctxPath + "/socialForum/editItem", function (data) {
                 Feng.success("更新成功！");

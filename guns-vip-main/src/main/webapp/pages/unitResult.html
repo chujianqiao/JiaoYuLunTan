@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit" />
+    <meta name ="viewport" content ="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/common.css" />
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/border-1px.css" />
+    <link rel="stylesheet" media="screen and (min-width:751px)" href="${ctxPath}/assets/common/css/custom_pc.css">
+    <link rel="stylesheet" media="screen and (max-width:751px)" href="${ctxPath}/assets/common/css/custom_mobile.css" />
+
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}" media="all"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>
+
+</head>
+<body>
+<div class="page">
+    <header>
+        <div class="head mCenter widthC pr">
+            <img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
+            <div class="language-select pa">
+                <img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
+                <div class="language-select-box pr">
+                    <div class="language fontSize16">
+                        <a href="#">中文</a>
+                        <a href="#" class="hover">英文</a>
+                    </div>
+                    <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn pa" id="langSelect" />
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="widthC mCenter pr">
+        <div class="inlineBlock"><a href="首页.html" class="fontSize18 item" target="_blank">首页</a></div>
+        <div class="inlineBlock"><a href="关于论坛.html" class="fontSize18 item" target="_blank">关于论坛</a></div>
+        <div class="inlineBlock"><a href="论坛活动.html" class="fontSize18 item" target="_blank">论坛活动</a></div>
+        <div>
+            <a href="javascript:void(0)" class="fontSize18 item" target="_blank">论坛之声</a>
+            <div class="childNav pa fontSize16 hide">
+                <div class="childNav-items inlineBlock">
+                    <a href="" target="_blank">参会嘉宾</a>
+                    <a href="" target="_blank">参会学者</a>
+                    <a href="" target="_blank">青年之声</a>
+                    <a href="" target="_blank">科研战线</a>
+                </div>
+            </div>
+        </div>
+        <div><a href="论坛成果.html" class="fontSize18 item" target="_blank">论坛成果</a></div>
+        <div><a href="javascript:void(0)" class="fontSize18 item" target="_blank">国内外会议信息</a></div>
+        <div><a href="javascript:void(0)" class="fontSize18 item" target="_blank">联系我们</a></div>
+    </nav>
+    <div class="func-column-container widthC mCenter mb40">
+        <div class="func-column-content mCenter mb20">
+            <div  class="form-title mCenter">
+                <span class="line inlineBlock"></span>
+                <span class="fontSize20 inlineBlock mCenter title">优秀成果会展申请</span>
+                <span class='line inlineBlock'></span>
+            </div>
+        </div>
+        <div class="forms">
+            <div class="form-box" id="formList">
+                <div class="form">
+                    <div class="form-box" id="typeList">
+                        <div class="type">
+                            <form class="layui-form" id="unitForumForm" lay-filter="socialForumForm">
+                                <input name="applyType" value="2" class="layui-input" type="hidden"/>
+                                <table class="sb-table fontSize16" width="100%">
+                                    <tr>
+                                        <td class="sb-table-name">成果申报类型<span style="color: red;">*</span>：</td>
+                                        <td>
+                                            <div class="layui-input-inline">
+                                                &nbsp;&nbsp;<input type="radio" name="resultType" value="0" title="教改实验申报" checked/>
+                                                <input type="radio" name="resultType" value="1" title="优秀论著申报"/>
+                                            </div>
+                                        </td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">成果名称<span style="color: red;">*</span>：</td><td><input name="resultName" placeholder="请输入成果名称" class="layui-input" type="text" lay-verify="required" required/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">单位名称<span style="color: red;">*</span>：</td><td><input name="belongName" type="text" placeholder="请输入单位名称" class="layui-input" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">负责人姓名<span style="color: red;">*</span>：</td><td><input name="manager" placeholder="请输入负责人姓名" class="layui-input" type="text" lay-verify="required" required/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">负责人电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" placeholder="请输入负责人电话" class="layui-input" type="text" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">负责人邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" placeholder="请输入负责人邮箱" class="layui-input" type="text" lay-verify="required" required/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">负责人职称/职务<span style="color: red;">*</span>：</td><td><input name="manaPost" type="text" placeholder="请输入负责人职称/职务" class="layui-input" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">优秀成果简介附件<span style="color: red;">*</span>：</td>
+                                        <td>
+                                            <input id="unitintroducefileInputHidden" name="introducefileInputHidden" type="hidden" class="layui-input"/>
+                                            <input id="unitintroducePath" name="introducePath" type="hidden" class="layui-input"/>
+                                            <input id="unitintroduceName" name="introduceName" type="hidden" class="layui-input"/>
+
+                                            <div style="float: left;">
+                                                <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+                                                <input name="introduceName" id="unitintroducefileNameTip" placeholder="请上传优秀成果简介附件" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+                                            </div>
+                                            <div style="float: left;">
+                                                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="unitintroducefileBtn"><i class="layui-icon"></i>选择文件</button>
+                                            </div>
+                                            <div style="float: left;">
+                                                <button type="button" class="layui-btn layui-btn-sm" id="unitdownloadPlan"><i class="layui-icon"></i>模板下载</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">负责人研究方向<span style="color: red;">*</span>：</td><td><input name="manaDirect" type="text" placeholder="请输入负责人研究方向" class="layui-input" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">专家推荐信附件<span style="color: red;">*</span>：</td>
+                                        <td>
+
+                                            <input id="unitletterfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
+                                            <input id="unitletterPath" name="letterPath" type="hidden" class="layui-input"/>
+                                            <input id="unitletterName" name="letterName" type="hidden" class="layui-input"/>
+
+                                            <div style="float: left;">
+                                                <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+                                                <input name="letterName" id="unitletterfileNameTip" placeholder="请上传专家推荐信附件" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+                                            </div>
+                                            <div style="float: left;">
+                                                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="unitletterfileBtn"><i class="layui-icon"></i>选择文件</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sb-table-name">关键词<span style="color: red;">*</span>：</td><td><input name="keyword" type="text" placeholder="请输入关键词" class="layui-input" lay-verify="required" required/></td>
+                                        <td class="sb-table-gap"></td>
+                                        <td class="sb-table-name">原创承诺书<span style="color: red;">*</span>：</td>
+                                        <td>
+
+                                            <input id="unitcommitfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
+                                            <input id="unitcommitPath" name="commitPath" type="hidden" class="layui-input"/>
+                                            <input id="unitcommitName" name="commitName" type="hidden" class="layui-input"/>
+
+                                            <div style="float: left;">
+                                                <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+                                                <input name="commitName" id="unitcommitfileNameTip" placeholder="请上传原创承诺书" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+                                            </div>
+                                            <div style="float: left;">
+                                                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="unitcommitfileBtn"><i class="layui-icon"></i>选择文件</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="btns sb-btns fontSize16">
+                                    <div class="btn submit" lay-filter="unitSubmit" lay-submit>提交</div><div class="btn cancel">取消</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div><!--end of form-->
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="widthC mCenter foot fontSize14">
+            <div class="inlineBlock d1">
+                <img src="${ctxPath}/assets/common/images/icon2_10.png" class="fl" />
+                <div class="fr">
+                    <p>中国教育科学研究院</p>
+                    <p>地址：北京市海淀区北三环中路46号 100088</p>
+                    <p>邮编：100871</p>
+                </div>
+            </div>
+            <div class="inlineBlock d2 clearfix">
+                <div class="weixin fl">
+                    <img src="${ctxPath}/assets/common/images/icon2_05.png" />
+                    <div>微信公众平台</div>
+                </div>
+                <div class="xinlang fr">
+                    <img src="${ctxPath}/assets/common/images/icon2_07.png" />
+                    <div>新浪微博</div>
+                </div>
+            </div>
+            <div class="inlineBlock d3">
+                <p>电话：010-6200XXXX</p>
+                <p>传真：010-6200XXXX</p>
+                <p>邮箱：123456</p>
+            </div>
+            <div class="inlineBlock d4">
+                <p>中国教育科学论坛 版权所有</p>
+                <p>Copyroght  2002-2020</p>
+                <p>京公网安备   110402430096</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
+<script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
+<script src="${ctxPath}/assets/common/js/custom.js"></script>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="/assets/greatResult/result_report.js"></script>
+
+<script>
+    $(document).ready(function(){
+        myJs.navTab();
+        myJs.typeTab();
+    });
+</script>
+<script>
+    /**
+     * 按键监听esc
+     */
+    layui.use(['admin'], function () {
+        var admin = layui.admin;
+        var $ = layui.jquery;
+
+        $(window).keydown(function (event) {
+            if (event.keyCode === 27) {
+                admin.closeThisDialog();
+            }
+        });
+    });
+</script>
+</body>
+</html>
