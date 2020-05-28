@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -315,10 +316,11 @@ public class ThesisController extends BaseController {
     @ResponseBody
     @RequestMapping("/majorList")
     public Object majorList(ThesisParam thesisParam) {
+        //查询角色为评审专家的用户
         String roleName = "评审专家";
         Page<Map<String, Object>> roles = this.restRoleService.selectRoles(roleName);
-        String roleId = "";
-
+        List<Map<String, Object>> roleList = roles.getRecords();
+        String roleId = roleList.get(0).get("roleId").toString();
         return this.userService.majorMapList(roleId);
     }
 

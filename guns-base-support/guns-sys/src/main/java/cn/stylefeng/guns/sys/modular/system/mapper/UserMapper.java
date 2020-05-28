@@ -66,5 +66,5 @@ public interface UserMapper extends BaseMapper<User> {
     IPage<Map<String, Object>> listUserAndRoleExpectAdmin(Page page);
 
 
-    List<Map<String, Object>> majorMapList();
+    List<Map<String, Object>> majorMapList(@Param("roleIds") String roleIds);
 }

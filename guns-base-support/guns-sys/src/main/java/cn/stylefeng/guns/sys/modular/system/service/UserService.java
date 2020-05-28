@@ -348,8 +348,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return baseMapper.listUserAndRoleExpectAdmin(pageContext);
     }
 
-    public LayuiPageInfo majorMapList(String roleId) {
-        List<Map<String, Object>> list = this.baseMapper.majorMapList();
+    public LayuiPageInfo majorMapList(String roleIds) {
+        List<Map<String, Object>> list = this.baseMapper.majorMapList(roleIds);
         LayuiPageInfo layuiPageInfo = new LayuiPageInfo();
         layuiPageInfo.setData(list);
         return layuiPageInfo;
