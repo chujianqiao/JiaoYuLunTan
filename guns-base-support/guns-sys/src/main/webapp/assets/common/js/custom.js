@@ -14,6 +14,7 @@ myJs={
 			this.mobile_swiper_init1();
 			this.mobile_swiper_init2();
 			this.mobile_swiper_init3();
+			this.mobile_swiper_init4();
 		},
 		//开屏动画
 		poster_animate:function(){
@@ -65,11 +66,11 @@ myJs={
 			$(id).click(function(){
 				var src=$(this).attr('src');
 				if(src.includes('show')){
-					$(this).attr('src','${ctxPath}/assets/common/images/hide.png');
+					$(this).attr('src','images/hide.png');
 					$(this).siblings('.language').css('height','auto')
 				}else{
-					$(this).attr('src','${ctxPath}/assets/common/images/show.png');
-					$(this).siblings('.language').css('height','30px')
+					$(this).attr('src','images/show.png');
+					$(this).siblings('.language').css('height','.3rem')
 				}
 			});
 		},
@@ -140,13 +141,13 @@ myJs={
 		defaultImg1:function(id){
 			$(id).on('error',function(){
 				this.onerror=null;
-				this.src="${ctxPath}/assets/common/images/alt1.jpg";
+				this.src="images/alt1.jpg";
 			});
 		},
 		defaultImg2:function(id){
 			$(id).on('error',function(){
 				this.onerror=null;
-				this.src="${ctxPath}/assets/common/images/alt2.jpg";
+				this.src="images/alt2.jpg";
 			});
 		},
 		mobile_swiper_init1:function(){
@@ -173,6 +174,9 @@ myJs={
 					},
 				 	sliderMove:function(){
 				 		$('.lavel2').addClass('hide');
+				 	},
+				 	progress:function(progress){
+				 		if(progress<1){$('#mobileSwiper1').siblings('.cover').css('z-index','3');}else{$('#mobileSwiper1').siblings('.cover').css('z-index','1');}
 				 	}
 				}
 			});
@@ -217,15 +221,13 @@ myJs={
 				$forms.addClass('hide').eq(index).removeClass('hide');
 			});
 		},
-		typeTab:function(){
-			var $tab=$('#typeTab');
-			var $forms=$('#typeList').find('.type');
-			$tab.find('span').click(function(){
-				var index=$(this).index();
-				$tab.find('span').removeClass('hover');
-				$(this).addClass('hover');
-				$forms.addClass('hide').eq(index).removeClass('hide');
-			});
+		//功能专区swiper
+		mobile_swiper_init4:function(){
+			var swiper=this.swiper_init('#mobileSwiper4','#mobileSwiper4 .swiper-pagination');
+			var slides=$('#mobileSwiper4 .swiper-slide');
+			swiper.params.spaceBetween=80
+			if(slides.length>1){
+				swiper.init()
+			}
 		}
-
 	}

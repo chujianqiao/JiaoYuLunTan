@@ -77,17 +77,17 @@
 									<td class="sb-table-name">单位名称<span style="color: red;">*</span>：</td><td><input name="unitName" placeholder="请输入单位名称" class="layui-input" type="text" lay-verify="required" required/></td>
 								</tr>
 								<tr>
-									<td class="sb-table-name">承办年份<span style="color: red;">*</span>：</td><td><input name="year" placeholder="请输入承办年份" class="layui-input" type="text" lay-verify="required" required/></td>
+									<td class="sb-table-name">承办年份<span style="color: red;">*</span>：</td><td><input name="year" placeholder="请输入承办年份" class="layui-input" type="text" lay-verify="required|number" required/></td>
 									<td class="sb-table-gap"></td>
 									<td class="sb-table-name">承办能力(会议规模)<span style="color: red;">*</span>：</td><td><input name="ability" placeholder="请输入承办能力(会议规模)" class="layui-input" type="text" lay-verify="required" required/></td>
 								</tr>
 								<tr>
 									<td class="sb-table-name">负责人<span style="color: red;">*</span>：</td><td><input name="manager" type="text" placeholder="请输入负责人" class="layui-input" lay-verify="required" required/></td>
 									<td class="sb-table-gap"></td>
-									<td class="sb-table-name">负责人电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" type="text" placeholder="请输入负责人电话" class="layui-input" lay-verify="required" required/></td>
+									<td class="sb-table-name">负责人电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" type="text" placeholder="请输入负责人电话" class="layui-input" lay-verify="required|phone" required/></td>
 								</tr>
 								<tr>
-									<td class="sb-table-name">负责人邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" type="text" placeholder="请输入负责人邮箱" class="layui-input" lay-verify="required" required/></td>
+									<td class="sb-table-name">负责人邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" type="text" placeholder="请输入负责人邮箱" class="layui-input" lay-verify="required|email" required/></td>
 									<td class="sb-table-gap"></td>
 									<td class="sb-table-name">承办方案附件<span style="color: red;">*</span>：</td>
 									<td>
@@ -126,9 +126,9 @@
 											<td class="sb-table-name">姓名<span style="color: red;">*</span>：</td><td><input name="manager" placeholder="请输入姓名" class="layui-input" type="text" lay-verify="required" required/></td>
 										</tr>
 										<tr>
-											<td class="sb-table-name">电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" placeholder="请输入电话" class="layui-input" type="text" lay-verify="required" required/></td>
+											<td class="sb-table-name">电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" placeholder="请输入电话" class="layui-input" type="text" lay-verify="required|phone" required/></td>
 											<td class="sb-table-gap"></td>
-											<td class="sb-table-name">邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" placeholder="请输入邮箱" class="layui-input" type="text" lay-verify="required" required/></td>
+											<td class="sb-table-name">邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" placeholder="请输入邮箱" class="layui-input" type="text" lay-verify="required|email" required/></td>
 										</tr>
 										<tr>
 											<td class="sb-table-name">职称<span style="color: red;">*</span>：</td><td><input name="title" type="text" placeholder="请输入职称" class="layui-input" lay-verify="required" required/></td>
@@ -200,9 +200,9 @@
 									<td class="sb-table-name">负责人<span style="color: red;">*</span>：</td><td><input name="manager" placeholder="请输入负责人" class="layui-input" type="text" lay-verify="required" required/></td>
 								</tr>
 								<tr>
-									<td class="sb-table-name">负责人电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" type="text" placeholder="请输入负责人电话" class="layui-input" lay-verify="required" required/></td>
+									<td class="sb-table-name">负责人电话<span style="color: red;">*</span>：</td><td><input name="manaPhone" type="text" placeholder="请输入负责人电话" class="layui-input" lay-verify="required|phone" required/></td>
 									<td class="sb-table-gap"></td>
-									<td class="sb-table-name">负责人邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" type="text" placeholder="请输入负责人邮箱" class="layui-input" lay-verify="required" required/></td>
+									<td class="sb-table-name">负责人邮箱<span style="color: red;">*</span>：</td><td><input name="manaEmail" type="text" placeholder="请输入负责人邮箱" class="layui-input" lay-verify="required|email" required/></td>
 								</tr>
 								<tr>
 									<td class="sb-table-name">已资助的会议<span style="color: red;">*</span>：</td><td><input name="alreadyMeet" type="text" placeholder="请输入已资助的会议（不超过3条）" class="layui-input" lay-verify="required" required/></td>
@@ -223,7 +223,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td class="sb-table-name">资助金额<span style="color: red;">*</span>：</td><td><input name="supMoney" type="text" placeholder="请输入资助金额（不超过五万）" class="layui-input" lay-verify="required" required/></td>
+									<td class="sb-table-name">资助金额<span style="color: red;">*</span>：</td><td><input name="supMoney" type="text" placeholder="请输入资助金额（不超过五万）" class="layui-input" lay-verify="required|number" required/></td>
 									<td class="sb-table-gap"></td>
 									<td class="sb-table-name">合同条件<span style="color: red;">*</span>：</td>
 									<td>

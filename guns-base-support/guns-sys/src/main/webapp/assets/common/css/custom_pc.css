@@ -121,6 +121,7 @@ ul.hotnews-list li.hover .hotnews-date{color:#fff;}
 .forum-header-tab span.carset{display:none;bottom:-12px;left:50%;margin-left:-6px;}
 table.forum-guests-side{overflow:hidden;}
 table.forum-guests-side .name{font-weight:bold;width:65px;}
+table.forum-guests-side .name a{color:#000;}
 table.forum-guests-side tr{height:36px;}
 ul.forum-topLists li{margin-bottom:20px;width:5.25rem;height:101px;overflow:hidden;}
 ul.forum-topLists li img{margin-right:.25rem;}
@@ -194,7 +195,7 @@ table.sb-table{color:#000;}
 table.sb-table tr{height:.5rem;}
 table.sb-table input{margin-left:.1rem;border:1px solid #b7b7b7;width:3.09rem;height:.35rem;}
 table.sb-table td.sb-table-name{text-align:right;}
-table.sb-table td.sb-table-gap{width:0.6rem;}
+table.sb-table td.sb-table-gap{width:1.2rem;}
 table.sb-table .attachBox{margin:0;}
 .sb-btns{margin-top:.6rem;}
 

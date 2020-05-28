@@ -24,6 +24,7 @@ import cn.stylefeng.guns.base.tenant.context.TenantCodeHolder;
 import cn.stylefeng.guns.base.tenant.entity.TenantInfo;
 import cn.stylefeng.guns.base.tenant.service.TenantInfoService;
 import cn.stylefeng.guns.sys.core.auth.cache.SessionManager;
+import cn.stylefeng.guns.sys.core.constant.DefaultAvatar;
 import cn.stylefeng.guns.sys.core.exception.InvalidKaptchaException;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
@@ -48,6 +49,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -87,7 +89,33 @@ public class LoginController extends BaseController {
                 return "/login.html";
             } else {
                 model.addAllAttributes(userIndexInfo);
-                return "/index.html";
+                String url = DefaultAvatar.getLoginUrl();
+                LoginUser user = LoginContextHolder.getContext().getUser();
+                List roles = user.getRoleList();
+                long unit = 3;
+                String loginUrl = "/index.html";
+                if (roles.contains(unit)){
+                    if (url.equals("/greatResult/add")){
+                        loginUrl = "/unitResult.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
+                    if (url.equals("/holdForum/add")){
+                        loginUrl = "/unitForum.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
+                }else {
+                    if (url.equals("/greatResult/add")){
+                        loginUrl = "/result.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
+                    if (url.equals("/holdForum/add")){
+                        loginUrl = "/forum.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
+                }
+
+
+                return loginUrl;
             }
 
         } else {
@@ -223,4 +251,14 @@ public class LoginController extends BaseController {
         return new SuccessResponseData();
     }
 
+    /**
+     * 退出登录
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 5:42 PM
+     */
+    @RequestMapping(value = "/index")
+    public String index() {
+        return "/webIndex.html";
+    }
 }

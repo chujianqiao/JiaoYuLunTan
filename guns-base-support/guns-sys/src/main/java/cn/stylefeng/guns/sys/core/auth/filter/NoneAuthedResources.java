@@ -31,6 +31,7 @@ public class NoneAuthedResources {
 
             //主页
             "/",
+            "/index",
 
             //注册
             "/mgr/add",

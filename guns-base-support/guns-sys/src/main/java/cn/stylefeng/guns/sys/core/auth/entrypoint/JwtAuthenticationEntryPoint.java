@@ -1,6 +1,8 @@
 package cn.stylefeng.guns.sys.core.auth.entrypoint;
 
 import cn.stylefeng.guns.base.auth.exception.enums.AuthExceptionEnum;
+import cn.stylefeng.guns.sys.core.constant.Const;
+import cn.stylefeng.guns.sys.core.constant.DefaultAvatar;
 import cn.stylefeng.roses.kernel.model.response.ErrorResponseData;
 import com.alibaba.fastjson.JSON;
 import org.springframework.security.core.AuthenticationException;
@@ -33,7 +35,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
         // GET请求跳转到主页
         if ("get".equalsIgnoreCase(request.getMethod())
                 && !request.getHeader("Accept").contains("application/json")) {
-
+            String url = request.getRequestURI();
+            DefaultAvatar.setLoginUrl(url);
             response.sendRedirect(request.getContextPath() + "/global/sessionError");
 
         } else {
