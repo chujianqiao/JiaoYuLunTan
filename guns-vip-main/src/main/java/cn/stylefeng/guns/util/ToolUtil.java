@@ -38,7 +38,7 @@ public class ToolUtil {
 	}
 
 	/**
-	 * 判断当前登录用户是否为管理员角色
+	 * 判断当前登录用户是否为论文评审专家角色
 	 * @return
 	 */
 	public static boolean isReviewRole(){
@@ -49,7 +49,7 @@ public class ToolUtil {
 			long roleId = roleIds.get(i);
 			Role role = roleService.getById(roleId);
 			String roleName = role.getName();
-			if(roleId == 1234567890 || roleName.equals("评审专家")){
+			if(roleId == 1234567890 || roleName.equals("论文评审专家")){
 				isReview = true;
 				break;
 			}
