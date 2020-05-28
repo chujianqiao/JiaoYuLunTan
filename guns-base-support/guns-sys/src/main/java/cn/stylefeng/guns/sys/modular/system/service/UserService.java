@@ -7,6 +7,7 @@ import cn.stylefeng.guns.base.oauth2.entity.OauthUserInfo;
 import cn.stylefeng.guns.base.oauth2.service.OauthUserInfoService;
 import cn.stylefeng.guns.base.pojo.node.MenuNode;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
+import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.sys.core.constant.Const;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.constant.state.ManagerStatus;
@@ -51,6 +52,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     @Autowired
     private UserPosService userPosService;
+
+    private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
 
     /**
      * 添加用戶
@@ -343,5 +346,12 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      */
     public IPage listUserAndRoleExpectAdmin(Page pageContext) {
         return baseMapper.listUserAndRoleExpectAdmin(pageContext);
+    }
+
+    public LayuiPageInfo majorMapList(String roleId) {
+        List<Map<String, Object>> list = this.baseMapper.majorMapList();
+        LayuiPageInfo layuiPageInfo = new LayuiPageInfo();
+        layuiPageInfo.setData(list);
+        return layuiPageInfo;
     }
 }

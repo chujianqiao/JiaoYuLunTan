@@ -12,19 +12,25 @@ public class TransTypeUtil {
 	 * 申请状态
 	 * 状态码 → 字符串
 	 */
-	public static Map<Object,Object> applyStatus = new HashMap <>();
+	private static Map<Object,Object> applyStatus = new HashMap <>();
 
 	/**
 	 * 申请状态
 	 * 字符串 → 状态码
 	 */
-	public static Map<Object,Integer> applyStatusNum = new HashMap <>();
+	private static Map<Object,Integer> applyStatusNum = new HashMap <>();
 
 	/**
 	 * 是否
 	 * 状态码 → 字符串
 	 */
-	public static Map<Object,Object> isOrNo = new HashMap();
+	private static Map<Object,Object> isOrNo = new HashMap();
+
+	/**
+	 * 是否通过
+	 * 状态码→字符串
+	 */
+	private static Map<Object,Object> isPass = new HashMap();
 
 	/**
 	 * 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
@@ -55,5 +61,15 @@ public class TransTypeUtil {
 		isOrNo.put(0,"否");
 		isOrNo.put(1,"是");
 		return isOrNo;
+	}
+
+	/**
+	 * 0-未通过，1-通过
+	 * @return
+	 */
+	public static Map<Object,Object> getIsPass(){
+		isPass.put(0,"未通过");
+		isPass.put(1,"通过");
+		return isPass;
 	}
 }

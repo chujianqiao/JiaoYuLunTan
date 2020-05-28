@@ -23,7 +23,6 @@ public interface ThesisMapper extends BaseMapper<Thesis> {
 
     /**
      * 获取列表
-     *
      * @author wucy
      * @Date 2020-05-21
      */
@@ -31,7 +30,6 @@ public interface ThesisMapper extends BaseMapper<Thesis> {
 
     /**
      * 获取map列表
-     *
      * @author wucy
      * @Date 2020-05-21
      */
@@ -39,7 +37,6 @@ public interface ThesisMapper extends BaseMapper<Thesis> {
 
     /**
      * 获取分页实体列表
-     *
      * @author wucy
      * @Date 2020-05-21
      */
@@ -47,7 +44,6 @@ public interface ThesisMapper extends BaseMapper<Thesis> {
 
     /**
      * 获取分页map列表
-     *
      * @author wucy
      * @Date 2020-05-21
      */

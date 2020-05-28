@@ -11,121 +11,128 @@
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">论文题目<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="thesisTitle" name="thesisTitle" placeholder="请输入论文题目" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="thesisTitle" name="thesisTitle" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">英文题目<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="engTitle" name="engTitle" placeholder="请输入英文题目" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="engTitle" name="engTitle" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">论文作者ID<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="thesisUser" name="thesisUser" placeholder="请输入论文作者ID" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">论文作者ID<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="thesisUser" name="thesisUser" placeholder="请输入论文作者ID" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">评审状态<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="status" name="status" placeholder="请输入评审状态" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="status" name="status" placeholder="" disabled="disabled" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">评审结果; 0-不通过，1-通过<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">评审结果<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="reviewResult" name="reviewResult" placeholder="请输入评审结果; 0-不通过，1-通过" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="reviewStr" name="reviewStr" placeholder="" disabled="disabled" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">是否推荐优秀; 0-否，1-是<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">是否为优秀论文<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="isgreat" name="isgreat" placeholder="请输入是否推荐优秀; 0-否，1-是" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="isGreatStr" name="isGreatStr" placeholder="" disabled="disabled" type="text" class="layui-input"  required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">推荐专家人数<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="greatNum" name="greatNum" placeholder="请输入推荐专家人数" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">推优专家ID,多个用逗号隔开<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="greatId" name="greatId" placeholder="请输入推优专家ID,多个用逗号隔开" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">推荐专家人数<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="greatNum" name="greatNum" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">推优专家<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="greatId" name="greatId" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">是否为优秀论文<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="great" name="great" placeholder="" type="text" disabled="disabled" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">论文提交时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="applyTime" name="applyTime" placeholder="请输入论文提交时间" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="applyTime" name="applyTime" placeholder="" type="text" disabled="disabled" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">正文<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="thesisText" name="thesisText" placeholder="请输入正文" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">分数<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="score" name="score" placeholder="请输入分数" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">评审人ID,多个用逗号隔开<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="reviewUser" name="reviewUser" placeholder="请输入评审人ID,多个用逗号隔开" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">是否为优秀论文;0-否,1-是<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="great" name="great" placeholder="请输入是否为优秀论文;0-否,1-是" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">正文<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="thesisText" name="thesisText" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">分数<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="score" name="score" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">评审人<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="reviewUser" name="reviewUser" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">中文关键词<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="cnKeyword" name="cnKeyword" placeholder="请输入中文关键词" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="cnKeyword" name="cnKeyword" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">英文关键词<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="engKeyword" name="engKeyword" placeholder="请输入英文关键词" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="engKeyword" name="engKeyword" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">中文摘要<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="cnAbstract" name="cnAbstract" placeholder="请输入中文摘要" type="text" class="layui-input" lay-verify="required" required/>
+                            <!--<input id="cnAbstract" name="cnAbstract" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                            <textarea id="cnAbstract" name="cnAbstract" required lay-verify="required" placeholder="" class="layui-textarea"></textarea>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">英文摘要<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="engAbstract" name="engAbstract" placeholder="请输入英文摘要" type="text" class="layui-input" lay-verify="required" required/>
+                            <!--<input id="engAbstract" name="engAbstract" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                            <textarea id="engAbstract" name="engAbstract" required lay-verify="required" placeholder="" class="layui-textarea"></textarea>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">参会论文研究方向<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="thesisDirect" name="thesisDirect" placeholder="请输入参会论文研究方向" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="thesisDirect" name="thesisDirect" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">论文附件路径<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">论文附件<span style="color: red;">*</span></label>
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="fileName" name="fileName" placeholder="" type="text" disabled="disabled" class="layui-input" lay-verify="required" required/>-->
+                            <!--<button id="btnUpload" class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;上传论文附件&emsp;</button>-->
+                        <!--</div>-->
                         <div class="layui-input-block">
-                            <input id="thesisPath" name="thesisPath" placeholder="请输入论文附件路径" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">论文附件文件名<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="fileName" name="fileName" placeholder="请输入论文附件文件名" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
+                            <div style="float: left;">
+                                <button type="button" class="layui-btn layui-btn-sm" id="fileBtn"><i class="layui-icon"></i>选择文件</button>
+                            </div>
+                            <div style="float: left;">
+                                <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -285,4 +285,14 @@
         left join sys_dept dept on u.dept_id = dept.dept_id
     </select>
 
+    <select id="majorMapList" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user where 1 = 1 and (role_id = '4' or role_id like '%,4%' or role_id like '%4,%' )
+        <!--<if test="paramCondition.thesisTitle != null and paramCondition.thesisTitle != ''">-->
+            <!--and thesis_title like CONCAT('%',#{paramCondition.thesisTitle},'%')-->
+        <!--</if>-->
+
+    </select>
+
 </mapper>

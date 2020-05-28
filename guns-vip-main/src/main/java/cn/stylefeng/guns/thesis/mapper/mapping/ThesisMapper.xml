@@ -58,6 +58,15 @@
         select
         <include refid="Base_Column_List"/>
         from thesis where 1 = 1
+        <if test="paramCondition.thesisTitle != null and paramCondition.thesisTitle != ''">
+            and thesis_title like CONCAT('%',#{paramCondition.thesisTitle},'%')
+        </if>
+        <if test="paramCondition.thesisUser != null and paramCondition.thesisUser != ''">
+            and thesis_user like CONCAT('%',#{paramCondition.thesisUser},'%')
+        </if>
+        <if test="paramCondition.reviewUser != null and paramCondition.reviewUser != ''">
+            and review_user like CONCAT('%',#{paramCondition.reviewUser},'%')
+        </if>
     </select>
 
 </mapper>

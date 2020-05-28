@@ -4,9 +4,11 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.thesis.entity.Thesis;
 import cn.stylefeng.guns.thesis.model.params.ThesisParam;
 import cn.stylefeng.guns.thesis.model.result.ThesisResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -20,7 +22,6 @@ public interface ThesisService extends IService<Thesis> {
 
     /**
      * 新增
-     *
      * @author wucy
      * @Date 2020-05-21
      */
@@ -28,7 +29,6 @@ public interface ThesisService extends IService<Thesis> {
 
     /**
      * 删除
-     *
      * @author wucy
      * @Date 2020-05-21
      */
@@ -36,7 +36,6 @@ public interface ThesisService extends IService<Thesis> {
 
     /**
      * 更新
-     *
      * @author wucy
      * @Date 2020-05-21
      */
@@ -44,7 +43,6 @@ public interface ThesisService extends IService<Thesis> {
 
     /**
      * 查询单条数据，Specification模式
-     *
      * @author wucy
      * @Date 2020-05-21
      */
@@ -52,7 +50,6 @@ public interface ThesisService extends IService<Thesis> {
 
     /**
      * 查询列表，Specification模式
-     *
      * @author wucy
      * @Date 2020-05-21
      */
@@ -60,10 +57,16 @@ public interface ThesisService extends IService<Thesis> {
 
     /**
      * 查询分页数据，Specification模式
-     *
      * @author wucy
      * @Date 2020-05-21
      */
      LayuiPageInfo findPageBySpec(ThesisParam param);
+
+    /**
+     * 拼接数据
+     * @author wucy
+     * @Date 2020-05-25
+     */
+    Page<Map<String, Object>> findPageWrap(ThesisParam param);
 
 }

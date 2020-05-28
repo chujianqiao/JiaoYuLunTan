@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{js:["/assets/thesis/thesis.js"]}){
+@layout("/common/_container.html",{js:["/assets/thesis/thesis_disable.js"]}){
 
 <div class="layui-body-header">
     <span class="layui-body-header-title">论文表管理</span>
@@ -28,7 +28,8 @@
 </div>
 
 <script type="text/html" id="tableBar">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="disable">查看详情</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="assign">分配评审人</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
 @}

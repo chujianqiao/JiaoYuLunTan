@@ -1,5 +1,6 @@
 package cn.stylefeng.guns.sys.modular.system.mapper;
 
+import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -7,6 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,4 +64,7 @@ public interface UserMapper extends BaseMapper<User> {
      * 选择办理人
      */
     IPage<Map<String, Object>> listUserAndRoleExpectAdmin(Page page);
+
+
+    List<Map<String, Object>> majorMapList();
 }

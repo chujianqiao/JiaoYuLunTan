@@ -43,7 +43,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             // {field: 'thesisDirect', sort: true, title: '参会论文研究方向'},
             // {field: 'thesisPath', sort: true, title: '论文附件路径'},
             // {field: 'fileName', sort: true, title: '论文附件文件名'},
-            {align: 'center', toolbar: '#tableBar', title: '操作'}
+            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth:220}
         ]];
     };
 
@@ -90,6 +90,15 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      */
     Thesis.onReviewItem = function (data) {
         window.location.href = Feng.ctxPath + '/thesis/review?thesisId=' + data.thesisId
+    };
+
+    Thesis.jumpAssignPage = function (data) {
+        func.open({
+            title: '分配评审人',
+            area: ['350px', '300px'],
+            content: Feng.ctxPath + '/thesis/assign?thesisId=' + data.thesisId,
+            tableId: Thesis.tableId
+        });
     };
 
     /**
@@ -163,6 +172,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             Thesis.onReviewItem(data);
         } else if (layEvent === 'disable') {
             Thesis.jumpDisablePage(data);
+        } else if (layEvent === 'assign') {
+            Thesis.jumpAssignPage(data);
         }
     });
 });

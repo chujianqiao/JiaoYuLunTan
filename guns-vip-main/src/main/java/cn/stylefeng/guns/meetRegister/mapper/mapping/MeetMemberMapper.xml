@@ -80,6 +80,9 @@
             <if test="userIds != null and userIds != ''">
                 and user_id in (#{userIds})
             </if>
+            <if test="paramCondition.userId != null and paramCondition.userId != ''">
+                and user_id=#{paramCondition.userId}
+            </if>
     </select>
 
 </mapper>

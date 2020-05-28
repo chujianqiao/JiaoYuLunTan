@@ -106,7 +106,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
     /**
      * 点击删除
-     *
      * @param data 点击按钮时候的行数据
      */
     Thesis.onDeleteItem = function (data) {

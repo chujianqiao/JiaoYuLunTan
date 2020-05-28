@@ -2,7 +2,8 @@ package cn.stylefeng.guns.util;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
-import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
+import cn.stylefeng.guns.sys.modular.system.entity.Role;
+import cn.stylefeng.guns.sys.modular.system.service.RoleService;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -18,11 +19,9 @@ import java.util.Map;
  */
 public class ToolUtil {
 
-//	@Autowired
-//	private UserService userService;
-
 	private UserService userService = SpringContextHolder.getBean(UserService.class);
 
+	private static RoleService roleService = SpringContextHolder.getBean(RoleService.class);
 	/**
 	 * 判断当前登录用户是否为管理员角色
 	 * @return
@@ -36,6 +35,26 @@ public class ToolUtil {
 		}else{
 			return false;
 		}
+	}
+
+	/**
+	 * 判断当前登录用户是否为管理员角色
+	 * @return
+	 */
+	public static boolean isReviewRole(){
+		LoginUser user = LoginContextHolder.getContext().getUser();
+		List<Long> roleIds = user.getRoleList();
+		boolean isReview = false;
+		for (int i = 0;i < roleIds.size();i++){
+			long roleId = roleIds.get(i);
+			Role role = roleService.getById(roleId);
+			String roleName = role.getName();
+			if(roleId == 1234567890 || roleName.equals("评审专家")){
+				isReview = true;
+				break;
+			}
+		}
+		return isReview;
 	}
 
 	/**

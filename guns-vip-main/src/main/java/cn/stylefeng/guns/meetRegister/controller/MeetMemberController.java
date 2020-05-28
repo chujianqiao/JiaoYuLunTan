@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.meetRegister.controller;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.meetRegister.entity.MeetMember;
@@ -9,7 +11,6 @@ import cn.stylefeng.guns.meetRegister.wrapper.MeetMemberWrapper;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
 import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
-import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.thesis.entity.Thesis;
 import cn.stylefeng.guns.thesis.service.ThesisService;
 import cn.stylefeng.guns.util.ToolUtil;
@@ -48,9 +49,6 @@ public class MeetMemberController extends BaseController {
 
     @Autowired
     private ThesisService thesisService;
-
-    @Autowired
-    private UserService userService;
 
     /**
      * 跳转到主页面
@@ -193,6 +191,16 @@ public class MeetMemberController extends BaseController {
             ToolUtil toolUtil = new ToolUtil();
             userIds = toolUtil.getUserIdsForName(userName);
         }
+
+        boolean isAdmin = ToolUtil.isAdminRole();
+        if(isAdmin){
+            meetMemberParam.setUserId(null);
+        }else{
+            LoginUser user = LoginContextHolder.getContext().getUser();
+            long userId = user.getId();
+            meetMemberParam.setUserId(userId);
+        }
+
         Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIds);
         Page wrapped = new MeetMemberWrapper(members).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
@@ -204,7 +212,6 @@ public class MeetMemberController extends BaseController {
      */
     @RequestMapping(path = "/downloadThesis")
     public void download(HttpServletResponse httpServletResponse, MeetMemberParam meetMemberParam, HttpServletRequest request) {
-        String a = request.getParameter("thesisId");
         long thesisId = meetMemberParam.getThesisId();
         Thesis thesis = this.thesisService.getById(thesisId);
         //文件完整路径

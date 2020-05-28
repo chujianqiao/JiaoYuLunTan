@@ -33,10 +33,10 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         var ownForumid = result.data.ownForumid;
         forumSelectOption(ownForumid);
 
+        debugger;
         var thesisId = result.data.thesisId;
         thesisSelectOption(thesisId);
 
-        debugger;
         var userId = result.data.userId;
         var userajax = new $ax(Feng.ctxPath + "/mgr/detail?userId=" + userId);
         var result = userajax.start();
@@ -101,6 +101,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             type:'post',
             url:Feng.ctxPath + "/thesis/list" ,
             success:function(response){
+                debugger;
                 var data=response.data;
                 var theses = [];
                 theses = data;
