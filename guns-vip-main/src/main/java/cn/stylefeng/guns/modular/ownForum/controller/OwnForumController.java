@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -139,6 +140,7 @@ public class OwnForumController extends BaseController {
         Long userId = LoginContextHolder.getContext().getUserId();
         ownForumParam.setApplyStatus(1);
         ownForumParam.setApplyId(userId);
+        ownForumParam.setApplyTime(new Date());
         this.ownForumService.add(ownForumParam);
         return ResponseData.success();
     }

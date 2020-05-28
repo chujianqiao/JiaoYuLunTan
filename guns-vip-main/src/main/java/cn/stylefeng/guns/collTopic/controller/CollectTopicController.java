@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.Map;
 
 
@@ -53,7 +54,7 @@ public class CollectTopicController extends BaseController {
      */
     @RequestMapping("/add")
     public String add() {
-        return PREFIX + "/collectTopic_add.html";
+        return "/collect.html";
     }
 
     /**
@@ -74,6 +75,9 @@ public class CollectTopicController extends BaseController {
     @RequestMapping("/addItem")
     @ResponseBody
     public ResponseData addItem(CollectTopicParam collectTopicParam) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        collectTopicParam.setCreateUser(user.getId());
+        collectTopicParam.setCreateTime(new Date());
         this.collectTopicService.add(collectTopicParam);
         return ResponseData.success();
     }

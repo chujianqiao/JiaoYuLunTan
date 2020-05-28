@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -133,6 +134,7 @@ public class HoldForumController extends BaseController {
         Long userId = LoginContextHolder.getContext().getUserId();
         holdForumParam.setApplyStatus(1);
         holdForumParam.setApplyUser(userId);
+        holdForumParam.setApplyTime(new Date());
         this.holdForumService.add(holdForumParam);
         return ResponseData.success();
     }

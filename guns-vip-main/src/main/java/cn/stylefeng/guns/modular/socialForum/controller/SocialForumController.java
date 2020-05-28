@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -126,7 +127,8 @@ public class SocialForumController extends BaseController {
         Long userId = LoginContextHolder.getContext().getUserId();
         socialForumParam.setApplyStatus(1);
         socialForumParam.setApplyId(userId);
-        //this.socialForumService.add(socialForumParam);
+        socialForumParam.setApplyTime(new Date());
+        this.socialForumService.add(socialForumParam);
         return ResponseData.success();
     }
 

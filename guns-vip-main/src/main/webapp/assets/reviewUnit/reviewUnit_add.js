@@ -39,7 +39,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     form.on('submit(btnSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/reviewUnit/addItem", function (data) {
             Feng.success("添加成功！");
-            window.location.href = Feng.ctxPath + '/reviewUnit'
+            window.location.href = Feng.ctxPath + '/'
         }, function (data) {
             Feng.error("添加失败！" + data.responseJSON.message)
         });

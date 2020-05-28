@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -138,6 +139,7 @@ public class EducationResultController extends BaseController {
         Long userId = LoginContextHolder.getContext().getUserId();
         educationResultParam.setApplyId(userId);
         educationResultParam.setCheckStatus(1);
+        educationResultParam.setApplyTime(new Date());
         this.educationResultService.add(educationResultParam);
         return ResponseData.success();
     }

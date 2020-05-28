@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.reviewunit.controller;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
@@ -90,7 +92,14 @@ public class ReviewUnitController extends BaseController {
      */
     @RequestMapping("/edit")
     public String edit() {
-        return PREFIX + "/reviewUnit_edit.html";
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roles = user.getRoleList();
+        long unit = 3;
+        if (roles.contains(unit)){
+            return "/unitReport.html";
+        } else {
+            return "/majorReport.html";
+        }
     }
 
     /**
@@ -111,6 +120,9 @@ public class ReviewUnitController extends BaseController {
     @RequestMapping("/addItem")
     @ResponseBody
     public ResponseData addItem(ReviewUnitParam reviewUnitParam) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        reviewUnitParam.setReviewId(user.getId());
+        reviewUnitParam.setCreateTime(new Date());
         this.reviewUnitService.add(reviewUnitParam);
         return ResponseData.success();
     }

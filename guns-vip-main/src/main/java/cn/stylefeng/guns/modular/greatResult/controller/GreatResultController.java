@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -138,6 +139,7 @@ public class GreatResultController extends BaseController {
         Long userId = LoginContextHolder.getContext().getUserId();
         greatResultParam.setApplyId(userId);
         greatResultParam.setCheckStatus(1);
+        greatResultParam.setApplyTime(new Date());
         this.greatResultService.add(greatResultParam);
         return ResponseData.success();
     }

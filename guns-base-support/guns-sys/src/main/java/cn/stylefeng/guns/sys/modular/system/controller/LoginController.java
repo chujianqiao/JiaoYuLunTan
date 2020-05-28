@@ -103,6 +103,14 @@ public class LoginController extends BaseController {
                         loginUrl = "/unitForum.html";
                         DefaultAvatar.setLoginUrl("");
                     }
+                    if (url.equals("/collectTopic/add")){
+                        loginUrl = "/collect.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
+                    if (url.equals("/reviewMajor/add")){
+                        loginUrl = "/unitReport.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
                 }else {
                     if (url.equals("/greatResult/add")){
                         loginUrl = "/result.html";
@@ -110,6 +118,14 @@ public class LoginController extends BaseController {
                     }
                     if (url.equals("/holdForum/add")){
                         loginUrl = "/forum.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
+                    if (url.equals("/collectTopic/add")){
+                        loginUrl = "/collect.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
+                    if (url.equals("/reviewMajor/add")){
+                        loginUrl = "/majorReport.html";
                         DefaultAvatar.setLoginUrl("");
                     }
                 }

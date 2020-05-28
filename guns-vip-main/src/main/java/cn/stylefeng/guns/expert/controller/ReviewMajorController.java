@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.expert.controller;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
@@ -83,7 +85,15 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/add")
     public String add() {
-        return PREFIX + "/reviewMajor_add.html";
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roles = user.getRoleList();
+        long unit = 3;
+        if (roles.contains(unit)){
+            return "/unitReport.html";
+        } else {
+            return "/majorReport.html";
+        }
+
     }
 
     /**
@@ -124,6 +134,10 @@ public class ReviewMajorController extends BaseController {
     @RequestMapping("/addItem")
     @ResponseBody
     public ResponseData addItem(ReviewMajorParam reviewMajorParam) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        reviewMajorParam.setReviewId(user.getId());
+        reviewMajorParam.setApplyTime(new Date());
+        reviewMajorParam.setApplyFrom("非邀请");
         this.reviewMajorService.add(reviewMajorParam);
         return ResponseData.success();
     }
