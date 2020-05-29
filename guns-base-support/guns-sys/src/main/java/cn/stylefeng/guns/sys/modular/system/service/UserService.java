@@ -53,7 +53,6 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @Autowired
     private UserPosService userPosService;
 
-    private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
 
     /**
      * 添加用戶
