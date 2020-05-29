@@ -46,60 +46,76 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     //表单提交事件
     form.on('submit(personSubmit)', function (data) {
-        if (data.field.resultType == 1) {
-            var ajax = new $ax(Feng.ctxPath + "/greatResult/addItem", function (data) {
-                Feng.success("申报成功！");
-                //传给上个页面，刷新table用
-                admin.putTempData('formOk', true);
-                //关掉对话框
-                admin.closeThisDialog();
-            }, function (data) {
-                Feng.error("申报失败！" + data.responseJSON.message)
-            });
-            ajax.set(data.field);
-            ajax.start();
-        } else {
-            var ajax = new $ax(Feng.ctxPath + "/educationResult/addItem", function (data) {
-                Feng.success("申报成功！");
-                //传给上个页面，刷新table用
-                admin.putTempData('formOk', true);
-                //关掉对话框
-                admin.closeThisDialog();
-            }, function (data) {
-                Feng.error("申报失败！" + data.responseJSON.message)
-            });
-            ajax.set(data.field);
-            ajax.start();
+        var flag = 0;
+        $("input:checkbox[name = ifAgree]:checked").each(function(i){
+            flag = 1;
+        })
+        if (flag == 1) {
+            if (data.field.resultType == 1) {
+                var ajax = new $ax(Feng.ctxPath + "/greatResult/addItem", function (data) {
+                    Feng.success("申报成功！");
+                    //传给上个页面，刷新table用
+                    admin.putTempData('formOk', true);
+                    //关掉对话框
+                    admin.closeThisDialog();
+                }, function (data) {
+                    Feng.error("申报失败！" + data.responseJSON.message)
+                });
+                ajax.set(data.field);
+                ajax.start();
+            } else {
+                var ajax = new $ax(Feng.ctxPath + "/educationResult/addItem", function (data) {
+                    Feng.success("申报成功！");
+                    //传给上个页面，刷新table用
+                    admin.putTempData('formOk', true);
+                    //关掉对话框
+                    admin.closeThisDialog();
+                }, function (data) {
+                    Feng.error("申报失败！" + data.responseJSON.message)
+                });
+                ajax.set(data.field);
+                ajax.start();
+            }
+        }else {
+            Feng.error("请先阅读并同意《论坛章程》！");
         }
         return false;
     });
 
     //表单提交事件
     form.on('submit(unitSubmit)', function (data) {
-        if (data.field.resultType == 1) {
-            var ajax = new $ax(Feng.ctxPath + "/greatResult/addItem", function (data) {
-                Feng.success("申报成功！");
-                //传给上个页面，刷新table用
-                admin.putTempData('formOk', true);
-                //关掉对话框
-                admin.closeThisDialog();
-            }, function (data) {
-                Feng.error("申报失败！" + data.responseJSON.message)
-            });
-            ajax.set(data.field);
-            ajax.start();
-        } else {
-            var ajax = new $ax(Feng.ctxPath + "/educationResult/addItem", function (data) {
-                Feng.success("申报成功！");
-                //传给上个页面，刷新table用
-                admin.putTempData('formOk', true);
-                //关掉对话框
-                admin.closeThisDialog();
-            }, function (data) {
-                Feng.error("申报失败！" + data.responseJSON.message)
-            });
-            ajax.set(data.field);
-            ajax.start();
+        var flag = 0;
+        $("input:checkbox[name = ifAgree]:checked").each(function(i){
+            flag = 1;
+        })
+        if (flag == 1) {
+            if (data.field.resultType == 1) {
+                var ajax = new $ax(Feng.ctxPath + "/greatResult/addItem", function (data) {
+                    Feng.success("申报成功！");
+                    //传给上个页面，刷新table用
+                    admin.putTempData('formOk', true);
+                    //关掉对话框
+                    admin.closeThisDialog();
+                }, function (data) {
+                    Feng.error("申报失败！" + data.responseJSON.message)
+                });
+                ajax.set(data.field);
+                ajax.start();
+            } else {
+                var ajax = new $ax(Feng.ctxPath + "/educationResult/addItem", function (data) {
+                    Feng.success("申报成功！");
+                    //传给上个页面，刷新table用
+                    admin.putTempData('formOk', true);
+                    //关掉对话框
+                    admin.closeThisDialog();
+                }, function (data) {
+                    Feng.error("申报失败！" + data.responseJSON.message)
+                });
+                ajax.set(data.field);
+                ajax.start();
+            }
+        }else {
+            Feng.error("请先阅读并同意《论坛章程》！");
         }
         return false;
     });
