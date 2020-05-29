@@ -128,6 +128,10 @@ public class LoginController extends BaseController {
                         loginUrl = "/majorReport.html";
                         DefaultAvatar.setLoginUrl("");
                     }
+                    if (url.equals("/meetMember/add")) {
+                        loginUrl = "/meet_reg.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
                 }
 
 

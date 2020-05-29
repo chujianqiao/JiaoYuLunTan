@@ -5,6 +5,8 @@ import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
+import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.sys.modular.rest.service.RestRoleService;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
@@ -39,7 +41,6 @@ import java.util.Map;
 
 /**
  * 论文表控制器
- *
  * @author wucy
  * @Date 2020-05-21 15:15:05
  */
@@ -64,6 +65,9 @@ public class ThesisController extends BaseController {
 
     @Autowired
     private RestRoleService restRoleService;
+
+    @Autowired
+    private MeetMemberService meetMemberService;
 
     /**
      * 跳转到主页面
@@ -114,7 +118,7 @@ public class ThesisController extends BaseController {
     }
 
     /**
-     * 仅查看
+     * 分配评审人
      * @author wucy
      * @Date 2020-05-21
      */
@@ -140,8 +144,15 @@ public class ThesisController extends BaseController {
      */
     @RequestMapping("/addItem")
     @ResponseBody
-    public ResponseData addItem(ThesisParam thesisParam) {
+    public ResponseData addItem(ThesisParam thesisParam, MeetMemberParam meetMemberParam) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        Long userId = user.getId();
+        thesisParam.setThesisUser(userId.toString());
+
+        meetMemberParam.setUserId(userId);
+
         this.thesisService.add(thesisParam);
+        this.meetMemberService.add(meetMemberParam);
         return ResponseData.success();
     }
 

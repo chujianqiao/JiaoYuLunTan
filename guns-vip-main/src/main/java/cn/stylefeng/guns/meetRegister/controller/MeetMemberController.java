@@ -72,7 +72,7 @@ public class MeetMemberController extends BaseController {
      */
     @RequestMapping("/add")
     public String add() {
-        return PREFIX + "/meetMember_add.html";
+        return  "/meet_reg.html";
     }
 
     /**

@@ -62,6 +62,26 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
         window.location.href = Feng.ctxPath + '/thesis'
     });
 
+    //上传文件
+    upload.render({
+        elem: '#fileBtn'
+        , url: Feng.ctxPath + '/thesis/upload?thesisId='+ Feng.getUrlParam("thesisId")
+        , accept: 'file'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                debugger;
+                $("#fileNameTip").html(file.name);
+            });
+        }
+        , done: function (res) {
+            $("#fileInputHidden").val(res.data.fileId);
+            Feng.success(res.message);
+        }
+        , error: function () {
+            Feng.error("上传文件失败！");
+        }
+    });
+
     $('#downloadBtn').click(function(){
         var form=$("<form>");    // 定义一个form表单
         form.attr("style","display:none");
