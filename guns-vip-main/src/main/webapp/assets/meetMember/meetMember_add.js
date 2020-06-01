@@ -19,6 +19,12 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var form = layui.form;
     var admin = layui.admin;
     var upload = layui.upload;
+    debugger;
+    var userTitle = $("#userTitle").val();
+    if(userTitle != '教授'){
+        $('#judge1').remove();
+        $('#judge2').remove();
+    }
 
     $(function () {
         forumSelectOption();
@@ -38,9 +44,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         });
         ajax.set(data.field);
         ajax.start();
-
-
-
         return false;
     });
 

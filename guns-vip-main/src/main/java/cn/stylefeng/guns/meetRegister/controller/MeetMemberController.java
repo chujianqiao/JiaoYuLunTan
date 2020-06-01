@@ -11,6 +11,8 @@ import cn.stylefeng.guns.meetRegister.wrapper.MeetMemberWrapper;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
 import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.thesis.entity.Thesis;
 import cn.stylefeng.guns.thesis.service.ThesisService;
 import cn.stylefeng.guns.util.ToolUtil;
@@ -50,6 +52,9 @@ public class MeetMemberController extends BaseController {
     @Autowired
     private ThesisService thesisService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 跳转到主页面
      * @author wucy
@@ -71,7 +76,15 @@ public class MeetMemberController extends BaseController {
      * @Date 2020-05-20
      */
     @RequestMapping("/add")
-    public String add() {
+    public String add(HttpServletRequest request) {
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        User user = userService.getById(loginUser.getId());
+        String userTitle = user.getTitle();
+        if(userTitle != null && userTitle != ""){
+            request.setAttribute("userTitle",userTitle);
+        }else{
+            request.setAttribute("userTitle","无职位");
+        }
         return  "/meet_reg.html";
     }
 

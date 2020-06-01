@@ -21,6 +21,7 @@
 		<header>
 			<div class="head mCenter widthC pr">
 				<img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
+				<input type="hidden" value="${userTitle}" id="userTitle"/>
 				<div class="language-select pa">
 					<img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
 					<div class="language-select-box pr">
@@ -94,19 +95,7 @@
 										<select id="ownForumid" name="ownForumid" lay-verify="" lay-search></select>
 									</td>
 								</tr>
-								<tr>
-									<td class="sb-table-name">论文附件：</td><td>
-										<input id="thesisPath" name="thesisPath" type="hidden" class="layui-input"/>
-										<input id="fileName" name="fileName" type="hidden" class="layui-input"/>
-										<input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
-										<div style="float: left;">
-											<button type="button" class="layui-btn layui-btn-sm" id="fileBtn"><i class="layui-icon"></i>选择文件</button>
-										</div>
-										<div style="float: left;">
-											<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>
-										</div>
-									<td class="sb-table-gap"></td>
-								</tr>
+
 								<tr>
 									<td class="sb-table-name">是否申请发言：</td>
 									<td>
@@ -117,14 +106,27 @@
 									</td>
 
 									<td class="sb-table-gap"></td>
-									<td class="sb-table-name">是否参加形式研判会：</td>
+									<td class="sb-table-name" id="judge1">是否参加形式研判会：</td>
 									<td>
-										<div class="layui-input-inline">
+										<div class="layui-input-inline" id="judge2">
 											<input type="radio" name="judge" value="1" title="是" checked/>
 											<input type="radio" name="judge" value="0" title="否"/>
 										</div>
 									</td>
-									</td>
+									<!--</td>-->
+								</tr>
+								<tr>
+									<td class="sb-table-name">论文附件：</td><td>
+									<input id="thesisPath" name="thesisPath" type="hidden" class="layui-input"/>
+									<input id="fileName" name="fileName" type="hidden" class="layui-input"/>
+									<input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
+									<div style="float: left;">
+										<button type="button" class="layui-btn layui-btn-sm" id="fileBtn"><i class="layui-icon"></i>选择文件</button>
+									</div>
+									<div style="float: left;">
+										<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>
+									</div>
+									<td class="sb-table-gap"></td>
 								</tr>
 							</table>
 							<div class="btns sb-btns fontSize16">
