@@ -90,9 +90,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public void editUser(UserDto user) {
         User oldUser = this.getById(user.getUserId());
 
-        if (LoginContextHolder.getContext().hasRole(Const.ADMIN_NAME)) {
+        //if (LoginContextHolder.getContext().hasRole(Const.ADMIN_NAME)) {
             this.updateById(UserFactory.editUser(user, oldUser));
-        } else {
+        /*} else {
             this.assertAuth(user.getUserId());
             LoginUser shiroUser = LoginContextHolder.getContext().getUser();
             if (shiroUser.getId().equals(user.getUserId())) {
@@ -100,7 +100,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             } else {
                 throw new ServiceException(BizExceptionEnum.NO_PERMITION);
             }
-        }
+        }*/
 
         //删除职位关联
         userPosService.remove(new QueryWrapper<UserPos>().eq("user_id", user.getUserId()));

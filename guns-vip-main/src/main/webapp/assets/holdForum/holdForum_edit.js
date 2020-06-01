@@ -135,6 +135,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         elem: '#fileBtn'
         , url: Feng.ctxPath + '/holdForum/upload'
         , accept: 'file'
+        , exts: 'doc|docx'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
                 $("#fileNameTip").val(file.name);
