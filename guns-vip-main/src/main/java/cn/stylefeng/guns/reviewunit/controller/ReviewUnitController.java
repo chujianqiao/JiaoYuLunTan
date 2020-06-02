@@ -3,8 +3,11 @@ package cn.stylefeng.guns.reviewunit.controller;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.ReviewMajorDict;
+import cn.stylefeng.guns.core.constant.dictmap.ReviewUnitDict;
 import cn.stylefeng.guns.expert.wrapper.ReviewMajorWrapper;
 import cn.stylefeng.guns.reviewunit.entity.ReviewUnit;
 import cn.stylefeng.guns.reviewunit.model.params.ReviewUnitParam;
@@ -202,6 +205,14 @@ public class ReviewUnitController extends BaseController {
             }
         }
 
+        boolean isAdmin = ToolUtil.isAdminRole();
+        if(isAdmin){
+
+        }else{
+            LoginUser user = LoginContextHolder.getContext().getUser();
+            reviewUnitParam.setReviewId(user.getId());
+        }
+
         Page<Map<String, Object>> units = this.reviewUnitService.findPageWrap(reviewUnitParam,paramIds);
         Page wrapped = new ReviewMajorWrapper(units).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
@@ -230,6 +241,7 @@ public class ReviewUnitController extends BaseController {
      */
     @RequestMapping("/uploadExcel")
     @ResponseBody
+    @BussinessLog(value = "导入理事单位", key = "reviewId", dict = ReviewUnitDict.class)
     public ResponseData uploadExcel(@RequestPart("file") MultipartFile file, HttpServletRequest request) {
         String name = file.getOriginalFilename();
         request.getSession().setAttribute("upFile", name);

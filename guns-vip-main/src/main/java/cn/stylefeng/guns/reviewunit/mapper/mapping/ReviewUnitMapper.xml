@@ -47,6 +47,9 @@
         <if test="paramIds != null and paramIds != ''">
             and review_id in (#{paramIds})
         </if>
+        <if test="paramCondition.reviewId != null and paramCondition.reviewId != ''">
+            and review_id = #{paramCondition.reviewId}
+        </if>
     </select>
 
 </mapper>

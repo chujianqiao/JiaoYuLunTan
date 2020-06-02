@@ -38,11 +38,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
             {align: 'center', minWidth: 180, title: '操作', templet: function(data){
                     if (data.checkStatus == "已取消") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</ a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew'>申请</ a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>编辑</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew'>申请</ a>";
                     }else if (data.checkStatus == "申请中") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</ a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</ a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</ a>";
                     }else {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</ a>"
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a>"
                     }
                 }}
         ]];

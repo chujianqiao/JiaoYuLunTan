@@ -20,6 +20,7 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'reviewId', hide: true, title: '单位ID'},
+            {field: 'reviewName', sort: true, title: '单位名称'},
             {field: 'location', sort: true, title: '单位所在地'},
             {field: 'year', sort: true, title: '担任理事单位年份'},
             {field: 'repName', sort: true, title: '代表姓名'},
@@ -35,6 +36,7 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
      */
     ReviewUnit.search = function () {
         var queryData = {};
+        queryData['reviewName'] = $("#reviewName").val();
         table.reload(ReviewUnit.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -117,7 +119,7 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + ReviewUnit.tableId,
-        url: Feng.ctxPath + '/reviewUnit/list',
+        url: Feng.ctxPath + '/reviewUnit/wraplist',
         page: true,
         height: "full-158",
         cellMinWidth: 100,

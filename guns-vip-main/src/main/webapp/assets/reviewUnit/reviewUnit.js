@@ -35,7 +35,6 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
      * 点击查询按钮
      */
     ReviewUnit.search = function () {
-        debugger;
         var queryData = {};
         queryData['reviewName'] = $("#reviewName").val();
         table.reload(ReviewUnit.tableId, {
