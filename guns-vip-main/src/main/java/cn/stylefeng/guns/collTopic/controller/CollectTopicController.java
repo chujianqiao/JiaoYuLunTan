@@ -2,12 +2,15 @@ package cn.stylefeng.guns.collTopic.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.collTopic.entity.CollectTopic;
 import cn.stylefeng.guns.collTopic.model.params.CollectTopicParam;
 import cn.stylefeng.guns.collTopic.service.CollectTopicService;
 import cn.stylefeng.guns.collTopic.wrapper.CollectTopicWrapper;
+import cn.stylefeng.guns.core.constant.dictmap.CollectTopicDict;
+import cn.stylefeng.guns.core.constant.dictmap.OwnForumDict;
 import cn.stylefeng.guns.expert.wrapper.ReviewMajorWrapper;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
@@ -74,6 +77,7 @@ public class CollectTopicController extends BaseController {
      */
     @RequestMapping("/addItem")
     @ResponseBody
+    @BussinessLog(value = "新增征集主题", key = "topicName", dict = CollectTopicDict.class)
     public ResponseData addItem(CollectTopicParam collectTopicParam) {
         LoginUser user = LoginContextHolder.getContext().getUser();
         collectTopicParam.setCreateUser(user.getId());
@@ -89,6 +93,7 @@ public class CollectTopicController extends BaseController {
      */
     @RequestMapping("/editItem")
     @ResponseBody
+    @BussinessLog(value = "编辑征集主题", key = "topicId", dict = CollectTopicDict.class)
     public ResponseData editItem(CollectTopicParam collectTopicParam) {
         this.collectTopicService.update(collectTopicParam);
         return ResponseData.success();
@@ -101,6 +106,7 @@ public class CollectTopicController extends BaseController {
      */
     @RequestMapping("/delete")
     @ResponseBody
+    @BussinessLog(value = "删除征集主题", key = "topicId", dict = CollectTopicDict.class)
     public ResponseData delete(CollectTopicParam collectTopicParam) {
         this.collectTopicService.delete(collectTopicParam);
         return ResponseData.success();

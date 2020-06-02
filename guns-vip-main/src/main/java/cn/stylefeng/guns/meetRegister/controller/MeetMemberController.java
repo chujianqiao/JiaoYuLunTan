@@ -2,8 +2,11 @@ package cn.stylefeng.guns.meetRegister.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.MeetMemberDict;
+import cn.stylefeng.guns.core.constant.dictmap.OwnForumDict;
 import cn.stylefeng.guns.meetRegister.entity.MeetMember;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
@@ -71,7 +74,7 @@ public class MeetMemberController extends BaseController {
     }
 
     /**
-     * 新增页面
+     * 会议注册页面
      * @author wucy
      * @Date 2020-05-20
      */
@@ -83,7 +86,7 @@ public class MeetMemberController extends BaseController {
         if(userTitle != null && userTitle != ""){
             request.setAttribute("userTitle",userTitle);
         }else{
-            request.setAttribute("userTitle","无职位");
+            request.setAttribute("userTitle","无职称");
         }
         return  "/meet_reg.html";
     }

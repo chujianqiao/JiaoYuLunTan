@@ -3,8 +3,11 @@ package cn.stylefeng.guns.thesis.controller;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.MeetMemberDict;
+import cn.stylefeng.guns.core.constant.dictmap.ReviewUnitDict;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.sys.modular.rest.service.RestRoleService;
@@ -144,6 +147,7 @@ public class ThesisController extends BaseController {
      */
     @RequestMapping("/addItem")
     @ResponseBody
+    @BussinessLog(value = "注册会议", key = "thesisTitle", dict = MeetMemberDict.class)
     public ResponseData addItem(ThesisParam thesisParam, MeetMemberParam meetMemberParam) {
         LoginUser user = LoginContextHolder.getContext().getUser();
         Long userId = user.getId();

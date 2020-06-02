@@ -3,8 +3,11 @@ package cn.stylefeng.guns.expert.controller;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.CollectTopicDict;
+import cn.stylefeng.guns.core.constant.dictmap.ReviewMajorDict;
 import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
@@ -133,11 +136,13 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/addItem")
     @ResponseBody
+    @BussinessLog(value = "提交申请", key = "direct", dict = ReviewMajorDict.class)
     public ResponseData addItem(ReviewMajorParam reviewMajorParam) {
         LoginUser user = LoginContextHolder.getContext().getUser();
         reviewMajorParam.setReviewId(user.getId());
         reviewMajorParam.setApplyTime(new Date());
         reviewMajorParam.setApplyFrom("非邀请");
+        reviewMajorParam.setCheckStatus(1);
         this.reviewMajorService.add(reviewMajorParam);
         return ResponseData.success();
     }
@@ -161,6 +166,7 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/reApply")
     @ResponseBody
+    @BussinessLog(value = "重新申请", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData checkApplyStatus(ReviewMajorParam reviewMajorParam) {
         reviewMajorParam.setCheckStatus(1);
         reviewMajorParam.setApplyTime(new Date());
@@ -175,6 +181,7 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/cancelApply")
     @ResponseBody
+    @BussinessLog(value = "取消申请", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData cancelApply(ReviewMajorParam reviewMajorParam) {
         reviewMajorParam.setCheckStatus(0);
         Date date = new Date();
@@ -190,6 +197,7 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/agreeApply")
     @ResponseBody
+    @BussinessLog(value = "同意申请", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData agreeApply(ReviewMajorParam reviewMajorParam) {
         reviewMajorParam.setCheckStatus(2);
         reviewMajorParam.setAgreeTime(new Date());
@@ -204,6 +212,7 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/disAgreeApply")
     @ResponseBody
+    @BussinessLog(value = "驳回申请", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData disAgreeApply(ReviewMajorParam reviewMajorParam) {
         reviewMajorParam.setCheckStatus(3);
         reviewMajorParam.setRefuseTime(new Date());
@@ -218,6 +227,7 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/delete")
     @ResponseBody
+    @BussinessLog(value = "删除申请", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData delete(ReviewMajorParam reviewMajorParam) {
         this.reviewMajorService.delete(reviewMajorParam);
         return ResponseData.success();

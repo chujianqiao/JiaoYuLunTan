@@ -122,6 +122,7 @@ public class ReviewUnitController extends BaseController {
      */
     @RequestMapping("/addItem")
     @ResponseBody
+	@BussinessLog(value = "新增申请", key = "reviewId", dict = ReviewUnitDict.class)
     public ResponseData addItem(ReviewUnitParam reviewUnitParam) {
         LoginUser user = LoginContextHolder.getContext().getUser();
         reviewUnitParam.setReviewId(user.getId());
@@ -137,6 +138,7 @@ public class ReviewUnitController extends BaseController {
      */
     @RequestMapping("/editItem")
     @ResponseBody
+	@BussinessLog(value = "编辑申请", key = "reviewId", dict = ReviewUnitDict.class)
     public ResponseData editItem(ReviewUnitParam reviewUnitParam) {
         this.reviewUnitService.update(reviewUnitParam);
         return ResponseData.success();
@@ -149,6 +151,7 @@ public class ReviewUnitController extends BaseController {
      */
     @RequestMapping("/delete")
     @ResponseBody
+	@BussinessLog(value = "删除申请", key = "reviewId", dict = ReviewUnitDict.class)
     public ResponseData delete(ReviewUnitParam reviewUnitParam) {
         this.reviewUnitService.delete(reviewUnitParam);
         return ResponseData.success();
