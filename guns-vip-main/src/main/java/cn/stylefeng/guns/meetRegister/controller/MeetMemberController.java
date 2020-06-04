@@ -155,7 +155,7 @@ public class MeetMemberController extends BaseController {
     @RequestMapping("/detail")
     @ResponseBody
     public ResponseData detail(MeetMemberParam meetMemberParam) {
-        MeetMember detail = this.meetMemberService.getById(meetMemberParam.getMemberId());
+         MeetMember detail = this.meetMemberService.getById(meetMemberParam.getMemberId());
         //类转Map
         Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
 

@@ -19,7 +19,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var form = layui.form;
     var admin = layui.admin;
     var upload = layui.upload;
-    debugger;
+    var func = layui.func;
     var userTitle = $("#userTitle").val();
     if(userTitle != '教授'){
         $('#judge1').remove();
@@ -35,10 +35,11 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         debugger;
         var ajax = new $ax(Feng.ctxPath + "/thesis/addItem", function (data) {
             Feng.success("添加成功！");
+            window.location.href = Feng.ctxPath + '/';
             //传给上个页面，刷新table用
-            admin.putTempData('formOk', true);
+            // admin.putTempData('formOk', true);
             //关掉对话框
-            admin.closeThisDialog();
+            // admin.closeThisDialog();
         }, function (data) {
             Feng.error("添加失败！" + data.responseJSON.message)
         });
@@ -93,6 +94,14 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             }
         })
     }
+
+    // $('#btnPay').click(function () {
+    //     debugger;
+    //     func.open({
+    //         title: '支付',
+    //         content: Feng.ctxPath + '/pay/payPage',
+    //     });
+    // });
 
 
 });

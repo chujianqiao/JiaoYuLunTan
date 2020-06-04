@@ -53,7 +53,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      */
     CollectTopic.openAddDlg = function () {
         func.open({
-            title: '添加论坛主题征集表',
+            title: '会议主题征集',
             content: Feng.ctxPath + '/collectTopic/add',
             tableId: CollectTopic.tableId
         });
@@ -65,7 +65,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
       */
       CollectTopic.openEditDlg = function (data) {
           func.open({
-              title: '修改论坛主题征集表',
+              title: '会议主题征集',
               content: Feng.ctxPath + '/collectTopic/edit?topicId=' + data.topicId,
               tableId: CollectTopic.tableId
           });

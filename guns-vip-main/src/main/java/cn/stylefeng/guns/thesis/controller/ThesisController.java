@@ -8,9 +8,13 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.MeetMemberDict;
 import cn.stylefeng.guns.core.constant.dictmap.ReviewUnitDict;
+import cn.stylefeng.guns.expert.entity.ReviewMajor;
+import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
+import cn.stylefeng.guns.expert.service.ReviewMajorService;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.sys.modular.rest.service.RestRoleService;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.sys.modular.system.service.RoleService;
@@ -71,6 +75,9 @@ public class ThesisController extends BaseController {
 
     @Autowired
     private MeetMemberService meetMemberService;
+
+    @Autowired
+    private ReviewMajorService reviewMajorService;
 
     /**
      * 跳转到主页面
@@ -155,6 +162,16 @@ public class ThesisController extends BaseController {
 
         meetMemberParam.setUserId(userId);
 
+        //论文ID
+        long thesisId = ToolUtil.getNum19();
+        thesisParam.setThesisId(thesisId);
+        meetMemberParam.setThesisId(thesisId);
+
+        //时间
+        Date date = new Date();
+        meetMemberParam.setRegTime(date);
+        thesisParam.setApplyTime(date);
+
         this.thesisService.add(thesisParam);
         this.meetMemberService.add(meetMemberParam);
         return ResponseData.success();
@@ -168,6 +185,30 @@ public class ThesisController extends BaseController {
     @RequestMapping("/editItem")
     @ResponseBody
     public ResponseData editItem(ThesisParam thesisParam) {
+        this.thesisService.update(thesisParam);
+        return ResponseData.success();
+    }
+
+    /**
+     * 分配评审专家接口
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/assignItem")
+    @ResponseBody
+    public ResponseData assignItem(ThesisParam thesisParam) {
+        String majors = thesisParam.getReviewUser();
+        String [] majorIds = majors.split(",");
+        for(int i =0 ;i < majorIds.length ;i++){
+            long userId = Long.parseLong(majorIds[i]);
+            ReviewMajor reviewMajor = this.reviewMajorService.getById(userId);
+            int thesisCount = reviewMajor.getThesisCount();
+            thesisCount += 1;
+            ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
+            reviewMajorParam.setReviewId(userId);
+            reviewMajorParam.setThesisCount(thesisCount);
+            this.reviewMajorService.update(reviewMajorParam);
+        }
         this.thesisService.update(thesisParam);
         return ResponseData.success();
     }

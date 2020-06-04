@@ -16,6 +16,7 @@ import cn.stylefeng.guns.reviewunit.model.params.ReviewUnitParam;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.sys.modular.system.warpper.UserWrapper;
@@ -143,6 +144,9 @@ public class ReviewMajorController extends BaseController {
         reviewMajorParam.setApplyTime(new Date());
         reviewMajorParam.setApplyFrom("非邀请");
         reviewMajorParam.setCheckStatus(1);
+        reviewMajorParam.setThesisCount(0);
+        reviewMajorParam.setReviewCount(0);
+        reviewMajorParam.setRefuseCount(0);
         this.reviewMajorService.add(reviewMajorParam);
         return ResponseData.success();
     }
@@ -154,6 +158,7 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/editItem")
     @ResponseBody
+    @BussinessLog(value = "编辑申请", key = "direct", dict = ReviewMajorDict.class)
     public ResponseData editItem(ReviewMajorParam reviewMajorParam) {
         this.reviewMajorService.update(reviewMajorParam);
         return ResponseData.success();
@@ -201,6 +206,23 @@ public class ReviewMajorController extends BaseController {
     public ResponseData agreeApply(ReviewMajorParam reviewMajorParam) {
         reviewMajorParam.setCheckStatus(2);
         reviewMajorParam.setAgreeTime(new Date());
+        long reviewId = reviewMajorParam.getReviewId();
+
+        User user = this.userService.getById(reviewId);
+        String roleStr = user.getRoleId();
+        if(roleStr == null || roleStr.equals("")){
+            roleStr = "1234567890";
+        } else {
+            roleStr += ",1234567890";
+        }
+
+//        UserDto userDto = new UserDto();
+//        userDto.setUserId(reviewId);
+//        userDto.setRoleId(roleStr);
+        user.setRoleId(roleStr);
+        this.userService.updateById(user);
+
+
         this.reviewMajorService.update(reviewMajorParam);
         return ResponseData.success();
     }

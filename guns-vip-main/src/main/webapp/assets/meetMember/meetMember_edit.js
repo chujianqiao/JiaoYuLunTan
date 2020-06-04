@@ -19,6 +19,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var form = layui.form;
     var admin = layui.admin;
 
+    debugger;
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
     var result = ajax.start();

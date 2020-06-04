@@ -47,7 +47,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload','sele
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/thesis/editItem", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/thesis/assignItem", function (data) {
             Feng.success("分配成功！");
             //传给上个页面，刷新table用
             admin.putTempData('formOk', true);
