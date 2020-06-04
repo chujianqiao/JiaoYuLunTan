@@ -27,6 +27,7 @@ import cn.stylefeng.guns.sys.core.auth.cache.SessionManager;
 import cn.stylefeng.guns.sys.core.constant.DefaultAvatar;
 import cn.stylefeng.guns.sys.core.exception.InvalidKaptchaException;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.mutidatasource.DataSourceContextHolder;
@@ -77,7 +78,7 @@ public class LoginController extends BaseController {
      * @Date 2018/12/23 5:41 PM
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model) {
+    public String index(Model model,HttpServletRequest request) {
 
         //判断用户是否登录
         if (LoginContextHolder.getContext().hasLogin()) {
@@ -129,6 +130,13 @@ public class LoginController extends BaseController {
                         DefaultAvatar.setLoginUrl("");
                     }
                     if (url.equals("/meetMember/add")) {
+                        User userMeet = userService.getById(user.getId());
+                        String userTitle = userMeet.getTitle();
+                        if(userTitle != null && userTitle != ""){
+                            request.setAttribute("userTitle",userTitle);
+                        }else{
+                            request.setAttribute("userTitle","无职称");
+                        }
                         loginUrl = "/meet_reg.html";
                         DefaultAvatar.setLoginUrl("");
                     }
@@ -272,13 +280,29 @@ public class LoginController extends BaseController {
     }
 
     /**
-     * 退出登录
+     * 主页
      *
      * @author fengshuonan
      * @Date 2018/12/23 5:42 PM
      */
     @RequestMapping(value = "/index")
     public String index() {
+        return "/webIndex.html";
+    }
+
+    /**
+     * 主页
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 5:42 PM
+     */
+    @RequestMapping(value = "/chatLogout")
+    public String chatLogout() {
+        authService.logout();
+        ResponseData data = new SuccessResponseData();
+        if (data.getMessage().equals("请求成功")) {
+            return "/logout.html";
+        }
         return "/webIndex.html";
     }
 }

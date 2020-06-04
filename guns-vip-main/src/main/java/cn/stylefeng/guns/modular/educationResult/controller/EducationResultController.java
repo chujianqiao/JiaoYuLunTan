@@ -133,7 +133,7 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/addItem")
-    @BussinessLog(value = "新增教改实验申报信息", key = "resultId", dict = ResultDict.class)
+    @BussinessLog(value = "新增教改实验申报信息", key = "resultName", dict = ResultDict.class)
     @ResponseBody
     public ResponseData addItem(EducationResultParam educationResultParam) {
         Long userId = LoginContextHolder.getContext().getUserId();

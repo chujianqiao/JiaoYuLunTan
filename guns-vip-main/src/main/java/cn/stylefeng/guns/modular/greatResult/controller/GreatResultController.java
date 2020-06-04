@@ -133,7 +133,7 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/addItem")
-    @BussinessLog(value = "新增优秀论著申报信息", key = "resultId", dict = ResultDict.class)
+    @BussinessLog(value = "新增优秀论著申报信息", key = "resultName", dict = ResultDict.class)
     @ResponseBody
     public ResponseData addItem(GreatResultParam greatResultParam) {
         Long userId = LoginContextHolder.getContext().getUserId();

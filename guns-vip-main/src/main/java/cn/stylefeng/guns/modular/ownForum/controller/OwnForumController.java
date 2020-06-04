@@ -134,7 +134,7 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-18
      */
     @RequestMapping("/addItem")
-    @BussinessLog(value = "新增自设论坛申报信息", key = "forumId", dict = OwnForumDict.class)
+    @BussinessLog(value = "新增自设论坛申报信息", key = "forumName", dict = OwnForumDict.class)
     @ResponseBody
     public ResponseData addItem(OwnForumParam ownForumParam) {
         Long userId = LoginContextHolder.getContext().getUserId();

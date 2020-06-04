@@ -128,7 +128,7 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/addItem")
-    @BussinessLog(value = "新增承办单位申报信息", key = "forumId", dict = HoldForumDict.class)
+    @BussinessLog(value = "新增承办单位申报信息", key = "forumName", dict = HoldForumDict.class)
     @ResponseBody
     public ResponseData addItem(HoldForumParam holdForumParam) {
         Long userId = LoginContextHolder.getContext().getUserId();

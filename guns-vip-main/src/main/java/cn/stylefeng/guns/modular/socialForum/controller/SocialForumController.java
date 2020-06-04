@@ -121,7 +121,7 @@ public class SocialForumController extends BaseController {
      * @Date 2020-05-15
      */
     @RequestMapping("/addItem")
-    @BussinessLog(value = "新增论坛资助申报信息", key = "forumId", dict = SocialForumDict.class)
+    @BussinessLog(value = "新增论坛资助申报信息", key = "forumName", dict = SocialForumDict.class)
     @ResponseBody
     public ResponseData addItem(SocialForumParam socialForumParam) {
         Long userId = LoginContextHolder.getContext().getUserId();
