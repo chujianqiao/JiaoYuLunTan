@@ -26,7 +26,7 @@ public class ReviewMajorParam implements Serializable, BaseValidatingParam {
     private Long reviewId;
 
     /**
-     * 研究方向和专长
+     * 专家名称
      */
     private String direct;
 
@@ -46,7 +46,7 @@ public class ReviewMajorParam implements Serializable, BaseValidatingParam {
     private Integer refuseCount;
 
     /**
-     * 专家分类
+     * 专家领域
      */
     private String majorType;
 
@@ -56,12 +56,12 @@ public class ReviewMajorParam implements Serializable, BaseValidatingParam {
     private String applyFrom;
 
     /**
-     * 申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
+     * 评审状态; 0-正常 1-冻结
      */
     private Integer checkStatus;
 
     /**
-     * 提交申请时间
+     * 创建时间
      */
     private Date applyTime;
 

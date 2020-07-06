@@ -12,6 +12,8 @@ import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
 import cn.stylefeng.guns.expert.wrapper.ReviewMajorWrapper;
+import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
+import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.reviewunit.model.params.ReviewUnitParam;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
@@ -20,6 +22,8 @@ import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.sys.modular.system.warpper.UserWrapper;
+import cn.stylefeng.guns.thesis.entity.Thesis;
+import cn.stylefeng.guns.thesis.model.params.ThesisParam;
 import cn.stylefeng.guns.util.ExcelTool;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.guns.util.TransTypeUtil;
@@ -28,6 +32,8 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.models.auth.In;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,11 +44,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -53,12 +57,16 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/reviewMajor")
+@Slf4j
 public class ReviewMajorController extends BaseController {
 
     private String PREFIX = "/expert/reviewMajor";
 
     @Autowired
     private ReviewMajorService reviewMajorService;
+
+    @Autowired
+    private MeetMemberService meetMemberService;
 
     @Autowired
     private UserService userService;
@@ -389,6 +397,73 @@ public class ReviewMajorController extends BaseController {
             }
         }
 //        return ResponseData.success(0, "导入成功", "");
+    }
+
+
+
+    @RequestMapping("/addAccount")
+    @ResponseBody
+    public ResponseData addAccount(@Valid UserDto user, String majorType, Integer joinType, Long ownForumId) {
+        ResponseData responseData = new ResponseData();
+        /*StringBuffer id=new StringBuffer();
+        Random random = new Random();
+        for (int i = 0; i < 8; i++) {
+            char s = 0;
+            int j=random.nextInt(3) % 4;
+            switch (j) {
+                case 0:
+                    //随机生成数字
+                    s = (char) (random.nextInt(57) % (57 - 48 + 1) + 48);
+                    break;
+                case 1:
+                    //随机生成大写字母
+                    s = (char) (random.nextInt(90) % (90 - 65 + 1) + 65);
+                    break;
+                case 2:
+                    //随机生成小写字母
+                    s = (char) (random.nextInt(122) % (122 - 97 + 1) + 97);
+                    break;
+            }
+            id.append(s);
+        }
+        String password = id.toString();
+        log.info("password---" + password);*/
+        long uid = ToolUtil.getNum19();
+        user.setUserId(uid);
+        user.setAccount(user.getPhone());
+        user.setPassword("11111111");
+
+        if (majorType != null && majorType != ""){
+            user.setRoleId("4");
+            ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
+            reviewMajorParam.setReviewId(uid);
+            reviewMajorParam.setDirect(user.getName());
+            reviewMajorParam.setApplyTime(new Date());
+            reviewMajorParam.setThesisCount(0);
+            reviewMajorParam.setRefuseCount(0);
+            reviewMajorParam.setReviewCount(0);
+            reviewMajorParam.setCheckStatus(0);
+            reviewMajorParam.setMajorType(majorType);
+            this.userService.addUser(user);
+            reviewMajorService.add(reviewMajorParam);
+        }
+        if (joinType != null){
+            user.setRoleId("5");
+            MeetMemberParam meetMemberParam = new MeetMemberParam();
+            meetMemberParam.setUserId(uid);
+            meetMemberParam.setRegTime(new Date());
+            meetMemberParam.setSpeak(1);
+            meetMemberParam.setThesisId(0l);
+            if (joinType == 0){
+                meetMemberParam.setOwnForumid(0l);
+            }else {
+                meetMemberParam.setOwnForumid(ownForumId);
+            }
+            this.userService.addUser(user);
+            meetMemberService.add(meetMemberParam);
+        }
+
+        return SUCCESS_TIP;
     }
 
 }

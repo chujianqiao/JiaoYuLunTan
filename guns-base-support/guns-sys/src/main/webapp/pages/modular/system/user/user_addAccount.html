@@ -1,0 +1,141 @@
+@layout("/common/_form.html",{js:["/assets/modular/system/user/user_addAccount.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+<link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
+<link rel="stylesheet" href="${ctxPath}/assets/common/css/common.css" />
+<link rel="stylesheet" href="${ctxPath}/assets/common/css/border-1px.css" />
+<link rel="stylesheet" media="screen and (min-width:751px)" href="${ctxPath}/assets/common/css/custom_pc.css">
+<link rel="stylesheet" media="screen and (max-width:751px)" href="${ctxPath}/assets/common/css/custom_mobile.css" />
+
+<link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+<link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}" media="all"/>
+<link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>
+
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">${lang.get("TITLE_BASE_INFO","个人基本信息")}</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <div class="forms">
+                        <div class="form-tab fontSize16 mb30" id="formTab">
+                            <span class="inlineBlock hover">生成专家账号</span>
+                            <span class="inlineBlock">生成嘉宾账号</span>
+                        </div>
+                        <div class="form-box" id="formList" style="width: 400px;margin: auto;">
+                            <div class="form">
+                                <form class="layui-form" id="expertForm" lay-filter="expertForm">
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_NAME","名称")}<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input name="name" placeholder="请输入专家姓名" type="text" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_WORK_UNIT","工作单位")}<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input name="workUnit" placeholder="请输入工作单位" type="text" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_WORK_UNIT","专家领域")}<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input name="majorType" placeholder="请输入专家领域" type="text" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_SEX","性别")}</label>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="sex" value="M" title="男" checked/>
+                                            <input type="radio" name="sex" value="F" title="女"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_PHONE","电话")}<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input name="phone" placeholder="请输入电话" type="text" class="layui-input" lay-verify="required|phone" required/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-bottom text-center">
+                                        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("BTN_CREATE","生成")}&emsp;</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;${lang.get("BTN_CANCEL","取消")}&emsp;</button>
+                                    </div>
+                                </form>
+                            </div><!--end of form-->
+                            <div class="form hide">
+                                <div class="form-box" id="typeList">
+                                    <div class="type">
+                                        <form class="layui-form" id="guestForm" lay-filter="guestForm">
+
+                                            <div class="layui-inline layui-col-md12">
+                                                <label class="layui-form-label">${lang.get("FIELD_NAME","名称")}<span style="color: red;">*</span></label>
+                                                <div class="layui-input-block">
+                                                    <input name="name" placeholder="请输入嘉宾姓名" type="text" class="layui-input" lay-verify="required" required/>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="layui-inline layui-col-md12">
+                                                <label class="layui-form-label">${lang.get("FIELD_WORK_UNIT","工作单位")}<span style="color: red;">*</span></label>
+                                                <div class="layui-input-block">
+                                                    <input name="workUnit" placeholder="请输入工作单位" type="text" class="layui-input" lay-verify="required" required/>
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-inline layui-col-md12">
+                                                <label class="layui-form-label">${lang.get("FIELD_SEX","性别")}</label>
+                                                <div class="layui-input-block">
+                                                    <input type="radio" name="sex" value="M" title="男" checked/>
+                                                    <input type="radio" name="sex" value="F" title="女"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-inline layui-col-md12">
+                                                <label class="layui-form-label">${lang.get("FIELD_PHONE","电话")}<span style="color: red;">*</span></label>
+                                                <div class="layui-input-block">
+                                                    <input name="phone" placeholder="请输入电话" type="text" class="layui-input" lay-verify="required|phone" required/>
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-inline layui-col-md12">
+                                                <label class="layui-form-label">${lang.get("FIELD_JOIN_TYPE","参会类别")}<span style="color: red;">*</span></label>
+                                                <div class="layui-input-block">
+                                                    <input type="radio" lay-filter="joinType" name="joinType" value="0" title="大会" checked/>
+                                                    <input type="radio" lay-filter="joinType" name="joinType" value="1" title="论坛"/>
+                                                </div>
+                                            </div>
+
+                                            <div id="ownForumDiv" class="layui-inline layui-col-md12" style="display: none">
+                                                <label class="layui-form-label">${lang.get("FIELD_OWN_FORUM","参加论坛")}<span style="color: red;">*</span></label>
+                                                <div class="layui-input-block">
+                                                    <select id="ownForumId" name="ownForumId" lay-verify="" lay-search></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-bottom text-center">
+                                                <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("BTN_CREATE","生成")}&emsp;</button>
+                                                <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;${lang.get("BTN_CANCEL","取消")}&emsp;</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div><!--end of form-->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+<script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
+<script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
+<script src="${ctxPath}/assets/common/js/custom.js"></script>
+<script>
+    $(document).ready(function(){
+        myJs.navTab();
+        myJs.formTab();
+    });
+</script>
+@}

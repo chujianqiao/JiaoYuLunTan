@@ -53,8 +53,8 @@ public class MeetMemberServiceImpl extends ServiceImpl<MeetMemberMapper, MeetMem
     }
 
     @Override
-    public List<MeetMemberResult> findListBySpec(MeetMemberParam param){
-        return null;
+    public List<MeetMemberResult> findListBySpec(){
+        return this.baseMapper.customListAll();
     }
 
     @Override

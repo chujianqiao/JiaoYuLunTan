@@ -149,6 +149,16 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     /**
+     * 修改用户状态
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:45
+     */
+    public int editUserByWrong(Long userId, String status, Integer wrongTimes) {
+        return this.baseMapper.editUserByWrong(userId, status, wrongTimes);
+    }
+
+    /**
      * 修改密码
      *
      * @author fengshuonan

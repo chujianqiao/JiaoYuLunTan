@@ -1,0 +1,152 @@
+@layout("/common/_form.html",{js:["/assets/modular/system/user/newPwd.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>忘记密码</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/common.css" />
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/border-1px.css" />
+    <link rel="stylesheet" media="screen and (min-width:751px)" href="${ctxPath}/assets/common/css/custom_pc.css">
+    <link rel="stylesheet" media="screen and (max-width:751px)" href="${ctxPath}/assets/common/css/custom_mobile.css" />
+
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}" media="all"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>
+
+    <script type="text/javascript">
+        var Feng = {
+            ctxPath: "${ctxPath}",
+            version: '${constants.getReleaseVersion()}'
+        };
+    </script>
+    <script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+    <script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+
+</head>
+<style>
+    .for-liucheng {
+        width: 640px;
+        margin: 30px auto;
+        height: 50px;
+        padding: 20px 0 0 0;
+        position: relative
+    }
+    .liulist {
+        float: left;
+        width: 33.3%;
+        height: 7px;
+        background: #ccc
+    }
+
+    .liutextbox {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 30px
+    }
+
+    .liutextbox .liutext {
+        float: left;
+        width: 33.3%;
+        margin-top: -24px;
+        text-align: center
+    }
+
+    .liutextbox .liutext em {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        -moz-border-radius: 24px;
+        -webkit-border-radius: 24px;
+        border-radius: 24px;
+        background: #ccc;
+        text-align: center;
+        font-size: 14px;
+        line-height: 24px;
+        font-style: normal;
+        font-weight: bold;
+        color: #fff
+    }
+
+    .liutextbox .liutext strong {
+        display: inline-block;
+        height: 26px;
+        line-height: 26px
+    }
+
+    .liulist.for-cur {
+        background: rgb(0,172,210);
+    }
+
+    .liutextbox .for-cur em {
+        background: rgb(0,172,210);
+    }
+
+    .liutextbox .for-cur strong {
+        color: rgb(0,172,210);
+    }
+</style>
+<div class="page">
+    <header>
+        <div class="head mCenter widthC pr">
+            <img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
+            <div class="language-select pa">
+                <img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
+                <div class="language-select-box pr">
+                    <div class="language fontSize16">
+                        <a href="#">中文</a>
+                        <a href="#" class="hover">英文</a>
+                    </div>
+                    <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn pa" id="langSelect" />
+                </div>
+            </div>
+        </div>
+    </header>
+<div class="layui-fluid" style="padding-bottom: 75px;">
+    <div class="layui-card">
+        <div class="layui-card-header" style="height: 100px">
+            <div class="for-liucheng">
+                <div class="liutextbox">
+                    <div id="topList1" class="liulist"></div>
+                    <div id="topList2" class="liulist for-cur"></div>
+                    <div id="topList3" class="liulist"></div>
+                    <div id="topText1" class="liutext"><em>1</em><br/>
+                        <strong>验证身份</strong></div>
+                    <div id="topText2" class="liutext for-cur"><em>2</em><br/>
+                        <strong>设置新密码</strong></div>
+                    <div id="topText3" class="liutext"><em>3</em><br/>
+                        <strong>完成</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <form class="layui-form" id="userForm" lay-filter="userForm">
+                <div class="layui-form-item layui-row" style="width: 400px;margin: 50px auto 0 auto;">
+                    <input name="userId" type="hidden"/>
+                    <input name="account" value="${account}" type="hidden"/>
+                    <input name="roleId" value="3" type="hidden"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">${lang.get("FIELD_PASSWORD","密码")}<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="password" placeholder="请输入密码" type="password" class="layui-input" lay-verify="required|psw" autocomplete="new-password" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">${lang.get("FIELD_REPEAT_PASSWORD","重复密码")}<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="rePassword" placeholder="请输入重复密码" type="password" class="layui-input" autocomplete="new-password" lay-verify="required|repsw" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12" style="margin-left: 43%">
+                        <button class="layui-btn" lay-filter="btnSubmit" style="background-color: rgb(0,172,210);" lay-submit>&emsp;提交&emsp;</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+    @include("/common/person_footer.html"){}
+</div>
+@}

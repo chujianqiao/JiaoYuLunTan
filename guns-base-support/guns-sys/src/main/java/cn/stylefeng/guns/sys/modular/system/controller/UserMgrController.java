@@ -39,12 +39,15 @@ import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import cn.stylefeng.roses.kernel.model.response.SuccessResponseData;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,6 +57,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -64,7 +68,8 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/mgr")
-    @Validated
+@Validated
+@Slf4j
 public class UserMgrController extends BaseController {
 
     private static String PREFIX = "/modular/system/user/";
@@ -91,7 +96,11 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/user_add")
     public String addView() {
-        return PREFIX + "user_add.html";
+        return PREFIX + "user_addAdmin.html";
+    }
+    @RequestMapping("/user_addUnit")
+    public String addUnitView() {
+        return PREFIX + "user_addUnitAdmin.html";
     }
 
     /**
@@ -107,6 +116,86 @@ public class UserMgrController extends BaseController {
     @RequestMapping("/user_registeUnit")
     public String registeUnitView() {
         return PREFIX + "user_addUnit.html";
+    }
+
+    /**
+     * 跳转到生成账号的页面
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:43
+     */
+    @RequestMapping("/user_addAccount")
+    public String toAddAccount() {
+        return PREFIX + "user_addAccount.html";
+    }
+
+
+    /**
+     * 跳转到忘记密码的页面
+     *
+     * @author chu
+     * @Date 2020/06/30 22:43
+     */
+    @RequestMapping("/forgetPwd")
+    public String forgetPwd() {
+        return PREFIX + "forgetPwd.html";
+    }
+    @RequestMapping("/toForgetPwdOne")
+    public String toForgetPwdOne(ModelMap map, String account) {
+        map.addAttribute("account", account);
+        return PREFIX + "newPwd.html";
+    }
+    @RequestMapping("/toForgetPwdTwo")
+    public String toForgetPwdTwo() {
+        return PREFIX + "finishPwd.html";
+    }
+    @RequestMapping("/forgetPwdOne")
+    @ResponseBody
+    public ResponseData forgetPwdOne(HttpServletRequest request, String account, String phone, String smsCode) {
+        JSONObject json = (JSONObject)request.getSession().getAttribute("smsCode");
+        ResponseData responseData = new ResponseData();
+        User user = this.userService.getByAccount(account);
+        if (user == null){
+            responseData.setMessage("userError");
+            return responseData;
+        }
+        if (json == null){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if (!json.getString("phone").equals(phone)){
+            responseData.setMessage("phoneError");
+            return responseData;
+        }
+        if (!json.getString("smsCode").equals(smsCode)){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if ((System.currentTimeMillis() - json.getLong("createTime")) > 1000 * 60 * 5){
+            responseData.setMessage("overTime");
+            return responseData;
+        }
+        responseData.setMessage(account);
+        return responseData;
+    }
+    @RequestMapping("/forgetPwdTwo")
+    @ResponseBody
+    public ResponseData forgetPwdTwo(String password, String account) {
+        ResponseData responseData = new ResponseData();
+        User user = this.userService.getByAccount(account);
+        if (user == null){
+            responseData.setMessage("error");
+            return responseData;
+        }
+        user.setSalt(SaltUtil.getRandomSalt());
+        user.setPassword(SaltUtil.md5Encrypt(password, user.getSalt()));
+        if (this.userService.updateById(user)){
+            responseData.setMessage("success");
+            return responseData;
+        }else {
+            responseData.setMessage("error");
+            return responseData;
+        }
     }
 
     /**
@@ -216,9 +305,27 @@ public class UserMgrController extends BaseController {
      * @Date 2018/12/24 22:44
      */
     @RequestMapping("/add")
-    @BussinessLog(value = "添加管理员", key = "account", dict = UserDict.class)
+    //@BussinessLog(value = "添加管理员", key = "account", dict = UserDict.class)
     @ResponseBody
-    public ResponseData add(@Valid UserDto user) {
+    public ResponseData add(@Valid UserDto user, HttpServletRequest request, String smsCode) {
+        JSONObject json = (JSONObject)request.getSession().getAttribute("smsCode");
+        ResponseData responseData = new ResponseData();
+        if(json == null){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if(!json.getString("phone").equals(user.getPhone())){
+            responseData.setMessage("phoneError");
+            return responseData;
+        }
+        if(!json.getString("smsCode").equals(smsCode)){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if((System.currentTimeMillis() - json.getLong("createTime")) > 1000 * 60 * 5){
+            responseData.setMessage("overTime");
+            return responseData;
+        }
         this.userService.addUser(user);
         return SUCCESS_TIP;
     }
@@ -331,7 +438,7 @@ public class UserMgrController extends BaseController {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
         }
         this.userService.assertAuth(userId);
-        this.userService.setStatus(userId, ManagerStatus.OK.getCode());
+        this.userService.editUserByWrong(userId, ManagerStatus.OK.getCode(), 0);
         return SUCCESS_TIP;
     }
 

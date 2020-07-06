@@ -53,7 +53,7 @@ public interface MeetMemberService extends IService<MeetMember> {
      * @author wucy
      * @Date 2020-05-20
      */
-    List<MeetMemberResult> findListBySpec(MeetMemberParam param);
+    List<MeetMemberResult> findListBySpec();
 
     /**
      * 查询分页数据，Specification模式

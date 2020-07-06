@@ -41,7 +41,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
             {field: 'phone', align: "center", sort: true, title: langs.FIELD_PHONE, minWidth: 117},
             {field: 'createTime', align: "center", sort: true, title: langs.FIELD_CREATE_TIME, minWidth: 160},
             {field: 'status', align: "center", sort: true, templet: '#statusTpl', title: langs.FIELD_STATUS},
-            {align: 'center', toolbar: '#tableBar', title: langs.FIELD_OPERATION, minWidth: 480}
+            {align: 'center', toolbar: '#tableBar', title: langs.FIELD_OPERATION, minWidth: 280}
         ]];
     };
 
@@ -90,7 +90,21 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
 
         func.open({
             title: langs.TITLE_ADD_USER,
-            content: Feng.ctxPath + '/mgr/user_registeUnit',
+            content: Feng.ctxPath + '/mgr/user_addUnit',
+            tableId: MgrUser.tableId
+        });
+    };
+    /**
+     * 弹出生成账号
+     */
+    MgrUser.openAddAccount = function () {
+
+        //获取多语言
+        var langs = layui.data('system').lang;
+
+        func.open({
+            title: langs.TITLE_ADD_USER,
+            content: Feng.ctxPath + '/mgr/user_addAccount',
             tableId: MgrUser.tableId
         });
     };
@@ -250,6 +264,10 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
     // 添加按钮点击事件
     $('#btnAddU').click(function () {
         MgrUser.openAddUnit();
+    });
+    // 添加按钮点击事件
+    $('#btnAddA').click(function () {
+        MgrUser.openAddAccount();
     });
 
     // 导出excel

@@ -165,6 +165,24 @@ public class User implements Serializable {
     @TableField("direction")
     private String direction;
 
+    /**
+     * 错误次数
+     */
+    @TableField("wrong_times")
+    private Integer wrongTimes;
+
+    /**
+     * 身份证号码
+     */
+    @TableField("id_card")
+    private String idCard;
+
+    /**
+     * 银行卡号码
+     */
+    @TableField("bank_card")
+    private String bankCard;
+
 
     public Long getUserId() {
         return userId;
@@ -358,6 +376,30 @@ public class User implements Serializable {
         this.direction = direction;
     }
 
+    public Integer getWrongTimes() {
+        return wrongTimes;
+    }
+
+    public void setWrongTimes(Integer wrongTimes) {
+        this.wrongTimes = wrongTimes;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String getBankCard() {
+        return bankCard;
+    }
+
+    public void setBankCard(String bankCard) {
+        this.bankCard = bankCard;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -385,6 +427,9 @@ public class User implements Serializable {
         ", post=" + post +
         ", education=" + education +
         ", direction=" + direction +
+        ", wrongTimes=" + wrongTimes +
+        ", idCard=" + idCard +
+        ", bankCard=" + bankCard +
         "}";
     }
 }

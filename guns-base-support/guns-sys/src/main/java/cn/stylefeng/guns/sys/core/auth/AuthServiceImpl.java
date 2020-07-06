@@ -38,7 +38,9 @@ import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.factory.UserFactory;
 import cn.stylefeng.guns.sys.modular.system.mapper.MenuMapper;
 import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
+import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.DictService;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.roses.core.util.HttpContext;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.core.util.ToolUtil;
@@ -65,6 +67,9 @@ public class AuthServiceImpl implements AuthService {
     private UserMapper userMapper;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private MenuMapper menuMapper;
 
     @Autowired
@@ -81,6 +86,7 @@ public class AuthServiceImpl implements AuthService {
     public String login(String username, String password) {
 
         User user = userMapper.getByAccount(username);
+        UserDto userDto = new UserDto();
 
         // 账号不存在
         if (null == user) {
@@ -91,6 +97,20 @@ public class AuthServiceImpl implements AuthService {
         String requestMd5 = SaltUtil.md5Encrypt(password, user.getSalt());
         String dbMd5 = user.getPassword();
         if (dbMd5 == null || !dbMd5.equalsIgnoreCase(requestMd5)) {
+            int wrongTimes = 0;
+            String status = "ENABLE";
+            if (user.getWrongTimes() != null){
+                wrongTimes = user.getWrongTimes() + 1;
+                if (user.getWrongTimes() == 4){
+                    status = "LOCKED";
+                }
+            }
+
+            if (user.getWrongTimes() >= 5){
+                throw new AuthException(AuthExceptionEnum.ACCOUNT_FREEZE_ERROR);
+            }else {
+                userMapper.editUserByWrong(user.getUserId(),status,wrongTimes);
+            }
             throw new AuthException(AuthExceptionEnum.USERNAME_PWD_ERROR);
         }
 
@@ -126,6 +146,12 @@ public class AuthServiceImpl implements AuthService {
 
         //创建cookie
         addLoginCookie(token);
+
+        if (user.getUserId() != null){
+            int wrongTimes = 0;
+            String status = "ENABLE";
+            userMapper.editUserByWrong(user.getUserId(),status,wrongTimes);
+        }
 
         return token;
     }

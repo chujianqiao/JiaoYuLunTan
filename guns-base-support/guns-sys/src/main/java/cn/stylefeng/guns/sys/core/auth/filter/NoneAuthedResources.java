@@ -37,6 +37,13 @@ public class NoneAuthedResources {
             "/mgr/add",
             "/mgr/user_registe",
             "/mgr/user_registeUnit",
+            "/check/checkSMS",
+            "/check/checkEmail",
+            "/mgr/forgetPwd",
+            "/mgr/toForgetPwdOne",
+            "/mgr/toForgetPwdTwo",
+            "/mgr/forgetPwdOne",
+            "/mgr/forgetPwdTwo",
 
             //加载当前语言字典并缓存
             "/translation/getUserTranslation",

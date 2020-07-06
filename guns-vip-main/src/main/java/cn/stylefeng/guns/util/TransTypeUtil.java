@@ -68,8 +68,9 @@ public class TransTypeUtil {
 	 * @return
 	 */
 	public static Map<Object,Object> getIsPass(){
-		isPass.put(0,"未通过");
-		isPass.put(1,"通过");
+		isPass.put(0,"不同意参会");
+		isPass.put(1,"同意参会");
+		isPass.put(2,"同意参会并推荐优秀");
 		return isPass;
 	}
 }

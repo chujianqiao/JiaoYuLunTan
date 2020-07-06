@@ -8,9 +8,9 @@
                 @if(tool.isEmpty(menu.children)){
                 <li class="layui-nav-item">
                     @if(itemLP.first && menuLP.first){
-                    <a id="firstPageAction" lay-href="${menu.url}"><i class="layui-icon ${menu.icon}"></i>&emsp;<cite>${menu.name}</cite></a>
+                    <a id="firstPageAction" lay-href="${menu.url}" title="${menu.name}"><i class="layui-icon ${menu.icon}"></i>&emsp;<cite>${menu.name}</cite></a>
                     @}else{
-                    <a lay-href="${menu.url}"><i class="layui-icon ${menu.icon}"></i>&emsp;<cite>${menu.name}</cite></a>
+                    <a lay-href="${menu.url}" title="${menu.name}"><i class="layui-icon ${menu.icon}"></i>&emsp;<cite>${menu.name}</cite></a>
                     @}
                 </li>
                 @}else{

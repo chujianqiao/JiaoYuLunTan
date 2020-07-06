@@ -37,7 +37,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
     // 添加表单验证方法
     form.verify({
-        psw: [/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'],
+        psw: [/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{8}$/, '密码必须由8位大小写字母加数字组合！'],
         repsw: function (value) {
             if (value !== $('#userForm input[name=password]').val()) {
                 return '两次密码输入不一致';
@@ -53,13 +53,21 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
     // 表单提交事件
     form.on('submit(btnSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/mgr/add", function (data) {
-            Feng.success("添加成功！");
+            console.log(data)
+            if (data.message == 'codeError') {
+                Feng.error("验证码错误！");
+            }else if (data.message == 'phoneError') {
+                Feng.error("手机号错误！");
+            }else if (data.message == 'overTime') {
+                Feng.error("验证码已过期！");
+            }else {
+                Feng.success("注册成功！");
+                //传给上个页面，刷新table用
+                admin.putTempData('formOk', true);
 
-            //传给上个页面，刷新table用
-            admin.putTempData('formOk', true);
-
-            //关掉对话框
-            admin.closeThisDialog();
+                //关掉对话框
+                admin.closeThisDialog();
+            }
 
         }, function (data) {
             Feng.error("添加失败！" + data.responseJSON.message)
@@ -77,4 +85,118 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
         keyName: 'name',
         keyVal: 'positionId'
     });*/
+
+
+
+
+
+
+
+    var countdownHandler = function(){
+        var $button = $("#sentSmsCode");
+        var number = 60;
+        var countdown = function(){
+            if (number == 0) {
+                $button.attr("disabled",false);
+                $button.html("发送验证码");
+                number = 60;
+                return;
+            } else {
+                $button.attr("disabled",true);
+                $button.html(number + "秒后重新发送");
+                number--;
+            }
+            setTimeout(countdown,1000);
+        }
+        setTimeout(countdown,1000);
+    }
+    //发送短信验证码
+    $("#sentSmsCode").on("click", function(){
+        var $phone = $("input[name=phone]");
+        var data = {};
+        data.phone = $.trim($phone.val());
+        if(data.phone == ''){
+            Feng.error('请输入手机号码');
+            return;
+        }
+        var reg = /^1\d{10}$/;
+        if(!reg.test(data.phone)){
+            Feng.error('请输入合法的手机号码');
+            return ;
+        }
+        $.ajax({
+            url: Feng.ctxPath +"/check/checkSMS",
+            async : true,
+            type: "post",
+            dataType: "text",
+            data: data,
+            success: function (data) {
+                if(data != 'error'){
+                    countdownHandler();
+                    return ;
+                }
+
+            }
+        });
+    })
+
+    $("#nextSubmit").on("click", function(){
+        $.ajax({
+            url: Feng.ctxPath +"/mgr/forgetPwdOne",
+            async : true,
+            type: "post",
+            dataType: "text",
+            data: "",
+            success: function (data) {
+                Feng.success("更新成功！");
+                window.location.href = Feng.ctxPath + "/mgr/toForgetPwdOne";
+
+            }
+        });
+    })
+
+
+    form.on('submit(nextSubmit)', function (data) {
+        $.ajax({
+            url: Feng.ctxPath +"/mgr/forgetPwdOne",
+            async : true,
+            type: "post",
+            dataType: "text",
+            data: "",
+            success: function (data) {
+                Feng.success("更新成功！");
+                window.location.href = Feng.ctxPath + "/mgr/toForgetPwdOne";
+
+            }
+        });
+    });
+
+    form.on('submit(passSubmit)', function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/mgr/forgetPwdTwo", function (data) {
+            window.location.href = Feng.ctxPath + "/mgr/toForgetPwdTwo";
+            /*console.log(data)
+            if (data.message == 'codeError') {
+                Feng.error("验证码错误！");
+            }else if (data.message == 'phoneError') {
+                Feng.error("手机号错误！");
+            }else if (data.message == 'overTime') {
+                Feng.error("验证码已过期！");
+            }else {
+                Feng.success("注册成功！");
+                //传给上个页面，刷新table用
+                admin.putTempData('formOk', true);
+
+                //关掉对话框
+                admin.closeThisDialog();
+            }*/
+
+        }, function (data) {
+            Feng.error("添加失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.start();
+
+        //添加 return false 可成功跳转页面
+        return false;
+    });
 });

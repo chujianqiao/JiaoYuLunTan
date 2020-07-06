@@ -57,7 +57,7 @@
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.thesis.model.params.ThesisParam">
         select
         <include refid="Base_Column_List"/>
-        from thesis where 1 = 1
+        from thesis where 1 = 1 and thesis_id != 0
         <if test="paramCondition.thesisTitle != null and paramCondition.thesisTitle != ''">
             and thesis_title like CONCAT('%',#{paramCondition.thesisTitle},'%')
         </if>

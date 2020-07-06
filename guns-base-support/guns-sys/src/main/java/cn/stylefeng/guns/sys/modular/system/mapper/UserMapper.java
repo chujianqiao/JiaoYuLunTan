@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -67,4 +69,11 @@ public interface UserMapper extends BaseMapper<User> {
 
 
     List<Map<String, Object>> majorMapList(@Param("roleIds") String roleIds);
+
+
+    /**
+     * 修改用户状态
+     */
+    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    int editUserByWrong(@Param("userId") Long userId, @Param("status") String status, @Param("wrongTimes") Integer wrongTimes);
 }

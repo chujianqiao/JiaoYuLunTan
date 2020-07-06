@@ -30,6 +30,15 @@ public interface MeetMemberMapper extends BaseMapper<MeetMember> {
     List<MeetMemberResult> customList(@Param("paramCondition") MeetMemberParam paramCondition);
 
     /**
+     * 获取列表
+     *
+     * @author wucy
+     * @Date 2020-05-20
+     */
+    List<MeetMemberResult> customListAll();
+
+
+    /**
      * 获取map列表
      *
      * @author wucy

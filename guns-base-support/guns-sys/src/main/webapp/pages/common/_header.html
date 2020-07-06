@@ -38,6 +38,18 @@
 
     </ul>
     <ul class="layui-nav layui-layout-right">
+        <!--<li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">年选择器</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="test2" placeholder="yyyy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>-->
         <li class="layui-nav-item" lay-unselect>
             <a>
                 <!--<img src="${avatar!}" class="layui-nav-img">-->
@@ -69,3 +81,17 @@
         </li>-->
     </ul>
 </div>
+
+<script src="../../assets/common/libs/layui/layui.js"></script>
+<script>
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+        //年月选择器
+        laydate.render({
+            elem: '#test2'
+            , type: 'year'
+        });
+
+    });
+
+</script>

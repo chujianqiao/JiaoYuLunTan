@@ -55,6 +55,9 @@
         <result column="post" property="post" />
         <result column="education" property="education" />
         <result column="direction" property="direction" />
+        <result column="wrong_times" property="wrongTimes" />
+        <result column="id_card" property="idCard" />
+        <result column="bank_card" property="bankCard" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -63,7 +66,7 @@
     </sql>
 
     <sql id="Base_Column_List_With_Pwd">
-		 user_id AS "userId", avatar AS "avatar", account AS "account", salt AS "salt", password AS "password", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version"
+		 user_id AS "userId", avatar AS "avatar", account AS "account", salt AS "salt", password AS "password", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", wrong_times AS "wrongTimes"
 	</sql>
 
     <select id="selectUsers" resultType="map">
@@ -232,6 +235,10 @@
 
     <update id="setStatus">
 		update sys_user set status = #{status} where user_id = #{userId}
+	</update>
+
+    <update id="editUserByWrong">
+		update sys_user set status = #{status}, wrong_times = #{wrongTimes} where user_id = #{userId}
 	</update>
 
     <update id="changePwd">

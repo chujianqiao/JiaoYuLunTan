@@ -33,10 +33,8 @@ public class UserDto {
 
     private Long userId;
 
-    @NotBlank
     private String account;
 
-    @NotBlank
     private String password;
 
 
@@ -47,7 +45,6 @@ public class UserDto {
 
     private String sex;
 
-    @NotBlank
     private String email;
 
     private String phone;
@@ -71,6 +68,12 @@ public class UserDto {
     private String education;
 
     private String direction;
+
+    private Integer wrongTimes;
+
+    private String idCard;
+
+    private String bankCard;
 
     /*@NotBlank
     private String position;*/

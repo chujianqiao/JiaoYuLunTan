@@ -102,6 +102,15 @@ public class UserFactory {
             if (ToolUtil.isNotEmpty(newUser.getDirection())) {
                 oldUser.setDirection(newUser.getDirection());
             }
+            if (ToolUtil.isNotEmpty(newUser.getWrongTimes())) {
+                oldUser.setWrongTimes(newUser.getWrongTimes());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getIdCard())) {
+                oldUser.setIdCard(newUser.getIdCard());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getBankCard())) {
+                oldUser.setBankCard(newUser.getBankCard());
+            }
             return oldUser;
         }
     }

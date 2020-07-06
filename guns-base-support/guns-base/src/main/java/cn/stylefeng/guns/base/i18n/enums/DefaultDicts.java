@@ -45,7 +45,16 @@ public enum DefaultDicts {
     TITLE_ROLE_ASSIGN_2("TITLE_ROLE_ASSIGN", TranslationEnum.ENGLISH, "role assign"),
 
     FIELD_DEPT_1("FIELD_DEPT", TranslationEnum.CHINESE, "部门"),
-    FIELD_DEPT_2("FIELD_DEPT", TranslationEnum.ENGLISH, "dept");
+    FIELD_DEPT_2("FIELD_DEPT", TranslationEnum.ENGLISH, "dept"),
+
+    MENU_PERSONAL_INFO_1("MENU_PERSONAL_INFO", TranslationEnum.CHINESE, "个人中心"),
+    MENU_PERSONAL_INFO_2("MENU_PERSONAL_INFO", TranslationEnum.ENGLISH, "personal center"),
+
+    MENU_PAPER_REVIEW_1("MENU_PAPER_REVIEW", TranslationEnum.CHINESE, "论文评审"),
+    MENU_PAPER_REVIEW_2("MENU_PAPER_REVIEW", TranslationEnum.ENGLISH, "paper review"),
+
+    MENU_CALL_1("MENU_CALL", TranslationEnum.CHINESE, "论坛主题征集"),
+    MENU_CALL_2("MENU_CALL", TranslationEnum.ENGLISH, "Call for theme and subthemes");
 
     /**
      * 编码

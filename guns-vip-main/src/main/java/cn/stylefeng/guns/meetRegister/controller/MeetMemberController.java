@@ -24,13 +24,19 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -237,6 +243,33 @@ public class MeetMemberController extends BaseController {
         try {
             FileDownload.fileDownload(httpServletResponse, filePath, fileName);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 下载模板文件
+     * @author wucy
+     */
+    @GetMapping(path = "/loadThesisPdf", produces = "application/pdf")
+    @ResponseBody
+    public void loadPdf(@RequestParam(value = "thesisId", required = false)Long thesisId, HttpServletRequest request, HttpServletResponse response) {
+        Thesis thesis = this.thesisService.getById(thesisId);
+        //文件完整路径
+        String filePath = thesis.getThesisPath();
+        try{
+            response.setContentType("application/pdf");
+            FileInputStream in = new FileInputStream(filePath);
+            OutputStream out = response.getOutputStream();
+
+            byte[] b = new byte[1024];
+            while ((in.read(b)) != -1) {
+                out.write(b);
+            }
+            out.flush();
+            in.close();
+            out.close();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

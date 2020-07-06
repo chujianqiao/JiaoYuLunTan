@@ -94,4 +94,27 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
 
     });
 
+    $('#loadBtn').click(function(){
+        /*var form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        form.attr("target","_blank");
+        form.attr("method","get");
+        form.attr("action",Feng.ctxPath + "/assets/pdfview/web/viewer.html");    // 此处填写文件下载提交路径
+        var input1=$("<input>");
+        input1.attr("name","file");
+        input1.attr("value","/meetMember/loadThesisPdf");
+        input1.attr("style","display:none");
+        form.append(input1);
+        var input=$("<input>");
+        input.attr("name","thesisId");
+        input.attr("value",Feng.getUrlParam("thesisId"));
+        input.attr("style","display:none");
+        form.append(input);
+        $("body").append(form);    // 将表单放置在web中
+        form.submit();*/
+
+        window.open("/assets/pdfview/web/viewer.html?file=" + encodeURIComponent("/meetMember/loadThesisPdf?thesisId=" + Feng.getUrlParam("thesisId")));
+
+    });
+
 });

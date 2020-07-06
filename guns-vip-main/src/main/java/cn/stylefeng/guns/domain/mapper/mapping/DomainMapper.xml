@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.domain.mapper.DomainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.domain.entity.Domain">
+        <result column="domain_id" property="domainId" />
+        <result column="pid" property="pid" />
+        <result column="pids" property="pids" />
+        <result column="domain_name" property="domainName" />
+        <result column="description" property="description" />
+        <result column="version" property="version" />
+        <result column="sort" property="sort" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        domain_id AS "domainId", pid AS "pid", pids AS "pids", domain_name AS "domainName", description AS "description", version AS "version", sort AS "sort", create_time AS "createTime", update_time AS "updateTime", create_user AS "createUser", update_user AS "updateUser"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.domain.model.result.DomainResult" parameterType="cn.stylefeng.guns.domain.model.params.DomainParam">
+        select
+        <include refid="Base_Column_List"/>
+        from domain where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.domain.model.params.DomainParam">
+        select
+        <include refid="Base_Column_List"/>
+        from domain where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.domain.model.result.DomainResult" parameterType="cn.stylefeng.guns.domain.model.params.DomainParam">
+        select
+        <include refid="Base_Column_List"/>
+        from domain where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.domain.model.params.DomainParam">
+        select
+        <include refid="Base_Column_List"/>
+        from domain where 1 = 1
+    </select>
+
+</mapper>

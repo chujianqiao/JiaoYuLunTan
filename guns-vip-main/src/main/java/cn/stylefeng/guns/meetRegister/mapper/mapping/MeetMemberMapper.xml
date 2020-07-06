@@ -18,6 +18,11 @@
         member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime"
     </sql>
 
+    <select id="customListAll" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_member where 1 = 1
+    </select>
 
     <select id="customList" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
         select

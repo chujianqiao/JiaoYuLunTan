@@ -61,7 +61,13 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		//论坛
 		long ownForumid = Long.parseLong(map.get("ownForumid").toString());
 		OwnForum ownForum = ownForumMapper.selectById(ownForumid);
-		String forumName = ownForum.getForumName();
+		String forumName = "";
+		if (ownForum == null){
+			forumName = "未选择";
+		}else {
+			forumName = ownForum.getForumName();
+		}
+
 
 		int isSpeak = Integer.parseInt(map.get("speak").toString());
 		String speak = TransTypeUtil.getIsOrNo().get(isSpeak).toString();
