@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.thesisDomain.mapper.ThesisDomainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.thesisDomain.entity.ThesisDomain">
+        <id column="domain_id" property="domainId" />
+        <result column="pid" property="pid" />
+        <result column="pids" property="pids" />
+        <result column="domain_name" property="domainName" />
+        <result column="description" property="description" />
+        <result column="version" property="version" />
+        <result column="sort" property="sort" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        domain_id AS "domainId", pid AS "pid", pids AS "pids", domain_name AS "domainName", description AS "description", version AS "version", sort AS "sort", create_time AS "createTime", update_time AS "updateTime", create_user AS "createUser", update_user AS "updateUser"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult" parameterType="cn.stylefeng.guns.thesisDomain.model.params.ThesisDomainParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_domain where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.thesisDomain.model.params.ThesisDomainParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_domain where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult" parameterType="cn.stylefeng.guns.thesisDomain.model.params.ThesisDomainParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_domain where 1 = 1
+		<if test="paramCondition.domainName != null and paramCondition.domainName != ''">
+			and domain_name like CONCAT('%',#{paramCondition.domainName},'%')
+		</if>
+		<if test="paramCondition.domainId != null and paramCondition.domainId != ''">
+			and (domain_id = #{paramCondition.domainId} or domain_id in ( select domain_id from thesis_domain where pids like CONCAT('%$[', #{paramCondition.domainId}, '$]%') escape '$' ))
+		</if>
+		order by sort ASC
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.thesisDomain.model.params.ThesisDomainParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_domain where 1 = 1
+    </select>
+
+    <select id="layuiTree" resultType="cn.stylefeng.guns.base.pojo.node.LayuiTreeNode">
+		select domain_id AS id, pid as "pid", domain_name as title,
+		(
+		CASE
+		WHEN (pid = 0 OR pid IS NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as "spread" from thesis_domain
+	</select>
+
+    <select id="layuiTree" resultType="cn.stylefeng.guns.base.pojo.node.LayuiTreeNode" databaseId="pgsql">
+		select domain_id AS id, pid as "pid", domain_name as title,
+		(
+		CASE
+		WHEN (pid = 0 OR pid IS NULL) THEN
+		'1'
+		ELSE
+		'0'
+		END
+		) as "spread" from thesis_domain
+	</select>
+
+    <select id="layuiTree" resultType="cn.stylefeng.guns.base.pojo.node.LayuiTreeNode" databaseId="oracle">
+		select domain_id AS id, pid as "pid", domain as title,
+		(
+		CASE
+		WHEN (pid = 0 OR pid IS NULL) THEN
+		'1'
+		ELSE
+		'0'
+		END
+		) as "spread" from thesis_domain
+	</select>
+
+    <select id="tree" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode">
+		select domain_id AS id, pid as "pId", domain_name as name,
+		(
+		CASE
+		WHEN (pid = 0 OR pid IS NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as "open" from thesis_domain
+	</select>
+
+    <select id="tree" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode" databaseId="pgsql">
+		select domain_id AS id, pid as "pId", domain_name as name,
+		(
+		CASE
+		WHEN (pid = 0 OR pid IS NULL) THEN
+		'1'
+		ELSE
+		'0'
+		END
+		) as "open" from thesis_domain
+	</select>
+
+    <select id="tree" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode" databaseId="oracle">
+		select domain_id AS id, pid as "pId", domain_name as name,
+		(
+		CASE
+		WHEN (pid = 0 OR pid IS NULL) THEN
+		'1'
+		ELSE
+		'0'
+		END
+		) as "open" from thesis_domain
+	</select>
+
+    <select id="treeviewNodes" resultType="cn.stylefeng.guns.base.pojo.node.TreeviewNode">
+        select domain_id AS tags, pid as "parentId", domain_name as text from thesis_domain
+    </select>
+
+	<select id="likePids" resultType="cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult">
+		select
+		<include refid="Base_Column_List"/>
+		from thesis_domain where 1 = 1
+		<if test="domainId != null and domainId != ''">
+			and pids LIKE CONCAT('%$[',#{domainId},'$]%') escape '$'
+		</if>
+	</select>
+
+	<select id="likePids" resultType="cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult" databaseId="pgsql">
+		select
+		<include refid="Base_Column_List"/>
+		from thesis_domain where 1 = 1
+		<if test="domainId != null and domainId != ''">
+			and pids LIKE '%[' || #{domainId} || ']%'
+		</if>
+	</select>
+
+    <select id="likePids" resultType="cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult" databaseId="oracle">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_domain where 1 = 1
+        <if test="domainId != null and domainId != ''">
+            and pids LIKE '%[' || #{domainId} || ']%'
+        </if>
+    </select>
+
+	<select id="list" resultType="map">
+		select
+		<include refid="Base_Column_List"/>
+		from thesis_domain where 1 = 1
+		<if test="condition != null and condition != ''">
+			and domain_name like CONCAT('%',#{condition},'%')
+		</if>
+		<if test="domainId != null and domainId != ''">
+			and (domain_id = #{domainId} or domain_id in ( select domain_id from thesis_domain where pids like CONCAT('%$[', #{domainId}, '$]%') escape '$' ))
+		</if>
+		order by sort ASC
+	</select>
+
+	<select id="list" resultType="map" databaseId="pgsql">
+		select
+		<include refid="Base_Column_List"/>
+		from thesis_domain where 1 = 1
+		<if test="condition != null and condition != ''">
+			and domain_name like ('%' || #{condition} || '%')
+		</if>
+		<if test="domainId != null and domainId != ''">
+			and (domain_id = #{domainId} or domain_id in ( select domain_id from thesis_domain where pids like '%[' ||  #{domainId} || ']%' ))
+		</if>
+		order by sort ASC
+	</select>
+
+	<select id="list" resultType="map" databaseId="oracle">
+		select
+		<include refid="Base_Column_List"/>
+		from thesis_domain where 1 = 1
+		<if test="condition != null and condition != ''">
+			and domain_name like ('%' || #{condition} || '%')
+		</if>
+		<if test="domainId != null and domainId != ''">
+			and (domain_id = #{domainId} or domain_id in ( select domain_id from thesis_domain where pids like '%[' ||  #{domainId} || ']%' ))
+		</if>
+		order by sort ASC
+	</select>
+
+
+	<select id="findByPid" resultType="cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult" parameterType="cn.stylefeng.guns.thesisDomain.model.params.ThesisDomainParam">
+		select
+		<include refid="Base_Column_List"/>
+		from thesis_domain where 1 = 1 and domain_id = #{pid}
+	</select>
+</mapper>

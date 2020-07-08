@@ -9,17 +9,21 @@ var MeetMemberInfoDlg = {
         speak: "",
         judge: "",
         ownForumid: "",
-        regTime: ""
+        regTime: "",
+        belongDomain: "",
+        pName: ""
     }
 };
 
-layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () {
+layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], function () {
     var $ = layui.jquery;
     var $ax = layui.ax;
     var form = layui.form;
     var admin = layui.admin;
     var upload = layui.upload;
     var func = layui.func;
+    var layer = layui.layer;
+
     var userTitle = $("#userTitle").val();
     if(userTitle != '教授'){
         $('#judge1').remove();
@@ -103,5 +107,23 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     //     });
     // });
 
+
+    // 点击上级角色时
+    $('#pName').click(function () {
+        var formName = encodeURIComponent("parent.MeetMemberInfoDlg.data.pName");
+        var formId = encodeURIComponent("parent.MeetMemberInfoDlg.data.belongDomain");
+        var treeUrl = encodeURIComponent("/thesisDomain/tree");
+
+        layer.open({
+            type: 2,
+            title: '父级领域',
+            area: ['300px', '400px'],
+            content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            end: function () {
+                $("#belongDomain").val(MeetMemberInfoDlg.data.belongDomain);
+                $("#pName").val(MeetMemberInfoDlg.data.pName);
+            }
+        });
+    });
 
 });

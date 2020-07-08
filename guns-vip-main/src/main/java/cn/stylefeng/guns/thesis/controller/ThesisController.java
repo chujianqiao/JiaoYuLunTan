@@ -23,6 +23,8 @@ import cn.stylefeng.guns.thesis.entity.Thesis;
 import cn.stylefeng.guns.thesis.model.params.ThesisParam;
 import cn.stylefeng.guns.thesis.service.ThesisService;
 import cn.stylefeng.guns.thesis.wrapper.ThesisWrapper;
+import cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult;
+import cn.stylefeng.guns.thesisDomain.service.ThesisDomainService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.guns.util.TransTypeUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
@@ -78,6 +80,9 @@ public class ThesisController extends BaseController {
 
     @Autowired
     private ReviewMajorService reviewMajorService;
+
+    @Autowired
+    private ThesisDomainService thesisDomainService;
 
     /**
      * 跳转到主页面
@@ -275,6 +280,8 @@ public class ThesisController extends BaseController {
         if(reviewNum != null){
             String reviewStr = TransTypeUtil.getIsPass().get(reviewNum).toString();
             map.put("reviewStr",reviewStr);
+        }else {
+            map.put("reviewStr","未评审");
         }
 
         Integer isGreatNum = detail.getGreat();
@@ -282,6 +289,29 @@ public class ThesisController extends BaseController {
             String isGreatStr = TransTypeUtil.getIsOrNo().get(isGreatNum).toString();
             map.put("isGreatStr",isGreatStr);
         }
+
+        String domainObj = detail.getBelongDomain();
+        String belongDomainStr = "";
+
+        if (domainObj.equals("") || domainObj == null){
+            belongDomainStr = "";
+        }else {
+            String[] domainList = domainObj.split(",");
+            for (int i = 0;i < domainList.length;i++){
+                Long pid = Long.parseLong(domainList[i]);
+                if (pid == null) {
+                    belongDomainStr = belongDomainStr + "";
+                } else if (pid == 0L) {
+                    belongDomainStr = belongDomainStr + "顶级;";
+                } else {
+                    ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(pid);
+                    if (cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult) && cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult.getDomainName())) {
+                        belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + ";";
+                    }
+                }
+            }
+        }
+        map.put("belongDomainStr",belongDomainStr);
 
         Date date = new Date(Long.parseLong(map.get("applyTime").toString()));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

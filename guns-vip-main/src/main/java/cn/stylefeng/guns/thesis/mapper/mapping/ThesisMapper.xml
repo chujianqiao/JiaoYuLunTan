@@ -25,11 +25,12 @@
         <result column="thesis_direct" property="thesisDirect" />
         <result column="thesis_path" property="thesisPath" />
         <result column="file_name" property="fileName" />
+        <result column="belong_domain" property="belongDomain" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        thesis_id AS "thesisId", thesis_title AS "thesisTitle", eng_title AS "engTitle", thesis_user AS "thesisUser", status AS "status", review_result AS "reviewResult", isgreat AS "isgreat", great_num AS "greatNum", great_id AS "greatId", apply_time AS "applyTime", thesis_text AS "thesisText", score AS "score", review_user AS "reviewUser", great AS "great", cn_keyword AS "cnKeyword", eng_keyword AS "engKeyword", cn_abstract AS "cnAbstract", eng_abstract AS "engAbstract", thesis_direct AS "thesisDirect", thesis_path AS "thesisPath", file_name AS "fileName"
+        thesis_id AS "thesisId", thesis_title AS "thesisTitle", eng_title AS "engTitle", thesis_user AS "thesisUser", status AS "status", review_result AS "reviewResult", isgreat AS "isgreat", great_num AS "greatNum", great_id AS "greatId", apply_time AS "applyTime", thesis_text AS "thesisText", score AS "score", review_user AS "reviewUser", great AS "great", cn_keyword AS "cnKeyword", eng_keyword AS "engKeyword", cn_abstract AS "cnAbstract", eng_abstract AS "engAbstract", thesis_direct AS "thesisDirect", thesis_path AS "thesisPath", file_name AS "fileName", belong_domain AS "belongDomain"
     </sql>
 
 

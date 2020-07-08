@@ -124,4 +124,9 @@ public class ThesisResult implements Serializable {
      */
     private String fileName;
 
+    /**
+     * 所属领域
+     */
+    private String belongDomain;
+
 }

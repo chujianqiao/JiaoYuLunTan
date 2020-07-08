@@ -82,6 +82,17 @@ Feng.zTreeCheckedNodes = function (zTreeId) {
     }
     return ids.substring(1);
 };
+
+Feng.zTreeCheckedNodesName = function (zTreeId) {
+    var zTree = $.fn.zTree.getZTreeObj(zTreeId);
+    var nodes = zTree.getCheckedNodes();
+    var name = "";
+    for (var i = 0, l = nodes.length; i < l; i++) {
+        name += ";" + nodes[i].name;
+    }
+    return name.substring(1);
+};
+
 Feng.closeAllLoading = function () {
     layer.closeAll('loading');
 };

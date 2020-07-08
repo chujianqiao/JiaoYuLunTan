@@ -59,14 +59,20 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		String thesisName = thesis.getThesisTitle();
 
 		//论坛
-		long ownForumid = Long.parseLong(map.get("ownForumid").toString());
-		OwnForum ownForum = ownForumMapper.selectById(ownForumid);
 		String forumName = "";
-		if (ownForum == null){
+		if (map.get("ownForumid") == "" || map.get("ownForumid") == null){
 			forumName = "未选择";
 		}else {
-			forumName = ownForum.getForumName();
+			long ownForumid = Long.parseLong(map.get("ownForumid").toString());
+			OwnForum ownForum = ownForumMapper.selectById(ownForumid);
+
+			if (ownForum == null){
+				forumName = "未选择";
+			}else {
+				forumName = ownForum.getForumName();
+			}
 		}
+
 
 
 		int isSpeak = Integer.parseInt(map.get("speak").toString());

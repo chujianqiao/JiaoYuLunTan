@@ -125,6 +125,11 @@ public class ThesisParam implements Serializable, BaseValidatingParam {
      */
     private String fileName;
 
+    /**
+     * 所属领域
+     */
+    private String belongDomain;
+
     @Override
     public String checkParam() {
         return null;

@@ -1,0 +1,59 @@
+@layout("/common/_form.html",{js:["/assets/thesisDomain/thesisDomain_add.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+
+<form class="layui-form" id="thesisDomainForm" lay-filter="thesisDomainForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="domainId" type="hidden"/>
+
+                    <!--<div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">父领域ID<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="pid" name="pid" placeholder="请输入父领域ID" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">父级ids<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="pids" name="pids" placeholder="请输入父级ids" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">领域名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="domainName" name="domainName" placeholder="请输入领域名称" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">上级名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="pid" name="pid" type="hidden">
+                            <input id="pName" name="pName" placeholder="请选择上级名称" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">备注<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="description" name="description" placeholder="请输入描述" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">排序<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="sort" name="sort" placeholder="请输入排序" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

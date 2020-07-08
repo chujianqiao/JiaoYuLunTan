@@ -1,4 +1,4 @@
-package cn.stylefeng.guns.domain.entity;
+package cn.stylefeng.guns.thesisDomain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -14,43 +14,76 @@ import java.io.Serializable;
  * </p>
  *
  * @author CHU
- * @since 2020-07-06
+ * @since 2020-07-07
  */
-@TableName("domain")
-public class Domain implements Serializable {
+@TableName("thesis_domain")
+public class ThesisDomain implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @TableField("domain_id")
+    /**
+     * 领域ID
+     */
+      @TableId(value = "domain_id", type = IdType.ID_WORKER)
     private Long domainId;
 
+    /**
+     * 父领域ID
+     */
     @TableField("pid")
     private Long pid;
 
+    /**
+     * 父级ids
+     */
     @TableField("pids")
     private String pids;
 
+    /**
+     * 领域名称
+     */
     @TableField("domain_name")
     private String domainName;
 
+    /**
+     * 描述
+     */
     @TableField("description")
     private String description;
 
+    /**
+     * 版本
+     */
     @TableField("version")
     private Integer version;
 
+    /**
+     * 排序
+     */
     @TableField("sort")
     private Integer sort;
 
+    /**
+     * 创建时间
+     */
       @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
+    /**
+     * 修改时间
+     */
       @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Date updateTime;
 
+    /**
+     * 创建人
+     */
       @TableField(value = "create_user", fill = FieldFill.INSERT)
     private Long createUser;
 
+    /**
+     * 修改人
+     */
       @TableField(value = "update_user", fill = FieldFill.UPDATE)
     private Long updateUser;
 
@@ -145,7 +178,7 @@ public class Domain implements Serializable {
 
     @Override
     public String toString() {
-        return "Domain{" +
+        return "ThesisDomain{" +
         "domainId=" + domainId +
         ", pid=" + pid +
         ", pids=" + pids +

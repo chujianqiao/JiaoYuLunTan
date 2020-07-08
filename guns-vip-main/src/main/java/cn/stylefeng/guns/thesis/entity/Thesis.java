@@ -146,6 +146,12 @@ public class Thesis implements Serializable {
     @TableField("file_name")
     private String fileName;
 
+    /**
+     * 所属领域
+     */
+    @TableField("belong_domain")
+    private String belongDomain;
+
 
     public Long getThesisId() {
         return thesisId;
@@ -315,6 +321,14 @@ public class Thesis implements Serializable {
         this.fileName = fileName;
     }
 
+    public String getBelongDomain() {
+        return belongDomain;
+    }
+
+    public void setBelongDomain(String belongDomain) {
+        this.belongDomain = belongDomain;
+    }
+
     @Override
     public String toString() {
         return "Thesis{" +
@@ -339,6 +353,7 @@ public class Thesis implements Serializable {
         ", thesisDirect=" + thesisDirect +
         ", thesisPath=" + thesisPath +
         ", fileName=" + fileName +
+        ", belongDomain=" + belongDomain +
         "}";
     }
 }
