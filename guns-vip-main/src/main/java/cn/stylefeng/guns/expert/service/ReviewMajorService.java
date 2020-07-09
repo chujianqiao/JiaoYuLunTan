@@ -77,4 +77,14 @@ public interface ReviewMajorService extends IService<ReviewMajor> {
      */
     Page<Map<String, Object>> findPageWrap(ReviewMajorParam param ,String paramIds);
 
+
+    /**
+     * 修改用户状态
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:45
+     */
+    Integer setStatus(Long reviewId, String status);
+
+    LayuiPageInfo majorMapList(String domain);
 }

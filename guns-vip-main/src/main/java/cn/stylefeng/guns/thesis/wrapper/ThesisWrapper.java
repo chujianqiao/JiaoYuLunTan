@@ -28,7 +28,7 @@ public class ThesisWrapper extends BaseControllerWrapper {
 	private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
 	private UserService userService = SpringContextHolder.getBean(UserService.class);
 
-	private ThesisDomainService thesisDomainService = SpringContextHolder.getBean(ThesisDomainService.class);;
+	private ThesisDomainService thesisDomainService = SpringContextHolder.getBean(ThesisDomainService.class);
 
 	public ThesisWrapper(Map<String, Object> single) {
 		super(single);

@@ -56,7 +56,13 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		//论文
 		long thesisId = Long.parseLong(map.get("thesisId").toString());
 		Thesis thesis = thesisMapper.selectById(thesisId);
-		String thesisName = thesis.getThesisTitle();
+		String thesisName = "";
+		if (thesis != null){
+			thesisName = thesis.getThesisTitle();
+		}else {
+			thesisName = "无";
+		}
+
 
 		//论坛
 		String forumName = "";

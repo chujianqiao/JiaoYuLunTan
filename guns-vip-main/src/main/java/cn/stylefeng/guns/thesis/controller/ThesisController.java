@@ -395,19 +395,15 @@ public class ThesisController extends BaseController {
     }
 
     /**
-     * 查询论文评审专家
+     * 根据领域查询论文评审专家
      * @author wucy
      * @Date 2020-05-21
      */
     @ResponseBody
     @RequestMapping("/majorList")
     public Object majorList(ThesisParam thesisParam) {
-        //查询角色为论文评审专家的用户
-        String roleName = "论文评审专家";
-        Page<Map<String, Object>> roles = this.restRoleService.selectRoles(roleName);
-        List<Map<String, Object>> roleList = roles.getRecords();
-        String roleId = roleList.get(0).get("roleId").toString();
-        return this.userService.majorMapList(roleId);
+
+        return this.reviewMajorService.majorMapList(thesisParam.getBelongDomain());
     }
 
 }

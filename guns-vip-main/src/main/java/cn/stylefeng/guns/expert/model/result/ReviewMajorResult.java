@@ -55,9 +55,9 @@ public class ReviewMajorResult implements Serializable {
     private String applyFrom;
 
     /**
-     * 申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
+     * 评审状态
      */
-    private Integer checkStatus;
+    private String checkStatus;
 
     /**
      * 提交申请时间
@@ -78,5 +78,11 @@ public class ReviewMajorResult implements Serializable {
      * 取消时间
      */
     private Date cancelTime;
+
+
+    /**
+     * 所属领域
+     */
+    private String belongDomain;
 
 }

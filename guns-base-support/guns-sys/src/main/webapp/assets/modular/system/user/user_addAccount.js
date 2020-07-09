@@ -4,7 +4,10 @@
 var UserInfoDlg = {
     data: {
         deptId: "",
-        deptName: ""
+        deptName: "",
+        belongDomain: "",
+        pName: ""
+
     }
 };
 
@@ -54,7 +57,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
         elem: '#birthday'
     });
 
-    // 表单提交事件
+    /*// 表单提交事件
     form.on('submit(btnSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/mgr/add", function (data) {
             console.log(data)
@@ -81,7 +84,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
         //添加 return false 可成功跳转页面
         return false;
-    });
+    });*/
 
     /*//初始化所有的职位列表
     formSelects.config('selPosition', {
@@ -205,4 +208,24 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
             $("#ownForumDiv").attr("style","display:block")
         }
     });
+
+
+    // 点击上级角色时
+    $('#pName').click(function () {
+        var formName = encodeURIComponent("parent.UserInfoDlg.data.pName");
+        var formId = encodeURIComponent("parent.UserInfoDlg.data.belongDomain");
+        var treeUrl = encodeURIComponent("/thesisDomain/tree");
+
+        layer.open({
+            type: 2,
+            title: '父级领域',
+            area: ['300px', '400px'],
+            content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            end: function () {
+                $("#belongDomain").val(UserInfoDlg.data.belongDomain);
+                $("#pName").val(UserInfoDlg.data.pName);
+            }
+        });
+    });
+
 });

@@ -1,6 +1,7 @@
-layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
+layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
     var $ = layui.$;
     var table = layui.table;
+    var form = layui.form;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
@@ -22,24 +23,24 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
             {field: 'reviewId', hide: true, title: '专家ID'},
             {field: 'reviewName', sort: true, title: '姓名'},
             {field: 'direct', sort: true, title: '研究方向和专长'},
-            {field: 'thesisCount', sort: true, title: '论文分配数量'},
-            {field: 'reviewCount', sort: true, title: '论文评审数量'},
-            {field: 'refuseCount', sort: true, title: '退回数量'},
+            {field: 'belongDomainStr', sort: true, title: '所属领域'},
+            {field: 'applyTime', sort: true, title: '创建时间',minWidth: 180},
+            {field: 'checkStatus', align: "center", sort: true, templet: '#statusTpl', title: '评审状态'},
+            //{field: 'thesisCount', sort: true, title: '论文分配数量'},
+            //{field: 'reviewCount', sort: true, title: '论文评审数量'},
+            /*{field: 'refuseCount', sort: true, title: '退回数量'},
             {field: 'majorType', sort: true, title: '专家分类'},
             {field: 'applyFrom', sort: true, title: '来源'},
             {field: 'checkStatus', sort: true, title: '申报状态'},
             {field: 'applyTime', sort: true, title: '提交申请时间',minWidth: 180},
             {field: 'agreeTime', hide: true, title: '通过时间'},
             {field: 'refuseTime', hide: true, title: '驳回时间'},
-            {field: 'cancelTime', hide: true, title: '取消时间'},
+            {field: 'cancelTime', hide: true, title: '取消时间'},*/
             // {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180}
 
             {align: 'center', minWidth: 180, title: '操作', templet: function(data){
-                    if (data.checkStatus == "申请中") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='approve'>审批</ a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' id='delete'>删除</ a>";
-                    }else {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</ a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' id='delete'>删除</ a>";
-                    }
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' id='delete'>删除</a>";
+
                 }}
 
         ]];
@@ -264,4 +265,42 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
             ReviewMajor.openDetail(data);
         }
     });
+
+
+    // 修改user状态
+    form.on('switch(status)', function (obj) {
+
+        var reviewId = obj.elem.value;
+        var checked = obj.elem.checked ? true : false;
+
+        ReviewMajor.changeUserStatus(reviewId, checked);
+    });
+
+    /**
+     * 修改用户状态
+     *
+     * @param userId 用户id
+     * @param checked 是否选中（true,false），选中就是解锁用户，未选中就是锁定用户
+     */
+    ReviewMajor.changeUserStatus = function (reviewId, checked) {
+        if (checked) {
+            var ajax = new $ax(Feng.ctxPath + "/reviewMajor/unfreeze", function (data) {
+                Feng.success("解除冻结成功!");
+            }, function (data) {
+                Feng.error("解除冻结失败!");
+                table.reload(ReviewMajor.tableId);
+            });
+            ajax.set("reviewId", reviewId);
+            ajax.start();
+        } else {
+            var ajax = new $ax(Feng.ctxPath + "/reviewMajor/freeze", function (data) {
+                Feng.success("冻结成功!");
+            }, function (data) {
+                Feng.error("冻结失败!" + data.responseJSON.message + "!");
+                table.reload(ReviewMajor.tableId);
+            });
+            ajax.set("reviewId", reviewId);
+            ajax.start();
+        }
+    };
 });

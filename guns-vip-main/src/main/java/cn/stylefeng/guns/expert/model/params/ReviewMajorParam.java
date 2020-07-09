@@ -56,9 +56,9 @@ public class ReviewMajorParam implements Serializable, BaseValidatingParam {
     private String applyFrom;
 
     /**
-     * 评审状态; 0-正常 1-冻结
+     * 评审状态
      */
-    private Integer checkStatus;
+    private String checkStatus;
 
     /**
      * 创建时间
@@ -79,6 +79,11 @@ public class ReviewMajorParam implements Serializable, BaseValidatingParam {
      * 取消时间
      */
     private Date cancelTime;
+
+    /**
+     * 所属领域
+     */
+    private String belongDomain;
 
     @Override
     public String checkParam() {

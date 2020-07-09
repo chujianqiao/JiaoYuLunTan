@@ -1,5 +1,6 @@
 package cn.stylefeng.guns.expert.controller;
 
+import cn.stylefeng.guns.base.auth.annotion.Permission;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
@@ -15,7 +16,10 @@ import cn.stylefeng.guns.expert.wrapper.ReviewMajorWrapper;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.reviewunit.model.params.ReviewUnitParam;
+import cn.stylefeng.guns.sys.core.constant.Const;
+import cn.stylefeng.guns.sys.core.constant.dictmap.UserDict;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
+import cn.stylefeng.guns.sys.core.constant.state.ManagerStatus;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
@@ -151,7 +155,7 @@ public class ReviewMajorController extends BaseController {
         reviewMajorParam.setReviewId(user.getId());
         reviewMajorParam.setApplyTime(new Date());
         reviewMajorParam.setApplyFrom("非邀请");
-        reviewMajorParam.setCheckStatus(1);
+        reviewMajorParam.setCheckStatus(ManagerStatus.OK.getCode());
         reviewMajorParam.setThesisCount(0);
         reviewMajorParam.setReviewCount(0);
         reviewMajorParam.setRefuseCount(0);
@@ -181,7 +185,7 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     @BussinessLog(value = "重新申请", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData checkApplyStatus(ReviewMajorParam reviewMajorParam) {
-        reviewMajorParam.setCheckStatus(1);
+        //reviewMajorParam.setCheckStatus(1);
         reviewMajorParam.setApplyTime(new Date());
         this.reviewMajorService.update(reviewMajorParam);
         return ResponseData.success();
@@ -196,7 +200,7 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     @BussinessLog(value = "取消申请", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData cancelApply(ReviewMajorParam reviewMajorParam) {
-        reviewMajorParam.setCheckStatus(0);
+        //reviewMajorParam.setCheckStatus(0);
         Date date = new Date();
         reviewMajorParam.setCancelTime(date);
         this.reviewMajorService.update(reviewMajorParam);
@@ -212,7 +216,7 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     @BussinessLog(value = "同意申请", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData agreeApply(ReviewMajorParam reviewMajorParam) {
-        reviewMajorParam.setCheckStatus(2);
+        //reviewMajorParam.setCheckStatus(2);
         reviewMajorParam.setAgreeTime(new Date());
         long reviewId = reviewMajorParam.getReviewId();
 
@@ -244,7 +248,7 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     @BussinessLog(value = "驳回申请", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData disAgreeApply(ReviewMajorParam reviewMajorParam) {
-        reviewMajorParam.setCheckStatus(3);
+        //reviewMajorParam.setCheckStatus(3);
         reviewMajorParam.setRefuseTime(new Date());
         this.reviewMajorService.update(reviewMajorParam);
         return ResponseData.success();
@@ -316,6 +320,7 @@ public class ReviewMajorController extends BaseController {
         }
         Page<Map<String, Object>> majors = this.reviewMajorService.findPageWrap(reviewMajorParam ,paramIds);
         Page wrapped = new ReviewMajorWrapper(majors).wrap();
+
         return LayuiPageFactory.createPageInfo(wrapped);
     }
 
@@ -403,7 +408,9 @@ public class ReviewMajorController extends BaseController {
 
     @RequestMapping("/addAccount")
     @ResponseBody
-    public ResponseData addAccount(@Valid UserDto user, String majorType, Integer joinType, Long ownForumId) {
+    public ResponseData addAccount(@Valid UserDto user, String majorType,
+                                   Integer joinType, Long ownForumId,
+                                   String belongDomain) {
         ResponseData responseData = new ResponseData();
         /*StringBuffer id=new StringBuffer();
         Random random = new Random();
@@ -437,13 +444,13 @@ public class ReviewMajorController extends BaseController {
             user.setRoleId("4");
             ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
             reviewMajorParam.setReviewId(uid);
-            reviewMajorParam.setDirect(user.getName());
             reviewMajorParam.setApplyTime(new Date());
             reviewMajorParam.setThesisCount(0);
             reviewMajorParam.setRefuseCount(0);
             reviewMajorParam.setReviewCount(0);
-            reviewMajorParam.setCheckStatus(0);
+            reviewMajorParam.setCheckStatus(ManagerStatus.OK.getCode());
             reviewMajorParam.setMajorType(majorType);
+            reviewMajorParam.setBelongDomain(belongDomain);
             this.userService.addUser(user);
             reviewMajorService.add(reviewMajorParam);
         }
@@ -466,6 +473,43 @@ public class ReviewMajorController extends BaseController {
         return SUCCESS_TIP;
     }
 
+
+
+    /**
+     * 冻结用户
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:44
+     */
+    @RequestMapping("/freeze")
+    @BussinessLog(value = "冻结专家", key = "reviewId", dict = ReviewMajorDict.class)
+    @Permission(Const.ADMIN_NAME)
+    @ResponseBody
+    public ResponseData freeze(@RequestParam Long reviewId) {
+        if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(reviewId)) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        this.reviewMajorService.setStatus(reviewId, ManagerStatus.FREEZED.getCode());
+        return SUCCESS_TIP;
+    }
+
+    /**
+     * 解除冻结用户
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:44
+     */
+    @RequestMapping("/unfreeze")
+    @BussinessLog(value = "解除冻结用户", key = "reviewId", dict = ReviewMajorDict.class)
+    @Permission(Const.ADMIN_NAME)
+    @ResponseBody
+    public ResponseData unfreeze(@RequestParam Long reviewId) {
+        if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(reviewId)) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        this.reviewMajorService.setStatus(reviewId, ManagerStatus.OK.getCode());
+        return SUCCESS_TIP;
+    }
 }
 
 

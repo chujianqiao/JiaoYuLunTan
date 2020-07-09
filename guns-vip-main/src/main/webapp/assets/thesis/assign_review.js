@@ -38,7 +38,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload','sele
     var formSelects = layui.formSelects;
 
     //获取详情信息，填充表单
-    debugger;
     var ajax = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + Feng.getUrlParam("thesisId"));
     var result = ajax.start();
     form.val('thesisForm', result.data);
@@ -66,8 +65,10 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload','sele
     //初始化评审专家列表
     formSelects.config('selPosition', {
         searchUrl: Feng.ctxPath + "/thesis/majorList",
-        keyName: 'name',
-        keyVal: 'userId'
+        searchName: 'belongDomain',      //自定义搜索内容的key值
+        searchVal: result.data.belongDomain,
+        keyName: 'direct',
+        keyVal: 'reviewId'
     });
 
 });

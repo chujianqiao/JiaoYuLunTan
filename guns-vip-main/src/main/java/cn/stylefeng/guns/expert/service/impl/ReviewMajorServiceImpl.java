@@ -17,6 +17,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -98,6 +99,35 @@ public class ReviewMajorServiceImpl extends ServiceImpl<ReviewMajorMapper, Revie
         ReviewMajor entity = new ReviewMajor();
         ToolUtil.copyProperties(param, entity);
         return entity;
+    }
+
+    /**
+     * 修改用户状态
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:45
+     */
+    @Override
+    public Integer setStatus(Long reviewId, String status) {
+        return this.baseMapper.setStatus(reviewId, status);
+    }
+
+    @Override
+    public LayuiPageInfo majorMapList(String domain){
+        String[] domainArr = domain.split(",");
+        List<Map<String, Object>> listAll = new ArrayList<>();
+        for (int i = 0;i < domainArr.length;i++){
+            List<Map<String, Object>> list = this.baseMapper.majorMapList(domainArr[i]);
+            if (i == 0){
+                listAll.addAll(list);
+            }else {
+                listAll.retainAll(list);
+            }
+
+        }
+        LayuiPageInfo layuiPageInfo = new LayuiPageInfo();
+        layuiPageInfo.setData(listAll);
+        return layuiPageInfo;
     }
 
 }

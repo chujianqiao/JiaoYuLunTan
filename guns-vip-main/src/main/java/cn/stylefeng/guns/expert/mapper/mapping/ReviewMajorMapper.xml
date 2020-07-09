@@ -16,11 +16,12 @@
         <result column="agree_time" property="agreeTime" />
         <result column="refuse_time" property="refuseTime" />
         <result column="cancel_time" property="cancelTime" />
+        <result column="belong_domain" property="belongDomain" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        review_id AS "reviewId", direct AS "direct", thesis_count AS "thesisCount", review_count AS "reviewCount", refuse_count AS "refuseCount", major_type AS "majorType", apply_from AS "applyFrom", check_status AS "checkStatus", apply_time AS "applyTime", agree_time AS "agreeTime", refuse_time AS "refuseTime", cancel_time AS "cancelTime"
+        review_id AS "reviewId", direct AS "direct", thesis_count AS "thesisCount", review_count AS "reviewCount", refuse_count AS "refuseCount", major_type AS "majorType", apply_from AS "applyFrom", check_status AS "checkStatus", apply_time AS "applyTime", agree_time AS "agreeTime", refuse_time AS "refuseTime", cancel_time AS "cancelTime", belong_domain AS "belongDomain"
     </sql>
 
 
@@ -55,4 +56,14 @@
 
     </select>
 
+    <update id="setStatus">
+		update review_major set check_status = #{status} where review_id = #{reviewId}
+	</update>
+
+    <select id="majorMapList" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from review_major where 1 = 1
+        and find_in_set(#{domain}, belong_domain);
+    </select>
 </mapper>

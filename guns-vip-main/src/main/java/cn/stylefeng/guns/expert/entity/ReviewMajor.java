@@ -63,13 +63,13 @@ public class ReviewMajor implements Serializable {
     private String applyFrom;
 
     /**
-     * 申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
+     * 评审状态
      */
     @TableField("check_status")
-    private Integer checkStatus;
+    private String checkStatus;
 
     /**
-     * 提交申请时间
+     * 创建时间
      */
     @TableField("apply_time")
     private Date applyTime;
@@ -92,6 +92,11 @@ public class ReviewMajor implements Serializable {
     @TableField("cancel_time")
     private Date cancelTime;
 
+    /**
+     * 所属领域
+     */
+    @TableField("belong_domain")
+    private String belongDomain;
 
     public Long getReviewId() {
         return reviewId;
@@ -149,11 +154,11 @@ public class ReviewMajor implements Serializable {
         this.applyFrom = applyFrom;
     }
 
-    public Integer getCheckStatus() {
+    public String getCheckStatus() {
         return checkStatus;
     }
 
-    public void setCheckStatus(Integer checkStatus) {
+    public void setCheckStatus(String checkStatus) {
         this.checkStatus = checkStatus;
     }
 
@@ -189,6 +194,14 @@ public class ReviewMajor implements Serializable {
         this.cancelTime = cancelTime;
     }
 
+    public String getBelongDomain() {
+        return belongDomain;
+    }
+
+    public void setBelongDomain(String belongDomain) {
+        this.belongDomain = belongDomain;
+    }
+
     @Override
     public String toString() {
         return "ReviewMajor{" +
@@ -204,6 +217,7 @@ public class ReviewMajor implements Serializable {
         ", agreeTime=" + agreeTime +
         ", refuseTime=" + refuseTime +
         ", cancelTime=" + cancelTime +
+        ", belongDomain=" + belongDomain +
         "}";
     }
 }

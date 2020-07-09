@@ -36,4 +36,7 @@
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="approve">审批</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
+<script type="text/html" id="statusTpl">
+    <input type="checkbox" lay-filter="status" value="{{d.reviewId}}" lay-skin="switch" lay-text="${lang.get("BTN_ACTIVE","激活")}|${lang.get("BTN_DISABLE","冻结")}" {{d.checkStatus=='ENABLE'?'checked':''}} />
+</script>
 @}
