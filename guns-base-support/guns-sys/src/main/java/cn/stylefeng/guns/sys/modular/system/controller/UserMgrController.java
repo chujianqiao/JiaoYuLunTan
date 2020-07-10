@@ -363,7 +363,7 @@ public class UserMgrController extends BaseController {
      *
      * @author fengshuonan
      * @Date 2018/12/24 22:44
-     */
+     *//*
     @RequestMapping("/delete")
     @BussinessLog(value = "删除管理员", key = "userId", dict = UserDict.class)
     @Permission
@@ -374,7 +374,7 @@ public class UserMgrController extends BaseController {
         }
         this.userService.deleteUser(userId);
         return SUCCESS_TIP;
-    }
+    }*/
 
     /**
      * 查看管理员详情
