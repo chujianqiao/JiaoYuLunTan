@@ -303,4 +303,10 @@
 
     </select>
 
+    <select id="getById" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select
+        <include refid="Base_Column_List_With_Pwd"/>
+        from sys_user where user_id = #{userId} and status != 'DELETED'
+    </select>
+
 </mapper>

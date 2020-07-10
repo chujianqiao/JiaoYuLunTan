@@ -76,4 +76,9 @@ public interface UserMapper extends BaseMapper<User> {
      */
     @Transactional(propagation= Propagation.REQUIRES_NEW)
     int editUserByWrong(@Param("userId") Long userId, @Param("status") String status, @Param("wrongTimes") Integer wrongTimes);
+
+    /**
+     * 通过账号获取用户
+     */
+    User getById(@Param("userId") Long userId);
 }

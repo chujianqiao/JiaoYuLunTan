@@ -9,11 +9,14 @@ import cn.stylefeng.guns.expert.mapper.ReviewMajorMapper;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.model.result.ReviewMajorResult;
 import  cn.stylefeng.guns.expert.service.ReviewMajorService;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -31,6 +34,9 @@ import java.util.Map;
  */
 @Service
 public class ReviewMajorServiceImpl extends ServiceImpl<ReviewMajorMapper, ReviewMajor> implements ReviewMajorService {
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public void add(ReviewMajorParam param){
@@ -123,8 +129,14 @@ public class ReviewMajorServiceImpl extends ServiceImpl<ReviewMajorMapper, Revie
             }else {
                 listAll.retainAll(list);
             }
-
         }
+
+        for (int j = 0;j < listAll.size();j++){
+            Long userId = Long.parseLong(listAll.get(j).get("reviewId").toString());
+            User user = this.userMapper.getById(userId);
+            listAll.get(j).put("name", user.getName());
+        }
+
         LayuiPageInfo layuiPageInfo = new LayuiPageInfo();
         layuiPageInfo.setData(listAll);
         return layuiPageInfo;

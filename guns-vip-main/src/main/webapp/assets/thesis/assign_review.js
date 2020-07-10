@@ -67,7 +67,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload','sele
         searchUrl: Feng.ctxPath + "/thesis/majorList",
         searchName: 'belongDomain',      //自定义搜索内容的key值
         searchVal: result.data.belongDomain,
-        keyName: 'direct',
+        keyName: 'name',
         keyVal: 'reviewId'
     });
 
