@@ -299,6 +299,20 @@ public class UserMgrController extends BaseController {
     }
 
     /**
+     * 管理员添加用户
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:44
+     */
+    @RequestMapping("/addAdmin")
+    //@BussinessLog(value = "添加管理员", key = "account", dict = UserDict.class)
+    @ResponseBody
+    public ResponseData addAdmin(@Valid UserDto user) {
+        this.userService.addUser(user);
+        return SUCCESS_TIP;
+    }
+
+    /**
      * 添加管理员
      *
      * @author fengshuonan

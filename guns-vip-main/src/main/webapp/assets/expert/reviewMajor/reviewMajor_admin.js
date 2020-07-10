@@ -22,7 +22,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
             {type: 'checkbox'},
             {field: 'reviewId', hide: true, title: '专家ID'},
             {field: 'reviewName', sort: true, title: '姓名'},
-            {field: 'direct', sort: true, title: '研究方向和专长'},
+            //{field: 'direct', sort: true, title: '研究方向和专长'},
             {field: 'belongDomainStr', sort: true, title: '所属领域'},
             {field: 'applyTime', sort: true, title: '创建时间',minWidth: 180},
             {field: 'checkStatus', align: "center", sort: true, templet: '#statusTpl', title: '评审状态'},
