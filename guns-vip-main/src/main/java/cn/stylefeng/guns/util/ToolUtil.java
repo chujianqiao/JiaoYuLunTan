@@ -49,7 +49,7 @@ public class ToolUtil {
 			long roleId = roleIds.get(i);
 			Role role = roleService.getById(roleId);
 			String roleName = role.getName();
-			if(roleId == 1234567890 || roleName.equals("论文评审专家")){
+			if(roleId == 4 || roleName.equals("论文评审专家")){
 				isReview = true;
 				break;
 			}
