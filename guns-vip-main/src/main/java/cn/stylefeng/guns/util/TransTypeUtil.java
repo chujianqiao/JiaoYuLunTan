@@ -80,7 +80,7 @@ public class TransTypeUtil {
 	}
 
 	/**
-	 * 1-评审中,2-评审通过,3-已取消,4-已缴费
+	 * 1-评审中,2-评审通过,3-已取消,4-已缴费,5-未通过
 	 * @return
 	 */
 	public static Map<Object, Object> getMeetStatus() {
@@ -88,6 +88,7 @@ public class TransTypeUtil {
 		meetStatus.put(2,"评审通过");
 		meetStatus.put(3,"已取消");
 		meetStatus.put(4,"已缴费");
+		meetStatus.put(5,"未通过");
 		return meetStatus;
 	}
 }

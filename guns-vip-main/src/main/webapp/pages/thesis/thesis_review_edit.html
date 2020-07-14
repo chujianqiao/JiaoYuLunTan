@@ -77,19 +77,20 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">是否通过<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">评审意见<span style="color: red;">*</span></label>
                                 <div class="layui-input-block" id="isPass">
-                                    <input type="radio" name="reviewResult" lay-filter="reviewResult"  value="1" title="是">
-                                    <input type="radio" name="reviewResult" lay-filter="reviewResult" value="0" title="否" checked>
+                                    <input type="radio" name="reviewResult" lay-filter="reviewResult" value="0" title="不同意参会" checked>
+                                    <input type="radio" name="reviewResult" lay-filter="reviewResult"  value="1" title="同意参会">
+                                    <input type="radio" name="reviewResult" lay-filter="reviewResult" value="2" title="同意参会并推荐优秀">
                                 </div>
                             </div>
-                            <div class="layui-inline layui-col-md12" id="greatDiv">
-                                <label class="layui-form-label">是否推优<span style="color: red;">*</span></label>
-                                <div class="layui-input-block" id="greatRadio">
-                                    <input type="radio" name="isgreat" value="1" title="是">
-                                    <input type="radio" name="isgreat" value="0" title="否" checked>
-                                </div>
-                            </div>
+                            <!--<div class="layui-inline layui-col-md12" id="greatDiv">-->
+                                <!--<label class="layui-form-label">是否推优<span style="color: red;">*</span></label>-->
+                                <!--<div class="layui-input-block" id="greatRadio">-->
+                                    <!--<input type="radio" name="isgreat" value="1" title="是">-->
+                                    <!--<input type="radio" name="isgreat" value="0" title="否" checked>-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>

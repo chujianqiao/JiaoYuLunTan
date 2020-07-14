@@ -20,6 +20,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var admin = layui.admin;
     var upload = layui.upload;
 
+    debugger;
     // 获取详情信息填充表单
     var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
     var result = ajax.start();
@@ -33,19 +34,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
         var result = ajax.start();
         var ownForumid = result.data.ownForumid;
-        forumSelectOption(ownForumid);
 
-        debugger;
-        // var thesisId = result.data.thesisId;
-        // var ajax2 = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + thesisId);
-        // var result2 = ajax2.start();
-        //
-        // var fileName = result2.data.fileName;
-        // $("#fileNameTip").html(fileName);
-        //批量赋值
-        // form.val('meetMemberForm', result2.data);
-        // form.val('meetMemberForm', result.data);
-
+        var thesisId = result.data.thesisId;
         thesisSelectOption(thesisId);
 
         var userId = result.data.userId;
@@ -57,93 +47,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }
     })
 
-    //表单提交事件
-    form.on('submit(btnSubmit)', function (data) {
-        debugger;
-        var ajax = new $ax(Feng.ctxPath + "/meetMember/editItem", function (data) {
-            Feng.success("更新成功！");
-            window.location.href = Feng.ctxPath + '/meetMember';
-            //传给上个页面，刷新table用
-            // admin.putTempData('formOk', true);
-            //关掉对话框
-            // admin.closeThisDialog();
-        }, function (data) {
-            Feng.error("更新失败！" + data.responseJSON.message)
-        });
-        ajax.set(data.field);
-        ajax.start();
-
-        return false;
-    });
-
-    // 点击上级角色时
-    // $('#pName').click(function () {
-    //     var formName = encodeURIComponent("parent.MeetMemberInfoDlg.data.pName");
-    //     var formId = encodeURIComponent("parent.MeetMemberInfoDlg.data.belongDomain");
-    //     var treeUrl = encodeURIComponent("/thesisDomain/tree");
-    //
-    //     layer.open({
-    //         type: 2,
-    //         title: '父级领域',
-    //         area: ['300px', '400px'],
-    //         content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
-    //         end: function () {
-    //             $("#belongDomain").val(MeetMemberInfoDlg.data.belongDomain);
-    //             $("#pName").val(MeetMemberInfoDlg.data.pName);
-    //         }
-    //     });
-    // });
-
-    //上传文件
-    upload.render({
-        elem: '#fileBtn'
-        , url: Feng.ctxPath + '/holdForum/upload'
-        , accept: 'file'
-        , before: function (obj) {
-            obj.preview(function (index, file, result) {
-                $("#fileNameTip").val(file.name);
-                $("#fileNameTip").html(file.name);
-            });
-        }
-        , done: function (res) {
-            $("#fileInputHidden").val(res.data.fileId);
-            $("#thesisPath").val(res.data.path);
-            $("#fileName").val($("#fileNameTip").val());
-            Feng.success(res.message);
-        }
-        , error: function () {
-            Feng.error("上传文件失败！");
-        }
-    });
-
-    /**
-     * 构建论坛下拉框候选值
-     * @param ownForumid
-     */
-    function forumSelectOption(ownForumid){
-        $.ajax({
-            type:'post',
-            url:Feng.ctxPath + "/ownForum/listAll" ,
-            success:function(response){
-                var data=response.data;
-                var forums = [];
-                forums = data;
-
-                var options;
-                for (i = 0 ;i < forums.length ;i++){
-                    var forum = data[i];
-                    if(ownForumid == forum.forumId){
-                        options += '<option value="'+ forum.forumId+ '" selected="selected">'+ forum.forumName +'</option>';
-                    }else{
-                        options += '<option value="'+ forum.forumId+ '" >'+ forum.forumName +'</option>';
-                    }
-                }
-                $('#ownForumid').empty();
-                $('#ownForumid').append(options);
-                form.render('select');
-            }
-        })
-    }
 
     /**
      * 构建论文下拉框候选值

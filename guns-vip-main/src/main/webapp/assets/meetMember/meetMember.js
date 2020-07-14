@@ -35,13 +35,17 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             // {field: 'ownForumid', sort: true, title: '自设论坛ID'},
             // {field: 'regTime', sort: true, title: '注册时间'},
             // {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180},
-            {align: 'center', minWidth: 180, title: '操作', templet: function(data){
+            {align: 'center', minWidth: 230, title: '操作', templet: function(data){
                     if (data.meetStatusStr == "评审中") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel'>取消申请</a>";
-                    }else if (data.meetStatusStr == "已取消") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel'>删除</a>";
-                    }else {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a>"
+                    } else if (data.meetStatusStr == "已取消") {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
+                    } else if (data.meetStatusStr == "评审通过") {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay'>缴费</a>";
+                    } else if (data.meetStatusStr == "已缴费") {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='pay'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay'>申请开票</a>";
+                    } else if (data.meetStatusStr == "未通过") {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                     }
                 }}
         ]];
@@ -113,7 +117,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      */
     MeetMember.onDeleteItem = function (data) {
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/meetMember/delete", function (data) {
+            var ajax = new $ax(Feng.ctxPath + "/meetMember/delete?thesisId="+data.thesisId, function (data) {
                 Feng.success("删除成功!");
                 table.reload(MeetMember.tableId);
             }, function (data) {
@@ -187,7 +191,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             MeetMember.onDeleteItem(data);
         } else if (layEvent === 'detail') {
             MeetMember.onDisableItem(data);
-        }   else if (layEvent === 'cancel') {
+        } else if (layEvent === 'cancel') {
             MeetMember.onCancelItem(data);
         }
 

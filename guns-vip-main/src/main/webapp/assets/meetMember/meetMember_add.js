@@ -39,7 +39,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         debugger;
         var ajax = new $ax(Feng.ctxPath + "/thesis/addItem", function (data) {
             Feng.success("添加成功！");
-            window.location.href = Feng.ctxPath + '/';
+            window.location.href = Feng.ctxPath + '/meetMember';
             //传给上个页面，刷新table用
             // admin.putTempData('formOk', true);
             //关掉对话框

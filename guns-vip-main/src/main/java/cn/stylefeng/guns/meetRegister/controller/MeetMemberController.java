@@ -164,8 +164,15 @@ public class MeetMemberController extends BaseController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public ResponseData delete(MeetMemberParam meetMemberParam) {
+    public ResponseData delete(MeetMemberParam meetMemberParam,HttpServletRequest request) {
+        String thesisIdStr = request.getParameter("thesisId");
+        //同时删除论文
+        long thesisId = Long.parseLong(thesisIdStr);
+        ThesisParam thesisParam = new ThesisParam();
+        thesisParam.setThesisId(thesisId);
+
         this.meetMemberService.delete(meetMemberParam);
+        this.thesisService.delete(thesisParam);
         return ResponseData.success();
     }
 

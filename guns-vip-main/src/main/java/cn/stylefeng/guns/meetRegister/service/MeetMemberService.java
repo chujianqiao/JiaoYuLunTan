@@ -4,8 +4,11 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.meetRegister.entity.MeetMember;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
+import cn.stylefeng.guns.thesis.model.params.ThesisParam;
+import cn.stylefeng.guns.thesis.model.result.ThesisResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -47,6 +50,13 @@ public interface MeetMemberService extends IService<MeetMember> {
      * @Date 2020-05-20
      */
     MeetMemberResult findBySpec(MeetMemberParam param);
+
+    /**
+     * 有条件的查询
+     * @param paramCondition
+     * @return
+     */
+    List<MeetMemberResult> customList(@Param("paramCondition") MeetMemberParam paramCondition);
 
     /**
      * 查询列表，Specification模式

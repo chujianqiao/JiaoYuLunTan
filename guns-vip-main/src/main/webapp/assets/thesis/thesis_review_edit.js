@@ -44,24 +44,24 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
         $("#fileNameTip").html(fileName);
     }
     //隐藏是否优秀的选项
-    var isPass = result.data.reviewResult;
-    if(isPass == 1){
-        //如果论文已通过，禁用是否通过的单选框，不隐藏是否优秀的单选框
-        document.getElementById("greatDiv").style.display="";
-        var input = $("#isPass").find("input:radio");
-        input.attr("disabled","disabled");
-    }else{
-        document.getElementById("greatDiv").style.display="none";
-    }
+    // var isPass = result.data.reviewResult;
+    // if(isPass == 1){
+    //     //如果论文已通过，禁用是否通过的单选框，不隐藏是否优秀的单选框
+    //     document.getElementById("greatDiv").style.display="";
+    //     var input = $("#isPass").find("input:radio");
+    //     input.attr("disabled","disabled");
+    // }else{
+    //     document.getElementById("greatDiv").style.display="none";
+    // }
 
 
-    form.on('radio(reviewResult)', function(data){
-        if(data.value == '1'){
-            document.getElementById("greatDiv").style.display="";
-        } else {
-            document.getElementById("greatDiv").style.display="none";
-        }
-    });
+    // form.on('radio(reviewResult)', function(data){
+    //     if(data.value == '1'){
+    //         document.getElementById("greatDiv").style.display="";
+    //     } else {
+    //         document.getElementById("greatDiv").style.display="none";
+    //     }
+    // });
 
 
     //表单提交事件

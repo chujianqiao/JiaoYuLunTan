@@ -11,7 +11,10 @@ import cn.stylefeng.guns.core.constant.dictmap.ReviewUnitDict;
 import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
+import cn.stylefeng.guns.meetRegister.entity.MeetMember;
+import cn.stylefeng.guns.meetRegister.mapper.MeetMemberMapper;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
+import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.sys.modular.rest.service.RestRoleService;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
@@ -83,6 +86,7 @@ public class ThesisController extends BaseController {
 
     @Autowired
     private ThesisDomainService thesisDomainService;
+
 
     /**
      * 跳转到主页面
@@ -164,6 +168,8 @@ public class ThesisController extends BaseController {
         LoginUser user = LoginContextHolder.getContext().getUser();
         Long userId = user.getId();
         thesisParam.setThesisUser(userId.toString());
+        thesisParam.setGreatNum(0);
+        thesisParam.setGreat(0);
 
         meetMemberParam.setUserId(userId);
 
@@ -176,6 +182,9 @@ public class ThesisController extends BaseController {
         Date date = new Date();
         meetMemberParam.setRegTime(date);
         thesisParam.setApplyTime(date);
+
+        //状态
+        meetMemberParam.setMeetStatus(1);
 
         this.thesisService.add(thesisParam);
         this.meetMemberService.add(meetMemberParam);
@@ -227,15 +236,17 @@ public class ThesisController extends BaseController {
     @ResponseBody
     public ResponseData reviewItem(ThesisParam thesisParam) {
         thesisParam.setStatus("已评审");
-        int isGreat = thesisParam.getIsgreat();
+
         LoginUser user = LoginContextHolder.getContext().getUser();
         String userIdStr = user.getId().toString();
-        int greatNum = thesisParam.getGreatNum();
         String greatUsers = thesisParam.getGreatId();
         if(greatUsers == null){
             greatUsers = "";
         }
-        if(isGreat == 1 && (greatUsers.indexOf(userIdStr) == -1)){
+        //推优逻辑
+        Integer greatNum = thesisParam.getGreatNum();
+        Integer isGreat = thesisParam.getIsgreat();
+        if(isGreat != null && isGreat == 1 && (greatUsers.indexOf(userIdStr) == -1)){
             int len = greatUsers.length();
             if(len != 0){
                 greatUsers += "," + userIdStr;
@@ -249,7 +260,24 @@ public class ThesisController extends BaseController {
         }
         thesisParam.setGreatId(greatUsers);
         thesisParam.setGreatNum(greatNum);
+
+        //同时修改会议状态
+        long thesisId = thesisParam.getThesisId();
+        MeetMemberParam meetMemberParam = new MeetMemberParam();
+        meetMemberParam.setThesisId(thesisId);
+        List<MeetMemberResult> members = this.meetMemberService.customList(meetMemberParam);
+        MeetMemberResult meetMemberResult = members.get(0);
+        long memberId = meetMemberResult.getMemberId();
+        meetMemberParam.setMemberId(memberId);
+        int reviewNum = thesisParam.getReviewResult();
+        if(reviewNum == 0){
+            meetMemberParam.setMeetStatus(5);
+        }else {
+            meetMemberParam.setMeetStatus(2);
+        }
+
         this.thesisService.update(thesisParam);
+        this.meetMemberService.update(meetMemberParam);
         return ResponseData.success();
     }
 

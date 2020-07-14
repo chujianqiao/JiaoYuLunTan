@@ -7,6 +7,8 @@ import cn.stylefeng.guns.meetRegister.mapper.MeetMemberMapper;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import  cn.stylefeng.guns.meetRegister.service.MeetMemberService;
+import cn.stylefeng.guns.thesis.model.params.ThesisParam;
+import cn.stylefeng.guns.thesis.model.result.ThesisResult;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -50,6 +52,11 @@ public class MeetMemberServiceImpl extends ServiceImpl<MeetMemberMapper, MeetMem
     @Override
     public MeetMemberResult findBySpec(MeetMemberParam param){
         return null;
+    }
+
+    @Override
+    public List<MeetMemberResult> customList(MeetMemberParam paramCondition) {
+        return this.baseMapper.customList(paramCondition);
     }
 
     @Override
