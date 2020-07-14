@@ -26,12 +26,13 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             //{field: 'forumDesc', sort: true, title: '论坛描述'},
 
             {field: 'unitName', sort: true, title: '企业/单位名称'},
-            {field: 'unitPlace', sort: true, title: '企业/单位所在地'},
-            /*{field: 'manager', sort: true, title: '负责人'},
-            {field: 'manaPhone', sort: true, title: '负责人电话'},
-            {field: 'manaEmail', sort: true, title: '负责人邮箱'},
+            {field: 'creditCode', sort: true, title: '统一社会信用代码'},
+            {field: 'manager', sort: true, title: '联系人'},
+            {field: 'manaPhone', sort: true, title: '联系电话'},
+            {field: 'manaEmail', sort: true, title: '联系邮箱'},
+            /*{field: 'unitPlace', sort: true, title: '企业/单位所在地'},
             {field: 'alreadyMeet', sort: true, title: '已资助的会议'},*/
-            {field: 'supPlate', sort: true, title: '拟资助版块'},
+            {field: 'supPlate', sort: true, title: '赞助环节'},
             {field: 'supMoney', sort: true, title: '资助金额'},
             //{field: 'contractPath', sort: true, title: '合同条件附件路径'},
             /*{field: 'applyStatus', sort: true, title: '申报状态', templet: function(data){

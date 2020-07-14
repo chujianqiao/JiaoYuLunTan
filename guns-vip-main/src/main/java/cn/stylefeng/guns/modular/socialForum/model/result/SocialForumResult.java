@@ -99,4 +99,14 @@ public class SocialForumResult implements Serializable {
      */
     private String contractName;
 
+    /**
+     * 备注
+     */
+    private String remarks;
+
+    /**
+     * 统一社会信用代码
+     */
+    private String creditCode;
+
 }

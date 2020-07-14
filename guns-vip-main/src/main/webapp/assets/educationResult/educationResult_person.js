@@ -74,7 +74,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     EducationResult.search = function () {
         var queryData = {};
 
-        queryData['resultName'] = $("#resultName").val();
+        queryData['resultName2'] = $("#resultName2").val();
         table.reload(EducationResult.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -197,7 +197,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     });
 
     // 搜索按钮点击事件
-    $('#btnSearch').click(function () {
+    $('#btnSearch2').click(function () {
+        EducationResult.search();
+    });
+    // 搜索按钮点击事件
+    $('#edu').click(function () {
         EducationResult.search();
     });
 

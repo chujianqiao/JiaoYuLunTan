@@ -116,6 +116,18 @@ public class SocialForum implements Serializable {
     @TableField("contract_name")
     private String contractName;
 
+    /**
+     * 备注
+     */
+    @TableField("remarks")
+    private String remarks;
+
+    /**
+     * 统一社会信用代码
+     */
+    @TableField("credit_code")
+    private String creditCode;
+
 
     public Long getForumId() {
         return forumId;
@@ -245,6 +257,22 @@ public class SocialForum implements Serializable {
         this.contractName = contractName;
     }
 
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
+    }
+
     @Override
     public String toString() {
         return "SocialForum{" +
@@ -264,6 +292,8 @@ public class SocialForum implements Serializable {
         ", applyTime=" + applyTime +
         ", applyId=" + applyId +
         ", contractName=" + contractName +
+        ", remarks=" + remarks +
+        ", creditCode=" + creditCode +
         "}";
     }
 }

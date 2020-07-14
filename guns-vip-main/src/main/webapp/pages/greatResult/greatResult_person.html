@@ -1,35 +1,77 @@
-@layout("/common/_container.html",{js:["/assets/greatResult/greatResult_person.js"]}){
+@layout("/common/_container.html",{js:["/assets/greatResult/greatResult_person.js","/assets/educationResult/educationResult_person.js"]}){
 
-<div class="layui-body-header">
-    <span class="layui-body-header-title">优秀论著申报表管理</span>
-</div>
 
-<div class="layui-fluid">
-    <div class="layui-row layui-col-space15">
-        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
-            <div class="layui-card">
-                <div class="layui-card-body">
-                    <div class="layui-form toolbar">
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <input id="resultName" class="layui-input" type="text" placeholder="请输入论坛名称"/>
+<body>
+<div class="page">
+    <!-- 头部 -->
+    @include("/common/person_header.html"){}
+    <div class="func-column-container widthC mCenter mb40">
+        <div class="layui-body-header">
+            <span class="layui-body-header-title">优秀论著申报表管理</span>
+        </div>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+                    <div class="layui-card">
+                        <div class="forms">
+                            <div class="form-tab fontSize16 mb30" id="formTab">
+                                <span class="inlineBlock hover">优秀论著申报</span>
+                                <span class="inlineBlock" id="edu">教改实验申报</span>
                             </div>
-                            <div class="layui-inline">
-                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
-                                <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                            <div class="form-box" id="formList">
+                                <div class="form">
+                                    <div class="layui-card-body">
+                                        <div class="layui-form toolbar">
+                                            <div class="layui-form-item">
+                                                <div class="layui-inline">
+                                                    <input id="resultName" class="layui-input" type="text" placeholder="请输入论坛名称"/>
+                                                </div>
+                                                <div class="layui-inline">
+                                                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                    <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
+                                                    <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table class="layui-table" id="greatResultTable" lay-filter="greatResultTable"></table>
+                                    </div>
+                                </div><!--end of form-->
+                                <div class="form hide">
+                                    <div class="layui-card-body">
+                                        <div class="layui-form toolbar">
+                                            <div class="layui-form-item">
+                                                <div class="layui-inline">
+                                                    <input id="resultName2" class="layui-input" type="text" placeholder="请输入论坛名称"/>
+                                                </div>
+                                                <div class="layui-inline">
+                                                    <button id="btnSearch2" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                    <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
+                                                    <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table class="layui-table" id="educationResultTable" lay-filter="educationResultTable"></table>
+                                    </div>
+                                </div><!--end of form-->
                             </div>
                         </div>
                     </div>
-                    <table class="layui-table" id="greatResultTable" lay-filter="greatResultTable"></table>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 尾部 -->
+    @include("/common/person_footer.html"){}
 </div>
-
+</body>
 <script type="text/html" id="tableBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>
+<script>
+    $(document).ready(function(){
+        myJs.navTab();
+        myJs.formTab();
+    });
 </script>
 @}

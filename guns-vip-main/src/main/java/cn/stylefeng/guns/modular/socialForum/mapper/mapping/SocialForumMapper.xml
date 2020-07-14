@@ -20,11 +20,13 @@
         <result column="apply_time" property="applyTime" />
         <result column="apply_id" property="applyId" />
         <result column="contract_name" property="contractName" />
+        <result column="remarks" property="remarks" />
+        <result column="credit_code" property="creditCode" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        forum_id AS "forumId", forum_name AS "forumName", forum_desc AS "forumDesc", apply_status AS "applyStatus", unit_name AS "unitName", unit_place AS "unitPlace", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", already_meet AS "alreadyMeet", sup_plate AS "supPlate", sup_money AS "supMoney", contract_path AS "contractPath", apply_time AS "applyTime", apply_id AS "applyId", contract_name AS "contractName"
+        forum_id AS "forumId", forum_name AS "forumName", forum_desc AS "forumDesc", apply_status AS "applyStatus", unit_name AS "unitName", unit_place AS "unitPlace", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", already_meet AS "alreadyMeet", sup_plate AS "supPlate", sup_money AS "supMoney", contract_path AS "contractPath", apply_time AS "applyTime", apply_id AS "applyId", contract_name AS "contractName", remarks AS "remarks", credit_code AS "creditCode"
     </sql>
 
 

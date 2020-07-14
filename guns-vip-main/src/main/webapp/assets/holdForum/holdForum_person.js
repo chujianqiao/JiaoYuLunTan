@@ -66,7 +66,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     HoldForum.search = function () {
         var queryData = {};
 
-        queryData['forumName'] = $("#forumName").val();
+        queryData['forumName2'] = $("#forumName2").val();
         table.reload(HoldForum.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -188,7 +188,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     });
 
     // 搜索按钮点击事件
-    $('#btnSearch').click(function () {
+    $('#btnSearch2').click(function () {
+        HoldForum.search();
+    });
+    // 搜索按钮点击事件
+    $('#hold').click(function () {
         HoldForum.search();
     });
 

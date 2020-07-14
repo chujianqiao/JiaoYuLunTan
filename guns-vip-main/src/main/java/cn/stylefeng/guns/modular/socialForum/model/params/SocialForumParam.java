@@ -100,6 +100,16 @@ public class SocialForumParam implements Serializable, BaseValidatingParam {
      */
     private String contractName;
 
+    /**
+     * 备注
+     */
+    private String remarks;
+
+    /**
+     * 统一社会信用代码
+     */
+    private String creditCode;
+
     @Override
     public String checkParam() {
         return null;
