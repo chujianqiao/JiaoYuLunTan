@@ -17,7 +17,7 @@ public enum DefaultDicts {
     FIELD_ACCOUNT_1("FIELD_ACCOUNT", TranslationEnum.CHINESE, "账号"),
     FIELD_ACCOUNT_2("FIELD_ACCOUNT", TranslationEnum.ENGLISH, "account"),
 
-    FIELD_NAME_1("FIELD_NAME", TranslationEnum.CHINESE, "名称"),
+    FIELD_NAME_1("FIELD_NAME", TranslationEnum.CHINESE, "姓名"),
     FIELD_NAME_2("FIELD_NAME", TranslationEnum.ENGLISH, "name"),
 
     FIELD_POST_1("FIELD_POST", TranslationEnum.CHINESE, "职位"),

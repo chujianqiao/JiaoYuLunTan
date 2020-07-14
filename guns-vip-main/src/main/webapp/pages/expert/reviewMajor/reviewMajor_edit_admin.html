@@ -8,10 +8,17 @@
                 <div class="layui-form-item layui-row">
                     <input name="reviewId" type="hidden"/>
 
-                    <div class="layui-inline layui-col-md12">
+                    <!--<div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">研究方向和专长<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="direct" name="direct" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">${lang.get("FIELD_WORK_UNIT","专家领域")}<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="belongDomain" name="belongDomain" type="hidden">
+                            <input id="pName" name="pName" placeholder="请选择专家领域" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
@@ -26,7 +33,7 @@
                             <input id="reviewCount" name="reviewCount" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
+                    <!--<div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">退回数量<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="refuseCount" name="refuseCount" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
@@ -49,14 +56,14 @@
                         <div class="layui-input-block">
                             <input id="checkStatus" name="checkStatus" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">提交申请时间<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">创建时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="applyTime" name="applyTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
+                    <!--<div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">通过时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="agreeTime" name="agreeTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="" required/>
@@ -73,7 +80,7 @@
                         <div class="layui-input-block">
                             <input id="cancelTime" name="cancelTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="" required/>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>

@@ -207,6 +207,34 @@ public class SystemController extends BaseController {
     }
 
     /**
+     * 跳转到个人中心查看用户详情页面
+     *
+     * @author CHU
+     * @Date 2020/07/13
+     */
+    @RequestMapping("/person_info")
+    public String personInfo(Model model) {
+        Long userId = LoginContextHolder.getContext().getUserId();
+        User user = this.userService.getById(userId);
+
+        model.addAllAttributes(BeanUtil.beanToMap(user));
+        model.addAttribute("roleName", ConstantFactory.me().getRoleName(user.getRoleId()));
+        model.addAttribute("deptName", ConstantFactory.me().getDeptName(user.getDeptId()));
+        model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
+        LogObjectHolder.me().set(user);
+
+        String[] roles = user.getRoleId().split(",");
+        for (String role : roles){
+            if (role.equals("3")){
+                return "/modular/frame/person_unit_info.html";
+            }else {
+                return "/modular/frame/person_user_info.html";
+            }
+        }
+        return "/modular/frame/person_user_info.html";
+    }
+
+    /**
      * 通用的树列表选择器
      *
      * @author fengshuonan

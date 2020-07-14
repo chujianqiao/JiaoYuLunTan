@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{js:["/assets/socialForum/socialForum_person.js"]}){
+@layout("/common/_container.html",{js:["/assets/collectTopic/collectTopic.js"]}){
 
 <body>
 <div class="page">
@@ -6,7 +6,7 @@
     @include("/common/person_header.html"){}
     <div class="func-column-container widthC mCenter mb40">
         <div class="layui-body-header">
-            <span class="layui-body-header-title">社会资助论坛表管理</span>
+            <span class="layui-body-header-title">会议主题征集</span>
         </div>
 
         <div class="layui-fluid">
@@ -16,8 +16,11 @@
                         <div class="layui-card-body">
                             <div class="layui-form toolbar">
                                 <div class="layui-form-item">
+                                    <!--<div class="layui-inline">-->
+                                    <!--<input id="createUser" class="layui-input" type="text" placeholder="创建人ID"/>-->
+                                    <!--</div>-->
                                     <div class="layui-inline">
-                                        <input id="forumName" class="layui-input" type="text" placeholder="请输入论坛名称"/>
+                                        <input id="topicName" class="layui-input" type="text" placeholder="大会主题"/>
                                     </div>
                                     <div class="layui-inline">
                                         <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
@@ -26,20 +29,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="layui-table" id="socialForumTable" lay-filter="socialForumTable"></table>
+                            <table class="layui-table" id="collectTopicTable" lay-filter="collectTopicTable"></table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 尾部 -->
-    @include("/common/person_footer.html"){}
-</div>
+        <!-- 尾部 -->
+        @include("/common/person_footer.html"){}
+    </div>
 </body>
 
 <script type="text/html" id="tableBar">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">查看详情</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
 @}

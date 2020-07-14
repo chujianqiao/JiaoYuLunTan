@@ -47,7 +47,13 @@ public class CollectTopicController extends BaseController {
      */
     @RequestMapping("")
     public String index() {
-        return PREFIX + "/collectTopic.html";
+        boolean isAdmin = ToolUtil.isAdminRole();
+        if(isAdmin){
+            return PREFIX + "/collectTopic.html";
+        }else {
+            return PREFIX + "/collectTopic_person.html";
+        }
+
     }
 
     /**

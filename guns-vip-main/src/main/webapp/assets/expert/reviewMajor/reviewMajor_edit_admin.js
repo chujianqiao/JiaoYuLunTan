@@ -14,15 +14,18 @@ var ReviewMajorInfoDlg = {
         applyTime: "",
         agreeTime: "",
         refuseTime: "",
-        cancelTime: ""
+        cancelTime: "",
+        belongDomain: "",
+        pName: ""
     }
 };
 
-layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () {
+layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], function () {
     var $ = layui.jquery;
     var $ax = layui.ax;
     var form = layui.form;
     var admin = layui.admin;
+    var layer = layui.layer;
 
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/reviewMajor/detail?reviewId=" + Feng.getUrlParam("reviewId"));
@@ -141,4 +144,22 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         return status;
     }
 
+
+    // 点击上级角色时
+    $('#pName').click(function () {
+        var formName = encodeURIComponent("parent.ReviewMajorInfoDlg.data.pName");
+        var formId = encodeURIComponent("parent.ReviewMajorInfoDlg.data.belongDomain");
+        var treeUrl = encodeURIComponent("/thesisDomain/tree");
+
+        layer.open({
+            type: 2,
+            title: '父级领域',
+            area: ['300px', '400px'],
+            content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            end: function () {
+                $("#belongDomain").val(ReviewMajorInfoDlg.data.belongDomain);
+                $("#pName").val(ReviewMajorInfoDlg.data.pName);
+            }
+        });
+    });
 });

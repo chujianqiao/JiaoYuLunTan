@@ -28,6 +28,8 @@ import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.sys.modular.system.warpper.UserWrapper;
 import cn.stylefeng.guns.thesis.entity.Thesis;
 import cn.stylefeng.guns.thesis.model.params.ThesisParam;
+import cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult;
+import cn.stylefeng.guns.thesisDomain.service.ThesisDomainService;
 import cn.stylefeng.guns.util.ExcelTool;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.guns.util.TransTypeUtil;
@@ -71,6 +73,9 @@ public class ReviewMajorController extends BaseController {
 
     @Autowired
     private MeetMemberService meetMemberService;
+
+    @Autowired
+    private ThesisDomainService thesisDomainService;
 
     @Autowired
     private UserService userService;
@@ -276,6 +281,29 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     public ResponseData detail(ReviewMajorParam reviewMajorParam) {
         ReviewMajor detail = this.reviewMajorService.getById(reviewMajorParam.getReviewId());
+
+        String domainObj = detail.getBelongDomain();
+        String belongDomainStr = "";
+        if (domainObj.equals("") || domainObj == null){
+            belongDomainStr = "";
+        }else {
+            String[] domainList = domainObj.split(",");
+            for (int i = 0;i < domainList.length;i++){
+                Long pid = Long.parseLong(domainList[i]);
+                if (pid == null) {
+                    belongDomainStr = belongDomainStr + "";
+                } else if (pid == 0L) {
+                    belongDomainStr = belongDomainStr + "顶级;";
+                } else {
+                    ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(pid);
+                    if (cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult) && cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult.getDomainName())) {
+                        belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + ";";
+                    }
+                }
+            }
+        }
+        detail.setBelongDomain(belongDomainStr);
+
         return ResponseData.success(detail);
     }
 

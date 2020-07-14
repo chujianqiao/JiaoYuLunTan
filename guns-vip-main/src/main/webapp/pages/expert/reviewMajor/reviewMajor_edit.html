@@ -8,10 +8,17 @@
                 <div class="layui-form-item layui-row">
                     <input name="reviewId" type="hidden"/>
 
-                    <div class="layui-inline layui-col-md12">
+                    <!--<div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">研究方向和专长<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="direct" name="direct" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">${lang.get("FIELD_WORK_UNIT","专家领域")}<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="belongDomain" name="belongDomain" type="hidden">
+                            <input id="pName" name="pName" placeholder="请选择专家领域" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
@@ -26,7 +33,7 @@
                             <input id="reviewCount"  disabled="disabled" name="reviewCount" placeholder="" type="text" class="layui-input"  required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
+                    <!--<div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">退回数量<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="refuseCount"  disabled="disabled" name="refuseCount" placeholder="" type="text" class="layui-input"  required/>
@@ -34,9 +41,9 @@
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">专家分类<span style="color: red;">*</span></label>
-                        <!--<div class="layui-input-block">-->
-                            <!--<input id="majorType" name="majorType" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
-                        <!--</div>-->
+                        &lt;!&ndash;<div class="layui-input-block">&ndash;&gt;
+                            &lt;!&ndash;<input id="majorType" name="majorType" placeholder="" type="text" class="layui-input" lay-verify="required" required/>&ndash;&gt;
+                        &lt;!&ndash;</div>&ndash;&gt;
                         <div class="layui-input-block">
                             <input type="radio" name="majorType" value="会议论文审核和优秀论著评审专家" title="会议论文审核和优秀论著评审专家" checked/>
                             <input type="radio" name="majorType" value="教改实验成果评审专家" title="教改实验成果评审专家"/>
@@ -53,14 +60,14 @@
                         <div class="layui-input-block">
                             <input id="checkStatus"  disabled="disabled" name="checkStatus" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">提交申请时间<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">创建时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="applyTime"  disabled="disabled" name="applyTime" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
+                    <!--<div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">通过时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="agreeTime"  disabled="disabled" name="agreeTime" placeholder="" type="text" class="layui-input"  required/>
@@ -77,7 +84,7 @@
                         <div class="layui-input-block">
                             <input id="cancelTime"  disabled="disabled" name="cancelTime" placeholder="" type="text" class="layui-input"  required/>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
