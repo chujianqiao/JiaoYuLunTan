@@ -62,7 +62,21 @@ public class MeetMember implements Serializable {
     @TableField("reg_time")
     private Date regTime;
 
+    /**
+     * 会议状态；
+     * 1-评审中,2-评审通过,3-已取消,4-已缴费
+     */
+    @TableField("meet_status")
+    private Integer meetStatus;
 
+    /**
+     * 缴费记录ID
+     */
+    @TableField("pay_id")
+    private Integer payId;
+
+    public MeetMember() {
+    }
 
 
     public Long getMemberId() {
@@ -119,6 +133,22 @@ public class MeetMember implements Serializable {
 
     public void setRegTime(Date regTime) {
         this.regTime = regTime;
+    }
+
+    public Integer getMeetStatus() {
+        return meetStatus;
+    }
+
+    public void setMeetStatus(Integer meetStatus) {
+        this.meetStatus = meetStatus;
+    }
+
+    public Integer getPayId() {
+        return payId;
+    }
+
+    public void setPayId(Integer payId) {
+        this.payId = payId;
     }
 
     @Override

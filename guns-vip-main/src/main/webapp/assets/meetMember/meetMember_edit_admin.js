@@ -20,10 +20,10 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var admin = layui.admin;
     var upload = layui.upload;
 
-    //获取详情信息，填充表单
-    // var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
-    // var result = ajax.start();
-    // form.val('meetMemberForm', result.data);
+    // 获取详情信息填充表单
+    var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
+    var result = ajax.start();
+    form.val('meetMemberForm', result.data);
 
 
     /**
@@ -33,20 +33,20 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
         var result = ajax.start();
         var ownForumid = result.data.ownForumid;
-        // forumSelectOption(ownForumid);
+        forumSelectOption(ownForumid);
 
         debugger;
-        var thesisId = result.data.thesisId;
-        var ajax2 = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + thesisId);
-        var result2 = ajax2.start();
-
-        var fileName = result2.data.fileName;
-        $("#fileNameTip").html(fileName);
+        // var thesisId = result.data.thesisId;
+        // var ajax2 = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + thesisId);
+        // var result2 = ajax2.start();
+        //
+        // var fileName = result2.data.fileName;
+        // $("#fileNameTip").html(fileName);
         //批量赋值
-        form.val('meetMemberForm', result2.data);
-        form.val('meetMemberForm', result.data);
+        // form.val('meetMemberForm', result2.data);
+        // form.val('meetMemberForm', result.data);
 
-        // thesisSelectOption(thesisId);
+        thesisSelectOption(thesisId);
 
         var userId = result.data.userId;
         var userajax = new $ax(Feng.ctxPath + "/mgr/detail?userId=" + userId);
@@ -77,22 +77,22 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     });
 
     // 点击上级角色时
-    $('#pName').click(function () {
-        var formName = encodeURIComponent("parent.MeetMemberInfoDlg.data.pName");
-        var formId = encodeURIComponent("parent.MeetMemberInfoDlg.data.belongDomain");
-        var treeUrl = encodeURIComponent("/thesisDomain/tree");
-
-        layer.open({
-            type: 2,
-            title: '父级领域',
-            area: ['300px', '400px'],
-            content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
-            end: function () {
-                $("#belongDomain").val(MeetMemberInfoDlg.data.belongDomain);
-                $("#pName").val(MeetMemberInfoDlg.data.pName);
-            }
-        });
-    });
+    // $('#pName').click(function () {
+    //     var formName = encodeURIComponent("parent.MeetMemberInfoDlg.data.pName");
+    //     var formId = encodeURIComponent("parent.MeetMemberInfoDlg.data.belongDomain");
+    //     var treeUrl = encodeURIComponent("/thesisDomain/tree");
+    //
+    //     layer.open({
+    //         type: 2,
+    //         title: '父级领域',
+    //         area: ['300px', '400px'],
+    //         content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+    //         end: function () {
+    //             $("#belongDomain").val(MeetMemberInfoDlg.data.belongDomain);
+    //             $("#pName").val(MeetMemberInfoDlg.data.pName);
+    //         }
+    //     });
+    // });
 
     //上传文件
     upload.render({

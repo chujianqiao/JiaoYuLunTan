@@ -33,11 +33,16 @@ public class TransTypeUtil {
 	private static Map<Object,Object> isPass = new HashMap();
 
 	/**
+	 * 会议状态
+	 * 状态码 → 字符串
+	 */
+	private static Map<Object,Object> meetStatus = new HashMap<>();
+
+	/**
 	 * 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
 	 * @return
 	 */
 	public static Map<Object, Object> getApplyStatus() {
-		//1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
 		applyStatus.put(0,"已取消");
 		applyStatus.put(1,"申请中");
 		applyStatus.put(2,"已通过");
@@ -72,5 +77,17 @@ public class TransTypeUtil {
 		isPass.put(1,"同意参会");
 		isPass.put(2,"同意参会并推荐优秀");
 		return isPass;
+	}
+
+	/**
+	 * 1-评审中,2-评审通过,3-已取消,4-已缴费
+	 * @return
+	 */
+	public static Map<Object, Object> getMeetStatus() {
+		meetStatus.put(1,"评审中");
+		meetStatus.put(2,"评审通过");
+		meetStatus.put(3,"已取消");
+		meetStatus.put(4,"已缴费");
+		return meetStatus;
 	}
 }

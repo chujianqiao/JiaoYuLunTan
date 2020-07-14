@@ -54,4 +54,15 @@ public class MeetMemberResult implements Serializable {
      */
     private Date regTime;
 
+    /**
+     * 会议状态；
+     * 1-评审中,2-评审通过,3-已取消,4-已缴费
+     */
+    private Integer meetStatus;
+
+    /**
+     * 缴费记录ID
+     */
+    private Integer payId;
+
 }

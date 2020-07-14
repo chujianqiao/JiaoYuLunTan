@@ -17,6 +17,7 @@ import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.thesis.entity.Thesis;
+import cn.stylefeng.guns.thesis.model.params.ThesisParam;
 import cn.stylefeng.guns.thesis.service.ThesisService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
@@ -136,7 +137,22 @@ public class MeetMemberController extends BaseController {
      */
     @RequestMapping("/editItem")
     @ResponseBody
-    public ResponseData editItem(MeetMemberParam meetMemberParam) {
+    public ResponseData editItem(MeetMemberParam meetMemberParam, ThesisParam thesisParam) {
+        meetMemberParam.setMeetStatus(1);
+        this.meetMemberService.update(meetMemberParam);
+        this.thesisService.update(thesisParam);
+        return ResponseData.success();
+    }
+
+    /**
+     * 取消申请
+     * @author wucy
+     * @Date 2020-07-13
+     */
+    @RequestMapping("/cancelApply")
+    @ResponseBody
+    public ResponseData cancelApply(MeetMemberParam meetMemberParam) {
+        meetMemberParam.setMeetStatus(3);
         this.meetMemberService.update(meetMemberParam);
         return ResponseData.success();
     }

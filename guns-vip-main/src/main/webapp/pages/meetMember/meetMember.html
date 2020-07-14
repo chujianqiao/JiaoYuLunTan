@@ -1,8 +1,11 @@
 @layout("/common/_container.html",{js:["/assets/meetMember/meetMember.js"]}){
-
-<div class="layui-body-header">
-    <span class="layui-body-header-title">会议注册成员管理</span>
-</div>
+<div class="page">
+<!-- 头部 -->
+@include("/common/person_header.html"){}
+    <div class="func-column-container widthC mCenter mb40">
+    <div class="layui-body-header">
+        <span class="layui-body-header-title">会议注册成员管理</span>
+    </div>
 
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
@@ -26,6 +29,10 @@
             </div>
         </div>
     </div>
+    </div>
+    </div>
+    <!-- 尾部 -->
+    @include("/common/person_footer.html"){}
 </div>
 
 <script type="text/html" id="tableBar">

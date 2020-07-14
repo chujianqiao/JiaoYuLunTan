@@ -27,13 +27,23 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'userPost', sort: true, title: '职务/职称'},
             {field: 'direct', sort: true, title: '研究方向'},
             {field: 'thesisName', sort: true, title: '参会论文'},
-            {field: 'forumName', sort: true, title: '自设论坛'},
+            {field: 'meetStatusStr', sort: true, title: '会议状态'},
+            // {field: 'forumName', sort: true, title: '自设论坛'},
 
-            {field: 'speak', sort: true, title: '是否申请发言'},
+            // {field: 'speak', sort: true, title: '是否申请发言'},
             // {field: 'judge', sort: true, title: '是否同意参加形势研判会'},
             // {field: 'ownForumid', sort: true, title: '自设论坛ID'},
             // {field: 'regTime', sort: true, title: '注册时间'},
-            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180}
+            // {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180},
+            {align: 'center', minWidth: 180, title: '操作', templet: function(data){
+                    if (data.meetStatusStr == "评审中") {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel'>取消申请</a>";
+                    }else if (data.meetStatusStr == "已取消") {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel'>删除</a>";
+                    }else {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a>"
+                    }
+                }}
         ]];
     };
 
@@ -64,11 +74,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
       * @param data 点击按钮时候的行数据
       */
       MeetMember.openEditDlg = function (data) {
-          func.open({
-              title: '修改会议注册成员表',
-              content: Feng.ctxPath + '/meetMember/edit?memberId=' + data.memberId,
-              tableId: MeetMember.tableId
-          });
+          window.location.href = Feng.ctxPath + '/meetMember/edit?memberId=' + data.memberId ;
+          // func.open({
+          //     title: '修改会议注册信息',
+          //     content: Feng.ctxPath + '/meetMember/edit?memberId=' + data.memberId + '&thesisId=' + data.thesisId,
+          //     tableId: MeetMember.tableId
+          // });
       };
 
     /**
@@ -98,7 +109,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
     /**
      * 点击删除
-     *
      * @param data 点击按钮时候的行数据
      */
     MeetMember.onDeleteItem = function (data) {
@@ -113,6 +123,30 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             ajax.start();
         };
         Feng.confirm("是否删除?", operation);
+    };
+
+    /**
+     * 取消申请
+     * @param data
+     */
+    MeetMember.onCancelItem = function (data){
+        if (data.meetStatusStr == '已取消'){
+            alert("已经是取消状态！")
+            return false;
+        }
+        debugger;
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/meetMember/cancelApply", function (data) {
+                Feng.success("取消申请成功!");
+                table.reload(MeetMember.tableId);
+                // window.location.href=window.location.href;
+            }, function (data) {
+                Feng.error("取消申请失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("memberId", data.memberId);
+            ajax.start();
+        };
+        Feng.confirm("是否取消会议申请?", operation);
     };
 
     // 渲染表格
@@ -153,6 +187,9 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             MeetMember.onDeleteItem(data);
         } else if (layEvent === 'detail') {
             MeetMember.onDisableItem(data);
+        }   else if (layEvent === 'cancel') {
+            MeetMember.onCancelItem(data);
         }
+
     });
 });

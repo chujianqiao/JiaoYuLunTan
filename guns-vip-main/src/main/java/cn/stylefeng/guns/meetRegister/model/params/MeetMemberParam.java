@@ -1,10 +1,10 @@
 package cn.stylefeng.guns.meetRegister.model.params;
 
-import lombok.Data;
 import cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam;
-import java.util.Date;
+import lombok.Data;
+
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * <p>
@@ -54,6 +54,17 @@ public class MeetMemberParam implements Serializable, BaseValidatingParam {
      * 注册时间
      */
     private Date regTime;
+
+    /**
+     * 会议状态；
+     * 1-评审中,2-评审通过,3-已取消,4-已缴费
+     */
+    private Integer meetStatus;
+
+    /**
+     * 缴费记录ID
+     */
+    private Integer payId;
 
     @Override
     public String checkParam() {

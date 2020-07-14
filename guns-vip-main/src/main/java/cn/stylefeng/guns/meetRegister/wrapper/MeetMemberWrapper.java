@@ -12,6 +12,7 @@ import cn.stylefeng.roses.core.base.warpper.BaseControllerWrapper;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.kernel.model.page.PageResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 import java.util.Map;
@@ -79,10 +80,11 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 			}
 		}
 
-
-
 		int isSpeak = Integer.parseInt(map.get("speak").toString());
 		String speak = TransTypeUtil.getIsOrNo().get(isSpeak).toString();
+
+		int meetStatus = Integer.parseInt(map.get("meetStatus").toString());
+		String meetStatusStr = TransTypeUtil.getMeetStatus().get(meetStatus).toString();
 
 		map.put("memberName",memberName);
 		map.put("unitName",unitName);
@@ -91,5 +93,6 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		map.put("thesisName",thesisName);
 		map.put("forumName",forumName);
 		map.put("speak",speak);
+		map.put("meetStatusStr",meetStatusStr);
 	}
 }
