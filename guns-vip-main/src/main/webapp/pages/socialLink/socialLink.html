@@ -1,7 +1,7 @@
-@layout("/common/_container.html",{js:["/assets/socialForum/socialForum.js"]}){
+@layout("/common/_container.html",{js:["/assets/socialLink/socialLink.js"]}){
 
 <div class="layui-body-header">
-    <span class="layui-body-header-title">社会资助论坛表管理</span>
+    <span class="layui-body-header-title">赞助环节表管理</span>
 </div>
 
 <div class="layui-fluid">
@@ -12,16 +12,13 @@
                     <div class="layui-form toolbar">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <input id="unitName" class="layui-input" type="text" placeholder="请输入企业名称"/>
-                            </div>
-                            <div class="layui-inline">
                                 <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
+                                <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
                                 <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
                             </div>
                         </div>
                     </div>
-                    <table class="layui-table" id="socialForumTable" lay-filter="socialForumTable"></table>
+                    <table class="layui-table" id="socialLinkTable" lay-filter="socialLinkTable"></table>
                 </div>
             </div>
         </div>

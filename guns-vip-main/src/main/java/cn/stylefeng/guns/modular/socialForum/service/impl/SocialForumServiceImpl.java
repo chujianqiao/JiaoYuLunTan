@@ -61,10 +61,10 @@ public class SocialForumServiceImpl extends ServiceImpl<SocialForumMapper, Socia
     @Override
     public LayuiPageInfo findPageBySpec(SocialForumParam param){
         Page pageContext = getPageContext();
-        if (param.getForumName()==null){
-            param.setForumName("%%");
+        if (param.getUnitName()==null){
+            param.setUnitName("%%");
         }else {
-            param.setForumName("%" + param.getForumName() + "%");
+            param.setUnitName("%" + param.getUnitName() + "%");
         }
 
         IPage page = null;

@@ -104,6 +104,10 @@ public class LoginController extends BaseController {
                         loginUrl = "/unitForum.html";
                         DefaultAvatar.setLoginUrl("");
                     }
+                    if (url.equals("/socialForum/add")){
+                        loginUrl = "/social.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
                     if (url.equals("/collectTopic/add")){
                         loginUrl = "/collect.html";
                         DefaultAvatar.setLoginUrl("");
@@ -119,6 +123,10 @@ public class LoginController extends BaseController {
                     }
                     if (url.equals("/holdForum/add")){
                         loginUrl = "/forum.html";
+                        DefaultAvatar.setLoginUrl("");
+                    }
+                    if (url.equals("/socialForum/add")){
+                        loginUrl = "/social.html";
                         DefaultAvatar.setLoginUrl("");
                     }
                     if (url.equals("/collectTopic/add")){

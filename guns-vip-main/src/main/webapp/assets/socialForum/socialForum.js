@@ -11,7 +11,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     var SocialForum = {
         tableId: "socialForumTable",
         condition: {
-            forumName: "",
+            unitName: "",
         }
     };
 
@@ -22,33 +22,33 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             //{field: 'forumId', hide: true, title: '论坛ID'},
-            {field: 'forumName', sort: true, title: '论坛名称'},
+            //{field: 'forumName', sort: true, title: '论坛名称'},
             //{field: 'forumDesc', sort: true, title: '论坛描述'},
 
-            {field: 'unitName', sort: true, title: '申报企业/单位名称'},
-            {field: 'unitPlace', sort: true, title: '企业/单位所在地'},
-            /*{field: 'manager', sort: true, title: '负责人'},
-            {field: 'manaPhone', sort: true, title: '负责人电话'},
-            {field: 'manaEmail', sort: true, title: '负责人邮箱'},
+            {field: 'unitName', sort: true, title: '企业/单位名称'},
+            {field: 'creditCode', sort: true, title: '统一社会信用代码'},
+            {field: 'manager', sort: true, title: '联系人'},
+            {field: 'manaPhone', sort: true, title: '联系电话'},
+            {field: 'manaEmail', sort: true, title: '联系邮箱'},
+            //{field: 'unitPlace', sort: true, title: '企业/单位所在地'},
+            /*
             {field: 'alreadyMeet', sort: true, title: '已资助的会议'},*/
-            {field: 'supPlate', sort: true, title: '拟资助版块'},
+            {field: 'supPlate', sort: true, title: '赞助环节'},
             {field: 'supMoney', sort: true, title: '资助金额'},
             //{field: 'contractPath', sort: true, title: '合同条件附件路径'},
-            {field: 'applyStatus', sort: true, title: '申报状态', templet: function(data){
+            /*{field: 'applyStatus', sort: true, title: '申报状态', templet: function(data){
                     if (data.applyStatus == 1) return '申请中';
                     if (data.applyStatus == 2) return '已通过';
                     if (data.applyStatus == 3) return '未通过';
                     if (data.applyStatus == 0) return '已取消';
-                }},//; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
+                }},*///; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
             /*{field: 'applyTime', sort: true, title: '申报时间'},
             {field: 'applyId', sort: true, title: '申报单位ID'},
             {field: 'contractName', sort: true, title: '合同条件附件名称'},*/
-            {align: 'center', title: '操作', templet: function(data){
-                    if (data.applyStatus == 1) {
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"approve\">审批</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
-                    }else {
+            {align: 'center', title: '操作',minWidth: 180, templet: function(data){
+
                         return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
-                    }
+
                 }}
         ]];
     };
@@ -59,7 +59,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     SocialForum.search = function () {
         var queryData = {};
 
-        queryData['forumName'] = $("#forumName").val();
+        queryData['unitName'] = $("#unitName").val();
         table.reload(SocialForum.tableId, {
             where: queryData, page: {curr: 1}
         });

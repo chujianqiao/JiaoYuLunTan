@@ -38,7 +38,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
 
 
-
+    var ajax = new $ax(Feng.ctxPath + "/socialLink/list");
+    var result = ajax.start();
+    console.log(result);
+    for (var i = 0; i < result.count; i++){
+        if (i%3==0){
+            $("#divLink").append("<br><br>");
+        }
+        var input=$("<input>");
+        input.attr("type","checkbox");
+        input.attr("name","supPlates");
+        input.attr("value",result.data[i].linkName);
+        input.attr("title",result.data[i].linkName);
+        $("#divLink").append(input);
+    }
+    form.render('checkbox');
 
 
 

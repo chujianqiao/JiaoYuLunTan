@@ -11,7 +11,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     var SocialForum = {
         tableId: "socialForumTable",
         condition: {
-            forumName: "",
+            unitName: "",
         }
     };
 
@@ -62,7 +62,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     SocialForum.search = function () {
         var queryData = {};
 
-        queryData['forumName'] = $("#forumName").val();
+        queryData['unitName'] = $("#unitName").val();
         table.reload(SocialForum.tableId, {
             where: queryData, page: {curr: 1}
         });

@@ -69,14 +69,7 @@ public class SocialForumController extends BaseController {
      */
     @RequestMapping("/add")
     public String add() {
-        LoginUser user = LoginContextHolder.getContext().getUser();
-        List roles = user.getRoleList();
-        long unit = 3;
-        if (roles.contains(unit)){
-            return "/unitForum.html";
-        } else {
-            return "/forum.html";
-        }
+        return "/social.html";
     }
 
     /**

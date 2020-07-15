@@ -128,7 +128,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         data.field.supPlate = supPlate;
 
         var flag = 0;
-        $("input:checkbox[name = ifAgreeOwnUnit]:checked").each(function(i){
+        $("input:checkbox[name = ifAgreeSocial]:checked").each(function(i){
             flag = 1;
         })
         if (flag == 1) {
