@@ -73,7 +73,7 @@ public class MeetMember implements Serializable {
      * 缴费记录ID
      */
     @TableField("pay_id")
-    private Integer payId;
+    private Long payId;
 
     public MeetMember() {
     }
@@ -143,11 +143,11 @@ public class MeetMember implements Serializable {
         this.meetStatus = meetStatus;
     }
 
-    public Integer getPayId() {
+    public Long getPayId() {
         return payId;
     }
 
-    public void setPayId(Integer payId) {
+    public void setPayId(Long payId) {
         this.payId = payId;
     }
 

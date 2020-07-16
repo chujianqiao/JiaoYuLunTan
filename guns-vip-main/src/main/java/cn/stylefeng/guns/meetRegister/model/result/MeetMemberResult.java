@@ -63,6 +63,6 @@ public class MeetMemberResult implements Serializable {
     /**
      * 缴费记录ID
      */
-    private Integer payId;
+    private Long payId;
 
 }

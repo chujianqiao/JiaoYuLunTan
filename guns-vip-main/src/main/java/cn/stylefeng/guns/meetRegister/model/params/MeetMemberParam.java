@@ -64,7 +64,7 @@ public class MeetMemberParam implements Serializable, BaseValidatingParam {
     /**
      * 缴费记录ID
      */
-    private Integer payId;
+    private Long payId;
 
     @Override
     public String checkParam() {

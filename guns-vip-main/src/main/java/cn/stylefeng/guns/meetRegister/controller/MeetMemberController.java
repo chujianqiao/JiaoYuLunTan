@@ -2,11 +2,8 @@ package cn.stylefeng.guns.meetRegister.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
-import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
-import cn.stylefeng.guns.core.constant.dictmap.MeetMemberDict;
-import cn.stylefeng.guns.core.constant.dictmap.OwnForumDict;
 import cn.stylefeng.guns.meetRegister.entity.MeetMember;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
@@ -25,7 +22,6 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,10 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -119,6 +113,16 @@ public class MeetMemberController extends BaseController {
     }
 
     /**
+     * 选择论坛
+     * @author wucy
+     * @Date 2020-07-14
+     */
+    @RequestMapping("/forum")
+    public String selectForum(MeetMemberParam meetMemberParam) {
+        return PREFIX + "/meetMember_edit_forum.html";
+    }
+
+    /**
      * 新增接口
      * @author wucy
      * @Date 2020-05-20
@@ -153,6 +157,18 @@ public class MeetMemberController extends BaseController {
     @ResponseBody
     public ResponseData cancelApply(MeetMemberParam meetMemberParam) {
         meetMemberParam.setMeetStatus(3);
+        this.meetMemberService.update(meetMemberParam);
+        return ResponseData.success();
+    }
+
+    /**
+     * 更新论坛信息
+     * @author wucy
+     * @Date 2020-07-13
+     */
+    @RequestMapping("/editForum")
+    @ResponseBody
+    public ResponseData editForum(MeetMemberParam meetMemberParam) {
         this.meetMemberService.update(meetMemberParam);
         return ResponseData.success();
     }

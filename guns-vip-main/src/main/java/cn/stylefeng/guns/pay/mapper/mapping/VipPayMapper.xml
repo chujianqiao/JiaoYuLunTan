@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.pay.mapper.VipPayMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.pay.entity.VipPay">
+        <id column="pay_id" property="payId" />
+        <result column="pay_user" property="payUser" />
+        <result column="order_num" property="orderNum" />
+        <result column="pay_money" property="payMoney" />
+        <result column="pay_type" property="payType" />
+        <result column="tran_num" property="tranNum" />
+        <result column="pay_time" property="payTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        pay_id AS "payId", pay_user AS "payUser", order_num AS "orderNum", pay_money AS "payMoney", pay_type AS "payType", tran_num AS "tranNum", pay_time AS "payTime"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.pay.model.result.VipPayResult" parameterType="cn.stylefeng.guns.pay.model.params.VipPayParam">
+        select
+        <include refid="Base_Column_List"/>
+        from vip_pay where 1 = 1
+        <if test="paramCondition.orderNum != null and paramCondition.orderNum != ''">
+            and order_num = #{paramCondition.orderNum}
+        </if>
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.pay.model.params.VipPayParam">
+        select
+        <include refid="Base_Column_List"/>
+        from vip_pay where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.pay.model.result.VipPayResult" parameterType="cn.stylefeng.guns.pay.model.params.VipPayParam">
+        select
+        <include refid="Base_Column_List"/>
+        from vip_pay where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.pay.model.params.VipPayParam">
+        select
+        <include refid="Base_Column_List"/>
+        from vip_pay where 1 = 1
+    </select>
+
+</mapper>

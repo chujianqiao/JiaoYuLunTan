@@ -41,15 +41,23 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                     } else if (data.meetStatusStr == "已取消") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                     } else if (data.meetStatusStr == "评审通过") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay'>缴费</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >支付宝缴费</a>";
                     } else if (data.meetStatusStr == "已缴费") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='pay'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay'>申请开票</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay'>申请开票</a>";
                     } else if (data.meetStatusStr == "未通过") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                     }
                 }}
         ]];
     };
+    
+    // $(function () {
+    //     debugger;
+    //     var payObj = document.getElementById("payBtn");
+    //     if(payObj != null){
+    //         payObj.href = "http://www.baidu.com";
+    //     }
+    // })
 
     /**
      * 点击查询按钮
@@ -98,6 +106,17 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         });
     };
 
+    /**
+     * 选择论坛
+     * @param data
+     */
+    MeetMember.onForumItem = function (data) {
+        func.open({
+            title: '选择论坛',
+            content: Feng.ctxPath + '/meetMember/forum?memberId=' + data.memberId,
+            tableId: MeetMember.tableId
+        });
+    };
 
     /**
      * 导出excel按钮
@@ -180,6 +199,14 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         MeetMember.exportExcel();
     });
 
+    /**
+     * 支付
+     * @param data
+     */
+    MeetMember.onPayItem = function (data) {
+        window.location.href = Feng.ctxPath + '/alipay/pay?memberId=' + data.memberId;
+    };
+
     // 工具条点击事件
     table.on('tool(' + MeetMember.tableId + ')', function (obj) {
         var data = obj.data;
@@ -193,6 +220,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             MeetMember.onDisableItem(data);
         } else if (layEvent === 'cancel') {
             MeetMember.onCancelItem(data);
+        } else if (layEvent === 'forum') {
+            MeetMember.onForumItem(data);
+        } else if (layEvent === 'pay') {
+            MeetMember.onPayItem(data);
         }
 
     });
