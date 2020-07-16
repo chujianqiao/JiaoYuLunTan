@@ -103,6 +103,7 @@ ul.hotnews-list li.hover .hotnews-date{color:#fff;}
 .func-item{overflow:hidden;font-size:0;text-align:center;}
 .func-item-icon{display:block;}
 .func-item img{width:.88rem;}
+.func-item{width:200px;}
 .func-item-title{color:#333333;}
 .func-items.swiper-container{}
 .func-items .swiper-wrapper{}

@@ -256,6 +256,12 @@
         from sys_user where account = #{account} and status != 'DELETED'
     </select>
 
+    <select id="getByPhone" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select
+        <include refid="Base_Column_List_With_Pwd"/>
+        from sys_user where phone = #{phone} and status != 'DELETED'
+    </select>
+
     <select id="listUserAndRoleExpectAdmin" resultType="map">
         select
         user.account as account,

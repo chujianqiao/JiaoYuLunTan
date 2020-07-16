@@ -63,6 +63,11 @@ public interface UserMapper extends BaseMapper<User> {
     User getByAccount(@Param("account") String account);
 
     /**
+     * 通过手机号获取用户
+     */
+    User getByPhone(@Param("phone") String phone);
+
+    /**
      * 选择办理人
      */
     IPage<Map<String, Object>> listUserAndRoleExpectAdmin(Page page);

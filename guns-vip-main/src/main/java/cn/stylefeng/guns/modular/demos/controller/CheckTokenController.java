@@ -102,8 +102,8 @@ public class CheckTokenController {
         String smsCode = String.valueOf(new Random().nextInt(899900) + 100000);
         log.info(smsCode);
         String param = "{\"code\":\"" + smsCode + "\"}";
-        boolean sentSMS = smsService.sendSMS(phone,signName,code,param);
-        if (sentSMS){
+        //boolean sentSMS = smsService.sendSMS(phone,signName,code,param);
+        if (true){
             log.info("发送成功");
             json.put("phone", phone);
             json.put("smsCode", smsCode);

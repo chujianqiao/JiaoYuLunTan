@@ -62,15 +62,14 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
                 Feng.error("验证码已过期！");
             }else {
                 Feng.success("注册成功！");
-                //传给上个页面，刷新table用
-                admin.putTempData('formOk', true);
+                setTimeout(function () {
+                    window.location.href = Feng.ctxPath + "/login";
+                },1000);
 
-                //关掉对话框
-                admin.closeThisDialog();
             }
 
         }, function (data) {
-            Feng.error("添加失败！" + data.responseJSON.message)
+            Feng.error("注册失败！" + data.responseJSON.message)
         });
         ajax.set(data.field);
         ajax.start();

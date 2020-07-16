@@ -69,6 +69,12 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             throw new ServiceException(BizExceptionEnum.USER_ALREADY_REG);
         }
 
+        // 判断手机号是否重复
+        User pUser = this.getByPhone(user.getPhone());
+        if (pUser != null) {
+            throw new ServiceException(BizExceptionEnum.USER_ALREADY_REG_PHONE);
+        }
+
         // 完善账号信息
         String salt = SaltUtil.getRandomSalt();
         String password = SaltUtil.md5Encrypt(user.getPassword(), salt);
@@ -208,6 +214,16 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      */
     public User getByAccount(String account) {
         return this.baseMapper.getByAccount(account);
+    }
+
+    /**
+     * 通过手机号获取用户
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:46
+     */
+    public User getByPhone(String phone) {
+        return this.baseMapper.getByPhone(phone);
     }
 
     /**
