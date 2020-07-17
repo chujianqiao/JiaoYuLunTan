@@ -19,6 +19,15 @@ spring:
     atomikos:
       properties:
         max-actives: -1
+#  mail:
+#    #邮件协议smtp
+#    host: smtp.qq.com
+#    #发送者的邮件的用户名
+#    username: 1172544385@qq.com
+#    #使用的编码
+#    default-encoding: utf-8
+#    #移动端客户授权码(在邮箱中设置)
+#    password: hgwrjqamlmubjehj
 
 mybatis-plus:
   mapper-locations: classpath*:cn/stylefeng/**/mapping/*.xml
@@ -39,3 +48,8 @@ log:
 
 file:
   uploadFolder: D:/tmp/
+  #uploadFolder: /home/JKY/data/
+
+sms:
+  accessKeyId: LTAI4G8fGDZuKV1T88CedR14
+  accessKeySecret: u1jvMhv6iaG53gpDu5pt6moNq3rflv
