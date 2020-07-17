@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/payPage")
 public class payPageController {
-	@RequestMapping("")
+	@RequestMapping("/aaa")
 	public String payPage() {
 //		return "/pay/pay.html";
 		return "/meetMember/meetMember.html";

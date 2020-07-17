@@ -15,11 +15,10 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -31,14 +30,11 @@ import java.util.*;
  * 支付宝支付控制器
  * @author
  */
-@RestController
+//@RestController
+@Controller
 //@RequestMapping(value = "/alipay")
 @RequestMapping("/alipay")
 public class AlipayController {
-
-//	private static MeetMemberService meetMemberService;
-
-//	private static VipPayService vipPayService;
 
 	private static MeetMemberService meetMemberService = SpringContextHolder.getBean(MeetMemberService.class);
 
@@ -143,7 +139,6 @@ public class AlipayController {
 
 		boolean signVerified = false; //调用SDK验证签名
 		try {
-			String sign = new String(request.getParameter("sign").getBytes("ISO-8859-1"),"UTF-8");
 			signVerified = AlipaySignature.rsaCheckV1(params,  AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type);
 //			signVerified = AlipaySignature.rsaCheckV2(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type);
 //			signVerified = AlipaySignature.rsaCheckV1(params,  AlipayConfig.alipay_public_key, AlipayConfig.charset);
@@ -172,8 +167,6 @@ public class AlipayController {
 			vipPayParam.setPayId(vipPayResult.getPayId());
 			vipPayParam.setTranNum(trade_no);
 
-
-
 			MeetMemberParam meetMemberParam = new MeetMemberParam();
 			meetMemberParam.setPayId(vipPayResult.getPayId());
 			List<MeetMemberResult> members = meetMemberService.customList(meetMemberParam);
@@ -181,6 +174,7 @@ public class AlipayController {
 			meetMemberParam.setMemberId(meetMemberResult.getMemberId());
 			meetMemberParam.setMeetStatus(4);
 
+			//更新缴费表、会议注册成员表
 			vipPayService.update(vipPayParam);
 			meetMemberService.update(meetMemberParam);
 
@@ -189,7 +183,8 @@ public class AlipayController {
 			return "/meetMember/meetMember.html";
 		}else {
 			System.out.println("验签失败");
-			return "支付失败";
+//			return "支付失败";
+			return "/meetMember/meetMember.html";
 		}
 	}
 
