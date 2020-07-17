@@ -528,7 +528,7 @@ public class ReviewMajorController extends BaseController {
      * @Date 2018/12/24 22:44
      */
     @RequestMapping("/unfreeze")
-    @BussinessLog(value = "解除冻结用户", key = "reviewId", dict = ReviewMajorDict.class)
+    @BussinessLog(value = "解除冻结专家", key = "reviewId", dict = ReviewMajorDict.class)
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData unfreeze(@RequestParam Long reviewId) {

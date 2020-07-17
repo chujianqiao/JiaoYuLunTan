@@ -1,14 +1,22 @@
 package cn.stylefeng.guns.modular.socialLink.controller;
 
+import cn.stylefeng.guns.base.auth.annotion.Permission;
+import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.core.constant.dictmap.SocialLinkDict;
 import cn.stylefeng.guns.modular.socialLink.entity.SocialLink;
 import cn.stylefeng.guns.modular.socialLink.model.params.SocialLinkParam;
 import cn.stylefeng.guns.modular.socialLink.service.SocialLinkService;
+import cn.stylefeng.guns.sys.core.constant.Const;
+import cn.stylefeng.guns.sys.core.constant.state.ManagerStatus;
+import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.roses.core.base.controller.BaseController;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -122,6 +130,54 @@ public class SocialLinkController extends BaseController {
     @RequestMapping("/list")
     public LayuiPageInfo list(SocialLinkParam socialLinkParam) {
         return this.socialLinkService.findPageBySpec(socialLinkParam);
+    }
+
+    /**
+     * 查询列表
+     *
+     * @author CHU
+     * @Date 2020-07-15
+     */
+    @ResponseBody
+    @RequestMapping("/listAll")
+    public LayuiPageInfo listAll(SocialLinkParam socialLinkParam) {
+        return this.socialLinkService.findPageBySpecAll(socialLinkParam);
+    }
+
+    /**
+     * 冻结用户
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:44
+     */
+    @RequestMapping("/freeze")
+    @BussinessLog(value = "冻结专家", key = "linkId", dict = SocialLinkDict.class)
+    @Permission(Const.ADMIN_NAME)
+    @ResponseBody
+    public ResponseData freeze(@RequestParam Long linkId) {
+        if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(linkId)) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        this.socialLinkService.setStatus(linkId, ManagerStatus.FREEZED.getCode());
+        return SUCCESS_TIP;
+    }
+
+    /**
+     * 解除冻结用户
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:44
+     */
+    @RequestMapping("/unfreeze")
+    @BussinessLog(value = "解除冻结专家", key = "linkId", dict = SocialLinkDict.class)
+    @Permission(Const.ADMIN_NAME)
+    @ResponseBody
+    public ResponseData unfreeze(@RequestParam Long linkId) {
+        if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(linkId)) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        this.socialLinkService.setStatus(linkId, ManagerStatus.OK.getCode());
+        return SUCCESS_TIP;
     }
 
 }

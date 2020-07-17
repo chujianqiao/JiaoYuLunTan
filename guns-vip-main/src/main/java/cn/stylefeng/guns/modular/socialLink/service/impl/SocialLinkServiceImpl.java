@@ -63,6 +63,13 @@ public class SocialLinkServiceImpl extends ServiceImpl<SocialLinkMapper, SocialL
         return LayuiPageFactory.createPageInfo(page);
     }
 
+    @Override
+    public LayuiPageInfo findPageBySpecAll(SocialLinkParam param){
+        Page pageContext = getPageContext();
+        IPage page = this.baseMapper.customPageListAll(pageContext, param);
+        return LayuiPageFactory.createPageInfo(page);
+    }
+
     private Serializable getKey(SocialLinkParam param){
         return param.getLinkId();
     }
@@ -79,6 +86,11 @@ public class SocialLinkServiceImpl extends ServiceImpl<SocialLinkMapper, SocialL
         SocialLink entity = new SocialLink();
         ToolUtil.copyProperties(param, entity);
         return entity;
+    }
+
+    @Override
+    public Integer setStatus(Long linkId, String status) {
+        return this.baseMapper.setStatus(linkId, status);
     }
 
 }

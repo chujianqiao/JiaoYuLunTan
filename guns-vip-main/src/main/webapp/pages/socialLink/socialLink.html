@@ -29,4 +29,8 @@
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
+
+<script type="text/html" id="statusTpl">
+    <input type="checkbox" lay-filter="status" value="{{d.linkId}}" lay-skin="switch" lay-text="${lang.get("BTN_ACTIVE","启用")}|${lang.get("BTN_DISABLE","禁用")}" {{d.status=='ENABLE'?'checked':''}} />
+</script>
 @}

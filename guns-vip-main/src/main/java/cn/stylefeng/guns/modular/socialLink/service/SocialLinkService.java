@@ -65,5 +65,20 @@ public interface SocialLinkService extends IService<SocialLink> {
      * @Date 2020-07-15
      */
      LayuiPageInfo findPageBySpec(SocialLinkParam param);
+    /**
+     * 查询分页数据，Specification模式
+     *
+     * @author CHU
+     * @Date 2020-07-15
+     */
+    LayuiPageInfo findPageBySpecAll(SocialLinkParam param);
+
+    /**
+     * 修改环节状态
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:45
+     */
+    Integer setStatus(Long linkId, String status);
 
 }

@@ -92,6 +92,8 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
                 Feng.error("验证码错误！");
             }else if (data.message == 'phoneError') {
                 Feng.error("手机号错误！");
+            }else if (data.message == 'userPhoneError') {
+                Feng.error("此账号未绑定该手机号！");
             }else if (data.message == 'overTime') {
                 Feng.error("验证码已过期！");
             }else {

@@ -33,6 +33,12 @@
     <select id="customPageList" resultType="cn.stylefeng.guns.modular.socialLink.model.result.SocialLinkResult" parameterType="cn.stylefeng.guns.modular.socialLink.model.params.SocialLinkParam">
         select
         <include refid="Base_Column_List"/>
+        from social_link where 1 = 1 and status = 'ENABLE' order by sort asc
+    </select>
+
+    <select id="customPageListAll" resultType="cn.stylefeng.guns.modular.socialLink.model.result.SocialLinkResult" parameterType="cn.stylefeng.guns.modular.socialLink.model.params.SocialLinkParam">
+        select
+        <include refid="Base_Column_List"/>
         from social_link where 1 = 1 order by sort asc
     </select>
 
@@ -42,4 +48,7 @@
         from social_link where 1 = 1
     </select>
 
+    <update id="setStatus">
+		update social_link set status = #{status} where link_id = #{linkId}
+	</update>
 </mapper>

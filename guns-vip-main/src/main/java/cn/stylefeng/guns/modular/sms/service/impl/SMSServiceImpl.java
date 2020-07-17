@@ -1,6 +1,9 @@
 package cn.stylefeng.guns.modular.sms.service.impl;
 
 import cn.stylefeng.guns.modular.sms.service.SMSService;
+import cn.stylefeng.guns.sys.modular.consts.mapper.SysConfigMapper;
+import cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam;
+import cn.stylefeng.guns.sys.modular.consts.model.result.SysConfigResult;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -10,6 +13,9 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -24,11 +30,13 @@ import org.springframework.stereotype.Service;
 public class SMSServiceImpl implements SMSService {
 
     //从application.properties配置文件中注入配置信息
-    @Value("${sms.accessKeyId}")
+    /*@Value("${sms.accessKeyId}")
     private String accessKeyId;
     @Value("${sms.accessKeySecret}")
-    private String accessKeySecret;
+    private String accessKeySecret;*/
 
+    @Resource
+    private SysConfigMapper sysConfigMapper;
 
     @Override
     public boolean sendSMS(String phone, String signName, String code, String param) {
@@ -37,6 +45,20 @@ public class SMSServiceImpl implements SMSService {
             //初始化ascClient需要的几个参数
             final String product = "Dysmsapi";//短信API产品名称（短信产品名固定，无需修改）
             final String domain = "dysmsapi.aliyuncs.com";//短信API产品域名（接口地址固定，无需修改）
+
+            String accessKeyId = "";
+            String accessKeySecret = "";
+            SysConfigParam sysConfigParam = new SysConfigParam();
+            List<SysConfigResult> sysConfigList = sysConfigMapper.customList(sysConfigParam);
+            for (int i = 0;i < sysConfigList.size();i++){
+                if (sysConfigList.get(i).getCode().equals("GUNS_SMS_ACCESSKEY_ID")){
+                    accessKeyId = sysConfigList.get(i).getValue();
+                }
+                if (sysConfigList.get(i).getCode().equals("GUNS_SMS_ACCESSKEY_SECRET")){
+                    accessKeySecret = sysConfigList.get(i).getValue();
+                }
+            }
+
             //替换成你的AK
             //初始化ascClient,暂时不支持多region（请勿修改）
             IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId,

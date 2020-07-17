@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 赞助环节表管理
@@ -21,7 +22,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'linkId', hide: true, title: '环节ID'},
             {field: 'linkName', sort: true, title: '环节名称'},
             {field: 'description', sort: true, title: '备注'},
-            {field: 'status', sort: true, title: '状态'},
+            {field: 'status', align: "center", sort: true, templet: '#statusTpl', title: '启用状态'},
             {field: 'createTime', sort: true, title: '创建时间'},
             {field: 'sort', sort: true, title: '排序'},
             {align: 'center', toolbar: '#tableBar', title: '操作'}
@@ -99,7 +100,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + SocialLink.tableId,
-        url: Feng.ctxPath + '/socialLink/list',
+        url: Feng.ctxPath + '/socialLink/listAll',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
@@ -134,4 +135,42 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             SocialLink.onDeleteItem(data);
         }
     });
+
+
+    // 修改环节启用状态
+    form.on('switch(status)', function (obj) {
+
+        var reviewId = obj.elem.value;
+        var checked = obj.elem.checked ? true : false;
+
+        SocialLink.changeUserStatus(reviewId, checked);
+    });
+
+    /**
+     * 修改环节启用状态
+     *
+     * @param linkId
+     * @param checked 是否选中（true,false），选中就是解锁用户，未选中就是锁定用户
+     */
+    SocialLink.changeUserStatus = function (linkId, checked) {
+        if (checked) {
+            var ajax = new $ax(Feng.ctxPath + "/socialLink/unfreeze", function (data) {
+                Feng.success("解除冻结成功!");
+            }, function (data) {
+                Feng.error("解除冻结失败!");
+                table.reload(SocialLink.tableId);
+            });
+            ajax.set("linkId", linkId);
+            ajax.start();
+        } else {
+            var ajax = new $ax(Feng.ctxPath + "/socialLink/freeze", function (data) {
+                Feng.success("冻结成功!");
+            }, function (data) {
+                Feng.error("冻结失败!" + data.responseJSON.message + "!");
+                table.reload(SocialLink.tableId);
+            });
+            ajax.set("linkId", linkId);
+            ajax.start();
+        }
+    };
 });

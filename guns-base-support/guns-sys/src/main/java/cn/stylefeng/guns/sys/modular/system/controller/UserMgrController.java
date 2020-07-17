@@ -167,6 +167,10 @@ public class UserMgrController extends BaseController {
             responseData.setMessage("phoneError");
             return responseData;
         }
+        if (!json.getString("phone").equals(user.getPhone())){
+            responseData.setMessage("userPhoneError");
+            return responseData;
+        }
         if (!json.getString("smsCode").equals(smsCode)){
             responseData.setMessage("codeError");
             return responseData;

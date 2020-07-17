@@ -45,6 +45,8 @@ public interface SocialLinkMapper extends BaseMapper<SocialLink> {
      */
     Page<SocialLinkResult> customPageList(@Param("page") Page page, @Param("paramCondition") SocialLinkParam paramCondition);
 
+    Page<SocialLinkResult> customPageListAll(@Param("page") Page page, @Param("paramCondition") SocialLinkParam paramCondition);
+
     /**
      * 获取分页map列表
      *
@@ -53,4 +55,5 @@ public interface SocialLinkMapper extends BaseMapper<SocialLink> {
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") SocialLinkParam paramCondition);
 
+    Integer setStatus(Long linkId, String status);
 }
