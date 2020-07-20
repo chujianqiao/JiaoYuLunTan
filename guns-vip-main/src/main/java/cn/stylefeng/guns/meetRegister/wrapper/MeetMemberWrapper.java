@@ -80,8 +80,11 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 			}
 		}
 
-		int isSpeak = Integer.parseInt(map.get("speak").toString());
-		String speak = TransTypeUtil.getIsOrNo().get(isSpeak).toString();
+//		String speak = "";
+//		Integer isSpeak = Integer.parseInt(map.get("speak").toString());
+//		if(isSpeak != null){
+//			speak = TransTypeUtil.getIsOrNo().get(isSpeak).toString();
+//		}
 
 		int meetStatus = Integer.parseInt(map.get("meetStatus").toString());
 		String meetStatusStr = TransTypeUtil.getMeetStatus().get(meetStatus).toString();
@@ -92,7 +95,7 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		map.put("direct",direct);
 		map.put("thesisName",thesisName);
 		map.put("forumName",forumName);
-		map.put("speak",speak);
+//		map.put("speak",speak);
 		map.put("meetStatusStr",meetStatusStr);
 	}
 }

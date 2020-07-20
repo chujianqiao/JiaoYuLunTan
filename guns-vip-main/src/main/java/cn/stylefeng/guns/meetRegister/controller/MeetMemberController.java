@@ -10,6 +10,7 @@ import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.meetRegister.wrapper.MeetMemberWrapper;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
 import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
+import cn.stylefeng.guns.sys.core.util.DefaultImages;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
@@ -23,6 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,7 +82,10 @@ public class MeetMemberController extends BaseController {
      * @Date 2020-05-20
      */
     @RequestMapping("/add")
-    public String add(HttpServletRequest request) {
+    public String add(HttpServletRequest request, Model model) {
+        //头像
+        model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
+
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
         User user = userService.getById(loginUser.getId());
         String userTitle = user.getTitle();

@@ -8,52 +8,73 @@
         <input type="hidden" name="thesisId" />
         <input type="hidden" name="memberId" />
         <tr>
-            <td class="sb-table-name">参会论文题目：</td><td>
-            <input name="thesisTitle" placeholder="请输入参会论文题目" class="layui-input" type="text" lay-verify="required" required/></td>
-            <td class="sb-table-gap"></td>
-            <td class="sb-table-name">参会论文英文题目：</td><td>
-            <input name="engTitle" placeholder="请输入参会论文英文题目" class="layui-input" type="text" lay-verify="required" required/></td></td>
-        </tr>
-        <tr>
-            <td class="sb-table-name">中文关键词：</td><td>
-            <input name="cnKeyword" placeholder="请输入中文关键词" class="layui-input" type="text" lay-verify="required" required/></td>
-            <td class="sb-table-gap"></td>
-            <td class="sb-table-name">英文关键词：</td><td>
-            <input name="engKeyword" placeholder="请输入英文关键词" class="layui-input" type="text" lay-verify="required" required/></td></td>
-        </tr>
-        <tr>
-            <td class="sb-table-name">参会论文研究方向：</td><td>
-            <input name="thesisDirect" placeholder="请输入参会论文研究方向" class="layui-input" type="text" lay-verify="required" required/></td>
-            <td class="sb-table-gap"></td>
-            <td class="sb-table-name">论文所属领域：</td>
+            <!--<td class="sb-table-gap"></td>-->
+            <td class="sb-table-name">参会论文题目：</td>
             <td>
-            <input id="belongDomain" name="belongDomain" type="hidden">
-            <input id="pName" name="pName" placeholder="请选择论文所属领域" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+                <input name="thesisTitle" placeholder="请输入参会论文题目" class="layui-input" type="text" lay-verify="required" required/>
+            </td>
+        </tr>
+        <tr>
+            <td class="sb-table-name">参会论文英文题目：</td>
+            <td>
+                <input name="engTitle" placeholder="请输入参会论文英文题目" class="layui-input" type="text" lay-verify="required" required/>
             </td>
         </tr>
 
         <tr>
-            <td class="sb-table-name">中文摘要：</td><td>
+            <td class="sb-table-name">中文关键词：</td>
+            <td>
+            <input name="cnKeyword" placeholder="请输入中文关键词" class="layui-input" type="text" lay-verify="required" required/>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="sb-table-name">英文关键词：</td>
+            <td>
+            <input name="engKeyword" placeholder="请输入英文关键词" class="layui-input" type="text" lay-verify="required" required/>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="sb-table-name">中文摘要：</td>
+            <td>
             <textarea name="cnAbstract" required lay-verify="required" placeholder="请输入中文摘要" class="layui-textarea" type="text"></textarea>
             <!--<input name="cnAbstract" placeholder="请输入中文摘要" class="layui-input" type="text" lay-verify="required" required/>-->
             </td>
-            <td class="sb-table-gap"></td>
+        </tr>
+
+        <tr></tr>
+
+        <tr>
             <td class="sb-table-name">英文摘要：</td>
             <td>
-            <textarea name="engAbstract" required lay-verify="required" placeholder="请输入英文摘要" class="layui-textarea" type="text"></textarea>
-            <!--<input name="engAbstract" placeholder="请输入英文摘要" class="layui-input" type="text" lay-verify="required" required/>-->
-            </td>
+                <textarea name="engAbstract" required lay-verify="required" placeholder="请输入英文摘要" class="layui-textarea" type="text"></textarea>
+                <!--<input name="engAbstract" placeholder="请输入英文摘要" class="layui-input" type="text" lay-verify="required" required/>-->
             </td>
         </tr>
 
+        <!--<tr>-->
+            <!--<td class="sb-table-name">参会论文研究方向：</td><td>-->
+            <!--<input name="thesisDirect" placeholder="请输入参会论文研究方向" class="layui-input" type="text" lay-verify="required" required/></td>-->
+            <!--<td class="sb-table-gap"></td>-->
+        <!--</tr>-->
+
         <tr>
-            <td class="sb-table-name">是否申请发言：</td>
+            <td class="sb-table-name">论文所属领域：</td>
             <td>
-                <div class="layui-input-inline">
-                    <input type="radio" name="speak" value="1" title="是" checked/>
-                    <input type="radio" name="speak" value="0" title="否"/>
-                </div>
+                <input id="belongDomain" name="belongDomain" type="hidden">
+                <input id="pName" name="pName" placeholder="请选择论文所属领域" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
             </td>
+        </tr>
+
+        <!--<tr>-->
+            <!--<td class="sb-table-name">是否申请发言：</td>-->
+            <!--<td>-->
+                <!--<div class="layui-input-inline">-->
+                    <!--<input type="radio" name="speak" value="1" title="是" checked/>-->
+                    <!--<input type="radio" name="speak" value="0" title="否"/>-->
+                <!--</div>-->
+            <!--</td>-->
             <!--<td class="sb-table-gap"></td>-->
             <!--<td class="sb-table-name" id="judge1">是否参加形式研判会：</td>-->
             <!--<td>-->
@@ -63,7 +84,7 @@
                 <!--</div>-->
             <!--</td>-->
             <!--</td>-->
-        </tr>
+        <!--</tr>-->
         <tr>
             <td class="sb-table-name">论文附件：</td><td>
             <input id="thesisPath" name="thesisPath" type="hidden" class="layui-input"/>

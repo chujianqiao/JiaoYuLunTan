@@ -19,6 +19,7 @@ import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.sys.modular.rest.service.RestRoleService;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
+import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.sys.modular.system.service.RoleService;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
@@ -44,6 +45,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -164,30 +166,32 @@ public class ThesisController extends BaseController {
     @RequestMapping("/addItem")
     @ResponseBody
     @BussinessLog(value = "注册会议", key = "thesisTitle", dict = MeetMemberDict.class)
-    public ResponseData addItem(ThesisParam thesisParam, MeetMemberParam meetMemberParam) {
-        LoginUser user = LoginContextHolder.getContext().getUser();
-        Long userId = user.getId();
+    public ResponseData addItem(ThesisParam thesisParam, MeetMemberParam meetMemberParam, @Valid UserDto user) {
+        //用户ID
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        Long userId = loginUser.getId();
         thesisParam.setThesisUser(userId.toString());
         thesisParam.setGreatNum(0);
         thesisParam.setGreat(0);
 
+        user.setUserId(userId);
         meetMemberParam.setUserId(userId);
-
         //论文ID
         long thesisId = ToolUtil.getNum19();
         thesisParam.setThesisId(thesisId);
         meetMemberParam.setThesisId(thesisId);
-
         //时间
         Date date = new Date();
         meetMemberParam.setRegTime(date);
         thesisParam.setApplyTime(date);
-
         //状态
         meetMemberParam.setMeetStatus(1);
 
+        //同时更新用户表、论文表、会议成员表
+        this.userService.editUser(user);
         this.thesisService.add(thesisParam);
         this.meetMemberService.add(meetMemberParam);
+
         return ResponseData.success();
     }
 

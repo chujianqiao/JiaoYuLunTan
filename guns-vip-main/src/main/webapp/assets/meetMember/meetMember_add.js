@@ -74,6 +74,28 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         }
     });
 
+    upload.render({
+        elem: '#imgHead'
+        , url: Feng.ctxPath + '/system/upload'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                $('#avatarPreview').attr('src', result);
+            });
+        }
+        , done: function (res) {
+            var ajax = new $ax(Feng.ctxPath + "/system/updateAvatar", function (data) {
+                Feng.success(res.message);
+            }, function (data) {
+                Feng.error("修改失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("fileId", res.data.fileId);
+            ajax.start();
+        }
+        , error: function () {
+            Feng.error("上传头像失败！");
+        }
+    });
+
     /**
      * 构建论坛下拉框候选值
      * @param ownForumid

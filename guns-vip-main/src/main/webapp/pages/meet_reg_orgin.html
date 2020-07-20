@@ -7,7 +7,6 @@
 	<meta name ="viewport" content ="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 	<title>Document</title>
 	<link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
-	<!--<link rel="stylesheet" href="${ctxPath}/assets/modular/frame/user_info.css" />-->
 	<link rel="stylesheet" href="${ctxPath}/assets/common/css/common.css" />
 	<link rel="stylesheet" href="${ctxPath}/assets/common/css/border-1px.css" />
 	<link rel="stylesheet" media="screen and (min-width:751px)" href="${ctxPath}/assets/common/css/custom_pc.css">
@@ -68,144 +67,54 @@
 						<form class="layui-form" id="collectTopicForm" lay-filter="collectTopicForm">
 							<table class="sb-table fontSize16" width="100%">
 								<tr>
-									<!--<td class="sb-table-gap"></td>-->
-									<td class="sb-table-name">头像 ：</td>
+									<td class="sb-table-name">参会论文题目：</td><td>
+									<input name="thesisTitle" placeholder="请输入参会论文题目" class="layui-input" type="text" lay-verify="required" required/></td>
+									<td class="sb-table-gap"></td>
+									<td class="sb-table-name">参会论文英文题目：</td><td>
+									<input name="engTitle" placeholder="请输入参会论文英文题目" class="layui-input" type="text" lay-verify="required" required/></td></td>
+								</tr>
+								<tr>
+									<td class="sb-table-name">中文关键词：</td><td>
+									<input name="cnKeyword" placeholder="请输入中文关键词" class="layui-input" type="text" lay-verify="required" required/></td>
+									<td class="sb-table-gap"></td>
+									<td class="sb-table-name">英文关键词：</td><td>
+									<input name="engKeyword" placeholder="请输入英文关键词" class="layui-input" type="text" lay-verify="required" required/></td></td>
+								</tr>
+								<tr>
+									<td class="sb-table-name">中文摘要：</td><td>
+									<input name="cnAbstract" placeholder="请输入中文摘要" class="layui-input" type="text" lay-verify="required" required/></td>
+									<td class="sb-table-gap"></td>
+									<td class="sb-table-name">英文摘要：</td><td>
+									<input name="engAbstract" placeholder="请输入英文摘要" class="layui-input" type="text" lay-verify="required" required/></td></td>
+								</tr>
+								<tr>
+									<td class="sb-table-name">参会论文研究方向：</td><td>
+									<input name="thesisDirect" placeholder="请输入参会论文研究方向" class="layui-input" type="text" lay-verify="required" required/></td>
+									<td class="sb-table-gap"></td>
+									<td class="sb-table-name">论文所属领域：</td><td>
+										<input id="belongDomain" name="belongDomain" type="hidden">
+										<input id="pName" name="pName" placeholder="请选择论文所属领域" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="sb-table-name">是否申请发言：</td>
 									<td>
-										<div class="user-info-head" id="imgHead">
-											<img id="avatarPreview" src="${avatar}"/>
+										<div class="layui-input-inline">
+											<input type="radio" name="speak" value="1" title="是" checked/>
+											<input type="radio" name="speak" value="0" title="否"/>
 										</div>
 									</td>
-								</tr>
-								<tr>
-									<td class="sb-table-name">姓名 ：</td>
-									<td>
-										<input name="name" placeholder="请输入姓名" class="layui-input" type="text" lay-verify="required" required/>
-									</td>
-								</tr>
-								<tr>
-									<td class="sb-table-name">性别 ：</td>
-									<td>
-										<input type="radio" name="sex" value="M" title="男" checked/>
-										<input type="radio" name="sex" value="F" title="女"/>
-									</td>
-								</tr>
-								<tr>
-									<td class="sb-table-name">电话 ：</td>
-									<td>
-										<input name="phone" placeholder="请输入电话" class="layui-input" type="text" lay-verify="required" required/>
-									</td>
-								</tr>
-								<tr>
-									<td class="sb-table-name">邮箱 ：</td>
-									<td>
-										<input name="email" placeholder="请输入邮箱" class="layui-input" type="text" lay-verify="required" required/>
-									</td>
-								</tr>
-								<tr>
-									<td class="sb-table-name">工作单位 ：</td>
-									<td>
-										<input name="workUnit" placeholder="请输入工作单位" class="layui-input" type="text" lay-verify="required" required/>
-									</td>
-								</tr>
-								<tr>
-									<td class="sb-table-name">职称 ：</td>
-									<td>
-										<input name="title" placeholder="请输入职称" class="layui-input" type="text" lay-verify="required" required/>
-									</td>
-								</tr>
-								<tr>
-									<td class="sb-table-name">学历 ：</td>
-									<td>
-										<input name="education" placeholder="请输入学历" class="layui-input" type="text" lay-verify="required" required/>
-									</td>
-								</tr>
-								<tr>
-									<td class="sb-table-name">研究方向 ：</td>
-									<td>
-										<input name="direction" placeholder="请输入研究方向" class="layui-input" type="text" lay-verify="required" required/>
-									</td>
-								</tr>
 
-								<tr>
-								</tr>
-
-								<tr>
-									<!--<td class="sb-table-gap"></td>-->
-									<td class="sb-table-name">参会论文题目（中文）：</td>
+									<td class="sb-table-gap"></td>
+									<td class="sb-table-name" id="judge1">是否参加形式研判会：</td>
 									<td>
-										<input name="thesisTitle" placeholder="请输入参会论文题目（中文）" class="layui-input" type="text" lay-verify="required" required/>
+										<div class="layui-input-inline" id="judge2">
+											<input type="radio" name="judge" value="1" title="是" checked/>
+											<input type="radio" name="judge" value="0" title="否"/>
+										</div>
 									</td>
-									</td>
-								</tr>
-
-								<tr>
-									<!--<td class="sb-table-gap"></td>-->
-									<td class="sb-table-name">参会论文题目（英文）：</td>
-									<td><input name="engTitle" placeholder="请输入参会论文题目（英文）" class="layui-input" type="text" lay-verify="required" required/></td>
-									</td>
-								</tr>
-								<tr>
-									<!--<td class="sb-table-gap"></td>-->
-									<td class="sb-table-name">中文关键词：</td>
-									<td><input name="cnKeyword" placeholder="请输入中文关键词" class="layui-input" type="text" lay-verify="required" required/></td>
-									</td>
-								</tr>
-								<tr>
-									<!--<td class="sb-table-gap"></td>-->
-									<td class="sb-table-name">英文关键词：</td>
-									<td><input name="engKeyword" placeholder="请输入英文关键词" class="layui-input" type="text" lay-verify="required" required/></td>
-									</td>
-								</tr>
-								<tr>
-									<!--<td class="sb-table-gap"></td>-->
-									<td class="sb-table-name">中文摘要：</td>
-									<!--<td><input name="cnAbstract" placeholder="请输入中文摘要" class="layui-input" type="text" lay-verify="required" required/></td>-->
-									<td class="sb-table-name"><textarea name="cnAbstract"   placeholder="请输入中文摘要" class="layui-textarea" lay-verify="required" required></textarea></td>
 									<!--</td>-->
 								</tr>
-								<tr></tr>
-								<!--<td></td>-->
-								<tr>
-									<!--<td class="sb-table-gap"></td>-->
-									<td class="sb-table-name">英文摘要：</td>
-									<!--<td><input name="engAbstract" placeholder="请输入英文摘要" class="layui-input" type="text" lay-verify="required" required/></td>-->
-									<td><textarea name="engAbstract"   placeholder="请输入英文摘要" class="layui-textarea" lay-verify="required" required></textarea></td>
-								</tr>
-								<!--<tr>-->
-									<!--<td class="sb-table-name">参会论文研究方向：</td>-->
-									<!--<td><input name="thesisDirect" placeholder="请输入参会论文研究方向" class="layui-input" type="text" lay-verify="required" required/></td>-->
-									<!--<td class="sb-table-gap"></td>-->
-
-									<!--<td class="sb-table-name">论文所属领域：</td>-->
-									<!--<td>-->
-									<!--<input id="belongDomain" name="belongDomain" type="hidden">-->
-									<!--<input id="pName" name="pName" placeholder="请选择论文所属领域" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>-->
-									<!--</td>-->
-								<!--</tr>-->
-								<tr>
-									<!--<td class="sb-table-gap"></td>-->
-									<td class="sb-table-name">论文提交领域：</td><td>
-									<input id="belongDomain" name="belongDomain" type="hidden">
-									<input id="pName" name="pName" placeholder="请选择论文所属领域" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
-									</td>
-								</tr>
-								<!--<tr>-->
-									<!--<td class="sb-table-name">是否申请发言：</td>-->
-									<!--<td>-->
-										<!--<div class="layui-input-inline">-->
-											<!--<input type="radio" name="speak" value="1" title="是" checked/>-->
-											<!--<input type="radio" name="speak" value="0" title="否"/>-->
-										<!--</div>-->
-									<!--</td>-->
-									<!--<td class="sb-table-gap"></td>-->
-									<!--<td class="sb-table-name" id="judge1">是否参加形式研判会：</td>-->
-									<!--<td>-->
-										<!--<div class="layui-input-inline" id="judge2">-->
-											<!--<input type="radio" name="judge" value="1" title="是" checked/>-->
-											<!--<input type="radio" name="judge" value="0" title="否"/>-->
-										<!--</div>-->
-									<!--</td>-->
-								<!--</tr>-->
 								<tr>
 									<td class="sb-table-name">论文附件：</td><td>
 									<input id="thesisPath" name="thesisPath" type="hidden" class="layui-input"/>
@@ -221,6 +130,7 @@
 								</tr>
 							</table>
 							<div class="btns sb-btns fontSize16">
+								<!--<div class="btn submit" lay-filter="btnPay" >支付</div>-->
 								<div class="btn submit" lay-filter="btnSubmit" lay-submit>提交</div><div class="btn cancel">取消</div>
 							</div>
 						</form>
@@ -261,25 +171,6 @@
 			</div>
 		</footer>
 	</div>
-
-	<style type="text/css">
-		/*body{ text-align:center}*/
-		.user-info-head {
-			width: 110px;
-			height: 110px;
-			/*position: relative;*/
-			display: inline-block;
-			text-align:center;
-			margin:0 auto;
-		}
-		.user-info-head img {
-			width: 110px;
-			height: 110px;
-			border-radius: 50%;
-		}
-
-		/*#divcss5{border:1px solid #000;width:300px;height:100px}*/
-	</style>
 
 	<script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
 	<script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
