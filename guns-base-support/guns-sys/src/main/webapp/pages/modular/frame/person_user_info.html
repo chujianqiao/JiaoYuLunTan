@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{title:"个人中心",css:["/assets/modular/frame/user_info.css"],js:["/assets/modular/frame/user_info.js"]}){
+@layout("/common/_container.html",{title:"个人中心",css:["/assets/modular/frame/user_info.css"],js:["/assets/modular/frame/user_info.js","/assets/modular/frame/password.js"]}){
 
 <div class="page">
     <!-- 头部 -->
@@ -50,7 +50,7 @@
                             <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
                                 <ul class="layui-tab-title">
                                     <li class="layui-this">${lang.get("MENU_BASE_INFO","基本信息")}</li>
-                                    <li>${lang.get("MENU_OTHER","其他")}</li>
+                                    <li>${lang.get("MENU_GUEST_INFO","嘉宾信息")}</li>
                                 </ul>
                                 <div class="layui-tab-content">
                                     <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
@@ -60,6 +60,15 @@
                                                 <label class="layui-form-label">${lang.get("FIELD_ACCOUNT","账号")}:</label>
                                                 <div class="layui-input-block">
                                                     <input type="text" name="account" class="layui-input layui-disabled" lay-verify="required" disabled/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">${lang.get("FIELD_PASSWORD","密码")}:</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" value="********" class="layui-input layui-disabled" lay-verify="required" disabled/>
+                                                </div>
+                                                <div class="layui-input-block">
+                                                    <a onclick="setPass()" href="#" style="line-height: 36px">修改密码?</a>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
@@ -139,6 +148,44 @@
                                         <div class="bd-list">
                                             <div class="bd-list-item">
                                                 <div class="bd-list-item-content">
+                                                    <div class="layui-inline layui-col-md12">
+                                                        <label class="layui-form-label">上传PPT<span style="color: red;">*</span></label>
+                                                        <div class="layui-input-block">
+                                                            <input id="pptInputHidden" name="pptInputHidden" type="hidden" class="layui-input"/>
+                                                            <input id="pptPath" name="pptPath" type="hidden" class="layui-input"/>
+                                                            <input id="pptName" name="pptName" type="hidden" class="layui-input"/>
+                                                            <div style="float: left;">
+                                                                <button type="button" class="layui-btn layui-btn-sm" id="pptBtn"><i class="layui-icon"></i>选择文件</button>
+                                                            </div>
+                                                            <div style="float: left;">
+                                                                <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="pptFileNameTip"></span>
+                                                                <input name="pptName" id="pptNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="bd-list-item">
+                                                <div class="bd-list-item-content">
+                                                    <div class="layui-inline layui-col-md12">
+                                                        <label class="layui-form-label">上传发言稿<span style="color: red;">*</span></label>
+                                                        <div class="layui-input-block">
+                                                            <input id="wordInputHidden" name="wordInputHidden" type="hidden" class="layui-input"/>
+                                                            <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
+                                                            <input id="wordName" name="wordName" type="hidden" class="layui-input"/>
+                                                            <div style="float: left;">
+                                                                <button type="button" class="layui-btn layui-btn-sm" id="wordBtn"><i class="layui-icon"></i>选择文件</button>
+                                                            </div>
+                                                            <div style="float: left;">
+                                                                <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordFileNameTip"></span>
+                                                                <input name="wordName" id="wordNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="bd-list-item">
+                                                <div class="bd-list-item-content">
                                                     <div class="bd-list-item-lable">密保手机</div>
                                                     <div class="bd-list-item-text">已绑定手机：182****0000</div>
                                                 </div>
@@ -172,7 +219,7 @@
                                                     <div class="bd-list-item-text">当前未绑定绑定微信账号</div>
                                                 </div>
                                                 <a class="bd-list-item-oper">绑定</a>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -188,4 +235,33 @@
     <!-- 尾部 -->
     @include("/common/person_footer.html"){}
 </div>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script>
+    function setPass(){
+        layui.use(['layer', 'element', 'admin', 'index', 'ax'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var admin = layui.admin;
+            var index = layui.index;
+            var $ax = layui.ax;
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            admin.open({
+                id: 'pswForm',
+                type: 2,
+                title: langs.MENU_CHANGE_PASSWORD,
+                shade: 0,
+                content: '${ctxPath}/system/user_chpwd'
+            });
+        });
+    }
+</script>
 @}

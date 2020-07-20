@@ -50,4 +50,47 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
             Feng.error("上传头像失败！");
         }
     });
+
+
+    //上传文件
+    upload.render({
+        elem: '#pptBtn'
+        , url: Feng.ctxPath + '/socialForum/upload'
+        , accept: 'file'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                $("#pptNameTip").val(file.name);
+            });
+        }
+        , done: function (res) {
+            $("#pptInputHidden").val(res.data.fileId);
+            $("#pptPath").val(res.data.path);
+            $("#pptName").val($("#pptNameTip").val());
+            Feng.success(res.message);
+        }
+        , error: function () {
+            Feng.error("上传图片失败！");
+        }
+    });
+
+    //上传文件
+    upload.render({
+        elem: '#wordBtn'
+        , url: Feng.ctxPath + '/socialForum/upload'
+        , accept: 'file'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                $("#wordNameTip").val(file.name);
+            });
+        }
+        , done: function (res) {
+            $("#wordInputHidden").val(res.data.fileId);
+            $("#wordPath").val(res.data.path);
+            $("#wordName").val($("#wordNameTip").val());
+            Feng.success(res.message);
+        }
+        , error: function () {
+            Feng.error("上传图片失败！");
+        }
+    });
 });
