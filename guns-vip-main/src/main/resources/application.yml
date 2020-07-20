@@ -50,9 +50,6 @@ file:
   uploadFolder: D:/tmp/
   #uploadFolder: /home/JKY/data/
 
-sms:
-  accessKeyId: LTAI4G8fGDZuKV1T88CedR14
-  accessKeySecret: u1jvMhv6iaG53gpDu5pt6moNq3rflv
 
 alipay:
   website: eb10fb2eba95.ngrok.io
