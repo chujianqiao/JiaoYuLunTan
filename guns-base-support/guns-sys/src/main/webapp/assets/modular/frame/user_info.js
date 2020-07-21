@@ -18,6 +18,14 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
     //用这个方法必须用在class有layui-form的元素上
     form.val('userInfoForm', result.data);
 
+    //获取嘉宾附件信息
+    var ajax = new $ax(Feng.ctxPath + "/meetMember/wraplist");
+    var result = ajax.start();
+    console.log(result)
+    $("#pptNameTip").val(result.data[0].pptName);
+    $("#wordNameTip").val(result.data[0].wordName);
+
+
     //表单提交事件
     form.on('submit(userInfoSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/mgr/edit", function (data) {
@@ -55,7 +63,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
     //上传文件
     upload.render({
         elem: '#pptBtn'
-        , url: Feng.ctxPath + '/socialForum/upload'
+        , url: Feng.ctxPath + '/meetMember/upload'
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
@@ -66,17 +74,32 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
             $("#pptInputHidden").val(res.data.fileId);
             $("#pptPath").val(res.data.path);
             $("#pptName").val($("#pptNameTip").val());
-            Feng.success(res.message);
+            var ajax = new $ax(Feng.ctxPath + "/meetMember/updateFile", function (data) {
+                if (data.message == "sizeError"){
+                    Feng.error("上传失败，无参会信息！");
+                } else if (data.message == "success") {
+                    Feng.success("上传成功!");
+                }else {
+                    Feng.error("上传失败!");
+                }
+
+            }, function (data) {
+                Feng.error("上传失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("pptPath",res.data.path);
+            ajax.set("pptName",$("#pptNameTip").val());
+            ajax.start();
+            //Feng.success(res.message);
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传失败！");
         }
     });
 
     //上传文件
     upload.render({
         elem: '#wordBtn'
-        , url: Feng.ctxPath + '/socialForum/upload'
+        , url: Feng.ctxPath + '/meetMember/upload'
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
@@ -87,10 +110,27 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
             $("#wordInputHidden").val(res.data.fileId);
             $("#wordPath").val(res.data.path);
             $("#wordName").val($("#wordNameTip").val());
-            Feng.success(res.message);
+
+            var ajax = new $ax(Feng.ctxPath + "/meetMember/updateFile", function (data) {
+                if (data.message == "sizeError"){
+                    Feng.error("上传失败，无参会信息！");
+                } else if (data.message == "success") {
+                    Feng.success("上传成功!");
+                }else {
+                    Feng.error("上传失败!");
+                }
+
+            }, function (data) {
+                Feng.error("上传失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("wordPath",res.data.path);
+            ajax.set("wordName",$("#wordNameTip").val());
+            ajax.start();
+
+            //Feng.success(res.message);
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传失败！");
         }
     });
 });

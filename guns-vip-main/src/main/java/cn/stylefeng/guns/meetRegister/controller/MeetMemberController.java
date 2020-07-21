@@ -6,6 +6,7 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.meetRegister.entity.MeetMember;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
+import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.meetRegister.wrapper.MeetMemberWrapper;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
@@ -13,6 +14,8 @@ import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
 import cn.stylefeng.guns.sys.core.util.DefaultImages;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
+import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.thesis.entity.Thesis;
 import cn.stylefeng.guns.thesis.model.params.ThesisParam;
@@ -23,12 +26,11 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +38,8 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,6 +64,12 @@ public class MeetMemberController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
+
+    @Autowired
+    private FileInfoService fileInfoService;
 
     /**
      * 跳转到主页面
@@ -318,6 +328,58 @@ public class MeetMemberController extends BaseController {
         }
     }
 
+    /**
+     * 上传文件
+     *
+     * @author fengshuonan
+     * @Date 2019-2-23 10:48:29
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/upload")
+    @ResponseBody
+    public ResponseData upload(@RequestPart("file") MultipartFile file) {
+
+        String path = uploadFolder;
+
+        UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
+        String fileId = uploadResult.getFileId();
+        /*if (fileId!=null&&!fileId.equals("")){
+            LoginUser loginUser = LoginContextHolder.getContext().getUser();
+            //List<MeetMemberResult> list = this.meetMemberService.findListByUserId(loginUser.getId());
+            //for (int i = 0;i < list.size();i++){
+                this.meetMemberService.updateWord(loginUser.getId(),file.getOriginalFilename(),uploadResult.getFileSavePath());
+            //}
+        }*/
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("fileId", fileId);
+        map.put("path",uploadResult.getFileSavePath());
+
+        return ResponseData.success(0, "上传成功", map);
+    }
+
+
+    /**
+     * 更新ppt发言稿
+     * @author wucy
+     * @Date 2020-07-13
+     */
+    @RequestMapping("/updateFile")
+    @ResponseBody
+    public ResponseData updateFile(MeetMemberParam meetMemberParam) {
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        List<MeetMemberResult> list = this.meetMemberService.findListByUserId(loginUser.getId());
+        ResponseData responseData = new ResponseData();
+        for (int i = 0;i < list.size();i++){
+            meetMemberParam.setMemberId(list.get(i).getMemberId());
+            this.meetMemberService.update(meetMemberParam);
+        }
+        if (list.size() != 0){
+            responseData.setMessage("success");
+            return responseData;
+        }else {
+            responseData.setMessage("sizeError");
+            return responseData;
+        }
+    }
 }
 
 

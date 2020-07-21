@@ -37,6 +37,8 @@ public interface MeetMemberMapper extends BaseMapper<MeetMember> {
      */
     List<MeetMemberResult> customListAll();
 
+    List<MeetMemberResult> customListByUserId(@Param("userId") Long userId);
+
 
     /**
      * 获取map列表
@@ -64,4 +66,5 @@ public interface MeetMemberMapper extends BaseMapper<MeetMember> {
                                                 @Param("paramCondition") MeetMemberParam paramCondition,
                                                 @Param("userIds") String userIds);
 
+    void updateWord(@Param("userId") Long userId, @Param("wordName") String wordName, @Param("wordPath") String wordPath);
 }

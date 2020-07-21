@@ -65,6 +65,8 @@ public interface MeetMemberService extends IService<MeetMember> {
      */
     List<MeetMemberResult> findListBySpec();
 
+    List<MeetMemberResult> findListByUserId(Long userId);
+
     /**
      * 查询分页数据，Specification模式
      * @author wucy
@@ -79,4 +81,10 @@ public interface MeetMemberService extends IService<MeetMember> {
      */
     Page<Map<String, Object>> findPageWrap(MeetMemberParam param,String userIds);
 
+    /**
+     * 更新
+     * @author wucy
+     * @Date 2020-05-20
+     */
+    void updateWord(Long userId, String wordName, String wordPath);
 }

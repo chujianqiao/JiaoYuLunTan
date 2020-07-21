@@ -65,6 +65,11 @@ public class MeetMemberServiceImpl extends ServiceImpl<MeetMemberMapper, MeetMem
     }
 
     @Override
+    public List<MeetMemberResult> findListByUserId(Long userId){
+        return this.baseMapper.customListByUserId(userId);
+    }
+
+    @Override
     public LayuiPageInfo findPageBySpec(MeetMemberParam param){
         Page pageContext = getPageContext();
         IPage page = this.baseMapper.customPageList(pageContext, param);
@@ -93,6 +98,11 @@ public class MeetMemberServiceImpl extends ServiceImpl<MeetMemberMapper, MeetMem
         MeetMember entity = new MeetMember();
         ToolUtil.copyProperties(param, entity);
         return entity;
+    }
+
+    @Override
+    public void updateWord(Long userId, String wordName, String wordPath){
+        this.baseMapper.updateWord(userId,wordName,wordPath);
     }
 
 }

@@ -66,6 +66,26 @@ public class MeetMemberParam implements Serializable, BaseValidatingParam {
      */
     private Long payId;
 
+    /**
+     * 发言稿路径
+     */
+    private String wordPath;
+
+    /**
+     * 发言稿名称
+     */
+    private String wordName;
+
+    /**
+     * ppt路径
+     */
+    private String pptPath;
+
+    /**
+     * ppt名称
+     */
+    private String pptName;
+
     @Override
     public String checkParam() {
         return null;

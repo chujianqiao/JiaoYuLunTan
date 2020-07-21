@@ -75,6 +75,30 @@ public class MeetMember implements Serializable {
     @TableField("pay_id")
     private Long payId;
 
+    /**
+     * 发言稿路径
+     */
+    @TableField("word_path")
+    private String wordPath;
+
+    /**
+     * 发言稿名称
+     */
+    @TableField("word_name")
+    private String wordName;
+
+    /**
+     * ppt路径
+     */
+    @TableField("ppt_path")
+    private String pptPath;
+
+    /**
+     * ppt名称
+     */
+    @TableField("ppt_name")
+    private String pptName;
+
     public MeetMember() {
     }
 
@@ -151,6 +175,38 @@ public class MeetMember implements Serializable {
         this.payId = payId;
     }
 
+    public String getWordPath() {
+        return wordPath;
+    }
+
+    public void setWordPath(String wordPath) {
+        this.wordPath = wordPath;
+    }
+
+    public String getWordName() {
+        return wordName;
+    }
+
+    public void setWordName(String wordName) {
+        this.wordName = wordName;
+    }
+
+    public String getPptPath() {
+        return pptPath;
+    }
+
+    public void setPptPath(String pptPath) {
+        this.pptPath = pptPath;
+    }
+
+    public String getPptName() {
+        return pptName;
+    }
+
+    public void setPptName(String pptName) {
+        this.pptName = pptName;
+    }
+
     @Override
     public String toString() {
         return "MeetMember{" +
@@ -161,6 +217,10 @@ public class MeetMember implements Serializable {
         ", judge=" + judge +
         ", ownForumid=" + ownForumid +
         ", regTime=" + regTime +
+        ", wordPath=" + wordPath +
+        ", wordName=" + wordName +
+        ", pptPath=" + pptPath +
+        ", pptName=" + pptName +
         "}";
     }
 }

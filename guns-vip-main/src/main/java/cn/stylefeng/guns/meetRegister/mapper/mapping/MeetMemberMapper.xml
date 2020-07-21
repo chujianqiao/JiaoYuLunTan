@@ -11,11 +11,15 @@
         <result column="judge" property="judge" />
         <result column="own_forumid" property="ownForumid" />
         <result column="reg_time" property="regTime" />
+        <result column="word_path" property="wordPath" />
+        <result column="word_name" property="wordName" />
+        <result column="ppt_path" property="pptPath" />
+        <result column="ppt_name" property="pptName" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime" ,meet_status AS "meetStatus" ,pay_id AS "payId"
+        member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime" ,meet_status AS "meetStatus" ,pay_id AS "payId",word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName"
     </sql>
 
     <select id="customListAll" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
@@ -95,6 +99,16 @@
             <if test="paramCondition.userId != null and paramCondition.userId != ''">
                 and user_id=#{paramCondition.userId}
             </if>
+    </select>
+
+    <update id="updateWord">
+		update meet_member set word_path = #{wordPath},word_name = #{wordName} where user_id = #{userId}
+	</update>
+
+    <select id="customListByUserId" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_member where 1 = 1 and user_id = #{userId}
     </select>
 
 </mapper>
