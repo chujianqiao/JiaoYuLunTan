@@ -66,7 +66,13 @@ public class ToolUtil {
 		String dataStr = new SimpleDateFormat("yyyyMMddHHMMSS").format(new Date());
 		numStr = trandStr.toString().substring(0, 4);
 		numStr = numStr + dataStr ;
-		long intId = Long.parseLong(numStr);
+		long intId = 0;
+		try {
+			intId = Long.parseLong(numStr);
+		}catch (NumberFormatException e){
+			getNum19();
+		}
+
 		return intId ;
 	}
 

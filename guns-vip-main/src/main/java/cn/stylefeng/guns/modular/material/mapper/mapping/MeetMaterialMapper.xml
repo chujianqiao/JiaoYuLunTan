@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.material.mapper.MeetMaterialMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.material.entity.MeetMaterial">
+        <id column="material_id" property="materialId" />
+        <result column="mat_path" property="matPath" />
+        <result column="mat_name" property="matName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        material_id AS "materialId", mat_path AS "matPath", mat_name AS "matName"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.material.model.result.MeetMaterialResult" parameterType="cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_material where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_material where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.material.model.result.MeetMaterialResult" parameterType="cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_material where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_material where 1 = 1
+    </select>
+
+</mapper>
