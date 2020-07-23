@@ -35,26 +35,47 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         var ownForumid = result.data.ownForumid;
         // forumSelectOption(ownForumid);
 
-        debugger;
         var thesisId = result.data.thesisId;
-        var ajax2 = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + thesisId);
-        var result2 = ajax2.start();
+        var ajaxThesis = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + thesisId);
+        var resultThesis = ajaxThesis.start();
 
-        var fileName = result2.data.fileName;
+        var fileName = resultThesis.data.fileName;
         $("#fileNameTip").html(fileName);
         //批量赋值
-        form.val('meetMemberForm', result2.data);
+        form.val('meetMemberForm', resultThesis.data);
         form.val('meetMemberForm', result.data);
+
+        //领域
+        debugger;
+        var domiansId = resultThesis.data.belongDomain;
+        var idList = domiansId.split(",");
+        var dNameStr = "";
+        var h = idList.length;
+        for (i = 0;i < idList.length;i++){
+            var ajaxDomain = new $ax(Feng.ctxPath + "/thesisDomain/detail?domainId=" + idList[i]);
+            var resultDomain = ajaxDomain.start();
+            var name = resultDomain.data.domainName;
+            if(name == undefined || name ===  undefined){
+                continue;
+            }
+            if(i == idList.length - 1){
+                dNameStr += name;
+            }else{
+                dNameStr += (name + ",");
+            }
+        }
+        $("#belongDomain").val(domiansId);
+        $("#pName").val(dNameStr);
 
         // thesisSelectOption(thesisId);
 
-        var userId = result.data.userId;
-        var userajax = new $ax(Feng.ctxPath + "/mgr/detail?userId=" + userId);
-        var result = userajax.start();
-        var title = result.data.title;
-        if(title != '教授'){
-            $('#professor').remove();
-        }
+        // var userId = result.data.userId;
+        // var userajax = new $ax(Feng.ctxPath + "/mgr/detail?userId=" + userId);
+        // var result = userajax.start();
+        // var title = result.data.title;
+        // if(title != '教授'){
+        //     $('#professor').remove();
+        // }
     })
 
     //表单提交事件
@@ -175,9 +196,14 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         })
     }
 
+    //取消
+    $('#btnCancel').click(function () {
+        window.location.href = Feng.ctxPath + '/meetMember';
+    });
 
     // 下载论文附件
     $('#btnDownload').click(function () {
+        debugger;
         var thesisId = $('#thesisId').val();
         downloadThesis(thesisId);
     });

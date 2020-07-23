@@ -124,7 +124,7 @@ public class MeetMemberController extends BaseController {
      */
     @RequestMapping("/disable")
     public String disable(MeetMemberParam meetMemberParam) {
-        return PREFIX + "/meetMember_edit_admin.html";
+        return PREFIX + "/meetMember_edit_disable.html";
     }
 
     /**
@@ -225,6 +225,8 @@ public class MeetMemberController extends BaseController {
             OwnForum ownForum = this.ownForumService.getById(ownForumId);
             String ownForumName = ownForum.getForumName();
             map.put("ownForumName",ownForumName);
+        } else {
+            map.put("ownForumName","未选择");
         }
 
         //加入论文题目

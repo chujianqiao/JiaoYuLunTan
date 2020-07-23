@@ -106,8 +106,10 @@ public class MeetMaterialController extends BaseController {
         MeetMaterial meetMaterial = this.meetMaterialService.getById(meetMaterialParam.getMaterialId());
         String filePath = meetMaterial.getMatPath();
         File file = new File(filePath);
+        //删除文件
         boolean status = file.delete();
         if(status){
+            //删除数据库数据
             this.meetMaterialService.delete(meetMaterialParam);
             return ResponseData.success();
         }else {

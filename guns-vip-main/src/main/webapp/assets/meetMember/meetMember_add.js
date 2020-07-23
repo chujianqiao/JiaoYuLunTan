@@ -121,13 +121,13 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         })
     }
 
-    // $('#btnPay').click(function () {
-    //     debugger;
-    //     func.open({
-    //         title: '支付',
-    //         content: Feng.ctxPath + '/pay/payPage',
-    //     });
-    // });
+    //取消
+    $('#btnCancel').click(function () {
+        //关闭标签页
+        window.opener=null;
+        window.open('','_self');
+        window.close();
+    });
 
 
     // 点击上级角色时
