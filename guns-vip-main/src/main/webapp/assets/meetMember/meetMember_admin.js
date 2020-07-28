@@ -35,7 +35,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             // {field: 'ownForumid', sort: true, title: '自设论坛ID'},
             // {field: 'regTime', sort: true, title: '注册时间'},
             // {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180},
-            {align: 'center', minWidth: 230, title: '操作', templet: function(data){
+            {align: 'center', minWidth: 130, title: '操作', templet: function(data){
                 return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
                 }}
         ]];

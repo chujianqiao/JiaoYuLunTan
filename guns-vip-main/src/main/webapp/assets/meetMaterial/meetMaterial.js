@@ -100,6 +100,21 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
         Feng.confirm("是否删除?", operation);
     };
 
+    /**
+     * 下载单个文件
+     * @param data
+     */
+    MeetMaterial.onDownLoadItem = function (data) {
+        var materialId = data.materialId;
+        var form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        form.attr("target","_blank");
+        form.attr("method","post");
+        form.attr("action",Feng.ctxPath + "/meetMaterial/downloadOne?materialId=" + materialId);    // 此处填写文件下载提交路径
+        $("body").append(form);    // 将表单放置在web中
+        form.submit();
+    }
+
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + MeetMaterial.tableId,
@@ -117,14 +132,23 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
 
     // 添加按钮点击事件
     $('#btnAdd').click(function () {
-
-    MeetMaterial.jumpAddPage();
-
+        MeetMaterial.jumpAddPage();
     });
 
     // 导出excel
     $('#btnExp').click(function () {
         MeetMaterial.exportExcel();
+    });
+
+    // 下载所有材料
+    $('#btnDownLoadAll').click(function () {
+        var form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        // form.attr("target","_blank");//注释之后不会跳转到新页面
+        form.attr("method","post");
+        form.attr("action",Feng.ctxPath + "/meetMaterial/downloadAll");    // 此处填写文件下载提交路径
+        $("body").append(form);    // 将表单放置在web中
+        form.submit();
     });
 
     // 工具条点击事件
@@ -136,6 +160,8 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
             MeetMaterial.jumpEditPage(data);
         } else if (layEvent === 'delete') {
             MeetMaterial.onDeleteItem(data);
+        } else if (layEvent === 'download') {
+            MeetMaterial.onDownLoadItem(data);
         }
     });
 });

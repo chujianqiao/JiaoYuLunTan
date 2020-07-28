@@ -7,16 +7,27 @@ import cn.stylefeng.guns.sys.modular.system.service.RoleService;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * 工具类
+ * @author wucy
  */
 public class ToolUtil {
+
+	private static Logger log = LoggerFactory.getLogger("ToolUtil");
 
 	private UserService userService = SpringContextHolder.getBean(UserService.class);
 
@@ -64,7 +75,7 @@ public class ToolUtil {
 		String numStr = "" ;
 		String trandStr = String.valueOf((Math.random() * 9 + 1) * 1000000);
 		String dataStr = new SimpleDateFormat("yyyyMMddHHMMSS").format(new Date());
-		numStr = trandStr.toString().substring(0, 4);
+		numStr = trandStr.substring(0, 4);
 		numStr = numStr + dataStr ;
 		long intId = 0;
 		try {
@@ -99,6 +110,45 @@ public class ToolUtil {
 			paramIds = "0";
 		}
 		return paramIds;
+	}
+
+	private static final int  BUFFER_SIZE = 2 * 1024;
+
+	/**
+	 * 压缩文件
+	 * @param srcFiles 需要压缩的文件列表
+	 * @param out 压缩文件输出流
+	 * @throws RuntimeException
+	 */
+	public static void toZip(List<File> srcFiles , OutputStream out)throws RuntimeException {
+		long start = System.currentTimeMillis();
+		ZipOutputStream zos = null ;
+		try {
+			zos = new ZipOutputStream(out);
+			for (File srcFile : srcFiles) {
+				byte[] buf = new byte[BUFFER_SIZE];
+				zos.putNextEntry(new ZipEntry(srcFile.getName()));
+				int len;
+				FileInputStream in = new FileInputStream(srcFile);
+				while ((len = in.read(buf)) != -1){
+					zos.write(buf, 0, len);
+				}
+				zos.closeEntry();
+				in.close();
+			}
+			long end = System.currentTimeMillis();
+			log.info("压缩完成，耗时：" + (end - start) +" ms");
+		} catch (Exception e) {
+			throw new RuntimeException("zip error from ZipUtils",e);
+		}finally{
+			if(zos != null){
+				try {
+					zos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 

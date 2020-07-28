@@ -3,12 +3,16 @@ package cn.stylefeng.guns.modular.material.controller;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.modular.material.entity.MeetMaterial;
 import cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam;
+import cn.stylefeng.guns.modular.material.model.result.MeetMaterialResult;
 import cn.stylefeng.guns.modular.material.service.MeetMaterialService;
+import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,8 +22,15 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 会议材料表控制器
@@ -40,6 +51,8 @@ public class MeetMaterialController extends BaseController {
 
     @Autowired
     private FileInfoService fileInfoService;
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 跳转到主页面
@@ -111,6 +124,8 @@ public class MeetMaterialController extends BaseController {
         if(status){
             //删除数据库数据
             this.meetMaterialService.delete(meetMaterialParam);
+            //重新压缩
+            toZipAll();
             return ResponseData.success();
         }else {
             return ResponseData.error("删除失败");
@@ -149,7 +164,7 @@ public class MeetMaterialController extends BaseController {
     @RequestMapping(method = RequestMethod.POST, path = "/upload")
     @ResponseBody
     public ResponseData upload(@RequestPart("file") MultipartFile file) {
-        String path = uploadFolder;
+        String path = uploadFolder + "material" + File.separator ;
         UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
         String fileId = uploadResult.getFileId();
         HashMap<String, Object> map = new HashMap<>();
@@ -161,7 +176,89 @@ public class MeetMaterialController extends BaseController {
         meetMaterialParam.setMatName(uploadResult.getOriginalFilename());
         meetMaterialParam.setMatPath(uploadResult.getFileSavePath());
         this.meetMaterialService.add(meetMaterialParam);
+        //上传完成后添加压缩文件
+        toZipAll();
         return ResponseData.success(0, "上传成功", map);
+    }
+
+    /**
+     * 下载单个模板文件
+     * @author wucy
+     */
+    @RequestMapping(path = "/downloadOne")
+    public void download(HttpServletResponse httpServletResponse, MeetMaterialParam meetMaterialParam, HttpServletRequest request) {
+        long materialId = meetMaterialParam.getMaterialId();
+        MeetMaterial meetMaterial = this.meetMaterialService.getById(materialId);
+        //文件完整路径
+        String filePath = meetMaterial.getMatPath();
+        //下载后看到的文件名
+        String fileName = meetMaterial.getMatName();
+        try {
+            FileDownload.fileDownload(httpServletResponse, filePath, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 下载所有模板文件
+     * @author wucy
+     */
+    @RequestMapping(path = "/downloadAll")
+    public void downloadAll(HttpServletResponse httpServletResponse){
+        String outPath = uploadFolder + "material" + File.separator + "allMaterial.zip";
+        //文件完整路径
+        String filePath = outPath;
+        //下载后看到的文件名
+        String fileName = "所有材料.zip";
+        File zipFile = new File(outPath);
+        if(!zipFile.exists()){
+            //如果压缩包不存在，执行压缩
+            toZipAll();
+        }
+        try {
+            FileDownload.fileDownload(httpServletResponse, filePath, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 压缩所有材料
+     */
+    private void toZipAll(){
+        MeetMaterialParam meetMaterialParam = new MeetMaterialParam();
+        //基础路径
+        String basePath = uploadFolder + "material" + File.separator;
+        //获取材料表中的所有信息
+        LayuiPageInfo allData = list(meetMaterialParam);
+        List<MeetMaterialResult> dataList = allData.getData();
+        List<File> fileList = new ArrayList<>();
+        for (int i = 0;i < dataList.size();i++){
+            MeetMaterialResult meetMaterialResult = dataList.get(i);
+            File orginFile = new File(meetMaterialResult.getMatPath());
+            String copyPath = basePath + meetMaterialResult.getMatName();
+            File newFile = new File(copyPath);
+            try {
+                Files.copy(orginFile.toPath(),newFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            fileList.add(newFile);
+        }
+
+        String outPath = basePath + "allMaterial.zip";
+        File parPath = new File(outPath).getParentFile();
+        if(!parPath.exists()){
+            parPath.mkdirs();
+        }
+        FileOutputStream outZip= null;
+        try {
+            outZip = new FileOutputStream(new File(outPath));
+        } catch (Exception e) {
+            log.info("压缩文件出错");
+        }
+        ToolUtil.toZip(fileList,outZip);
     }
 
 }
