@@ -259,6 +259,11 @@ public class MeetMaterialController extends BaseController {
             log.info("压缩文件出错");
         }
         ToolUtil.toZip(fileList,outZip);
+        //压缩完成后删除临时文件
+        for (int i = 0; i < fileList.size(); i++) {
+            File tempFile = fileList.get(i);
+            tempFile.delete();
+        }
     }
 
 }
