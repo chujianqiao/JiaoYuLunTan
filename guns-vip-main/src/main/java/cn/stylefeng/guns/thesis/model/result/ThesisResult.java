@@ -40,7 +40,7 @@ public class ThesisResult implements Serializable {
     private String thesisUser;
 
     /**
-     * 评审状态
+     * 评审字典项
      */
     private String status;
 

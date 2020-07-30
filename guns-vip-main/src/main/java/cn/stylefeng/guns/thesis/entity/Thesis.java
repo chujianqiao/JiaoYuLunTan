@@ -45,7 +45,7 @@ public class Thesis implements Serializable {
     private String thesisUser;
 
     /**
-     * 评审状态
+     * 评审字典项
      */
     @TableField("status")
     private String status;
