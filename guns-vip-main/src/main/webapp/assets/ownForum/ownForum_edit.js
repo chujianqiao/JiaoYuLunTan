@@ -42,16 +42,39 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var form = layui.form;
     var admin = layui.admin;
     var upload = layui.upload;
+    var laydate = layui.laydate;
+    var nowTime = new Date().valueOf();
 
 
 
 
 
+    // 渲染时间选择框
+    var start = laydate.render({
+        elem: '#startTime'
+        ,type: 'datetime'
+        ,min:nowTime,
+        done:function(value,date){
+            endMax = end.config.max;
+            end.config.min = date;
+            end.config.min.month = date.month -1;
+        }
+    });
 
-
-
-
-
+    // 渲染时间选择框
+    var end = laydate.render({
+        elem: '#endTime'
+        ,type: 'datetime'
+        ,min : nowTime,
+        done:function(value,date){
+            if($.trim(value) == ''){
+                var curDate = new Date();
+                date = {'date': curDate.getDate(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
+            }
+            start.config.max = date;
+            start.config.max.month = date.month -1;
+        }
+    });
 
 
 
@@ -147,6 +170,22 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }else {
             Feng.success("请先取消申请再进行修改！");
         }
+        return false;
+    });
+
+    //表单提交事件
+    form.on('submit(setSubmit)', function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/ownForum/editItem", function (data) {
+            Feng.success("更新成功！");
+            //传给上个页面，刷新table用
+            admin.putTempData('formOk', true);
+            //关掉对话框
+            admin.closeThisDialog();
+        }, function (data) {
+            Feng.error("更新失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.start();
         return false;
     });
 

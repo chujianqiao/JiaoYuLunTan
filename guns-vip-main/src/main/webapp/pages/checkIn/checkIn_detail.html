@@ -1,0 +1,88 @@
+@layout("/common/_form.html",{js:["/assets/checkIn/checkIn_edit.js"]}){
+
+<form class="layui-form" id="checkInForm" lay-filter="checkInForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="checkId" type="hidden"/>
+
+                    <!--<div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">用户ID<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="userId" name="userId" placeholder="请输入用户ID" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">姓名<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="name" disabled name="name" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">工作单位<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="workUnit" disabled name="workUnit" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">职称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="title" disabled name="title" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">职位<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="post" disabled name="post" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">电话<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="phone" disabled name="phone" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">邮件<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="email" disabled name="email" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">报到时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="registerTime" disabled name="registerTime" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">签到状态<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="signStatus" disabled name="signStatus" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">签到时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="signTime" disabled name="signTime" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">签到地点<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="signPlace" disabled name="signPlace" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <!--<button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>-->
+        <button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;关闭&emsp;</button>
+    </div>
+
+</form>
+
+@}

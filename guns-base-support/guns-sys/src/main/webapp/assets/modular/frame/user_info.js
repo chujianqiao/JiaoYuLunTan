@@ -14,6 +14,12 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
     //获取用户详情
     var ajax = new $ax(Feng.ctxPath + "/system/currentUserInfo");
     var result = ajax.start();
+    var role = result.data.roleId.split(",");
+    for (var i = 0;i < role.length;i++){
+        if (role[i] == '5') {
+            $("#guestLi").attr("style","display: inline-block");
+        }
+    } 
 
     //用这个方法必须用在class有layui-form的元素上
     form.val('userInfoForm', result.data);
@@ -21,7 +27,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
     //获取嘉宾附件信息
     var ajax = new $ax(Feng.ctxPath + "/meetMember/wraplist");
     var result = ajax.start();
-    console.log(result)
+    //console.log(result)
     $("#pptNameTip").val(result.data[0].pptName);
     $("#wordNameTip").val(result.data[0].wordName);
 

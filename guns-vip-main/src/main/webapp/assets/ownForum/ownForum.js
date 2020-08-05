@@ -58,9 +58,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                     if (data.applyStatus == 3) return '未通过';
                     if (data.applyStatus == 0) return '已取消';
                 }},
-            {align: 'center', title: '操作', templet: function(data){
+            {align: 'center', title: '操作',minWidth: 200, templet: function(data){
                     if (data.applyStatus == 1) {
                         return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"approve\">审批</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                    }else if (data.applyStatus == 2) {
+                        return "<a class=\"layui-btn layui-btn-xs\" lay-event=\"set\">状态设置</a><a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
                     }else {
                         return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
                     }
@@ -92,18 +94,30 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     };
 
      /**
-      * 点击编辑
-      *
-      * @param data 点击按钮时候的行数据
-      */
-      OwnForum.openEditDlg = function (data) {
-          func.open({
-              title: '修改自设论坛表',
-              content: Feng.ctxPath + '/ownForum/edit?forumId=' + data.forumId + '&applyType=' + data.applyType,
-              tableId: OwnForum.tableId
-          });
-      };
+     * 点击编辑
+     *
+     * @param data 点击按钮时候的行数据
+     */
+    OwnForum.openEditDlg = function (data) {
+        func.open({
+            title: '修改自设论坛表',
+            content: Feng.ctxPath + '/ownForum/edit?forumId=' + data.forumId + '&applyType=' + data.applyType,
+            tableId: OwnForum.tableId
+        });
+    };
 
+    /**
+     * 设置
+     *
+     * @param data 点击按钮时候的行数据
+     */
+    OwnForum.openSet = function (data) {
+        func.open({
+            title: '论坛状态设置',
+            content: Feng.ctxPath + '/ownForum/setUp?forumId=' + data.forumId + '&applyType=' + data.applyType,
+            tableId: OwnForum.tableId
+        });
+    };
 
     /**
      * 点击审批
@@ -201,6 +215,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             OwnForum.openApprove(data);
         } else if (layEvent === 'detail') {
             OwnForum.openDetail(data);
+        } else if (layEvent === 'set') {
+            OwnForum.openSet(data);
         }
     });
 });

@@ -89,7 +89,9 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
                 Feng.success("删除成功!");
                 table.reload(SocialLink.tableId);
             }, function (data) {
-                Feng.error("删除失败!" + data.responseJSON.message + "!");
+                var rulemodeid = $("#message").val();
+                console.log(rulemodeid);
+                Feng.error("删除失败!" + /*data.responseJSON.message*/ + "!");
             });
             ajax.set("linkId", data.linkId);
             ajax.start();

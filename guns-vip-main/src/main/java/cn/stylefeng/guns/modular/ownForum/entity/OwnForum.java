@@ -201,6 +201,35 @@ public class OwnForum implements Serializable {
     @TableField("post")
     private String post;
 
+    /**
+     * 设置人数
+     */
+    @TableField("set_num")
+    private Integer setNum;
+
+    /**
+     * 已有人数
+     */
+    @TableField("exist_num")
+    private Integer existNum;
+
+    /**
+     * 启用状态
+     */
+    @TableField("status")
+    private Integer status;
+
+    /**
+     * 报名开始时间
+     */
+    @TableField("start_time")
+    private Date startTime;
+
+    /**
+     * 报名结束时间
+     */
+    @TableField("end_time")
+    private Date endTime;
 
     public Long getForumId() {
         return forumId;
@@ -442,6 +471,46 @@ public class OwnForum implements Serializable {
         this.post = post;
     }
 
+    public Integer getSetNum() {
+        return setNum;
+    }
+
+    public void setSetNum(Integer setNum) {
+        this.setNum = setNum;
+    }
+
+    public Integer getExistNum() {
+        return existNum;
+    }
+
+    public void setExistNum(Integer existNum) {
+        this.existNum = existNum;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public String toString() {
         return "OwnForum{" +
@@ -475,6 +544,11 @@ public class OwnForum implements Serializable {
         ", direction=" + direction +
         ", title=" + title +
         ", post=" + post +
+        ", setNum=" + setNum +
+        ", existNum=" + existNum +
+        ", status=" + status +
+        ", startTime=" + startTime +
+        ", endTime=" + endTime +
         "}";
     }
 }

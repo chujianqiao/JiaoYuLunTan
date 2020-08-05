@@ -170,4 +170,29 @@ public class OwnForumResult implements Serializable {
      */
     private String post;
 
+    /**
+     * 设置人数
+     */
+    private Integer setNum;
+
+    /**
+     * 已有人数
+     */
+    private Integer existNum;
+
+    /**
+     * 启用状态
+     */
+    private Integer status;
+
+    /**
+     * 报名开始时间
+     */
+    private Date startTime;
+
+    /**
+     * 报名结束时间
+     */
+    private Date endTime;
+
 }

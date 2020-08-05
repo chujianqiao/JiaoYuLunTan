@@ -1,0 +1,58 @@
+@layout("/common/_form.html",{js:["/assets/checkIn/checkIn_edit.js"]}){
+
+<form class="layui-form" id="checkInForm" lay-filter="checkInForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="checkId" type="hidden"/>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">用户ID<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="userId" name="userId" placeholder="请输入用户ID" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">报到状态 0-未报到 1-已报到<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="registerStatus" name="registerStatus" placeholder="请输入报到状态 0-未报到 1-已报到" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">报到时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="registerTime" name="registerTime" placeholder="请输入报到时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">签到状态 0-未报到 1-已报到<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="signStatus" name="signStatus" placeholder="请输入签到状态 0-未报到 1-已报到" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">签到时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="signTime" name="signTime" placeholder="请输入签到时间" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">签到地点<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="signPlace" name="signPlace" placeholder="请输入签到地点" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

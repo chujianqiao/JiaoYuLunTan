@@ -128,6 +128,19 @@ public class OwnForumController extends BaseController {
     }
 
     /**
+     * 设置页面
+     *
+     * @author CHUJIANQIAO
+     * @Date 2020-05-18
+     */
+    @RequestMapping("/setUp")
+    public String setUp(@RequestParam Long forumId) {
+        OwnForum ownForum = ownForumService.getById(forumId);
+        LogObjectHolder.me().set(ownForum);
+        return PREFIX + "/ownForum_setUp.html";
+    }
+
+    /**
      * 新增接口
      *
      * @author CHUJIANQIAO

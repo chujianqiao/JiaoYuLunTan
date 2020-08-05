@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.checkIn.mapper.CheckInMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.checkIn.entity.CheckIn">
+        <id column="check_id" property="checkId" />
+        <result column="user_id" property="userId" />
+        <result column="register_status" property="registerStatus" />
+        <result column="register_time" property="registerTime" />
+        <result column="sign_status" property="signStatus" />
+        <result column="sign_time" property="signTime" />
+        <result column="sign_place" property="signPlace" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        check_id AS "checkId", user_id AS "userId", register_status AS "registerStatus", register_time AS "registerTime", sign_status AS "signStatus", sign_time AS "signTime", sign_place AS "signPlace"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.checkIn.model.result.CheckInResult" parameterType="cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam">
+        select
+        <include refid="Base_Column_List"/>
+        from check_in where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam">
+        select
+        <include refid="Base_Column_List"/>
+        from check_in where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.checkIn.model.result.CheckInResult" parameterType="cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam">
+        select
+        <include refid="Base_Column_List"/>
+        from check_in where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam">
+        select
+        <include refid="Base_Column_List"/>
+        from check_in where 1 = 1
+        <if test="paramCondition.signStatus != null and paramCondition.signStatus != ''">
+            and sign_status = #{paramCondition.signStatus}
+        </if>
+
+    </select>
+
+</mapper>
