@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">论文提交时间<span style="color: red;">*</span></label>
+                                <label class="layui-form-label" style="white-space:nowrap">论文提交时间<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
                                     <input id="applyTime" name="applyTime" placeholder="" type="text" disabled="disabled" class="layui-input" lay-verify="required" required/>
                                 </div>
@@ -58,7 +58,7 @@
                             <div class="layui-inline layui-col-md12">
                                 <label class="layui-form-label">参会论文研究方向<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
-                                    <input id="thesisDirect" name="thesisDirect" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                                    <input id="thesisDirect" name="thesisDirect" disabled="disabled" placeholder="" type="text" class="layui-input"  required/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
@@ -77,11 +77,17 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">分数<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="score" name="score" placeholder="评分区间 0~100分" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
                                 <label class="layui-form-label">评审意见<span style="color: red;">*</span></label>
-                                <div class="layui-input-block" id="isPass">
-                                    <input type="radio" name="reviewResult" lay-filter="reviewResult" value="0" title="不同意参会" checked>
-                                    <input type="radio" name="reviewResult" lay-filter="reviewResult"  value="1" title="同意参会">
-                                    <input type="radio" name="reviewResult" lay-filter="reviewResult" value="2" title="同意参会并推荐优秀">
+                                <div id="divLink" class="layui-input-block" id="isPass">
+                                    <input type="radio" name="reviewResult" lay-filter="reviewResult" value="0" title="不同意参会">
+                                    <input type="radio" name="reviewResult" lay-filter="reviewResult"  value="1" title="同意参会" checked>
+                                    <!--<input type="radio" name="reviewResult" lay-filter="reviewResult" value="2" title="同意参会并推荐优秀">-->
                                 </div>
                             </div>
                             <!--<div class="layui-inline layui-col-md12" id="greatDiv">-->

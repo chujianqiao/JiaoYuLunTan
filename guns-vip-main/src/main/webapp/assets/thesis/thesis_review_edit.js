@@ -43,6 +43,22 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
     if(fileName != null && fileName != "" && fileName != 'undefined'){
         $("#fileNameTip").html(fileName);
     }
+
+    //构建评审字典radio选项
+    var ajaxDic = new $ax(Feng.ctxPath + "/reviewDictionary/list?dicStatus=1");
+    var resultDic = ajaxDic.start();
+    for (var i = 0; i < resultDic.count; i++){
+        var dicName = resultDic.data[i].dicName;
+        var input=$("<input>");
+        input.attr("type","checkbox");
+        input.attr("name","status");
+        input.attr("value",dicName);
+        input.attr("title",dicName);
+        // input.attr("disabled","");
+        input.attr("disabled",false);
+        $("#divLink").append(input);
+    }
+    form.render('checkbox');
     //隐藏是否优秀的选项
     // var isPass = result.data.reviewResult;
     // if(isPass == 1){
@@ -54,12 +70,26 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
     //     document.getElementById("greatDiv").style.display="none";
     // }
 
-
+    //
     // form.on('radio(reviewResult)', function(data){
-    //     if(data.value == '1'){
-    //         document.getElementById("greatDiv").style.display="";
+    //     debugger;
+    //     if(data.value == '0'){
+    //         $("input:checkbox[name = status]").each(function(i){
+    //             $(this).attr("disabled","");
+    //         })
     //     } else {
-    //         document.getElementById("greatDiv").style.display="none";
+    //         debugger;
+    //         $("input:checkbox[name = status]").each(function(i){
+    //             debugger;
+    //             var item =  $(this)
+    //             var input = item[0];
+    //             var disabled = input.disabled;
+    //             var dis = item.context.disabled;
+    //
+    //             input.disabled = false;
+    //             item.context.disabled = false;
+    //             // $(this).removeAttr("disabled"); //解除禁用
+    //         })
     //     }
     // });
 
@@ -67,15 +97,27 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
     //表单提交事件
     form.on('submit(btnReview)', function (data) {
         debugger;
-        var ajax = new $ax(Feng.ctxPath + "/thesis/reviewItem", function (data) {
-            Feng.success("提交评审结果成功！");
-            window.location.href = Feng.ctxPath + '/thesis'
-        }, function (data) {
-            Feng.error("提交评审结果失败！" + data.responseJSON.message)
-        });
-        ajax.set(data.field);
-        ajax.start();
+        var score = data.field.score;
+        if(score >= 0 && score <=100){
+            debugger;
+            var dicts = "";
+            $("input:checkbox[name = status]:checked").each(function(i){
+                //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
+                dicts += $(this).val() + ";";
+            })
+            data.field.status = dicts;
 
+            var ajax = new $ax(Feng.ctxPath + "/thesis/reviewItem", function (data) {
+                Feng.success("提交评审结果成功！");
+                window.location.href = Feng.ctxPath + '/thesis'
+            }, function (data) {
+                Feng.error("提交评审结果失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.start();
+        }else{
+            Feng.error("评分区间 0~100分");
+        }
         return false;
     });
 

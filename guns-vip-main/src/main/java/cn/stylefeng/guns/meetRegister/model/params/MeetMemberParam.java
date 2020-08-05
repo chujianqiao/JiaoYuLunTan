@@ -57,7 +57,7 @@ public class MeetMemberParam implements Serializable, BaseValidatingParam {
 
     /**
      * 会议状态；
-     * 1-评审中,2-评审通过,3-已取消,4-已缴费
+     * 1-评审中,2-评审通过,3-已取消,4-已缴费,5-未通过
      */
     private Integer meetStatus;
 

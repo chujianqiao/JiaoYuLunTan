@@ -239,31 +239,38 @@ public class ThesisController extends BaseController {
     @RequestMapping("/reviewItem")
     @ResponseBody
     public ResponseData reviewItem(ThesisParam thesisParam) {
-        thesisParam.setStatus("已评审");
-
         LoginUser user = LoginContextHolder.getContext().getUser();
         String userIdStr = user.getId().toString();
-        String greatUsers = thesisParam.getGreatId();
-        if(greatUsers == null){
-            greatUsers = "";
+
+        Thesis thesis = this.thesisService.getById(thesisParam.getThesisId());
+        String reviewUser = thesis.getReviewUser();
+        if(reviewUser != null && reviewUser.length() != 0){
+            reviewUser += "," + userIdStr;
+        }else{
+            reviewUser = userIdStr;
         }
+        thesisParam.setReviewUser(reviewUser);
+//        String greatUsers = thesisParam.getGreatId();
+//        if(greatUsers == null){
+//            greatUsers = "";
+//        }
         //推优逻辑
-        Integer greatNum = thesisParam.getGreatNum();
-        Integer isGreat = thesisParam.getIsgreat();
-        if(isGreat != null && isGreat == 1 && (greatUsers.indexOf(userIdStr) == -1)){
-            int len = greatUsers.length();
-            if(len != 0){
-                greatUsers += "," + userIdStr;
-            }else {
-                greatUsers = userIdStr;
-            }
-            greatNum +=1;
-        }
-        if(greatNum >= 2){
-            thesisParam.setGreat(1);
-        }
-        thesisParam.setGreatId(greatUsers);
-        thesisParam.setGreatNum(greatNum);
+//        Integer greatNum = thesisParam.getGreatNum();
+//        Integer isGreat = thesisParam.getIsgreat();
+//        if(isGreat != null && isGreat == 1 && (greatUsers.indexOf(userIdStr) == -1)){
+//            int len = greatUsers.length();
+//            if(len != 0){
+//                greatUsers += "," + userIdStr;
+//            }else {
+//                greatUsers = userIdStr;
+//            }
+//            greatNum +=1;
+//        }
+//        if(greatNum >= 2){
+//            thesisParam.setGreat(1);
+//        }
+//        thesisParam.setGreatId(greatUsers);
+//        thesisParam.setGreatNum(greatNum);
 
         //同时修改会议状态
         long thesisId = thesisParam.getThesisId();
@@ -276,6 +283,8 @@ public class ThesisController extends BaseController {
         int reviewNum = thesisParam.getReviewResult();
         if(reviewNum == 0){
             meetMemberParam.setMeetStatus(5);
+            //未通过，评审字典内容为空
+            thesisParam.setStatus(null);
         }else {
             meetMemberParam.setMeetStatus(2);
         }
