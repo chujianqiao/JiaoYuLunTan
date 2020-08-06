@@ -15,7 +15,13 @@
 	<link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
 	<link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}" media="all"/>
 	<link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>
-
+<style>
+	.layui-upload-choose{
+		padding: 4px 10px;
+		width: 79.7%;
+		float: left;
+	}
+</style>
 </head>
 <body>
 	<div class="page">
@@ -68,7 +74,121 @@
 							<div class="type">
 								<form class="layui-form" id="personForumForm" lay-filter="socialForumForm">
 									<input name="applyType" value="1" class="layui-input" type="hidden"/>
-									<table class="sb-table fontSize16" width="100%">
+									<div class="layui-fluid" style="padding-bottom: 75px;">
+										<div class="layui-card">
+											<div class="layui-card-body">
+												<div class="layui-form-item layui-row">
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">成果申报类型 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+																&nbsp;&nbsp;<input type="radio" name="resultType" value="0" title="教改实验申报" checked/>
+																<input type="radio" name="resultType" value="1" title="优秀论著申报"/>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">成果名称 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input name="resultName" placeholder="请输入成果名称" class="layui-input" type="text" lay-verify="required" required/>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">申请人姓名 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input name="belongName" placeholder="请输入申请人姓名" class="layui-input" type="text" lay-verify="required" required/>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">申请人电话 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input name="manaPhone" placeholder="请输入申请人电话" class="layui-input" type="text" lay-verify="required|phone" required/>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">申请人邮箱 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input name="manaEmail" placeholder="请输入申请人邮箱" class="layui-input" type="text" lay-verify="required|email" required/>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">所在单位 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input name="team" type="text" placeholder="请输入所在单位" class="layui-input" lay-verify="required" required/>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">申请人职务 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input name="manaPost" type="text" placeholder="请输入申请人职务" class="layui-input" lay-verify="required" required/>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">申请人研究方向 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input name="manaDirect" type="text" placeholder="请输入申请人研究方向" class="layui-input" lay-verify="required" required/>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">优秀成果简介附件 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input id="introducefileInputHidden" name="introducefileInputHidden" type="hidden" class="layui-input"/>
+															<input id="introducePath" name="introducePath" type="hidden" class="layui-input"/>
+															<input id="introduceName" name="introduceName" type="hidden" class="layui-input"/>
+
+
+																<!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+																<input name="introduceName" id="introducefileNameTip" placeholder="请上传优秀成果简介附件" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+
+															<div style="float: left;">
+																<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="introducefileBtn"><i class="layui-icon"></i>选择文件</button>
+															</div>
+															<div style="float: left;">
+																<button type="button" class="layui-btn layui-btn-sm" id="downloadPlan"><i class="layui-icon"></i>模板下载</button>
+															</div>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">专家推荐信附件 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input id="letterfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
+															<input id="letterPath" name="letterPath" type="hidden" class="layui-input"/>
+															<input id="letterName" name="letterName" type="hidden" class="layui-input"/>
+
+
+																<!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+																<input name="letterName" id="letterfileNameTip" placeholder="请上传专家推荐信附件" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+
+															<div style="float: left;">
+																<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="letterfileBtn"><i class="layui-icon"></i>选择文件</button>
+															</div>
+														</div>
+													</div>
+													<div class="layui-inline layui-col-md12">
+														<label class="layui-form-label">原创承诺书 ：<span style="color: red;">*</span></label>
+														<div class="layui-input-block">
+															<input id="commitfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
+															<input id="commitPath" name="commitPath" type="hidden" class="layui-input"/>
+															<input id="commitName" name="commitName" type="hidden" class="layui-input"/>
+
+
+																<!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+																<input name="commitName" id="commitfileNameTip" placeholder="请上传原创承诺书" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+
+															<div style="float: left;">
+																<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="commitfileBtn"><i class="layui-icon"></i>选择文件</button>
+															</div>
+														</div>
+													</div>
+													<div class="btns sb-btns fontSize16">
+														<input type="checkbox" name="ifAgreeSocial" id="ifAgreeSocial" title="阅读并同意遵守《论坛章程》" lay-skin="primary">
+														<br><br>
+														<div class="btn submit" lay-filter="socialSubmit" lay-submit>提交</div>
+														<!--<div class="btn cancel" id="btnCancel">取消</div>-->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--<table class="sb-table fontSize16" width="100%">
 										<tr>
 											<td class="sb-table-name">成果申报类型<span style="color: red;">*</span>：</td>
 											<td>
@@ -100,7 +220,7 @@
 												<input id="introduceName" name="introduceName" type="hidden" class="layui-input"/>
 
 												<div style="float: left;">
-													<!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+													&lt;!&ndash;<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>&ndash;&gt;
 													<input name="introduceName" id="introducefileNameTip" placeholder="请上传优秀成果简介附件" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
 												</div>
 												<div style="float: left;">
@@ -121,7 +241,7 @@
 												<input id="letterName" name="letterName" type="hidden" class="layui-input"/>
 
 												<div style="float: left;">
-													<!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+													&lt;!&ndash;<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>&ndash;&gt;
 													<input name="letterName" id="letterfileNameTip" placeholder="请上传专家推荐信附件" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
 												</div>
 												<div style="float: left;">
@@ -140,7 +260,7 @@
 												<input id="commitName" name="commitName" type="hidden" class="layui-input"/>
 
 												<div style="float: left;">
-													<!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+													&lt;!&ndash;<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>&ndash;&gt;
 													<input name="commitName" id="commitfileNameTip" placeholder="请上传原创承诺书" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
 												</div>
 												<div style="float: left;">
@@ -153,7 +273,7 @@
 										<input type="checkbox" name="ifAgree" id="ifAgree" title="阅读并同意遵守《论坛章程》" lay-skin="primary">
 										<br><br>
 										<div class="btn submit" lay-filter="personSubmit" lay-submit>提交</div><div class="btn cancel">取消</div>
-									</div>
+									</div>-->
 								</form>
 							</div>
 						</div>
@@ -210,8 +330,8 @@
 
 	<script>
 	$(document).ready(function(){
-		myJs.navTab();
-		myJs.typeTab();
+		/*myJs.navTab();
+		myJs.typeTab();*/
 	});
 	</script>
 	<script>

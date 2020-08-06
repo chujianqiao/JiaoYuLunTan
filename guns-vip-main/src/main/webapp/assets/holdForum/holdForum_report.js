@@ -133,11 +133,13 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         })
         if (flag == 1) {
             var ajax = new $ax(Feng.ctxPath + "/socialForum/addItem", function (data) {
-                Feng.success("申报成功！");
+                Feng.success("感谢赞助！</br>衷心感谢您携手中国教育科学论坛，</br>共谋中国教育改革与发展！");
                 //传给上个页面，刷新table用
-                admin.putTempData('formOk', true);
-                //关掉对话框
-                admin.closeThisDialog();
+                setTimeout(function (){
+
+                    window.location.href = Feng.ctxPath + "/socialForum"
+                }, 3000);
+
             }, function (data) {
                 Feng.error("申报失败！" + data.responseJSON.message)
             });

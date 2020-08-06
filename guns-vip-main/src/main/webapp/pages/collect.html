@@ -65,7 +65,39 @@
 				<div class="form-box" id="formList">
 					<div class="form">
 						<form class="layui-form" id="collectTopicForm" lay-filter="collectTopicForm">
-							<table class="sb-table fontSize16" width="100%">
+							<div class="layui-fluid" style="padding-bottom: 75px;">
+								<div class="layui-card">
+									<div class="layui-card-body">
+										<div class="layui-form-item layui-row">
+											<div class="layui-inline layui-col-md12">
+												<label class="layui-form-label">大会主题 ：<span style="color: red;">*</span></label>
+												<div class="layui-input-block">
+													<input name="topicName" placeholder="请输入大会主题" class="layui-input" type="text" lay-verify="required" required/>
+												</div>
+											</div>
+											<div class="layui-inline layui-col-md12">
+												<label class="layui-form-label">分论坛主题 ：<span style="color: red;">*</span></label>
+												<div class="layui-input-block">
+													<input name="subTopic" placeholder="请输入分论坛主题" class="layui-input" type="text" lay-verify="required" required/>
+												</div>
+											</div>
+											<div class="layui-inline layui-col-md12">
+												<label class="layui-form-label">选题意义 ：<span style="color: red;">*</span></label>
+												<div class="layui-input-block">
+													<textarea name="topicDesc" placeholder="请输入选题意义" class="layui-input" type="text" lay-verify="required" required></textarea>
+												</div>
+											</div>
+											<div class="btns sb-btns fontSize16">
+												<input type="checkbox" name="ifAgreeSocial" id="ifAgreeSocial" title="阅读并同意遵守《论坛章程》" lay-skin="primary">
+												<br><br>
+												<div class="btn submit" lay-filter="socialSubmit" lay-submit>提交</div>
+												<!--<div class="btn cancel" id="btnCancel">取消</div>-->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--<table class="sb-table fontSize16" width="100%">
 								<tr>
 									<td class="sb-table-name">大会主题<span style="color: red;">*</span>：</td><td><input name="topicName" placeholder="请输入大会主题" class="layui-input" type="text" lay-verify="required" required/></td>
 									<td class="sb-table-gap"></td>
@@ -82,7 +114,7 @@
 								<div class="btn submit" lay-filter="btnSubmit" lay-submit>提交</div>
 
 							</div>
-						</form>
+						</form>-->
 					</div><!--end of form-->
 				</div>
 			</div>

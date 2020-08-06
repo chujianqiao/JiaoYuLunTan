@@ -129,4 +129,9 @@ public class ThesisResult implements Serializable {
      */
     private String belongDomain;
 
+    /**
+     * 论文评审时间
+     */
+    private Date reviewTime;
+
 }

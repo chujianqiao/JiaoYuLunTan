@@ -152,6 +152,12 @@ public class Thesis implements Serializable {
     @TableField("belong_domain")
     private String belongDomain;
 
+    /**
+     * 论文评审时间
+     */
+    @TableField("review_time")
+    private Date reviewTime;
+
 
     public Long getThesisId() {
         return thesisId;
@@ -329,6 +335,13 @@ public class Thesis implements Serializable {
         this.belongDomain = belongDomain;
     }
 
+    public Date getReviewTime() {
+        return reviewTime;
+    }
+
+    public void setReviewTime(Date reviewTime) {
+        this.reviewTime = reviewTime;
+    }
     @Override
     public String toString() {
         return "Thesis{" +
@@ -354,6 +367,7 @@ public class Thesis implements Serializable {
         ", thesisPath=" + thesisPath +
         ", fileName=" + fileName +
         ", belongDomain=" + belongDomain +
+        ", reviewTime=" + reviewTime +
         "}";
     }
 }

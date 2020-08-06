@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.thesisReviewMiddle.mapper.ThesisReviewMiddleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.thesisReviewMiddle.entity.ThesisReviewMiddle">
+        <id column="middle_id" property="middleId" />
+        <result column="user_id" property="userId" />
+        <result column="thesis_id" property="thesisId" />
+        <result column="score" property="score" />
+        <result column="review_time" property="reviewTime" />
+        <result column="review_sort" property="reviewSort" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        middle_id AS "middleId", user_id AS "userId", thesis_id AS "thesisId", score AS "score", review_time AS "reviewTime", review_sort AS "reviewSort"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.thesisReviewMiddle.model.result.ThesisReviewMiddleResult" parameterType="cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_review_middle where 1 = 1
+        <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
+            and thesis_id = #{paramCondition.thesisId}
+        </if>
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_review_middle where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.thesisReviewMiddle.model.result.ThesisReviewMiddleResult" parameterType="cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_review_middle where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_review_middle where 1 = 1
+    </select>
+
+</mapper>

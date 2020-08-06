@@ -6,6 +6,9 @@ import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult;
 import cn.stylefeng.guns.thesisDomain.service.ThesisDomainService;
+import cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam;
+import cn.stylefeng.guns.thesisReviewMiddle.model.result.ThesisReviewMiddleResult;
+import cn.stylefeng.guns.thesisReviewMiddle.service.ThesisReviewMiddleService;
 import cn.stylefeng.guns.util.TransTypeUtil;
 import cn.stylefeng.roses.core.base.warpper.BaseControllerWrapper;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
@@ -29,6 +32,7 @@ public class ThesisWrapper extends BaseControllerWrapper {
 	private UserService userService = SpringContextHolder.getBean(UserService.class);
 
 	private ThesisDomainService thesisDomainService = SpringContextHolder.getBean(ThesisDomainService.class);
+	private ThesisReviewMiddleService thesisReviewMiddleService = SpringContextHolder.getBean(ThesisReviewMiddleService.class);
 
 	public ThesisWrapper(Map<String, Object> single) {
 		super(single);
@@ -104,12 +108,37 @@ public class ThesisWrapper extends BaseControllerWrapper {
 			}
 		}
 
+		//评审专家
+		ThesisReviewMiddleParam param = new ThesisReviewMiddleParam();
+		param.setThesisId(Long.parseLong(map.get("thesisId").toString()));
+		List<ThesisReviewMiddleResult> middleList = thesisReviewMiddleService.findListBySpec(param);
+		String firstName = "";
+		String againName = "";
+		if (middleList != null){
+            for (int i = 0;i < middleList.size();i++){
+                User user = userService.getById(middleList.get(i).getUserId());
+                String name = user.getName();
+                if (middleList.get(i).getReviewSort() == 1){
+					if (middleList.get(i).getScore() != null){
+						int score = middleList.get(i).getScore();
+						firstName = name + "(" + score + ")";
+					}else {
+						firstName = name + "(未评审)";
+					}
+                }else {
+					if (middleList.get(i).getScore() != null){
+						int score = middleList.get(i).getScore();
+						againName = againName + name + "(" + score + ");";
+					}else {
+						againName = againName + name + "(未评审);";
+					}
+                }
+            }
+        }
+
+		map.put("firstName",firstName);
+		map.put("againName",againName);
 		map.put("belongDomainStr",belongDomainStr);
-
-
-
-
-
 		map.put("userName",nameBuilder.toString());
 		map.put("unitsName",unitsName);
 

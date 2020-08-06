@@ -130,6 +130,12 @@ public class ThesisParam implements Serializable, BaseValidatingParam {
      */
     private String belongDomain;
 
+    /**
+     * 论文评审时间
+     */
+    private Date reviewTime;
+
+
     @Override
     public String checkParam() {
         return null;
