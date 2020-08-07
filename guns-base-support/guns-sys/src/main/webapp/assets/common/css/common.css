@@ -57,8 +57,8 @@ html{font-size:13.33vw/*100px*/;}
 .language-select-box{display: inline-block;}
 .language-select-btn{vertical-align:top;cursor:pointer;}
 .language-select-icon{vertical-align: top;}
-.language{width:.6rem;height:.3rem;overflow:hidden;text-align:center;vertical-align: middle;}
-.language a{display:block;color:#fff;height:.3rem;line-height:.3rem;}
+.language{width:.6rem;height:.3rem;overflow:hidden;text-align:center;vertical-align: middle;display:inline-block;}
+.language a{display:block;color:#fff;height:.3rem;}
 .language a:last-child{line-height:.4rem;height:.4rem;}
 .language a:last-child:hover{background:rgba(255,255,255,0.5);border-radius:4px;}
 .language a:last-child.hover{background:rgba(255,255,255,0.5);border-radius:4px;}

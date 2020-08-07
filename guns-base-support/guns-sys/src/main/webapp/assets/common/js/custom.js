@@ -4,7 +4,6 @@ myJs={
 			//里面是首页初始化时需要的函数
 			this.poster_animate();
 			this.hot_swiper_init();
-			this.hydt_swiper_init();
 			this.tab();
 			this.languageSelect('#langSelect');
 			this.languageSelect('#langSelect_mobile');
@@ -41,15 +40,22 @@ myJs={
 		},
 		//热点swiper
 		hot_swiper_init:function(){
-			var hot_swiper=myJs.swiper_init('.hot-swiper-container','.hot-swiper-pagination','.hot-swiper-button-next','.hot-swiper-button-prev',1,true);
-			var length=$('.hot-swiper-container img').length;
-			if(length>1){hot_swiper.init();}else{$('.hot-swiper-button-next,.hot-swiper-button-prev').hide();}
-		},
-		//会议动态swiper
-		hydt_swiper_init:function(){
-			var hot_swiper=myJs.swiper_init('.hydt-swiper-container','.hydt-swiper-pagination','.hydt-swiper-button-next','.hydt-swiper-button-prev',1,true);
-			var length=$('.hydt-swiper-container img').length;
-			if(length>1){hot_swiper.init();}else{$('.hydt-swiper-button-next,.hydt-swiper-button-prev').hide();}
+			var hot_swiper=myJs.swiper_init('.hot-swiper-container',null,'.hot-swiper-button-next','.hot-swiper-button-prev',1,true);
+			hot_swiper.init();
+			if(hot_swiper.slides.length<=1){hot_swiper.params.noSwiping=true;$('.hot-swiper-button-prev,.hot-swiper-pagination,.hot-swiper-button-next').addClass('hide')};
+			var htmlC=myJs.getTitle($(hot_swiper.slides).first());
+			$('.hot-swiper-container .hydt-imgTitle').html(htmlC);
+			var htmlC=myJs.getTitle($(hot_swiper.slides).first());
+			$('.hot-swiper-container .hydt-imgTitle').html(htmlC);
+			hot_swiper.on('slideChangeTransitionEnd',function(){
+				$slides=$('.hot-swiper-container .swiper-slide');
+				var activeIndex=hot_swiper.activeIndex;
+				var $item=$slides.eq(activeIndex);
+				var htmlC=myJs.getTitle($item);
+				$('.hot-swiper-container .hydt-imgTitle').html(htmlC);
+				var htmlC=myJs.getTitle($item);
+				$('.hot-swiper-container .hydt-imgTitle').html(htmlC);
+			});
 		},
 		//首页论坛嘉宾和论坛花絮切换
 		tab:function(){
@@ -102,9 +108,9 @@ myJs={
 				var $toggleIcon=$(this).find('.toggleBtn');
 				var $lists=$(this).find('.lavel1-list');
 				var $title=$(this).find('.title');
-				if($lists.length>0){
-					$toggleIcon.addClass('down');
-					$toggleIcon.siblings('a').attr('href','javascript:void(0)').css('cursor','default')
+				if($lists.find('li').length>0){
+					if(!$toggleIcon.hasClass('up')){$toggleIcon.addClass('down');}
+					//$toggleIcon.siblings('a').attr('href','javascript:void(0)').css('cursor','default')
 					$toggleIcon.click(function(index){
 						$('.navTree').find('.title').removeClass('hover');
 						$title.addClass('hover');
@@ -123,17 +129,17 @@ myJs={
 				var $carset=$(this).find('.carset1');
 				var $this=$(this);
 				if(lavelNum>0){
-					$carset.addClass('down');
-					$carset.siblings('a').attr('href','javascript:void(0)').css('cursor','default');
+					if(!$carset.hasClass('up')){$carset.addClass('down');}
+					//$carset.siblings('a').attr('href','javascript:void(0)').css('cursor','default');
 					$carset.click(function(){
-					if($(this).hasClass('down')){
-						$(this).removeClass('down').addClass('up');
-						$this.find('.lavel2').slideDown();
-					}else{
-						$(this).removeClass('up').addClass('down');
-						$this.find('.lavel2').slideUp();
-					}
-				});
+						if($(this).hasClass('down')){
+							$(this).removeClass('down').addClass('up');
+							$this.find('.lavel2').slideDown();
+						}else{
+							$(this).removeClass('up').addClass('down');
+							$this.find('.lavel2').slideUp();
+						}
+					});
 				}
 			});
 		},
@@ -155,22 +161,27 @@ myJs={
 			var swiper=new Swiper('#mobileSwiper1',{
 				slidesPerView:4,
 				on:{
-					tap:function(){
-						var $item=$(swiper.clickedSlide);
-						var $childLavel=$item.find('.lavel2');
-						var left=swiper.getTranslate();
-						$childLavel.css('left',-left);
-						if($childLavel.length>0){
-							if($item.find('.carset').hasClass('down')){
-								$item.siblings().find('.carset').removeClass('up').addClass('down');
-								$item.siblings().find('.lavel2').addClass('hide');
-								$item.find('.carset').removeClass('down').addClass('up');
-								$childLavel.removeClass('hide');
-							}else{
-								$item.find('.carset').removeClass('up').addClass('down');
-								$childLavel.addClass('hide');
+					tap:function(e){
+							var $target=$(e.target);
+							var $item=$(swiper.clickedSlide);
+							var $childLavel=$item.find('.lavel2');
+							var left=swiper.getTranslate();
+							$childLavel.css('left',-left);
+							if($childLavel.length>0){
+								if($item.find('.carset').hasClass('down')){
+									$item.siblings().find('.carset').removeClass('up').addClass('down');
+									$item.siblings().find('.lavel2').addClass('hide');
+									$item.find('.carset').removeClass('down').addClass('up');
+									$childLavel.removeClass('hide');
+								}else{
+									if($target.attr('href')){
+										return;
+									}else{
+										$item.find('.carset').removeClass('up').addClass('down');
+										$childLavel.addClass('hide');
+									}	
+								}
 							}
-						}
 					},
 				 	sliderMove:function(){
 				 		$('.lavel2').addClass('hide');
@@ -181,30 +192,35 @@ myJs={
 				}
 			});
 		},
+		getTitle:function(item){
+				var hrefValue=$(item).find('a').attr('href');
+				var title=$(item).find('a').attr('title');
+				var htmlC="<a href='"+hrefValue+"' title='"+title+"' target='_blank'>"+title+"</a>";
+				return htmlC;
+			},
 		mobile_swiper_init2:function(){
 			var swiper=this.swiper_init('#mobileSwiper2','#mobileSwiper2 .swiper-pagination',null,null,1,true);
 			var length=$('.mobile_swiper2 img').length;
 			if(length>1){swiper.init();}
+			swiper.on('tap',function(){
+				var $item=$(swiper.clickedSlide);
+				var href=$item.find('a').attr('href');
+				window.open(href);
+			});
 		},
 		//会议动态swiper
 		mobile_swiper_init3:function(){
 			var $slides=$('#mobileSwiper3 .swiper-slide');
 			var swiper=this.swiper_init('#mobileSwiper3','#mobileSwiper3 .swiper-pagination','#mobileSwiper3 .swiper-button-next','#mobileSwiper3 .swiper-button-prev');
-			function  getTitle(item){
-				var hrefValue=$(item).find('a').attr('href');
-				var title=$(item).find('a').attr('title');
-				var htmlC="<a href='"+hrefValue+"' title='"+title+"' target='_blank'>"+title+"</a>";
-				return htmlC;
-			}
 			swiper.on('init',function(){
 				var hrefValue=$slides.first().find('a').attr('href');
-				var htmlC=getTitle($slides.first());
+				var htmlC=myJs.getTitle($slides.first());
 				$('.mobile-hydt-title1').html(htmlC);
 			});
 			swiper.on('slideChangeTransitionEnd',function(){
 				var activeIndex=swiper.activeIndex;
 				var $item=$slides.eq(activeIndex);
-				var htmlC=getTitle($item);
+				var htmlC=myJs.getTitle($item);
 				$('.mobile-hydt-title1').html(htmlC);
 			});
 			if($slides.length>1){
@@ -214,7 +230,17 @@ myJs={
 		formTab:function(){
 			var $tab=$('#formTab');
 			var $forms=$('#formList').find('.form');
-			$tab.find('span').click(function(){
+			$tab.find('span').hover(function(){
+				var index=$(this).index();
+				$tab.find('span').removeClass('hover');
+				$(this).addClass('hover');
+				$forms.addClass('hide').eq(index).removeClass('hide');
+			});
+		},
+		mobile_form:function(){
+			var $tab=$('#formTab');
+			var $forms=$('#formList').find('.mobile-form');
+			$tab.find('span').tap(function(){
 				var index=$(this).index();
 				$tab.find('span').removeClass('hover');
 				$(this).addClass('hover');
@@ -231,3 +257,4 @@ myJs={
 			}
 		}
 	}
+	

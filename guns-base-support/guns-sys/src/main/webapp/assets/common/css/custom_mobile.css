@@ -1,4 +1,14 @@
 /*公共代码*/
+/*禁止用户选择*/
+* {
+-webkit-touch-callout:none;
+-webkit-user-select:none;
+-khtml-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
+}
+
 .mobile-channelBox{background:#c4d8ef;padding-left:.32rem;height:.76rem;line-height:.76rem;font-size:0;}
 .mobile-channelBox span{color:#196bc6;}
 .more{background:#a0c4ed url(../images/mobile_13.png) no-repeat center;width:.82rem;height:100%;}
@@ -30,7 +40,7 @@ ul.mobile-list2 li{padding:.35rem 0;}
 ul.mobile-list2 li img{width:2.72rem;}
 ul.mobile-list2 .lthx-content{width:4rem;}
 ul.mobile-list2 .lthx-content .title a{color:#000000;}
-ul.mobile-list2 .lthx-content .summary{color:#434343;}
+ul.mobile-list2 .lthx-content .summary2{color:#434343;}
 ul.mobile-list2 li.border-bottom::before{border-bottom:1px solid #c8c8c8;}
 
 ul.mobile-list3 li{padding:.3rem 0;}
@@ -43,7 +53,7 @@ ul.mobile-list3 li .zw{color:#434343;}
 header{background:url(../images/mobile_02.png) no-repeat center;background-size:contain;height:3.3rem;}
 .language-select{right:.1rem;}
 .language-select-icon{margin:.06rem;width:.22rem;}
-.language-select-btn{margin:.12rem;width:.13rem;}
+.language-select-btn{margin:.12rem;width:.18rem;}
 /*导航*/
 nav{background:#e5edfd;padding:0 .27rem;height:.95rem;}
 nav .home{flex-basis: 1rem;flex-grow: 0;}
@@ -52,7 +62,7 @@ nav .home{flex-basis: 1rem;flex-grow: 0;}
 .lavel1-name img{margin-right:.1rem;}
 .lavel1-name span.down{background:url(../images/show.png) no-repeat center;display: inline-block;width:13px;height:8px;margin:0 .06rem;}
 .lavel1-name span.up{background:url(../images/hide.png) no-repeat center;display: inline-block;width:13px;height:8px;margin:0 .06rem;}
-.lavel2{background:#fff;padding:.4rem;left:0;top:.85rem;width:100%;z-index:9;}
+.lavel2{background:#fff;padding:.4rem;left:0;top:.85rem;width:100%;z-index:999;}
 .lavel2-name{margin-bottom:.35rem;font-weight:700;color:#000;}
 .lavel2-name a{color:#000;}
 ul.lavel2-list li{margin-bottom:.28rem;width:50%;}
@@ -63,13 +73,14 @@ ul.lavel2-list li a{color:#282828;}
 .mobile_swiper1.swiper-container{overflow:visible;}
 .mobile_swiper1 .gnw-swiper-slide{width:2.7rem !important;}
 /*脚部*/
-.mobile-footer-top{background:url(../images/mobile_35.png) no-repeat center;padding:.4rem 0;color:#fff;line-height:.38rem;}
+.mobile-footer-top{background:#0761bc url(../images/mobile_35.png) no-repeat bottom;padding:.4rem 0;color:#fff;line-height:.38rem;}
 .mobile-footer-top .center{width:3.88rem;text-align:center;}
 .mobile-footer-top .webchatImg{width:1.04rem;}
 .mobile-footer-bottom{background:#3a8adb;padding:.1rem 0;text-align:center;color:#b9d7f5;line-height:.32rem;}
 
 /*首页轮播*/
 .mobile_swiper2{width:100%;height:5.10rem;}
+.mobile_swiper2 .swiper-slide a{}
 .mobile_swiper2 .swiper-slide img{width:100%;height:100%;}
 .mobile_swiper2 .swiper-pagination-bullet{background:#fff;opacity: 1;}
 .mobile_swiper2 .swiper-pagination-bullet-active{background:#ff0000;}
@@ -117,7 +128,7 @@ ul.mobile-hydt-list .mobile-hydt-title2 a{color:#000;}
 /*详情页*/
 .detail-content .titleBox{padding-bottom:.24rem;}
 .detail-content .titleBox.border-bottom::before{border-bottom:1px solid #dcdcdc;}
-.detail-content .title{font-size:.36rem;color:#1b1b1b;font-weight: 700}
+.detail-content .title{font-size:.36rem;color:#1b1b1b;font-weight: 700;text-align: center;}
 .detail-content .titleBox .desc{color:#545353;}
 .detail-content .content{padding:.3rem 0;text-indent: 2em;line-height:.5rem;}
 .detail-content .content.border-bottom::before{border-bottom:1px solid #dcdcdc;}
@@ -138,9 +149,19 @@ ul.mobile-hydt-list .mobile-hydt-title2 a{color:#000;}
 .mobile-form-content .border::before{border:1px solid #b0b0b0;height:199%;width:199%;}
 .mobile-form-content > div{padding:0 .1rem;height:.73rem;line-height:.73rem;}
 .mobile-form-content input.input1{border:none;padding:0;width:100%;font-size:.3rem;position:relative;z-index:3;outline:none;}
-.mobile-form-content .upload input{margin-top:.06rem;width:65%;position:relative;z-index:3;}
-.mobile-form-content .upload{height:.73rem;line-height:.73rem;}
-.mobile-form-content .btns div{}
+.mobile-form-content .upload input{position:absolute;right:0;top:.14rem;z-index:3;}
+.mobile-form-content .upload{position:relative;height:.73rem;line-height:.73rem;}
+.mobile-form .btns div{margin:.4rem 0;width:3.08rem;height:.88rem;text-align:center;line-height:.88rem;color:#fff;}
+.mobile-form .btns .submit{background:#4792de;}
+.mobile-form .btns .cancel{background:#b3b8bc;}
+.form-tab{padding:0 .45rem;line-height:.75rem;display:flex;justify-content: space-between;}
+.form-tab.border-bottom:before{border-bottom:1px solid #e5e5e5;}
+.form-tab span{position:relative;}
+.form-tab span:hover{color:#196bc6;cursor:pointer;}
+.form-tab span:hover:after{position:absolute;bottom:0;left:50%;margin-left:-3px;content:'';width:0;height:0;border-width:6px;border-style:solid;border-color:transparent transparent #f0cc6c transparent;}
+.form-tab span.hover{color:#196bc6;cursor:pointer;}
+.form-tab span.hover:after{position:absolute;bottom:0;left:50%;margin-left:-3px;content:'';width:0;height:0;border-width:6px;border-style:solid;border-color:transparent transparent #f0cc6c transparent;}
+
 
 @media screen and (max-width: 750px) {
     html {
