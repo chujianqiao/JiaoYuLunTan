@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.meet.mapper.MeetMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.meet.entity.Meet">
+        <id column="meet_id" property="meetId" />
+        <result column="meet_name" property="meetName" />
+        <result column="meet_desc" property="meetDesc" />
+        <result column="place" property="place" />
+        <result column="people_num" property="peopleNum" />
+        <result column="thesis_num" property="thesisNum" />
+        <result column="begin_time" property="beginTime" />
+        <result column="end_time" property="endTime" />
+        <result column="reg_user" property="regUser" />
+        <result column="reg_time" property="regTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        meet_id AS "meetId", meet_name AS "meetName", meet_desc AS "meetDesc", place AS "place", people_num AS "peopleNum", thesis_num AS "thesisNum", begin_time AS "beginTime", end_time AS "endTime", reg_user AS "regUser", reg_time AS "regTime",meet_status AS "meetStatus",content AS "content"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.meet.model.result.MeetResult" parameterType="cn.stylefeng.guns.meet.model.params.MeetParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.meet.model.params.MeetParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.meet.model.result.MeetResult" parameterType="cn.stylefeng.guns.meet.model.params.MeetParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.meet.model.params.MeetParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet where 1 = 1
+        <if test="paramCondition.meetStatus != null and paramCondition.meetStatus != ''">
+            and meet_status = #{paramCondition.meetStatus}
+        </if>
+    </select>
+
+</mapper>
