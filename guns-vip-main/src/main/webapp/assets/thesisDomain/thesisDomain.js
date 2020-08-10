@@ -14,7 +14,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
         tableId: "thesisDomainTable",
         condition: {
             domainId: "",
-            domainName: ""
+            domainName: "",
         }
     };
 
@@ -28,7 +28,8 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
             //{field: 'pid', sort: true, title: '父领域ID'},
             //{field: 'pids', sort: true, title: '父级ids'},
             {field: 'domainName', sort: true, title: '领域名称'},
-            {field: 'description', sort: true, title: '描述'},
+            {field: 'belongMajor', sort: true, title: '所属专家'},
+            {field: 'description', sort: true, title: '备注'},
             //{field: 'version', sort: true, title: '版本'},
             //{field: 'sort', sort: true, title: '排序'},
             {field: 'createTime', sort: true, title: '创建时间'},
@@ -84,7 +85,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
               content: Feng.ctxPath + '/thesisDomain/edit?domainId=' + data.domainId,
               tableId: ThesisDomain.tableId,
               endCallback: function () {
-                  ThesisDomain.loadDomainTree();
+                  //ThesisDomain.loadDomainTree();
               }
           });
       };
@@ -128,7 +129,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
     /**
      * 左侧树加载
      */
-    ThesisDomain.loadDomainTree = function () {
+    /*ThesisDomain.loadDomainTree = function () {
         var ajax = new $ax(Feng.ctxPath + "/thesisDomain/layuiTree", function (data) {
             tree.render({
                 elem: '#domainTree',
@@ -139,12 +140,12 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
         }, function (data) {
         });
         ajax.start();
-    };
+    };*/
 
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + ThesisDomain.tableId,
-        url: Feng.ctxPath + '/thesisDomain/list',
+        url: Feng.ctxPath + '/thesisDomain/wrapList',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
@@ -152,7 +153,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
     });
 
     //初始化左侧部门树
-    ThesisDomain.loadDomainTree();
+    //ThesisDomain.loadDomainTree();
 
     // 搜索按钮点击事件
     $('#btnSearch').click(function () {

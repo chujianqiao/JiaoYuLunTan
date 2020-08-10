@@ -68,6 +68,11 @@ public class ReviewMajorServiceImpl extends ServiceImpl<ReviewMajorMapper, Revie
     }
 
     @Override
+    public List<ReviewMajorResult> findListByDomain(ReviewMajorParam param){
+        return this.baseMapper.selectByDomain(param);
+    }
+
+    @Override
     public LayuiPageInfo findPageBySpec(ReviewMajorParam param){
         Page pageContext = getPageContext();
         IPage page = this.baseMapper.customPageList(pageContext, param);

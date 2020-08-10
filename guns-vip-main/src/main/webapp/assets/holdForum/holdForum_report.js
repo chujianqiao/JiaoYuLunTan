@@ -119,12 +119,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     //表单提交事件
     form.on('submit(socialSubmit)', function (data) {
-        var supPlate = "";
-        $("input:checkbox[name = supPlates]:checked").each(function(i){
-            //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
-            console.log($(this).val());
-            supPlate = supPlate + $(this).val() + ";";
-        })
+        var supPlate = $("#supPlate").val();
+
         data.field.supPlate = supPlate;
 
         var flag = 0;

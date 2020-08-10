@@ -52,6 +52,9 @@
         select
         <include refid="Base_Column_List"/>
         from thesis_domain where 1 = 1
+		<if test="paramCondition.domainName != null and paramCondition.domainName != ''">
+			and domain_name like CONCAT('%',#{paramCondition.domainName},'%')
+		</if>
     </select>
 
     <select id="layuiTree" resultType="cn.stylefeng.guns.base.pojo.node.LayuiTreeNode">

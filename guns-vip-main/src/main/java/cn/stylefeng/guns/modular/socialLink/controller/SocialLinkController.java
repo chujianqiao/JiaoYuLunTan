@@ -151,7 +151,7 @@ public class SocialLinkController extends BaseController {
      * @Date 2018/12/24 22:44
      */
     @RequestMapping("/freeze")
-    @BussinessLog(value = "冻结专家", key = "linkId", dict = SocialLinkDict.class)
+    @BussinessLog(value = "冻结", key = "linkId", dict = SocialLinkDict.class)
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData freeze(@RequestParam Long linkId) {
@@ -169,7 +169,7 @@ public class SocialLinkController extends BaseController {
      * @Date 2018/12/24 22:44
      */
     @RequestMapping("/unfreeze")
-    @BussinessLog(value = "解除冻结专家", key = "linkId", dict = SocialLinkDict.class)
+    @BussinessLog(value = "解除冻结", key = "linkId", dict = SocialLinkDict.class)
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData unfreeze(@RequestParam Long linkId) {

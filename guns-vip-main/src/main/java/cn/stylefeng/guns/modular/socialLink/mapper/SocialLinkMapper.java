@@ -55,5 +55,5 @@ public interface SocialLinkMapper extends BaseMapper<SocialLink> {
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") SocialLinkParam paramCondition);
 
-    Integer setStatus(Long linkId, String status);
+    Integer setStatus(@Param("linkId") Long linkId, @Param("status") String status);
 }

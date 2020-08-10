@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -62,7 +63,7 @@ public class ThesisDomainServiceImpl extends ServiceImpl<ThesisDomainMapper, The
     public void update(ThesisDomainParam param){
         ThesisDomain oldEntity = getOldEntity(param);
         ThesisDomain newEntity = getEntity(param);
-        if (ToolUtil.isOneEmpty(newEntity, newEntity.getDomainId(), newEntity.getDomainName(), newEntity.getPid())) {
+        if (ToolUtil.isOneEmpty(newEntity, newEntity.getDomainId(), newEntity.getDomainName()/*, newEntity.getPid()*/)) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
         }
 
@@ -88,6 +89,12 @@ public class ThesisDomainServiceImpl extends ServiceImpl<ThesisDomainMapper, The
         Page pageContext = getPageContext();
         IPage page = this.baseMapper.customPageList(pageContext, param);
         return LayuiPageFactory.createPageInfo(page);
+    }
+
+    @Override
+    public Page<Map<String, Object>> findPageWrap(ThesisDomainParam param) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.customPageMapList(page,param);
     }
 
     private Serializable getKey(ThesisDomainParam param){
