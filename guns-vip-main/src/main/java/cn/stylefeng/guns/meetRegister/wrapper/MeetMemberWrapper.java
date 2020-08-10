@@ -2,6 +2,7 @@ package cn.stylefeng.guns.meetRegister.wrapper;
 
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
 import cn.stylefeng.guns.modular.ownForum.mapper.OwnForumMapper;
+import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
@@ -13,6 +14,7 @@ import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.kernel.model.page.PageResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.models.auth.In;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,9 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 	private ThesisMapper thesisMapper = SpringContextHolder.getBean(ThesisMapper.class);
 
 	private OwnForumMapper ownForumMapper = SpringContextHolder.getBean(OwnForumMapper.class);
+
+	@Autowired
+	private OwnForumService ownForumService;
 
 	public MeetMemberWrapper(Map<String, Object> single) {
 		super(single);
@@ -70,14 +75,16 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		if (map.get("ownForumid") == "" || map.get("ownForumid") == null){
 			forumName = "未选择";
 		}else {
-			long ownForumid = Long.parseLong(map.get("ownForumid").toString());
+			Long ownForumid = Long.parseLong(map.get("ownForumid").toString());
 			OwnForum ownForum = ownForumMapper.selectById(ownForumid);
-
 			if (ownForum == null){
 				forumName = "未选择";
 			}else {
 				forumName = ownForum.getForumName();
 			}
+
+
+
 		}
 
 //		String speak = "";
