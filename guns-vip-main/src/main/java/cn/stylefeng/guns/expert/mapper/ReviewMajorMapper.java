@@ -29,6 +29,16 @@ public interface ReviewMajorMapper extends BaseMapper<ReviewMajor> {
      */
     List<ReviewMajorResult> customList(@Param("paramCondition") ReviewMajorParam paramCondition);
 
+
+    /**
+     * 获取列表
+     *
+     * @author wucy
+     * @Date 2020-05-11
+     */
+    List<ReviewMajorResult> selectByDomain(@Param("paramCondition") ReviewMajorParam paramCondition);
+
+
     /**
      * 获取map列表
      *

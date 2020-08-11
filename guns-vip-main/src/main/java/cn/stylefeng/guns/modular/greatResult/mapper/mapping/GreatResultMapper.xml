@@ -61,13 +61,22 @@
     <select id="customPageList" resultType="cn.stylefeng.guns.modular.greatResult.model.result.GreatResultResult" parameterType="cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam">
         select
         <include refid="Base_Column_List"/>
-        from great_result where apply_id = #{paramCondition.applyId} and result_name like #{paramCondition.resultName}
+        from great_result where 1 = 1
+        <if test="paramCondition.applyId != null and paramCondition.applyId != ''">
+            and apply_id = #{paramCondition.applyId}
+        </if>
+        <if test="paramCondition.resultName != null and paramCondition.resultName != ''">
+            and result_name like CONCAT('%',#{paramCondition.resultName},'%')
+        </if>
     </select>
 
     <select id="customPageListAdmin" resultType="cn.stylefeng.guns.modular.greatResult.model.result.GreatResultResult" parameterType="cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam">
         select
         <include refid="Base_Column_List"/>
-        from great_result where 1 = 1 and result_name like #{paramCondition.resultName}
+        from great_result where 1 = 1
+        <if test="paramCondition.resultName != null and paramCondition.resultName != ''">
+            and result_name like CONCAT('%',#{paramCondition.resultName},'%')
+        </if>
     </select>
 
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam">

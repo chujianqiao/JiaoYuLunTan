@@ -32,6 +32,11 @@ public class ThesisDomainDto implements Serializable {
     private String pName;
 
     /**
+     * 所属专家名称
+     */
+    private String belongMajor;
+
+    /**
      * 领域名称
      */
     private String domainName;

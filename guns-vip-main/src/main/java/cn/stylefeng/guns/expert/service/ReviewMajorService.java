@@ -61,6 +61,14 @@ public interface ReviewMajorService extends IService<ReviewMajor> {
     List<ReviewMajorResult> findListBySpec(ReviewMajorParam param);
 
     /**
+     * 根据领域查询列表，Specification模式
+     *
+     * @author wucy
+     * @Date 2020-05-11
+     */
+    List<ReviewMajorResult> findListByDomain(ReviewMajorParam param);
+
+    /**
      * 查询分页数据，Specification模式
      *
      * @author wucy

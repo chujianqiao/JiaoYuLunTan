@@ -116,7 +116,7 @@
                                             <label class="layui-form-label">赞助环节 ：<span style="color: red;">*</span></label>
                                             <div class="layui-input-block">
                                                 <div id="divLink">
-                                                    <input type="checkbox" value="全部" title="全部">
+                                                    <input type="checkbox" id="allCheck" value="" title="全部">
                                                     <!--<input type="checkbox" name="supPlates" value="开幕式" title="开幕式">
                                                     <input type="checkbox" name="supPlates" value="论文资助" title="论文资助">
                                                     <input type="checkbox" name="supPlates" value="优秀成果展" title="优秀成果展">
@@ -125,7 +125,7 @@
                                                     <input type="checkbox" name="supPlates" value="自设论坛" title="自设论坛">
                                                     <input type="checkbox" name="supPlates" value="形势研判会" title="形势研判会">-->
                                                 </div>
-                                                <input type="text" id="supPlate" name="supPlate" hidden value="">
+                                                <input type="text" id="supPlate" name="supPlate" lay-verify="required" required hidden value="">
                                             </div>
                                         </div>
                                         <div class="btns sb-btns fontSize16">
@@ -272,7 +272,30 @@
             $("#divLink").append(input);
         }
         form.render('checkbox');
+
+
+        form.on('checkbox()', function(data){
+            console.log(data.value);
+            if (data.value == ""){
+                $('input:checkbox[name = supPlates]').each(function(index, item){
+                    item.checked = data.elem.checked;
+                });
+            }
+            form.render('checkbox');
+
+            var supPlate = "";
+            $("input:checkbox[name = supPlates]:checked").each(function(i){
+                //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
+                console.log($(this).val());
+                if ($(this).val() != null && $(this).val() != ""){
+                    supPlate = supPlate + $(this).val() + ";";
+                }
+            })
+            $("#supPlate").val(supPlate);
+        });
     })
+
+
 
 </script>
 </body>

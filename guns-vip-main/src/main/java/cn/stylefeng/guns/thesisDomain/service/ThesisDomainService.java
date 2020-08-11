@@ -7,9 +7,11 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.thesisDomain.entity.ThesisDomain;
 import cn.stylefeng.guns.thesisDomain.model.params.ThesisDomainParam;
 import cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -68,6 +70,13 @@ public interface ThesisDomainService extends IService<ThesisDomain> {
      * @Date 2020-07-07
      */
      LayuiPageInfo findPageBySpec(ThesisDomainParam param);
+
+    /**
+     * 拼接数据
+     * @author wucy
+     * @Date 2020-05-25
+     */
+    Page<Map<String, Object>> findPageWrap(ThesisDomainParam param);
 
     /**
      * 获取ztree的节点列表
