@@ -282,9 +282,10 @@ public class ReviewMajorController extends BaseController {
     public ResponseData detail(ReviewMajorParam reviewMajorParam) {
         ReviewMajor detail = this.reviewMajorService.getById(reviewMajorParam.getReviewId());
 
-        String domainObj = detail.getBelongDomain();
+        Long domainObj = Long.parseLong(detail.getBelongDomain());
         String belongDomainStr = "";
-        if (domainObj.equals("") || domainObj == null){
+        ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
+        /*if (domainObj.equals("") || domainObj == null){
             belongDomainStr = "";
         }else {
             String[] domainList = domainObj.split(",");
@@ -301,8 +302,8 @@ public class ReviewMajorController extends BaseController {
                     }
                 }
             }
-        }
-        detail.setBelongDomain(belongDomainStr);
+        }*/
+        detail.setBelongDomain(thesisDomainResult.getDomainName());
 
         return ResponseData.success(detail);
     }
@@ -468,20 +469,7 @@ public class ReviewMajorController extends BaseController {
         user.setAccount(user.getPhone());
         user.setPassword("11111111");
 
-        if (majorType != null && majorType != ""){
-            user.setRoleId("4");
-            ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
-            reviewMajorParam.setReviewId(uid);
-            reviewMajorParam.setApplyTime(new Date());
-            reviewMajorParam.setThesisCount(0);
-            reviewMajorParam.setRefuseCount(0);
-            reviewMajorParam.setReviewCount(0);
-            reviewMajorParam.setCheckStatus(ManagerStatus.OK.getCode());
-            reviewMajorParam.setMajorType(majorType);
-            reviewMajorParam.setBelongDomain(belongDomain);
-            this.userService.addUser(user);
-            reviewMajorService.add(reviewMajorParam);
-        }
+
         if (joinType != null){
             user.setRoleId("5");
             MeetMemberParam meetMemberParam = new MeetMemberParam();
@@ -496,6 +484,19 @@ public class ReviewMajorController extends BaseController {
             }
             this.userService.addUser(user);
             meetMemberService.add(meetMemberParam);
+        }else{
+            user.setRoleId("4");
+            ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
+            reviewMajorParam.setReviewId(uid);
+            reviewMajorParam.setApplyTime(new Date());
+            reviewMajorParam.setThesisCount(0);
+            reviewMajorParam.setRefuseCount(0);
+            reviewMajorParam.setReviewCount(0);
+            reviewMajorParam.setCheckStatus(ManagerStatus.OK.getCode());
+            reviewMajorParam.setMajorType(majorType);
+            reviewMajorParam.setBelongDomain(belongDomain);
+            this.userService.addUser(user);
+            reviewMajorService.add(reviewMajorParam);
         }
 
         return SUCCESS_TIP;

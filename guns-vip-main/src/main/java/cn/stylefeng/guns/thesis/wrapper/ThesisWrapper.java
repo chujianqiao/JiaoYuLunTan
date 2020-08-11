@@ -102,7 +102,7 @@ public class ThesisWrapper extends BaseControllerWrapper {
 				} else {
 					ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(pid);
 					if (ToolUtil.isNotEmpty(thesisDomainResult) && ToolUtil.isNotEmpty(thesisDomainResult.getDomainName())) {
-						belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + ";";
+						belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + "";
 					}
 				}
 			}

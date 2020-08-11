@@ -22,6 +22,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
     $(function () {
         forumSelectOption();
+        domainSelectOption();
     })
 
     // 点击部门时
@@ -188,12 +189,34 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
                 forums = data;
 
                 var options;
-                for (i = 0 ;i < forums.length ;i++){
+                for (var i = 0 ;i < forums.length ;i++){
                     var forum = data[i];
                     options += '<option value="'+ forum.forumId+ '" >'+ forum.forumName +'</option>';
                 }
                 $('#ownForumId').empty();
                 $('#ownForumId').append(options);
+                form.render('select');
+            }
+        })
+    }
+
+    function domainSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/thesisDomain/list" ,
+            success:function(response){
+                var data=response.data;
+                var domains = [];
+                domains = data;
+
+                var options;
+                for (var i = 0 ;i < domains.length ;i++){
+                    var domain = data[i];
+                    options += '<option value="'+ domain.domainId+ '" >'+ domain.domainName +'</option>';
+                }
+                $('#belongDomain').empty();
+                $('#belongDomain').append("<option value=''>请选择专家领域</option>");
+                $('#belongDomain').append(options);
                 form.render('select');
             }
         })
@@ -211,7 +234,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
 
     // 点击上级角色时
-    $('#pName').click(function () {
+    /*$('#pName').click(function () {
         var formName = encodeURIComponent("parent.UserInfoDlg.data.pName");
         var formId = encodeURIComponent("parent.UserInfoDlg.data.belongDomain");
         var treeUrl = encodeURIComponent("/thesisDomain/tree");
@@ -226,6 +249,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
                 $("#pName").val(UserInfoDlg.data.pName);
             }
         });
-    });
+    });*/
+
 
 });
