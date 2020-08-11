@@ -8,15 +8,18 @@ import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.model.params.MeetParam;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meet.wrapper.MeetWrapper;
+import cn.stylefeng.guns.util.WordUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -182,6 +185,16 @@ public class MeetController extends BaseController {
         Page<Map<String, Object>> meets = this.meetService.findPageWrap(meetParam);
         Page wrapped = new MeetWrapper(meets).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    @RequestMapping("/exportWord")
+    public void exportWord(HttpServletRequest request, HttpServletResponse response) {
+        String idStr = request.getParameter("meetId");
+        Long meetId = Long.parseLong(idStr);
+        Meet meet = this.meetService.getById(meetId);
+        String html = meet.getContent();
+        String title = meet.getMeetName();
+        WordUtil.exportWords(request,response,html,title);
     }
 
 }

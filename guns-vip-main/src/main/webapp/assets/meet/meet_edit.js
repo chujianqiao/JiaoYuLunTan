@@ -47,7 +47,6 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], func
     };
 
     //获取详情信息，填充表单
-    debugger;
     var meetId = Feng.getUrlParam("meetId");
     if(meetId == null || meetId == undefined){
         meetId = $("#meetIdParam").val();
@@ -70,6 +69,20 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], func
         return false;
     });
 
+    /**
+     * 导出Word
+     */
+    $('#exportWord').click(function(){
+        debugger;
+        var form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        form.attr("target","_blank");
+        form.attr("method","post");
+        form.attr("action",Feng.ctxPath + "/meet/exportWord?meetId=" + meetId);    // 此处填写文件下载提交路径
+        $("body").append(form);    // 将表单放置在web中
+        form.submit();
+    });
+
     $('#cancel').click(function(){
         window.location.href = Feng.ctxPath + '/meet'
     });
@@ -79,10 +92,12 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], func
         elem: '#beginTime' //指定元素
         ,type: 'datetime'
         ,format: 'yyyy-MM-dd HH:mm:ss'
+        ,trigger: 'click'
     });
     laydate.render({
         elem: '#endTime'
         ,type: 'datetime'
         ,format: 'yyyy-MM-dd HH:mm:ss'
+        ,trigger: 'click'
     });
 });
