@@ -347,7 +347,7 @@ public class ThesisController extends BaseController {
                 } else {
                     ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(pid);
                     if (cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult) && cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult.getDomainName())) {
-                        belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + ";";
+                        belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + "";
                     }
                 }
             }

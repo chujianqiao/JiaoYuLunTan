@@ -27,14 +27,17 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     var admin = layui.admin;
     var layer = layui.layer;
 
+    $(function () {
+        domainSelectOption();
+    })
+
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/reviewMajor/detail?reviewId=" + Feng.getUrlParam("reviewId"));
     var result = ajax.start();
-    $('#pName').val(result.data.belongDomain);
+    //$('#pName').val(result.data.belongDomain);
 
     //转换状态值
     var checkStatus = result.data.checkStatus;
-    debugger;
     if(checkStatus == 0){
         result.data.checkStatus = "已取消";
     }else if(checkStatus == 1){
@@ -139,7 +142,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     }
 
     // 点击上级角色时
-    $('#pName').click(function () {
+    /*$('#pName').click(function () {
         var formName = encodeURIComponent("parent.ReviewMajorInfoDlg.data.pName");
         var formId = encodeURIComponent("parent.ReviewMajorInfoDlg.data.belongDomain");
         var treeUrl = encodeURIComponent("/thesisDomain/tree");
@@ -154,6 +157,36 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                 $("#pName").val(ReviewMajorInfoDlg.data.pName);
             }
         });
-    });
+    });*/
 
+    function domainSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/thesisDomain/list" ,
+            success:function(response){
+                var data=response.data;
+                var domains = [];
+                domains = data;
+
+                var options;
+                for (var i = 0 ;i < domains.length ;i++){
+                    var domain = data[i];
+                    options += '<option value="'+ domain.domainId+ '" >'+ domain.domainName +'</option>';
+                }
+                $('#belongDomain').empty();
+                $('#belongDomain').append("<option value=''>请选择专家领域</option>");
+                $('#belongDomain').append(options);
+                //form.render('select');
+
+                var selectDomain = document.getElementById("belongDomain");
+                for (var i = 0; i < selectDomain.options.length; i++) {
+                    console.log(selectDomain.options[i].text + "----" + result.data.belongDomain)
+                    if (selectDomain.options[i].text == result.data.belongDomain) {
+                        selectDomain.options[i].selected = true;
+                    }
+                }
+                form.render('select');
+            }
+        })
+    }
 });
