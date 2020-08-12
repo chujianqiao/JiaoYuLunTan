@@ -189,4 +189,9 @@ public class EducationResultResult implements Serializable {
      */
     private String introduceName;
 
+    /**
+     * 所属领域
+     */
+    private String belongDomain;
+
 }

@@ -190,6 +190,11 @@ public class EducationResultParam implements Serializable, BaseValidatingParam {
      */
     private String introduceName;
 
+    /**
+     * 所属领域
+     */
+    private String belongDomain;
+
     @Override
     public String checkParam() {
         return null;

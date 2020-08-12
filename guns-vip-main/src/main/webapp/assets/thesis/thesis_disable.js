@@ -46,7 +46,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             // {field: 'thesisDirect', sort: true, title: '参会论文研究方向'},
             // {field: 'thesisPath', sort: true, title: '论文附件路径'},
             // {field: 'fileName', sort: true, title: '论文附件文件名'},
-            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth:220}
+            {align: 'center', title: '操作',minWidth:220,templet: function(data){
+                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">查看详情</a>\n" +
+                            "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
+                            "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                }}
         ]];
     };
 
@@ -138,7 +142,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + Thesis.tableId,
-        url: Feng.ctxPath + '/thesis/wrapList',
+        url: Feng.ctxPath + '/thesis/wrapListFirst',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
@@ -177,6 +181,188 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             Thesis.jumpDisablePage(data);
         } else if (layEvent === 'assign') {
             Thesis.jumpAssignPage(data);
+        }
+    });
+
+
+    //复评---------------------------------------------------
+
+    /**
+     * 论文表管理
+     */
+    var ThesisAgain = {
+        tableId: "thesisTableAgain"
+    };
+
+    /**
+     * 初始化表格的列
+     */
+    ThesisAgain.initColumn = function () {
+        return [[
+            {type: 'checkbox'},
+            {field: 'thesisId', hide: true, title: '论文ID'},
+            {field: 'thesisTitle', sort: true, title: '论文名称（中文）'},
+            {field: 'engTitle', sort: true, title: '论文名称（英文）'},
+            // {field: 'engTitle', sort: true, title: '英文题目'},
+            // {field: 'thesisUser', sort: true, title: '论文作者ID'},
+            {field: 'userName', sort: true, title: '作者'},
+            {field: 'againName', sort: true, title: '评审专家'},
+            //{field: 'unitsName', sort: true, title: '所在单位'},
+            // {field: 'isgreat', sort: true, title: '是否推荐优秀'},
+            // {field: 'greatNum', sort: true, title: '推荐专家人数'},
+            // {field: 'greatId', sort: true, title: '推优专家ID'},
+            // {field: 'applyTime', sort: true, title: '论文提交时间'},
+            // {field: 'thesisText', sort: true, title: '正文'},
+            // {field: 'score', sort: true, title: '分数'},
+            // {field: 'reviewUser', sort: true, title: '评审人ID'},
+            // {field: 'great', sort: true, title: '是否为优秀论文'},
+            // {field: 'cnKeyword', sort: true, title: '中文关键词'},
+            // {field: 'engKeyword', sort: true, title: '英文关键词'},
+            //{field: 'cnAbstract', sort: true, title: '中文摘要'},
+            // {field: 'engAbstract', sort: true, title: '英文摘要'},
+            {field: 'status', sort: true, title: '评审状态'},
+            {field: 'reviewTime', sort: true, title: '评审时间'},
+            // {field: 'reviewResult', sort: true, title: '评审结果'},
+            //{field: 'belongDomainStr', sort: true, title: '论文领域'},
+            //{field: 'reviewStr', sort: true, title: '评审结果'},
+            // {field: 'thesisDirect', sort: true, title: '参会论文研究方向'},
+            // {field: 'thesisPath', sort: true, title: '论文附件路径'},
+            // {field: 'fileName', sort: true, title: '论文附件文件名'},
+            {align: 'center', title: '操作',minWidth:220,templet: function(data){
+                    return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">查看详情</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assignAgain\">分配专家</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                }}
+        ]];
+    };
+
+    /**
+     * 点击查询按钮
+     */
+    ThesisAgain.search = function () {
+        var queryData = {};
+
+        queryData['thesisTitle'] = $('#thesisTitleAgain').val();
+
+        table.reload(ThesisAgain.tableId, {
+            where: queryData, page: {curr: 1}
+        });
+    };
+
+    /**
+     * 跳转到添加页面
+     */
+    ThesisAgain.jumpAddPage = function () {
+        window.location.href = Feng.ctxPath + '/thesis/add'
+    };
+
+    /**
+     * 跳转到编辑页面
+     * @param data 点击按钮时候的行数据
+     */
+    ThesisAgain.jumpEditPage = function (data) {
+        window.location.href = Feng.ctxPath + '/thesis/edit?thesisId=' + data.thesisId
+    };
+
+    /**
+     * 查看详情页面
+     * @param data 点击按钮时候的行数据
+     */
+    ThesisAgain.jumpDisablePage = function (data) {
+        debugger;
+        window.location.href = Feng.ctxPath + '/thesis/disable?thesisId=' + data.thesisId
+    };
+
+    /**
+     * 跳转到评审页面
+     * @param data 点击按钮时候的行数据
+     */
+    ThesisAgain.onReviewItem = function (data) {
+        window.location.href = Feng.ctxPath + '/thesis/review?thesisId=' + data.thesisId
+    };
+
+    ThesisAgain.jumpAssignPageAgain = function (data) {
+        func.open({
+            title: '分配评审人',
+            area: ['350px', '300px'],
+            content: Feng.ctxPath + '/thesis/assignAgain?thesisId=' + data.thesisId,
+            tableId: ThesisAgain.tableId
+        });
+    };
+
+    /**
+     * 导出excel按钮
+     */
+    ThesisAgain.exportExcel = function () {
+        var checkRows = table.checkStatus(ThesisAgain.tableId);
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择要导出的数据");
+        } else {
+            table.exportFile(tableResultAgain.config.id, checkRows.data, 'xls');
+        }
+    };
+
+    /**
+     * 点击删除
+     *
+     * @param data 点击按钮时候的行数据
+     */
+    ThesisAgain.onDeleteItem = function (data) {
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/thesis/delete", function (data) {
+                Feng.success("删除成功!");
+                table.reload(ThesisAgain.tableId);
+            }, function (data) {
+                Feng.error("删除失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("thesisId", data.thesisId);
+            ajax.start();
+        };
+        Feng.confirm("是否删除?", operation);
+    };
+
+    // 渲染表格
+    var tableResultAgain = table.render({
+        elem: '#' + ThesisAgain.tableId,
+        url: Feng.ctxPath + '/thesis/wrapListAgain',
+        page: true,
+        height: "full-158",
+        cellMinWidth: 100,
+        cols: ThesisAgain.initColumn()
+    });
+
+    // 搜索按钮点击事件
+    $('#btnSearch').click(function () {
+        ThesisAgain.search();
+    });
+
+    // 添加按钮点击事件
+    $('#btnAdd').click(function () {
+
+        ThesisAgain.jumpAddPage();
+
+    });
+
+    // 导出excel
+    $('#btnExp').click(function () {
+        ThesisAgain.exportExcel();
+    });
+
+    // 工具条点击事件
+    table.on('tool(' + ThesisAgain.tableId + ')', function (obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+
+        if (layEvent === 'edit') {
+            ThesisAgain.jumpEditPage(data);
+        } else if (layEvent === 'delete') {
+            ThesisAgain.onDeleteItem(data);
+        } else if (layEvent === 'review') {
+            ThesisAgain.onReviewItem(data);
+        } else if (layEvent === 'disable') {
+            ThesisAgain.jumpDisablePage(data);
+        } else if (layEvent === 'assignAgain') {
+            ThesisAgain.jumpAssignPageAgain(data);
         }
     });
 });

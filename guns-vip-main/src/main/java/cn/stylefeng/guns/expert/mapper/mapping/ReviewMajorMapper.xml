@@ -69,7 +69,7 @@
     <select id="majorMapList" resultType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
-        from review_major where 1 = 1
+        from review_major where 1 = 1 and check_status = 'ENABLE'
         and find_in_set(#{domain}, belong_domain);
     </select>
 </mapper>

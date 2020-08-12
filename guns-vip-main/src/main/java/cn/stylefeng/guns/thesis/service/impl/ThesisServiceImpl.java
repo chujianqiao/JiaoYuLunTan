@@ -70,6 +70,17 @@ public class ThesisServiceImpl extends ServiceImpl<ThesisMapper, Thesis> impleme
         return this.baseMapper.customPageMapList(page,param);
     }
 
+    @Override
+    public Page<Map<String, Object>> findPageWrapByBatch(ThesisParam param, Integer batch) {
+        Page page = LayuiPageFactory.defaultPage();
+        if (batch == 1){
+            return this.baseMapper.customPageMapListFirst(page,param);
+        }else {
+            return this.baseMapper.customPageMapListAgain(page,param);
+        }
+
+    }
+
     private Serializable getKey(ThesisParam param){
         return param.getThesisId();
     }

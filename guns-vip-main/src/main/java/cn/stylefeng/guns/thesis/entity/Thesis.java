@@ -158,6 +158,12 @@ public class Thesis implements Serializable {
     @TableField("review_time")
     private Date reviewTime;
 
+    /**
+     * 1-初评 2-复评
+     */
+    @TableField("review_batch")
+    private Integer reviewBatch;
+
 
     public Long getThesisId() {
         return thesisId;
@@ -342,6 +348,14 @@ public class Thesis implements Serializable {
     public void setReviewTime(Date reviewTime) {
         this.reviewTime = reviewTime;
     }
+
+    public Integer getReviewBatch() {
+        return reviewBatch;
+    }
+
+    public void setReviewBatch(Integer reviewBatch) {
+        this.reviewBatch = reviewBatch;
+    }
     @Override
     public String toString() {
         return "Thesis{" +
@@ -368,6 +382,7 @@ public class Thesis implements Serializable {
         ", fileName=" + fileName +
         ", belongDomain=" + belongDomain +
         ", reviewTime=" + reviewTime +
+        ", reviewBatch=" + reviewBatch +
         "}";
     }
 }

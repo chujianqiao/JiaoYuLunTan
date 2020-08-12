@@ -27,11 +27,12 @@
         <result column="file_name" property="fileName" />
         <result column="belong_domain" property="belongDomain" />
         <result column="review_time" property="reviewTime" />
+        <result column="review_batch" property="reviewBatch" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        thesis_id AS "thesisId", thesis_title AS "thesisTitle", eng_title AS "engTitle", thesis_user AS "thesisUser", status AS "status", review_result AS "reviewResult", isgreat AS "isgreat", great_num AS "greatNum", great_id AS "greatId", apply_time AS "applyTime", thesis_text AS "thesisText", score AS "score", review_user AS "reviewUser", great AS "great", cn_keyword AS "cnKeyword", eng_keyword AS "engKeyword", cn_abstract AS "cnAbstract", eng_abstract AS "engAbstract", thesis_direct AS "thesisDirect", thesis_path AS "thesisPath", file_name AS "fileName", belong_domain AS "belongDomain", review_time AS "reviewTime"
+        thesis_id AS "thesisId", thesis_title AS "thesisTitle", eng_title AS "engTitle", thesis_user AS "thesisUser", status AS "status", review_result AS "reviewResult", isgreat AS "isgreat", great_num AS "greatNum", great_id AS "greatId", apply_time AS "applyTime", thesis_text AS "thesisText", score AS "score", review_user AS "reviewUser", great AS "great", cn_keyword AS "cnKeyword", eng_keyword AS "engKeyword", cn_abstract AS "cnAbstract", eng_abstract AS "engAbstract", thesis_direct AS "thesisDirect", thesis_path AS "thesisPath", file_name AS "fileName", belong_domain AS "belongDomain", review_time AS "reviewTime", review_batch AS "reviewBatch"
     </sql>
 
 
@@ -71,4 +72,33 @@
         </if>
     </select>
 
+    <select id="customPageMapListFirst" resultType="map" parameterType="cn.stylefeng.guns.thesis.model.params.ThesisParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis where 1 = 1 and thesis_id != 0 and review_batch = 1
+        <if test="paramCondition.thesisTitle != null and paramCondition.thesisTitle != ''">
+            and thesis_title like CONCAT('%',#{paramCondition.thesisTitle},'%')
+        </if>
+        <if test="paramCondition.thesisUser != null and paramCondition.thesisUser != ''">
+            and thesis_user like CONCAT('%',#{paramCondition.thesisUser},'%')
+        </if>
+        <if test="paramCondition.reviewUser != null and paramCondition.reviewUser != ''">
+            and review_user like CONCAT('%',#{paramCondition.reviewUser},'%')
+        </if>
+    </select>
+
+    <select id="customPageMapListAgain" resultType="map" parameterType="cn.stylefeng.guns.thesis.model.params.ThesisParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis where 1 = 1 and thesis_id != 0 and review_batch = 2
+        <if test="paramCondition.thesisTitle != null and paramCondition.thesisTitle != ''">
+            and thesis_title like CONCAT('%',#{paramCondition.thesisTitle},'%')
+        </if>
+        <if test="paramCondition.thesisUser != null and paramCondition.thesisUser != ''">
+            and thesis_user like CONCAT('%',#{paramCondition.thesisUser},'%')
+        </if>
+        <if test="paramCondition.reviewUser != null and paramCondition.reviewUser != ''">
+            and review_user like CONCAT('%',#{paramCondition.reviewUser},'%')
+        </if>
+    </select>
 </mapper>

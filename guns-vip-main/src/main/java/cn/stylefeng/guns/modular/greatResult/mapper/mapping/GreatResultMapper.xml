@@ -38,11 +38,12 @@
         <result column="commit_name" property="commitName" />
         <result column="introduce_path" property="introducePath" />
         <result column="introduce_name" property="introduceName" />
+        <result column="belong_domain" property="belongDomain" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        result_id AS "resultId", result_name AS "resultName", apply_type AS "applyType", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", mana_post AS "manaPost", mana_direct AS "manaDirect", result_mean AS "resultMean", value AS "value", result_range AS "resultRange", object AS "object", team AS "team", conclusion AS "conclusion", introduce AS "introduce", influence AS "influence", slogan AS "slogan", design_img AS "designImg", keyword AS "keyword", letter_path AS "letterPath", commit_path AS "commitPath", form AS "form", detail AS "detail", check_status AS "checkStatus", apply_id AS "applyId", apply_time AS "applyTime", refuse_time AS "refuseTime", pass_time AS "passTime", cancel_time AS "cancelTime", belong_name AS "belongName", letter_name AS "letterName", commit_name AS "commitName", introduce_path AS "introducePath", introduce_name AS "introduceName"
+        result_id AS "resultId", result_name AS "resultName", apply_type AS "applyType", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", mana_post AS "manaPost", mana_direct AS "manaDirect", result_mean AS "resultMean", value AS "value", result_range AS "resultRange", object AS "object", team AS "team", conclusion AS "conclusion", introduce AS "introduce", influence AS "influence", slogan AS "slogan", design_img AS "designImg", keyword AS "keyword", letter_path AS "letterPath", commit_path AS "commitPath", form AS "form", detail AS "detail", check_status AS "checkStatus", apply_id AS "applyId", apply_time AS "applyTime", refuse_time AS "refuseTime", pass_time AS "passTime", cancel_time AS "cancelTime", belong_name AS "belongName", letter_name AS "letterName", commit_name AS "commitName", introduce_path AS "introducePath", introduce_name AS "introduceName", belong_domain AS "belongDomain"
     </sql>
 
 

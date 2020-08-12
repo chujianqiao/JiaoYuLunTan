@@ -134,4 +134,9 @@ public class ThesisResult implements Serializable {
      */
     private Date reviewTime;
 
+    /**
+     * 1-初评 2-复评
+     */
+    private Integer reviewBatch;
+
 }

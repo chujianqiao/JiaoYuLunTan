@@ -48,5 +48,7 @@ public interface ThesisMapper extends BaseMapper<Thesis> {
      * @Date 2020-05-21
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") ThesisParam paramCondition);
+    Page<Map<String, Object>> customPageMapListFirst(@Param("page") Page page, @Param("paramCondition") ThesisParam paramCondition);
+    Page<Map<String, Object>> customPageMapListAgain(@Param("page") Page page, @Param("paramCondition") ThesisParam paramCondition);
 
 }

@@ -28,8 +28,11 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
     var ajax = new $ax(Feng.ctxPath + "/meetMember/wraplist");
     var result = ajax.start();
     //console.log(result)
-    $("#pptNameTip").val(result.data[0].pptName);
-    $("#wordNameTip").val(result.data[0].wordName);
+    if (result.data != null){
+        $("#pptNameTip").val(result.data[0].pptName);
+        $("#wordNameTip").val(result.data[0].wordName);
+    }
+
 
 
     //表单提交事件

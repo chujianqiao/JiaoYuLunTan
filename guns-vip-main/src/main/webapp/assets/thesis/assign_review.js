@@ -37,13 +37,16 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload','sele
     var selectPlus = layui.selectPlus;
     var formSelects = layui.formSelects;
 
+
+
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + Feng.getUrlParam("thesisId"));
     var result = ajax.start();
     form.val('thesisForm', result.data);
     // var ajaxMajor = new $ax(Feng.ctxPath + "/thesis/majorList");
     // var majors = ajaxMajor.start();
-
+    var belongDomain = result.data.belongDomain;
+    majorSelectOption();
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/thesis/assignItem", function (data) {
@@ -71,4 +74,26 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload','sele
         keyVal: 'reviewId'
     });
 
+    function majorSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/thesis/majorList?belongDomain=" + belongDomain ,
+            success:function(response){
+                var data=response.data;
+                var majors = [];
+                majors = data;
+
+                var options;
+                for (var i = 0 ;i < majors.length ;i++){
+                    var major = data[i];
+                    options += '<option value="'+ major.reviewId+ '" >'+ major.name +'</option>';
+                }
+                $('#reviewMajor').empty();
+                //$('#reviewMajor').append("<option value=''>请选择专家</option>");
+                $('#reviewMajor').append(options);
+
+                form.render('select');
+            }
+        })
+    }
 });

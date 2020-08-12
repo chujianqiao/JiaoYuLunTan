@@ -224,6 +224,12 @@ public class EducationResult implements Serializable {
     @TableField("introduce_name")
     private String introduceName;
 
+    /**
+     * 所属领域
+     */
+    @TableField("belong_domain")
+    private String belongDomain;
+
 
     public Long getResultId() {
         return resultId;
@@ -497,6 +503,14 @@ public class EducationResult implements Serializable {
         this.introduceName = introduceName;
     }
 
+    public String getBelongDomain() {
+        return belongDomain;
+    }
+
+    public void setBelongDomain(String belongDomain) {
+        this.belongDomain = belongDomain;
+    }
+
     @Override
     public String toString() {
         return "EducationResult{" +
@@ -534,6 +548,7 @@ public class EducationResult implements Serializable {
         ", commitName=" + commitName +
         ", introducePath=" + introducePath +
         ", introduceName=" + introduceName +
+        ", belongDomain=" + belongDomain +
         "}";
     }
 }

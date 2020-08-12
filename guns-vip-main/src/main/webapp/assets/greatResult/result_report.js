@@ -36,6 +36,9 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var laydate = layui.laydate;
     var upload = layui.upload;
 
+    $(function () {
+        domainSelectOption();
+    })
 
     // 渲染时间选择框
     laydate.render({
@@ -83,7 +86,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     });
 
     //表单提交事件
-    form.on('submit(unitSubmit)', function (data) {
+    /*form.on('submit(unitSubmit)', function (data) {
         var flag = 0;
         $("input:checkbox[name = ifAgree]:checked").each(function(i){
             flag = 1;
@@ -118,7 +121,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             Feng.error("请先阅读并同意《论坛章程》！");
         }
         return false;
-    });
+    });*/
 
 
 
@@ -282,5 +285,25 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     });
 
+    function domainSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/thesisDomain/list" ,
+            success:function(response){
+                var data=response.data;
+                var domains = [];
+                domains = data;
 
+                var options;
+                for (var i = 0 ;i < domains.length ;i++){
+                    var domain = data[i];
+                    options += '<option value="'+ domain.domainId+ '" >'+ domain.domainName +'</option>';
+                }
+                $('#belongDomain').empty();
+                $('#belongDomain').append("<option value=''>请选择成果领域</option>");
+                $('#belongDomain').append(options);
+                form.render('select');
+            }
+        })
+    }
 });

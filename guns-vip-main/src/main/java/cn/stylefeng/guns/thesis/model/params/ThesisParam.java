@@ -135,6 +135,11 @@ public class ThesisParam implements Serializable, BaseValidatingParam {
      */
     private Date reviewTime;
 
+    /**
+     * 1-初评 2-复评
+     */
+    private Integer reviewBatch;
+
 
     @Override
     public String checkParam() {

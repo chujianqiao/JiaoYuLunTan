@@ -69,4 +69,6 @@ public interface ThesisService extends IService<Thesis> {
      */
     Page<Map<String, Object>> findPageWrap(ThesisParam param);
 
+    Page<Map<String, Object>> findPageWrapByBatch(ThesisParam param, Integer batch);
+
 }

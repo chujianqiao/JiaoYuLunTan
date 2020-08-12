@@ -169,15 +169,6 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                 $('#belongDomain').empty();
                 $('#belongDomain').append("<option value=''>请选择论文领域</option>");
                 $('#belongDomain').append(options);
-                //form.render('select');
-
-                var selectDomain = document.getElementById("belongDomain");
-                for (var i = 0; i < selectDomain.options.length; i++) {
-                    console.log(selectDomain.options[i].text + "----" + result.data.belongDomain)
-                    if (selectDomain.options[i].text == result.data.belongDomain) {
-                        selectDomain.options[i].selected = true;
-                    }
-                }
                 form.render('select');
             }
         })

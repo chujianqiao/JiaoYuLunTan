@@ -72,13 +72,31 @@ public class ThesisWrapper extends BaseControllerWrapper {
 
 		String unitsName = Arrays.toString(unitList.toArray()).replace("[","").replace("]","");
 
-		Object passObj = map.get("reviewResult");
-		if(passObj != null){
-			Map passMap = TransTypeUtil.getIsPass();
-			String isPass = passMap.get(passObj).toString();
-			map.put("reviewStr",isPass);
+
+
+		Object statusObj = map.get("status");
+		if(statusObj != null){
+			if (!statusObj.toString().equals("")){
+				map.put("status",statusObj.toString());
+			}else {
+				Object passObj = map.get("reviewResult");
+				if(passObj != null){
+					Map passMap = TransTypeUtil.getIsPass();
+					String isPass = passMap.get(passObj).toString();
+					map.put("status",isPass);
+				}else {
+					map.put("status","未评审");
+				}
+			}
 		}else {
-			map.put("reviewStr","未评审");
+			Object passObj = map.get("reviewResult");
+			if(passObj != null){
+				Map passMap = TransTypeUtil.getIsPass();
+				String isPass = passMap.get(passObj).toString();
+				map.put("status",isPass);
+			}else {
+				map.put("status","未评审");
+			}
 		}
 
 		Object greatObj = map.get("great");

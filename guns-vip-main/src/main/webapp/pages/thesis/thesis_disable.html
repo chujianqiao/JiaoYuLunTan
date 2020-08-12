@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{js:["/assets/thesis/thesis_disable.js"]}){
+@layout("/common/_container.html",{css:["/assets/modular/frame/user_info.css"],js:["/assets/thesis/thesis_disable.js","/assets/modular/frame/user_info.js"]}){
 
 <div class="layui-body-header">
     <span class="layui-body-header-title">论文表管理</span>
@@ -9,18 +9,43 @@
         <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
             <div class="layui-card">
                 <div class="layui-card-body">
-                    <div class="layui-form toolbar">
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <input id="thesisTitle" class="layui-input" type="text" placeholder="论文题目"/>
+                    <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">论文初评</li>
+                            <li>论文复评</li>
+                        </ul>
+                        <br>
+                        <div class="layui-tab-content">
+                            <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
+                                <div class="layui-form toolbar">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <input id="thesisTitle" class="layui-input" type="text" placeholder="论文题目"/>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                            <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="layui-table" id="thesisTable" lay-filter="thesisTable"></table>
                             </div>
-                            <div class="layui-inline">
-                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                            <div class="layui-tab-item">
+                                <div class="layui-form toolbar">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <input id="thesisTitleAgain" class="layui-input" type="text" placeholder="论文题目"/>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <button id="btnSearchAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                            <button id="btnExpAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="layui-table" id="thesisTableAgain" lay-filter="thesisTableAgain"></table>
                             </div>
                         </div>
                     </div>
-                    <table class="layui-table" id="thesisTable" lay-filter="thesisTable"></table>
                 </div>
             </div>
         </div>
@@ -28,8 +53,6 @@
 </div>
 
 <script type="text/html" id="tableBar">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="disable">查看详情</a>
-    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="assign">分配专家</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+
 </script>
 @}

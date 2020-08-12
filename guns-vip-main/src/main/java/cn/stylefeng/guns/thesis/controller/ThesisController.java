@@ -29,6 +29,8 @@ import cn.stylefeng.guns.thesis.service.ThesisService;
 import cn.stylefeng.guns.thesis.wrapper.ThesisWrapper;
 import cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult;
 import cn.stylefeng.guns.thesisDomain.service.ThesisDomainService;
+import cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam;
+import cn.stylefeng.guns.thesisReviewMiddle.service.ThesisReviewMiddleService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.guns.util.TransTypeUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
@@ -89,6 +91,8 @@ public class ThesisController extends BaseController {
     @Autowired
     private ThesisDomainService thesisDomainService;
 
+    @Autowired
+    private ThesisReviewMiddleService thesisReviewMiddleService;
 
     /**
      * 跳转到主页面
@@ -146,6 +150,16 @@ public class ThesisController extends BaseController {
     @RequestMapping("/assign")
     public String assign() {
         return PREFIX + "/assign_review.html";
+    }
+
+    /**
+     * 分配评审人
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/assignAgain")
+    public String assignAgain() {
+        return PREFIX + "/assignAgain_review.html";
     }
 
     /**
@@ -226,8 +240,17 @@ public class ThesisController extends BaseController {
             reviewMajorParam.setReviewId(userId);
             reviewMajorParam.setThesisCount(thesisCount);
             this.reviewMajorService.update(reviewMajorParam);
+
+            ThesisReviewMiddleParam param = new ThesisReviewMiddleParam();
+            param.setThesisId(thesisParam.getThesisId());
+            param.setUserId(userId);
+            //param.setScore(0);
+            param.setReviewSort(1);
+            this.thesisReviewMiddleService.add(param);
         }
         this.thesisService.update(thesisParam);
+
+
         return ResponseData.success();
     }
 
@@ -404,6 +427,58 @@ public class ThesisController extends BaseController {
             thesisParam.setThesisUser(userId.toString());
         }
         Page<Map<String, Object>> theses = this.thesisService.findPageWrap(thesisParam);
+        Page wrapped = new ThesisWrapper(theses).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    /**
+     * 查询列表（拼接字段）
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @ResponseBody
+    @RequestMapping("/wrapListFirst")
+    public Object wrapListFirst(ThesisParam thesisParam) {
+        boolean isAdmin = ToolUtil.isAdminRole();
+        boolean isReview = ToolUtil.isReviewRole();
+        if(isAdmin){
+            thesisParam.setThesisUser(null);
+        } else if (isReview){
+            LoginUser user = LoginContextHolder.getContext().getUser();
+            Long userId = user.getId();
+            thesisParam.setReviewUser(userId.toString());
+        }else{
+            LoginUser user = LoginContextHolder.getContext().getUser();
+            Long userId = user.getId();
+            thesisParam.setThesisUser(userId.toString());
+        }
+        Page<Map<String, Object>> theses = this.thesisService.findPageWrapByBatch(thesisParam,1);
+        Page wrapped = new ThesisWrapper(theses).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    /**
+     * 查询列表（拼接字段）
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @ResponseBody
+    @RequestMapping("/wrapListAgain")
+    public Object wrapListAgain(ThesisParam thesisParam) {
+        boolean isAdmin = ToolUtil.isAdminRole();
+        boolean isReview = ToolUtil.isReviewRole();
+        if(isAdmin){
+            thesisParam.setThesisUser(null);
+        } else if (isReview){
+            LoginUser user = LoginContextHolder.getContext().getUser();
+            Long userId = user.getId();
+            thesisParam.setReviewUser(userId.toString());
+        }else{
+            LoginUser user = LoginContextHolder.getContext().getUser();
+            Long userId = user.getId();
+            thesisParam.setThesisUser(userId.toString());
+        }
+        Page<Map<String, Object>> theses = this.thesisService.findPageWrapByBatch(thesisParam,2);
         Page wrapped = new ThesisWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }
