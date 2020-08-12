@@ -108,6 +108,24 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         });
     };
 
+    Thesis.jumpAssignPageBatch = function (data) {
+        var checkRows = table.checkStatus(Thesis.tableId);
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择被分配的数据");
+        } else {
+            var thesisIds = "";
+            for (var i = 0;i < checkRows.data.length;i++){
+                thesisIds = thesisIds + checkRows.data[i].thesisId + ";";
+            }
+            func.open({
+                title: '分配评审人',
+                area: ['350px', '300px'],
+                content: Feng.ctxPath + '/thesis/assign?thesisId=' + thesisIds,
+                tableId: Thesis.tableId
+            });
+        }
+    };
+
     /**
      * 导出excel按钮
      */
@@ -164,6 +182,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         Thesis.exportExcel();
+    });
+
+    //批量分配
+    $('#assignBatch').click(function () {
+        Thesis.jumpAssignPageBatch();
     });
 
     // 工具条点击事件
@@ -290,6 +313,20 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         });
     };
 
+    Thesis.jumpAssignPageBatchAgain = function (data) {
+        var checkRows = table.checkStatus(ThesisAgain.tableId);
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择被分配的数据");
+        } else {
+            func.open({
+                title: '分配评审人',
+                area: ['350px', '300px'],
+                content: Feng.ctxPath + '/thesis/assign?thesisId=' + data.thesisId,
+                tableId: ThesisAgain.tableId
+            });
+        }
+    };
+
     /**
      * 导出excel按钮
      */
@@ -347,6 +384,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     $('#btnExp').click(function () {
         ThesisAgain.exportExcel();
     });
+
+    //批量分配
+    $('#assignBatchAgain').click(function () {
+        ThesisAgain.jumpAssignPageBatchAgain();
+    });
+
 
     // 工具条点击事件
     table.on('tool(' + ThesisAgain.tableId + ')', function (obj) {
