@@ -39,6 +39,11 @@ public class TransTypeUtil {
 	private static Map<Object,Object> meetStatus = new HashMap<>();
 
 	/**
+	 * 支付方式
+	 */
+	private static Map<Object,Object> payType = new HashMap<>();
+
+	/**
 	 * 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
 	 * @return
 	 */
@@ -91,4 +96,15 @@ public class TransTypeUtil {
 		meetStatus.put(5,"未通过");
 		return meetStatus;
 	}
+
+	/**
+	 * alipay-支付宝，wechat-微信
+	 * @return
+	 */
+	public  static Map<Object,Object> getPayType(){
+		payType.put("alipay","支付宝");
+		payType.put("wechat","微信");
+		return payType;
+	}
+
 }
