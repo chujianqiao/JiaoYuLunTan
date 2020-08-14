@@ -125,7 +125,14 @@
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">学历 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="education" placeholder="请输入学历" class="layui-input" type="text" lay-verify="required" required/>
+													<!--<input name="education" placeholder="请输入学历" class="layui-input" type="text" lay-verify="required" required/>-->
+													<select name="education" lay-verify="required">
+														<option value=""></option>
+														<option value="专科">专科</option>
+														<option value="本科">本科</option>
+														<option value="硕士">硕士</option>
+														<option value="博士">博士</option>
+													</select>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
@@ -208,7 +215,7 @@
 											</div>
 											<div class="btns sb-btns fontSize16">
 												<div class="btn submit" lay-filter="btnSubmit" lay-submit>提交</div>
-												<div class="btn cancel" id="btnCancel">取消</div>
+												<!--<div class="btn cancel" id="btnCancel">取消</div>-->
 											</div>
 											<div class="btns sb-btns fontSize16">
 											</div>
