@@ -106,9 +106,11 @@
         select
         <include refid="Base_Column_List"/>
         from thesis where 1 = 1 and thesis_id != 0
-        <if test="paramIds != null and paramIds != ''">
-            and thesis_id in (#{paramIds})
-        </if>
+        and thesis_id IN
+        <foreach collection="list" index="index" item="i" open="("
+                 separator="," close=")">
+            #{i}
+        </foreach>
     </select>
 
 </mapper>

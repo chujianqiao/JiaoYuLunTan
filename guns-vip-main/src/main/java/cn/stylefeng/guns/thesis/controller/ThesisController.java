@@ -46,10 +46,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -578,7 +575,7 @@ public class ThesisController extends BaseController {
     @RequestMapping("/reviewList")
     public Object reviewList(ThesisParam thesisParam,HttpServletRequest request) {
         boolean isReview = ToolUtil.isReviewRole();
-        StringBuilder thesisIds = new StringBuilder();
+        List<Long> thesisIdList = new ArrayList<>();
         if (isReview){
             LoginUser user = LoginContextHolder.getContext().getUser();
             Long userId = user.getId();
@@ -595,14 +592,10 @@ public class ThesisController extends BaseController {
             for (int i = 0; i < mids.size(); i++) {
                 ThesisReviewMiddleResult middleResult = mids.get(i);
                 thesisId = middleResult.getThesisId();
-                thesisIds.append(thesisId);
-                if(i != mids.size() - 1){
-                    thesisIds.append(",");
-                }
+                thesisIdList.add(thesisId);
             }
         }
-        String paramIds = thesisIds.toString();
-        Page<Map<String, Object>> theses = this.thesisService.findReview(paramIds);
+        Page<Map<String, Object>> theses = this.thesisService.findReview(thesisIdList);
         Page wrapped = new ThesisWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }

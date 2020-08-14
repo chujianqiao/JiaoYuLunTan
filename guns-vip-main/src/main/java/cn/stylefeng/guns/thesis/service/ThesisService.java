@@ -73,10 +73,9 @@ public interface ThesisService extends IService<Thesis> {
 
     /**
      * 评审专家查询列表
-     * @param paramIds
      * @return
      */
-    Page<Map<String, Object>> findReview(String paramIds);
+    Page<Map<String, Object>> findReview(List<Long> list);
 
 
 }
