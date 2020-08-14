@@ -57,6 +57,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             if (data.field.resultType == 1) {
                 var ajax = new $ax(Feng.ctxPath + "/greatResult/addItem", function (data) {
                     Feng.success("申报成功！");
+                    window.location.href = Feng.ctxPath + '/greatResult';
                     //传给上个页面，刷新table用
                     admin.putTempData('formOk', true);
                     //关掉对话框
@@ -69,6 +70,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             } else {
                 var ajax = new $ax(Feng.ctxPath + "/educationResult/addItem", function (data) {
                     Feng.success("申报成功！");
+                    window.location.href = Feng.ctxPath + '/greatResult';
                     //传给上个页面，刷新table用
                     admin.putTempData('formOk', true);
                     //关掉对话框

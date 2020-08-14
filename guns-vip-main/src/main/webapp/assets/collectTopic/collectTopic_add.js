@@ -48,10 +48,10 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         })
         if (flag == 1){
             var ajax = new $ax(Feng.ctxPath + "/collectTopic/addItem", function (data) {
-                Feng.success("添加成功！");
-                window.location.href = Feng.ctxPath + '/'
+                Feng.success("征集成功！");
+                window.location.href = Feng.ctxPath + '/collectTopic'
             }, function (data) {
-                Feng.error("添加失败！" + data.responseJSON.message)
+                Feng.error("征集失败！" + data.responseJSON.message)
             });
             ajax.set(data.field);
             ajax.start();

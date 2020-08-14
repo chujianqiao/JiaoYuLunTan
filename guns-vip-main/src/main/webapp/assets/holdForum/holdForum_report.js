@@ -76,6 +76,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         if (flag == 1) {
             var ajax = new $ax(Feng.ctxPath + "/ownForum/addItem", function (data) {
                 Feng.success("申报成功！");
+                window.location.href = Feng.ctxPath + '/ownForum';
                 //传给上个页面，刷新table用
                 admin.putTempData('formOk', true);
                 //关掉对话框
