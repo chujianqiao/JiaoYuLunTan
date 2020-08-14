@@ -79,13 +79,13 @@
                             <div class="layui-inline layui-col-md12">
                                 <label class="layui-form-label">分数<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
-                                    <input id="firstScore" name="firstScore" placeholder="评分区间 0~100分" type="text" class="layui-input" lay-verify="required" required/>
+                                    <input id="firstScore" name="firstScore" disabled="disabled" placeholder="评分区间 0~100分" type="text" class="layui-input" lay-verify="required" required/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
                                 <label class="layui-form-label">评审意见<span style="color: red;">*</span></label>
                                 <div class="layui-input-block" >
-                                    <input id="firstReviewStr" name="firstReviewStr" type="text" class="layui-input" lay-verify="required" required/>
+                                    <input id="firstReviewStr" name="firstReviewStr" disabled="disabled" type="text" class="layui-input" lay-verify="required" required/>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,6 @@
                 </div>
             </div>
             <div class=" text-center">
-                <!--<button class="layui-btn layui-btn-danger" lay-filter="btnReview" lay-submit>&emsp;提交评审结果&emsp;</button>-->
                 <button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;取消&emsp;</button>
             </div>
 
