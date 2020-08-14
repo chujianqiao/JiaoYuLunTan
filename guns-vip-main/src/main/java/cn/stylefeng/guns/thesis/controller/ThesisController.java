@@ -30,6 +30,7 @@ import cn.stylefeng.guns.thesis.wrapper.ThesisWrapper;
 import cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult;
 import cn.stylefeng.guns.thesisDomain.service.ThesisDomainService;
 import cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam;
+import cn.stylefeng.guns.thesisReviewMiddle.model.result.ThesisReviewMiddleResult;
 import cn.stylefeng.guns.thesisReviewMiddle.service.ThesisReviewMiddleService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.guns.util.TransTypeUtil;
@@ -163,13 +164,23 @@ public class ThesisController extends BaseController {
     }
 
     /**
-     * 评审页面
+     * 初评页面
      * @author wucy
      * @Date 2020-05-21
      */
     @RequestMapping("/review")
     public String review() {
         return PREFIX + "/thesis_review_edit.html";
+    }
+
+    /**
+     * 复评页面
+     * @author wucy
+     * @Date 2020-08-13
+     */
+    @RequestMapping("/reviewAgain")
+    public String reviewAgain() {
+        return PREFIX + "/thesis_review_editAgain.html";
     }
 
     /**
@@ -187,6 +198,7 @@ public class ThesisController extends BaseController {
         thesisParam.setThesisUser(userId.toString());
         thesisParam.setGreatNum(0);
         thesisParam.setGreat(0);
+        thesisParam.setReviewBatch(1);
 
         user.setUserId(userId);
         meetMemberParam.setUserId(userId);
@@ -255,7 +267,7 @@ public class ThesisController extends BaseController {
     }
 
     /**
-     * 评审接口
+     * 初评接口
      * @author wucy
      * @Date 2020-05-21
      */
@@ -273,6 +285,7 @@ public class ThesisController extends BaseController {
             reviewUser = userIdStr;
         }
         thesisParam.setReviewUser(reviewUser);
+        thesisParam.setReviewBatch(2);
 //        String greatUsers = thesisParam.getGreatId();
 //        if(greatUsers == null){
 //            greatUsers = "";
@@ -312,8 +325,62 @@ public class ThesisController extends BaseController {
             meetMemberParam.setMeetStatus(2);
         }
 
+        //同时修改中间表，查询条件：论文ID、专家ID、评审顺序（1）
+        ThesisReviewMiddleParam middleParam = new ThesisReviewMiddleParam();
+        middleParam.setThesisId(thesisId);
+        middleParam.setUserId(Long.parseLong(userIdStr));
+        middleParam.setReviewSort(1);
+        LayuiPageInfo midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+        List<ThesisReviewMiddleResult> midList = midRes.getData();
+        ThesisReviewMiddleResult middleResult = midList.get(0);
+        middleParam.setMiddleId(middleResult.getMiddleId());
+        middleParam.setScore(thesisParam.getScore());
+        middleParam.setReviewTime(new Date());
+
         this.thesisService.update(thesisParam);
         this.meetMemberService.update(meetMemberParam);
+        this.thesisReviewMiddleService.update(middleParam);
+        return ResponseData.success();
+    }
+
+    /**
+     * 复评接口
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/reviewItemAgain")
+    @ResponseBody
+    public ResponseData reviewItemAgain(ThesisParam thesisParam) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        String userIdStr = user.getId().toString();
+
+        Thesis thesis = this.thesisService.getById(thesisParam.getThesisId());
+        String reviewUser = thesis.getReviewUser();
+        if(reviewUser != null && reviewUser.length() != 0){
+            reviewUser += "," + userIdStr;
+        }else{
+            reviewUser = userIdStr;
+        }
+        thesisParam.setReviewUser(reviewUser);
+//        thesisParam.setReviewBatch(2);
+
+        //同时修改会议状态
+        long thesisId = thesisParam.getThesisId();
+
+        //同时修改中间表，查询条件：论文ID、专家ID、评审顺序（1）
+        ThesisReviewMiddleParam middleParam = new ThesisReviewMiddleParam();
+        middleParam.setThesisId(thesisId);
+        middleParam.setUserId(Long.parseLong(userIdStr));
+        middleParam.setReviewSort(2);
+        LayuiPageInfo midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+        List<ThesisReviewMiddleResult> midList = midRes.getData();
+        ThesisReviewMiddleResult middleResult = midList.get(0);
+        middleParam.setMiddleId(middleResult.getMiddleId());
+        middleParam.setScore(thesisParam.getScore());
+        middleParam.setReviewTime(new Date());
+        middleParam.setGreat(thesisParam.getIsgreat());
+
+        this.thesisReviewMiddleService.update(middleParam);
         return ResponseData.success();
     }
 
@@ -432,6 +499,44 @@ public class ThesisController extends BaseController {
     }
 
     /**
+     * 专家评审列表
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @ResponseBody
+    @RequestMapping("/reviewList")
+    public Object reviewList(ThesisParam thesisParam,HttpServletRequest request) {
+        boolean isReview = ToolUtil.isReviewRole();
+        StringBuilder thesisIds = new StringBuilder();
+        if (isReview){
+            LoginUser user = LoginContextHolder.getContext().getUser();
+            Long userId = user.getId();
+            Long thesisId = thesisParam.getThesisId();
+
+            ThesisReviewMiddleParam middleParam = new ThesisReviewMiddleParam();
+            middleParam.setUserId(userId);
+            //评审顺序（1或2）
+            String reviewSort = request.getParameter("reviewSort");
+            middleParam.setReviewSort(Integer.parseInt(reviewSort));
+
+            LayuiPageInfo midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+            List<ThesisReviewMiddleResult> mids = midRes.getData();
+            for (int i = 0; i < mids.size(); i++) {
+                ThesisReviewMiddleResult middleResult = mids.get(i);
+                thesisId = middleResult.getThesisId();
+                thesisIds.append(thesisId);
+                if(i != mids.size() - 1){
+                    thesisIds.append(",");
+                }
+            }
+        }
+        String paramIds = thesisIds.toString();
+        Page<Map<String, Object>> theses = this.thesisService.findReview(paramIds);
+        Page wrapped = new ThesisWrapper(theses).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    /**
      * 查询列表（拼接字段）
      * @author wucy
      * @Date 2020-05-21
@@ -518,7 +623,6 @@ public class ThesisController extends BaseController {
     @ResponseBody
     @RequestMapping("/majorList")
     public Object majorList(ThesisParam thesisParam) {
-
         return this.reviewMajorService.majorMapList(thesisParam.getBelongDomain());
     }
 

@@ -10,11 +10,12 @@
         <result column="score" property="score" />
         <result column="review_time" property="reviewTime" />
         <result column="review_sort" property="reviewSort" />
+        <result column="great" property="great" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        middle_id AS "middleId", user_id AS "userId", thesis_id AS "thesisId", score AS "score", review_time AS "reviewTime", review_sort AS "reviewSort"
+        middle_id AS "middleId", user_id AS "userId", thesis_id AS "thesisId", score AS "score", review_time AS "reviewTime", review_sort AS "reviewSort" ,great AS "great"
     </sql>
 
 
@@ -37,6 +38,15 @@
         select
         <include refid="Base_Column_List"/>
         from thesis_review_middle where 1 = 1
+        <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
+            and thesis_id = #{paramCondition.thesisId}
+        </if>
+        <if test="paramCondition.userId != null and paramCondition.userId != ''">
+            and user_id = #{paramCondition.userId}
+        </if>
+        <if test="paramCondition.reviewSort != null and paramCondition.reviewSort != ''">
+            and review_sort = #{paramCondition.reviewSort}
+        </if>
     </select>
 
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam">

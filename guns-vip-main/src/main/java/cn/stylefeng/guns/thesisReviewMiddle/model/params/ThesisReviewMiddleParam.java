@@ -50,6 +50,11 @@ public class ThesisReviewMiddleParam implements Serializable, BaseValidatingPara
      */
     private Integer reviewSort;
 
+    /**
+     * 是否推优；0-否，1-是
+     */
+    private Integer great;
+
     @Override
     public String checkParam() {
         return null;

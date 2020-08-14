@@ -101,4 +101,14 @@
             and review_user like CONCAT('%',#{paramCondition.reviewUser},'%')
         </if>
     </select>
+
+    <select id="customReview" resultType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis where 1 = 1 and thesis_id != 0
+        <if test="paramIds != null and paramIds != ''">
+            and thesis_id in (#{paramIds})
+        </if>
+    </select>
+
 </mapper>

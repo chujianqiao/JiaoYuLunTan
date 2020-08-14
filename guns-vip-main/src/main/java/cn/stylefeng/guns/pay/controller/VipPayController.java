@@ -1,15 +1,20 @@
 package cn.stylefeng.guns.pay.controller;
 
+import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.pay.entity.VipPay;
 import cn.stylefeng.guns.pay.model.params.VipPayParam;
 import cn.stylefeng.guns.pay.service.VipPayService;
+import cn.stylefeng.guns.pay.wrapper.VipPayWrapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 
 /**
@@ -29,7 +34,6 @@ public class VipPayController extends BaseController {
 
     /**
      * 跳转到主页面
-     *
      * @author wucy
      * @Date 2020-07-15
      */
@@ -40,7 +44,6 @@ public class VipPayController extends BaseController {
 
     /**
      * 新增页面
-     *
      * @author wucy
      * @Date 2020-07-15
      */
@@ -62,7 +65,6 @@ public class VipPayController extends BaseController {
 
     /**
      * 新增接口
-     *
      * @author wucy
      * @Date 2020-07-15
      */
@@ -75,7 +77,6 @@ public class VipPayController extends BaseController {
 
     /**
      * 编辑接口
-     *
      * @author wucy
      * @Date 2020-07-15
      */
@@ -88,7 +89,6 @@ public class VipPayController extends BaseController {
 
     /**
      * 删除接口
-     *
      * @author wucy
      * @Date 2020-07-15
      */
@@ -101,7 +101,6 @@ public class VipPayController extends BaseController {
 
     /**
      * 查看详情接口
-     *
      * @author wucy
      * @Date 2020-07-15
      */
@@ -114,7 +113,6 @@ public class VipPayController extends BaseController {
 
     /**
      * 查询列表
-     *
      * @author wucy
      * @Date 2020-07-15
      */
@@ -122,6 +120,19 @@ public class VipPayController extends BaseController {
     @RequestMapping("/list")
     public LayuiPageInfo list(VipPayParam vipPayParam) {
         return this.vipPayService.findPageBySpec(vipPayParam);
+    }
+
+    /**
+     * 查询列表
+     * @author wucy
+     * @Date 2020-07-15
+     */
+    @ResponseBody
+    @RequestMapping("/wrapList")
+    public Object wrapList(VipPayParam vipPayParam){
+        Page<Map<String, Object>> pays = this.vipPayService.findPageWrap(vipPayParam);
+        Page wrapped = new VipPayWrapper(pays).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
     }
 
 }

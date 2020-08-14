@@ -49,4 +49,9 @@ public class ThesisReviewMiddleResult implements Serializable {
      */
     private Integer reviewSort;
 
+    /**
+     * 是否推优；0-否，1-是
+     */
+    private Integer great;
+
 }

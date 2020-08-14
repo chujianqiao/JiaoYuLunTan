@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -66,6 +67,12 @@ public class VipPayServiceImpl extends ServiceImpl<VipPayMapper, VipPay> impleme
         Page pageContext = getPageContext();
         IPage page = this.baseMapper.customPageList(pageContext, param);
         return LayuiPageFactory.createPageInfo(page);
+    }
+
+    @Override
+    public Page<Map<String, Object>> findPageWrap(VipPayParam param) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.customPageMapList(page,param);
     }
 
     private Serializable getKey(VipPayParam param){

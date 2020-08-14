@@ -4,7 +4,6 @@ import cn.stylefeng.guns.thesis.entity.Thesis;
 import cn.stylefeng.guns.thesis.model.params.ThesisParam;
 import cn.stylefeng.guns.thesis.model.result.ThesisResult;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
@@ -50,5 +49,12 @@ public interface ThesisMapper extends BaseMapper<Thesis> {
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") ThesisParam paramCondition);
     Page<Map<String, Object>> customPageMapListFirst(@Param("page") Page page, @Param("paramCondition") ThesisParam paramCondition);
     Page<Map<String, Object>> customPageMapListAgain(@Param("page") Page page, @Param("paramCondition") ThesisParam paramCondition);
+
+    /**
+     * 评审专家查询列表
+     * @param paramIds
+     * @return
+     */
+    Page<Map<String, Object>> customReview(@Param("page") Page page, @Param("paramIds") String paramIds);
 
 }

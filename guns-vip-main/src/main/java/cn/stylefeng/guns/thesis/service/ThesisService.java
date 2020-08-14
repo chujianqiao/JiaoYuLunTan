@@ -71,4 +71,12 @@ public interface ThesisService extends IService<Thesis> {
 
     Page<Map<String, Object>> findPageWrapByBatch(ThesisParam param, Integer batch);
 
+    /**
+     * 评审专家查询列表
+     * @param paramIds
+     * @return
+     */
+    Page<Map<String, Object>> findReview(String paramIds);
+
+
 }

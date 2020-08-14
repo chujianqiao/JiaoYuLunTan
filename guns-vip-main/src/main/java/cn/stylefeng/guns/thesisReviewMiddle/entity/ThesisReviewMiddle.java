@@ -56,6 +56,12 @@ public class ThesisReviewMiddle implements Serializable {
     @TableField("review_sort")
     private Integer reviewSort;
 
+    /**
+     * 是否推优；0-否，1-是
+     */
+    @TableField("great")
+    private Integer great;
+
 
     public Long getMiddleId() {
         return middleId;
@@ -103,6 +109,14 @@ public class ThesisReviewMiddle implements Serializable {
 
     public void setReviewSort(Integer reviewSort) {
         this.reviewSort = reviewSort;
+    }
+
+    public Integer getGreat() {
+        return great;
+    }
+
+    public void setGreat(Integer great) {
+        this.great = great;
     }
 
     @Override

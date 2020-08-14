@@ -1,5 +1,8 @@
 package cn.stylefeng.guns.thesis.wrapper;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
+import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
@@ -17,10 +20,7 @@ import cn.stylefeng.roses.kernel.model.page.PageResult;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 拼接字段
@@ -71,8 +71,6 @@ public class ThesisWrapper extends BaseControllerWrapper {
 		}
 
 		String unitsName = Arrays.toString(unitList.toArray()).replace("[","").replace("]","");
-
-
 
 		Object statusObj = map.get("status");
 		if(statusObj != null){
@@ -153,6 +151,61 @@ public class ThesisWrapper extends BaseControllerWrapper {
                 }
             }
         }
+
+        //初评分数
+		ThesisReviewMiddleParam middleParam = new ThesisReviewMiddleParam();
+		long thesisId = Long.parseLong(map.get("thesisId").toString());
+		LoginUser user = LoginContextHolder.getContext().getUser();
+		middleParam.setThesisId(thesisId);
+		middleParam.setUserId(user.getId());
+		middleParam.setReviewSort(1);
+		LayuiPageInfo midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+		List<ThesisReviewMiddleResult> midList = midRes.getData();
+		if(midList.size() != 0){
+			ThesisReviewMiddleResult middleResult = midList.get(0);
+			Integer firstScore = middleResult.getScore();
+			if(firstName != null){
+				map.put("firstScore",firstScore);
+			}
+			Date date = middleResult.getReviewTime();
+			if(date != null && date.getTime() != 0){
+				map.put("firstStatus","已评审");
+			}else {
+				map.put("firstStatus","未评审");
+			}
+		}
+
+		//复评状态
+		middleParam.setReviewSort(2);
+		LayuiPageInfo midResAgain = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+		List<ThesisReviewMiddleResult> midListAgain = midResAgain.getData();
+		if(midListAgain.size() != 0){
+			ThesisReviewMiddleResult middleResult = midListAgain.get(0);
+			Date date = middleResult.getReviewTime();
+			if(date != null && date.getTime() != 0){
+				map.put("secondStatus","已评审");
+			}else {
+				map.put("secondStatus","未评审");
+			}
+		}
+
+		//复评分数
+		middleParam = new ThesisReviewMiddleParam();
+		middleParam.setThesisId(thesisId);
+		middleParam.setReviewSort(2);
+		midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+		midList = midRes.getData();
+		if(midList.size() > 0){
+			StringBuilder scoreStr = new StringBuilder();
+			for (int i = 0; i < midList.size(); i++) {
+				ThesisReviewMiddleResult middleResult = midList.get(i);
+				Integer score = middleResult.getScore();
+				if(score != null){
+					scoreStr.append(score + "; ");
+				}
+			}
+			map.put("scoreStr",scoreStr);
+		}
 
 		map.put("firstName",firstName);
 		map.put("againName",againName);

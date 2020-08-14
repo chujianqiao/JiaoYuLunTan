@@ -95,11 +95,13 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
 
 
     //表单提交事件
+    /**
+     * 初评
+     */
     form.on('submit(btnReview)', function (data) {
         debugger;
         var score = data.field.score;
         if(score >= 0 && score <=100){
-            debugger;
             var dicts = "";
             $("input:checkbox[name = status]:checked").each(function(i){
                 //使用循环遍历迭代的方式得到所有被选中的checkbox复选框

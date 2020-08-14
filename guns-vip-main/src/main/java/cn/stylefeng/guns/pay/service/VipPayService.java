@@ -6,10 +6,12 @@ import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.pay.entity.VipPay;
 import cn.stylefeng.guns.pay.model.params.VipPayParam;
 import cn.stylefeng.guns.pay.model.result.VipPayResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -75,5 +77,11 @@ public interface VipPayService extends IService<VipPay> {
      * @Date 2020-07-15
      */
      LayuiPageInfo findPageBySpec(VipPayParam param);
+
+    /**
+     * 查询数据（用于拼接字段）
+     * @return
+     */
+    Page<Map<String, Object>> findPageWrap(VipPayParam vipPayParam);
 
 }
