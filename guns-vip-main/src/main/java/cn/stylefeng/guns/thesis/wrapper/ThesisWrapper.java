@@ -164,7 +164,7 @@ public class ThesisWrapper extends BaseControllerWrapper {
 		if(midList.size() != 0){
 			ThesisReviewMiddleResult middleResult = midList.get(0);
 			Integer firstScore = middleResult.getScore();
-			if(firstName != null){
+			if(firstScore != null){
 				map.put("firstScore",firstScore);
 			}
 			Date date = middleResult.getReviewTime();
@@ -184,6 +184,8 @@ public class ThesisWrapper extends BaseControllerWrapper {
 			Date date = middleResult.getReviewTime();
 			if(date != null && date.getTime() != 0){
 				map.put("secondStatus","已评审");
+				Integer secondScore = middleResult.getScore();
+				map.put("secondScore",secondScore);
 			}else {
 				map.put("secondStatus","未评审");
 			}

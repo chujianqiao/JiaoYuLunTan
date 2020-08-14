@@ -32,7 +32,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                     if(data.firstStatus == "未评审"){
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='review'>评审</a>";
                     }else{
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"review\">查看详情</a>\n";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
                     }
                 }}
         ]];
@@ -71,8 +71,16 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     Thesis.jumpDisablePage = function (data) {
-        debugger;
         window.location.href = Feng.ctxPath + '/thesis/disable?thesisId=' + data.thesisId
+    };
+
+    /**
+     * 初评后查看详情页面
+     * @param data 点击按钮时候的行数据
+     */
+    Thesis.jumpFirstDetailPage = function (data) {
+        debugger;
+        window.location.href = Feng.ctxPath + '/thesis/firstDetail?thesisId=' + data.thesisId
     };
 
     /**
@@ -153,6 +161,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             Thesis.onReviewItem(data);
         } else if (layEvent === 'disable') {
             Thesis.jumpDisablePage(data);
+        } else if(layEvent === 'firstDetail'){
+            Thesis.jumpFirstDetailPage(data);
         }
     });
 
@@ -183,7 +193,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                 if(data.secondStatus == "未评审"){
                     return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reviewAgain'>评审</a>";
                 }else{
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reviewAgain'>查看详情</a>";
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='secondDetail'>查看详情</a>";
                 }
                 }}
         ]];
@@ -225,6 +235,14 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      */
     ThesisAgain.jumpReviewAgainPage = function (data) {
         window.location.href = Feng.ctxPath + '/thesis/reviewAgain?thesisId=' + data.thesisId
+    };
+
+    /**
+     * 复评后查看详情
+     * @param data 点击按钮时候的行数据
+     */
+    ThesisAgain.jumpSecondDetailPage = function (data) {
+        window.location.href = Feng.ctxPath + '/thesis/secondDetail?thesisId=' + data.thesisId
     };
 
     /**
@@ -285,6 +303,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             ThesisAgain.jumpDisablePage(data);
         } else if (layEvent === 'reviewAgain') {
             ThesisAgain.jumpReviewAgainPage(data);
+        } else if (layEvent === 'secondDetail') {
+            ThesisAgain.jumpSecondDetailPage(data);
         }
     });
 });

@@ -7,17 +7,13 @@ import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.MeetMemberDict;
-import cn.stylefeng.guns.core.constant.dictmap.ReviewUnitDict;
 import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
-import cn.stylefeng.guns.meetRegister.entity.MeetMember;
-import cn.stylefeng.guns.meetRegister.mapper.MeetMemberMapper;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.sys.modular.rest.service.RestRoleService;
-import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
@@ -141,6 +137,26 @@ public class ThesisController extends BaseController {
     @RequestMapping("/disable")
     public String disable() {
         return PREFIX + "/thesis_disable_edit.html";
+    }
+
+    /**
+     * 初评后查看详情
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/firstDetail")
+    public String firstDetail() {
+        return PREFIX + "/thesis_disable_firstDetail.html";
+    }
+
+    /**
+     * 复评后查看详情
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/secondDetail")
+    public String secondDetail() {
+        return PREFIX + "/thesis_disable_secondDetail.html";
     }
 
     /**
@@ -335,7 +351,9 @@ public class ThesisController extends BaseController {
         ThesisReviewMiddleResult middleResult = midList.get(0);
         middleParam.setMiddleId(middleResult.getMiddleId());
         middleParam.setScore(thesisParam.getScore());
-        middleParam.setReviewTime(new Date());
+        Date reviewDate = new Date();
+        middleParam.setReviewTime(reviewDate);
+        thesisParam.setReviewTime(reviewDate);
 
         this.thesisService.update(thesisParam);
         this.meetMemberService.update(meetMemberParam);
@@ -377,10 +395,14 @@ public class ThesisController extends BaseController {
         ThesisReviewMiddleResult middleResult = midList.get(0);
         middleParam.setMiddleId(middleResult.getMiddleId());
         middleParam.setScore(thesisParam.getScore());
-        middleParam.setReviewTime(new Date());
         middleParam.setGreat(thesisParam.getIsgreat());
+        Date reviewDate = new Date();
+        middleParam.setReviewTime(reviewDate);
+
+        thesisParam.setReviewTime(reviewDate);
 
         this.thesisReviewMiddleService.update(middleParam);
+        this.thesisService.update(thesisParam);
         return ResponseData.success();
     }
 
@@ -448,6 +470,55 @@ public class ThesisController extends BaseController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = formatter.format(date);
         map.put("applyTime",dateString);
+
+
+        //初评
+        ThesisReviewMiddleParam middleParam = new ThesisReviewMiddleParam();
+        long thesisId = Long.parseLong(map.get("thesisId").toString());
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        Thesis thesis = this.thesisService.getById(thesisId);
+        middleParam.setThesisId(thesisId);
+        middleParam.setUserId(user.getId());
+        middleParam.setReviewSort(1);
+        LayuiPageInfo midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+        List<ThesisReviewMiddleResult> midList = midRes.getData();
+        if(midList.size() != 0){
+            ThesisReviewMiddleResult middleResult = midList.get(0);
+            Integer firstScore = middleResult.getScore();
+            if(firstScore != null){
+                map.put("firstScore",firstScore);
+            }
+            Integer reviewResult = thesis.getReviewResult();
+            if(reviewResult != null && reviewResult == 1){
+                String status = thesis.getStatus();
+                if(status == null || ("").equals(status)){
+                    map.put("firstReviewStr","同意参会");
+                }else{
+                    map.put("firstReviewStr",status);
+                }
+            }else if(reviewResult != null && reviewResult == 0){
+                map.put("firstReviewStr","不同意参会");
+            }
+        }
+
+        //复评
+        middleParam.setReviewSort(2);
+        LayuiPageInfo midResAgain = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+        List<ThesisReviewMiddleResult> midListAgain = midResAgain.getData();
+        if(midListAgain.size() != 0){
+            ThesisReviewMiddleResult middleResult = midListAgain.get(0);
+                Integer secondScore = middleResult.getScore();
+                if(secondScore != null){
+                    map.put("secondScore",secondScore);
+                }
+
+                Integer great = middleResult.getGreat();
+                if(great != null && great == 0){
+                    map.put("secondGreat",0);
+                }else if(great != null && great == 1){
+                    map.put("secondGreat",1);
+                }
+        }
 
         return ResponseData.success(map);
     }
