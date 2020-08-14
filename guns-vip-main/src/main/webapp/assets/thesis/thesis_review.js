@@ -268,7 +268,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     });
 
     // 搜索按钮点击事件
-    $('#btnSearch').click(function () {
+    $('#btnSearchAgain').click(function () {
         ThesisAgain.search();
     });
 
