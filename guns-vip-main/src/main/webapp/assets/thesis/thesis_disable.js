@@ -123,8 +123,11 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
 
     Thesis.jumpAssignPageBatch = function (data) {
         var checkRows = table.checkStatus(Thesis.tableId);
+        var belongDomain = $("#belongDomain").val();
         if (checkRows.data.length === 0) {
             Feng.error("请选择被分配的数据");
+        } else if (belongDomain == ""){
+            Feng.error("请先根据领域筛选，再进行批量分配。");
         } else {
             var thesisIds = "";
             for (var i = 0;i < checkRows.data.length;i++){
@@ -133,7 +136,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             func.open({
                 title: '分配评审人',
                 area: ['350px', '300px'],
-                content: Feng.ctxPath + '/thesis/assign?thesisIds=' + thesisIds,
+                content: Feng.ctxPath + '/thesis/assign?thesisId=' + thesisIds,
                 tableId: Thesis.tableId
             });
         }
@@ -334,10 +337,13 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         });
     };
 
-    Thesis.jumpAssignPageBatchAgain = function (data) {
+    ThesisAgain.jumpAssignPageBatchAgain = function (data) {
         var checkRows = table.checkStatus(ThesisAgain.tableId);
+        var belongDomainAgain = $("#belongDomainAgain").val();
         if (checkRows.data.length === 0) {
             Feng.error("请选择被分配的数据");
+        } else if (belongDomainAgain == ""){
+            Feng.error("请先根据领域筛选，再进行批量分配。");
         } else {
             var thesisIds = "";
             for (var i = 0;i < checkRows.data.length;i++){
@@ -346,7 +352,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             func.open({
                 title: '分配评审人',
                 area: ['350px', '300px'],
-                content: Feng.ctxPath + '/thesis/assignAgain?thesisIds=' + thesisIds,
+                content: Feng.ctxPath + '/thesis/assignAgain?thesisId=' + thesisIds,
                 tableId: ThesisAgain.tableId
             });
         }

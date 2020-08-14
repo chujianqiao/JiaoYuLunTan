@@ -263,7 +263,7 @@ public class ThesisController extends BaseController {
      */
     @RequestMapping("/assignItem")
     @ResponseBody
-    public ResponseData assignItem(ThesisParam thesisParam) {
+    public ResponseData assignItem(ThesisParam thesisParam, String thesisIds) {
         String majors = thesisParam.getReviewUser();
         String [] majorIds = majors.split(",");
         for(int i =0 ;i < majorIds.length ;i++){
@@ -276,12 +276,16 @@ public class ThesisController extends BaseController {
             reviewMajorParam.setThesisCount(thesisCount);
             this.reviewMajorService.update(reviewMajorParam);
 
-            ThesisReviewMiddleParam param = new ThesisReviewMiddleParam();
-            param.setThesisId(thesisParam.getThesisId());
-            param.setUserId(userId);
-            //param.setScore(0);
-            param.setReviewSort(thesisParam.getReviewBatch());
-            this.thesisReviewMiddleService.add(param);
+            String[] thesisId = thesisIds.split(";");
+            for (int j = 0;j < thesisId.length;j++){
+                ThesisReviewMiddleParam param = new ThesisReviewMiddleParam();
+                param.setThesisId(Long.parseLong(thesisId[j]));
+                param.setUserId(userId);
+                //param.setScore(0);
+                param.setReviewSort(thesisParam.getReviewBatch());
+                this.thesisReviewMiddleService.add(param);
+            }
+
         }
         this.thesisService.update(thesisParam);
 
