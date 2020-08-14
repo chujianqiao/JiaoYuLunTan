@@ -270,7 +270,7 @@ public class ThesisController extends BaseController {
             param.setThesisId(thesisParam.getThesisId());
             param.setUserId(userId);
             //param.setScore(0);
-            param.setReviewSort(1);
+            param.setReviewSort(thesisParam.getReviewBatch());
             this.thesisReviewMiddleService.add(param);
         }
         this.thesisService.update(thesisParam);
@@ -621,7 +621,7 @@ public class ThesisController extends BaseController {
             Long userId = user.getId();
             thesisParam.setThesisUser(userId.toString());
         }
-        Page<Map<String, Object>> theses = this.thesisService.findPageWrapByBatch(thesisParam,1);
+        Page<Map<String, Object>> theses = this.thesisService.findPageWrap(thesisParam);
         Page wrapped = new ThesisWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }

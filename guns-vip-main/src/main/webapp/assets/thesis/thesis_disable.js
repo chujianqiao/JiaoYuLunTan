@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 论文表管理
@@ -11,6 +12,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     var Thesis = {
         tableId: "thesisTable"
     };
+
+    $(function () {
+        domainSelectOption();
+    })
 
     /**
      * 初始化表格的列
@@ -408,4 +413,26 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             ThesisAgain.jumpAssignPageAgain(data);
         }
     });
+
+    function domainSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/thesisDomain/list" ,
+            success:function(response){
+                var data=response.data;
+                var domains = [];
+                domains = data;
+
+                var options;
+                for (var i = 0 ;i < domains.length ;i++){
+                    var domain = data[i];
+                    options += '<option value="'+ domain.domainId+ '" >'+ domain.domainName +'</option>';
+                }
+                $('#belongDomain').empty();
+                $('#belongDomain').append("<option value=''>请选择</option>");
+                $('#belongDomain').append(options);
+                form.render('select');
+            }
+        })
+    }
 });
