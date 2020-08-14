@@ -177,6 +177,16 @@ public class ThesisController extends BaseController {
     }
 
     /**
+     * 分配评审人
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/assignSelect")
+    public String assignSelect() {
+        return PREFIX + "/assignSelect_review.html";
+    }
+
+    /**
      * 初评页面
      * @author wucy
      * @Date 2020-05-21

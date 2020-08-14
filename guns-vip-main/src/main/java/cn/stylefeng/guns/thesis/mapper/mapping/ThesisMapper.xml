@@ -70,6 +70,9 @@
         <if test="paramCondition.reviewUser != null and paramCondition.reviewUser != ''">
             and review_user like CONCAT('%',#{paramCondition.reviewUser},'%')
         </if>
+        <if test="paramCondition.belongDomain != null and paramCondition.reviewUser != ''">
+            and belong_domain like CONCAT('%',#{paramCondition.belongDomain},'%')
+        </if>
     </select>
 
     <select id="customPageMapListFirst" resultType="map" parameterType="cn.stylefeng.guns.thesis.model.params.ThesisParam">
@@ -85,6 +88,9 @@
         <if test="paramCondition.reviewUser != null and paramCondition.reviewUser != ''">
             and review_user like CONCAT('%',#{paramCondition.reviewUser},'%')
         </if>
+        <if test="paramCondition.belongDomain != null and paramCondition.reviewUser != ''">
+            and belong_domain like CONCAT('%',#{paramCondition.belongDomain},'%')
+        </if>
     </select>
 
     <select id="customPageMapListAgain" resultType="map" parameterType="cn.stylefeng.guns.thesis.model.params.ThesisParam">
@@ -99,6 +105,9 @@
         </if>
         <if test="paramCondition.reviewUser != null and paramCondition.reviewUser != ''">
             and review_user like CONCAT('%',#{paramCondition.reviewUser},'%')
+        </if>
+        <if test="paramCondition.belongDomain != null and paramCondition.reviewUser != ''">
+            and belong_domain like CONCAT('%',#{paramCondition.belongDomain},'%')
         </if>
     </select>
 

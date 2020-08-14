@@ -10,7 +10,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
      * 论文表管理
      */
     var Thesis = {
-        tableId: "thesisTable"
+        tableId: "thesisTable",
+        condition: {
+            belongDomain: "",
+        }
     };
 
     $(function () {
@@ -66,11 +69,16 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         var queryData = {};
 
         queryData['thesisTitle'] = $('#thesisTitle').val();
+        queryData['belongDomain'] = $('#belongDomain').val();
 
         table.reload(Thesis.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
+
+    form.on('select(belongDomain)', function(data){
+        Thesis.search();
+    });
 
     /**
      * 跳转到添加页面
@@ -125,7 +133,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             func.open({
                 title: '分配评审人',
                 area: ['350px', '300px'],
-                content: Feng.ctxPath + '/thesis/assign?thesisId=' + thesisIds,
+                content: Feng.ctxPath + '/thesis/assign?thesisIds=' + thesisIds,
                 tableId: Thesis.tableId
             });
         }
@@ -219,7 +227,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
      * 论文表管理
      */
     var ThesisAgain = {
-        tableId: "thesisTableAgain"
+        tableId: "thesisTableAgain",
+        condition: {
+            belongDomain: "",
+        }
     };
 
     /**
@@ -271,11 +282,16 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         var queryData = {};
 
         queryData['thesisTitle'] = $('#thesisTitleAgain').val();
+        queryData['belongDomain'] = $("#belongDomainAgain").val();
 
         table.reload(ThesisAgain.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
+
+    form.on('select(belongDomainAgain)', function(data){
+        ThesisAgain.search();
+    });
 
     /**
      * 跳转到添加页面
@@ -323,10 +339,14 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         if (checkRows.data.length === 0) {
             Feng.error("请选择被分配的数据");
         } else {
+            var thesisIds = "";
+            for (var i = 0;i < checkRows.data.length;i++){
+                thesisIds = thesisIds + checkRows.data[i].thesisId + ";";
+            }
             func.open({
                 title: '分配评审人',
                 area: ['350px', '300px'],
-                content: Feng.ctxPath + '/thesis/assign?thesisId=' + data.thesisId,
+                content: Feng.ctxPath + '/thesis/assignAgain?thesisIds=' + thesisIds,
                 tableId: ThesisAgain.tableId
             });
         }
@@ -374,19 +394,19 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     });
 
     // 搜索按钮点击事件
-    $('#btnSearch').click(function () {
+    $('#btnSearchAgain').click(function () {
         ThesisAgain.search();
     });
 
     // 添加按钮点击事件
-    $('#btnAdd').click(function () {
+    $('#btnAddAgain').click(function () {
 
         ThesisAgain.jumpAddPage();
 
     });
 
     // 导出excel
-    $('#btnExp').click(function () {
+    $('#btnExpAgain').click(function () {
         ThesisAgain.exportExcel();
     });
 
@@ -431,6 +451,9 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
                 $('#belongDomain').empty();
                 $('#belongDomain').append("<option value=''>请选择</option>");
                 $('#belongDomain').append(options);
+                $('#belongDomainAgain').empty();
+                $('#belongDomainAgain').append("<option value=''>请选择</option>");
+                $('#belongDomainAgain').append(options);
                 form.render('select');
             }
         })
