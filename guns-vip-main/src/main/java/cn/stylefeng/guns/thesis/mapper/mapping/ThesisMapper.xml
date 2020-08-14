@@ -111,7 +111,7 @@
         </if>
     </select>
 
-    <select id="customReview" resultType="map">
+    <select id="customReview" resultType="map" parameterType="cn.stylefeng.guns.thesis.model.params.ThesisParam">
         select
         <include refid="Base_Column_List"/>
         from thesis where 1 = 1 and thesis_id != 0
@@ -120,6 +120,9 @@
                  separator="," close=")">
             #{i}
         </foreach>
+        <if test="paramCondition.thesisTitle != null and paramCondition.thesisTitle != ''">
+            and thesis_title like CONCAT('%',#{paramCondition.thesisTitle},'%')
+        </if>
     </select>
 
 </mapper>

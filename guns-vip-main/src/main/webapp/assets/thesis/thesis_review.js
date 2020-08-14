@@ -204,9 +204,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      */
     ThesisAgain.search = function () {
         var queryData = {};
-
         queryData['thesisTitle'] = $('#thesisTitleAgain').val();
-
         table.reload(ThesisAgain.tableId, {
             where: queryData, page: {curr: 1}
         });

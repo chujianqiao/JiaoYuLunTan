@@ -82,9 +82,9 @@ public class ThesisServiceImpl extends ServiceImpl<ThesisMapper, Thesis> impleme
     }
 
     @Override
-    public Page<Map<String, Object>> findReview(List<Long> list) {
+    public Page<Map<String, Object>> findReview(List<Long> list,ThesisParam thesisParam) {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.customReview(page,list);
+        return this.baseMapper.customReview(page,list,thesisParam);
     }
 
     private Serializable getKey(ThesisParam param){

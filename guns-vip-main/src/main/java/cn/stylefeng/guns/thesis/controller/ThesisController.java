@@ -608,7 +608,7 @@ public class ThesisController extends BaseController {
         if(thesisIdList.size() == 0){
         	thesisIdList.add(new Long(0));
 		}
-        Page<Map<String, Object>> theses = this.thesisService.findReview(thesisIdList);
+        Page<Map<String, Object>> theses = this.thesisService.findReview(thesisIdList,thesisParam);
         Page wrapped = new ThesisWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }
