@@ -76,11 +76,11 @@
                 <artifactId>jtds</artifactId>
                 <version>${sqlserver.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.oracle</groupId>
-                <artifactId>ojdbc6</artifactId>
-                <version>${oracle.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>com.oracle</groupId>-->
+                <!--<artifactId>ojdbc6</artifactId>-->
+                <!--<version>${oracle.version}</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
