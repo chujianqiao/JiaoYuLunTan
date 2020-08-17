@@ -54,5 +54,5 @@ public interface ForumMapper extends BaseMapper<Forum> {
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") ForumParam paramCondition);
 
-    Integer setStatus(@Param("status") Long forumId, @Param("status") Integer status);
+    Integer setStatus(@Param("forumId") Long forumId, @Param("status") Integer status);
 }
