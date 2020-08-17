@@ -43,22 +43,9 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
     if(fileName != null && fileName != "" && fileName != 'undefined'){
         $("#fileNameTip").html(fileName);
     }
+    //构建评审字典选项
+    createReviewDic();
 
-    //构建评审字典radio选项
-    var ajaxDic = new $ax(Feng.ctxPath + "/reviewDictionary/list?dicStatus=1");
-    var resultDic = ajaxDic.start();
-    for (var i = 0; i < resultDic.count; i++){
-        var dicName = resultDic.data[i].dicName;
-        var input=$("<input>");
-        input.attr("type","checkbox");
-        input.attr("name","status");
-        input.attr("value",dicName);
-        input.attr("title",dicName);
-        // input.attr("disabled","");
-        input.attr("disabled",false);
-        $("#divLink").append(input);
-    }
-    form.render('checkbox');
     //隐藏是否优秀的选项
     // var isPass = result.data.reviewResult;
     // if(isPass == 1){
@@ -71,27 +58,51 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
     // }
 
     //
-    // form.on('radio(reviewResult)', function(data){
-    //     debugger;
-    //     if(data.value == '0'){
-    //         $("input:checkbox[name = status]").each(function(i){
-    //             $(this).attr("disabled","");
-    //         })
-    //     } else {
-    //         debugger;
-    //         $("input:checkbox[name = status]").each(function(i){
-    //             debugger;
-    //             var item =  $(this)
-    //             var input = item[0];
-    //             var disabled = input.disabled;
-    //             var dis = item.context.disabled;
-    //
-    //             input.disabled = false;
-    //             item.context.disabled = false;
-    //             // $(this).removeAttr("disabled"); //解除禁用
-    //         })
-    //     }
-    // });
+    form.on('radio(reviewResult)', function(data){
+        if(data.value == '1'){
+            debugger;
+            var ajaxDic = new $ax(Feng.ctxPath + "/reviewDictionary/list?dicStatus=1");
+            var resultDic = ajaxDic.start();
+            for (var i = 0; i < resultDic.count; i++){
+                var objId = resultDic.data[i].dicId;
+                document.getElementById(objId).disabled=false;
+            }
+            form.render('checkbox');
+        }
+        else {
+            debugger;
+            var ajaxDic = new $ax(Feng.ctxPath + "/reviewDictionary/list?dicStatus=1");
+            var resultDic = ajaxDic.start();
+            for (var i = 0; i < resultDic.count; i++){
+                var objId = resultDic.data[i].dicId;
+                // var obj = document.getElementById(objId);
+                document.getElementById(objId).disabled=true;
+            }
+            form.render('checkbox');
+        }
+    });
+
+    /**
+     * 构建评审字典选项checkbox
+     */
+    function createReviewDic(){
+        var ajaxDic = new $ax(Feng.ctxPath + "/reviewDictionary/list?dicStatus=1");
+        var resultDic = ajaxDic.start();
+        for (var i = 0; i < resultDic.count; i++){
+            var dicName = resultDic.data[i].dicName;
+            var objId = resultDic.data[i].dicId;
+            var input=$("<input>");
+            input.attr("type","checkbox");
+            input.attr("name","status");
+            input.attr("value",dicName);
+            input.attr("title",dicName);
+            input.attr("id",objId);
+            // input.attr("disabled","");
+            // input.attr("disabled",false);
+            $("#divLink").append(input);
+        }
+        form.render('checkbox');
+    }
 
 
     //表单提交事件
@@ -126,6 +137,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
     $('#cancel').click(function(){
         window.location.href = Feng.ctxPath + '/thesis'
     });
+
+
 
     $('#downloadBtn').click(function(){
         var form=$("<form>");    // 定义一个form表单
