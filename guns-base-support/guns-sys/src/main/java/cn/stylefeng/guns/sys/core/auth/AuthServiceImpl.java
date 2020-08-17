@@ -34,12 +34,14 @@ import cn.stylefeng.guns.sys.core.listener.ConfigListener;
 import cn.stylefeng.guns.sys.core.log.LogManager;
 import cn.stylefeng.guns.sys.core.log.factory.LogTaskFactory;
 import cn.stylefeng.guns.sys.core.util.SaltUtil;
+import cn.stylefeng.guns.sys.modular.system.entity.Relation;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.factory.UserFactory;
 import cn.stylefeng.guns.sys.modular.system.mapper.MenuMapper;
 import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.DictService;
+import cn.stylefeng.guns.sys.modular.system.service.RelationService;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.roses.core.util.HttpContext;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
@@ -76,6 +78,9 @@ public class AuthServiceImpl implements AuthService {
     private DictService dictService;
 
     @Autowired
+    private RelationService relationService;
+
+    @Autowired
     private SessionManager sessionManager;
 
     public static AuthService me() {
@@ -83,7 +88,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(String username, String password) {
+    public String login(String username, String password, HttpServletRequest request) {
 
         User user = userMapper.getByAccount(username);
         UserDto userDto = new UserDto();
@@ -114,7 +119,56 @@ public class AuthServiceImpl implements AuthService {
             throw new AuthException(AuthExceptionEnum.USERNAME_PWD_ERROR);
         }
 
-        return login(username);
+        return login(username,request);
+    }
+
+    @Override
+    public String login(String username, HttpServletRequest request) {
+
+        User user = userMapper.getByAccount(username);
+
+        // 账号不存在
+        if (null == user) {
+            throw new AuthException(AuthExceptionEnum.USERNAME_PWD_ERROR);
+        }
+
+        // 账号被冻结
+        if (!user.getStatus().equals(ManagerStatus.OK.getCode())) {
+            throw new AuthException(AuthExceptionEnum.ACCOUNT_FREEZE_ERROR);
+        }
+
+        //记录登录日志
+        LogManager.me().executeLog(LogTaskFactory.loginLog(user.getUserId(), getIp()));
+
+        //TODO key的作用
+        JwtPayLoad payLoad = new JwtPayLoad(user.getUserId(), user.getAccount(), "xxxx");
+
+        //创建token
+        String token = JwtTokenUtil.generateToken(payLoad);
+
+        //创建登录会话
+        sessionManager.createSession(token, user(username));
+
+        //创建cookie
+        addLoginCookie(token);
+
+        if (user.getUserId() != null){
+            int wrongTimes = 0;
+            String status = "ENABLE";
+            userMapper.editUserByWrong(user.getUserId(),status,wrongTimes);
+            String[] roleIds = user.getRoleId().split(",");
+            List<String> userUrl = new ArrayList<>();
+            for (int i = 0;i<roleIds.length;i++){
+                List<String> url = menuMapper.getResUrlsByRoleId(Long.parseLong(roleIds[i]));
+                userUrl.addAll(url);
+            }
+            List<String> urlAll = menuMapper.getResUrls();
+            request.getSession().setAttribute("urlAll",urlAll);
+            request.getSession().setAttribute("userUrl",userUrl);
+
+        }
+
+        return token;
     }
 
     @Override
@@ -151,6 +205,7 @@ public class AuthServiceImpl implements AuthService {
             int wrongTimes = 0;
             String status = "ENABLE";
             userMapper.editUserByWrong(user.getUserId(),status,wrongTimes);
+
         }
 
         return token;

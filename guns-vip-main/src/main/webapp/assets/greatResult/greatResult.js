@@ -41,16 +41,19 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'slogan', sort: true, title: '宣传口号'},
             {field: 'designImg', sort: true, title: '易拉宝设计图路径'},*/
             {field: 'keyword', sort: true, title: '关键词'},
+            {field: 'keyword', sort: true, title: '评审专家'},
+            {field: 'keyword', sort: true, title: '评审状态'},
+            {field: 'keyword', sort: true, title: '评审分数'},
             /*{field: 'letterPath', sort: true, title: '专家推荐信附件路径'},
             {field: 'commitPath', sort: true, title: '原创承诺书路径'},
             {field: 'form', sort: true, title: '成果形式'},
             {field: 'detail', sort: true, title: '成果内容'},*/
-            {field: 'checkStatus', sort: true, title: '申报状态', templet: function(data){
+            /*{field: 'checkStatus', sort: true, title: '申报状态', templet: function(data){
                     if (data.checkStatus == 1) return '申请中';
                     if (data.checkStatus == 2) return '已通过';
                     if (data.checkStatus == 3) return '未通过';
                     if (data.checkStatus == 0) return '已取消';
-                }},//; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
+                }},*///; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
             /*{field: 'applyId', sort: true, title: '申请人/单位ID'},
             {field: 'applyTime', sort: true, title: '申请提交时间'},
             {field: 'refuseTime', sort: true, title: '申请驳回时间'},

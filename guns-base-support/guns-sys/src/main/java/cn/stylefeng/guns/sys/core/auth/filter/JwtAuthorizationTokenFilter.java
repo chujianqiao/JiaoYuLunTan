@@ -3,6 +3,10 @@ package cn.stylefeng.guns.sys.core.auth.filter;
 import cn.stylefeng.guns.base.auth.jwt.JwtTokenUtil;
 import cn.stylefeng.guns.sys.core.auth.cache.SessionManager;
 import cn.stylefeng.guns.sys.core.auth.util.TokenUtil;
+import cn.stylefeng.guns.sys.core.listener.ConfigListener;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.mapper.MenuMapper;
+import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static cn.stylefeng.guns.base.consts.ConstantsContext.getTokenHeaderName;
 
@@ -37,6 +43,12 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private SessionManager sessionManager;
+
+    @Autowired
+    private MenuMapper menuMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     public JwtAuthorizationTokenFilter() {
     }
@@ -75,8 +87,37 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                chain.doFilter(request, response);
-                return;
+                //按钮权限判断
+                User user = userMapper.getByAccount(username);
+                String[] roleIds = user.getRoleId().split(",");
+                List<String> userUrl = new ArrayList<>();
+                for (int i = 0;i<roleIds.length;i++){
+                    List<String> url = menuMapper.getResUrlsByRoleId(Long.parseLong(roleIds[i]));
+                    userUrl.addAll(url);
+                }
+                List<String> urlAll = menuMapper.getResUrls();
+                String requestURI = request.getRequestURI().replaceFirst(ConfigListener.getConf().get("contextPath"), "");
+                if (urlAll.contains(requestURI)){
+                    if (userUrl.contains(requestURI)){
+                        request.setAttribute("message","success");
+                        chain.doFilter(request, response);
+                        return;
+                    }else {
+                        request.getRequestDispatcher("/global/error").forward(request, response);
+                        request.setAttribute("message","error");
+                        response.getWriter().write("没有权限！");
+                        return;
+                    }
+                }else {
+                    request.setAttribute("message","success");
+                    chain.doFilter(request, response);
+                    return;
+                }
+                /*List<String> url = (List<String>) request.getSession().getAttribute("userUrl");
+                List<String> urlAll = (List<String>) request.getSession().getAttribute("urlAll");
+
+                */
+
             } else {
 
                 // 6.当用户的token过期了，缓存中没有用户信息，则删除相关cookies

@@ -194,4 +194,9 @@ public class EducationResultResult implements Serializable {
      */
     private String belongDomain;
 
+    /**
+     * 评审备注
+     */
+    private String description;
+
 }

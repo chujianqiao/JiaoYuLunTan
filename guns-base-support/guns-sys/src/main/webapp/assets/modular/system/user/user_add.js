@@ -62,10 +62,17 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
                 Feng.error("验证码已过期！");
             }else {
                 Feng.success("注册成功！");
-                setTimeout(function () {
-                    window.location.href = Feng.ctxPath + "/login";
-                },1000);
-
+                // setTimeout(function () {
+                //     //window.location.href = Feng.ctxPath + "/login";
+                //     window.location.href = Feng.ctxPath + "/login"
+                // },1000);
+                admin.closeThisDialog();
+                top.layer.open({
+                    type: 2,
+                    title: false,
+                    area: ['400px', '400px'],
+                    content: Feng.ctxPath + '/mgr/registerSuccess',
+                });
             }
 
         }, function (data) {
@@ -198,4 +205,8 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
         //添加 return false 可成功跳转页面
         return false;
     });
+
+    $("#btnLogin").on("click", function(){
+        admin.closeThisDialog();
+    })
 });

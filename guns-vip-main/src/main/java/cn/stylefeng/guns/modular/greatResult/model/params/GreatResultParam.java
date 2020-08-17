@@ -195,6 +195,11 @@ public class GreatResultParam implements Serializable, BaseValidatingParam {
      */
     private String belongDomain;
 
+    /**
+     * 评审备注
+     */
+    private String description;
+
     @Override
     public String checkParam() {
         return null;

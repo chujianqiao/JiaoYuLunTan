@@ -330,6 +330,11 @@
         where rel.role_id = #{roleId}
     </select>
 
+    <select id="getResUrls" resultType="string">
+        select URL from
+        sys_menu where 1 = 1
+    </select>
+
     <select id="getMenusByRoleIds" resultType="cn.stylefeng.guns.base.pojo.node.MenuNode">
         SELECT
         m1.menu_id AS id,

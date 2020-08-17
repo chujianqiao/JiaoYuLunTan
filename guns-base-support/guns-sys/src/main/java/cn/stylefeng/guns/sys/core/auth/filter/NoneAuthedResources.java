@@ -44,6 +44,7 @@ public class NoneAuthedResources {
             "/mgr/toForgetPwdTwo",
             "/mgr/forgetPwdOne",
             "/mgr/forgetPwdTwo",
+            "/mgr/registerSuccess",
 
             //加载当前语言字典并缓存
             "/translation/getUserTranslation",

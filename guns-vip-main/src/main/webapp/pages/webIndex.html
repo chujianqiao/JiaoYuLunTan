@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="renderer" content="webkit" />
-    <meta name ="viewport" content ="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0;">
+    <meta name ="viewport" content ="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
     <title>Document</title>
     <link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
     <link rel="stylesheet" href="${ctxPath}/assets/common/css/common.css" />
     <link rel="stylesheet" href="${ctxPath}/assets/common/css/border-1px.css" />
     <link rel="stylesheet" media="screen and (min-width:769px)" href="${ctxPath}/assets/common/css/custom_pc.css">
     <link rel="stylesheet" media="screen and (max-width:769px)" href="${ctxPath}/assets/common/css/custom_mobile.css" />
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/expand/css/style.css?v=${constants.getReleaseVersion()}" media="all"/>
 </head>
 <body>
 <div class="pc">
@@ -30,8 +33,8 @@
                         </div>
                         <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn" id="langSelect" />
                     </div>
-                    <div class="fontSize16" style="float:left;display: block;margin-right: 10px">
-                        <a href="/system/person_info" target="_blank" style="color: white">个人中心</a>
+                    <div id="userDiv" class="fontSize16" style="float:left;display: block;margin-right: 10px">
+                        <!--<a href="/system/person_info" target="_blank" style="color: white">个人中心</a>-->
                     </div>
                 </div>
             </div>
@@ -629,10 +632,79 @@
 <script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
 <script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
 <script src="${ctxPath}/assets/common/js/custom.js"></script>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
 <script>
     $(document).ready(function(){
         myJs.render();
+        if ("${roleNames! }" == "[超级管理员]"){
+            $("#userDiv").append("<a href=\"/admin\" target=\"_blank\" style=\"color: white;margin-right: 10px\">后台管理</a>");
+            $("#userDiv").append("<a href=\"/#\" id='btnLogout' target=\"_blank\" style=\"color: white\">退出</a>");
+        } else if ("${userName! }" == "" || "${userName! }" == null) {
+            $("#userDiv").append("<a id='btnLogin' style=\"color: white;cursor:pointer \">登录</a>");
+        } else {
+            $("#userDiv").append("<a href=\"/system/person_info\" target=\"_blank\" style=\"color: white;margin-right: 10px\"><i class=\"layui-icon\">&#xe770;</i>${userName! }</a>");
+            $("#userDiv").append("<a href=\"/#\" id='btnLogout' target=\"_blank\" style=\"color: white\">退出</a>");
+        }
+    });
 
+
+
+    layui.use(['layer', 'element', 'admin', 'func', 'index', 'ax'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var $ax = layui.ax;
+        var func = layui.func;
+        var admin = layui.admin;
+
+        var loginUrl = "${loginUrl!}";
+        if (loginUrl == "/webIndex.html"){
+            parent.location.reload();
+            admin.closeThisDialog();
+        }
+
+        var errorMsg = "${tips!}";
+        if (errorMsg == "请登陆！") {
+            layer.open({
+                type: 2,
+                title: false,
+                area: ['400px', '362px'],
+                content: '/login',
+            });
+            layer.msg(errorMsg, {icon: 5, anim: 6});
+        }
+
+        /**
+         * 弹出添加对话框
+         */
+        $("#btnLogin").click(function(){
+            layer.open({
+                type: 2,
+                title: false,
+                area: ['400px', '362px'],
+                content: '/login',
+                success: function(layero, index){
+
+                }
+            });
+        })
+
+        // 退出登录点击事件
+        $('#btnLogout').click(function () {
+            var ajax = new $ax(Feng.ctxPath + "/logout", function (data) {
+                Feng.success("退出成功!");
+                window.location.href = Feng.ctxPath + "/index";
+            }, function (data) {
+                layer.msg("退出失败！" + data.responseJSON.message, {icon: 5, anim: 6});
+            });
+            ajax.start();
+        });
     });
 </script>
 </body>

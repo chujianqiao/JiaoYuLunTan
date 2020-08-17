@@ -230,6 +230,12 @@ public class EducationResult implements Serializable {
     @TableField("belong_domain")
     private String belongDomain;
 
+    /**
+     * 评审备注
+     */
+    @TableField("description")
+    private String description;
+
 
     public Long getResultId() {
         return resultId;
@@ -511,6 +517,14 @@ public class EducationResult implements Serializable {
         this.belongDomain = belongDomain;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "EducationResult{" +
@@ -549,6 +563,7 @@ public class EducationResult implements Serializable {
         ", introducePath=" + introducePath +
         ", introduceName=" + introduceName +
         ", belongDomain=" + belongDomain +
+        ", description=" + description +
         "}";
     }
 }

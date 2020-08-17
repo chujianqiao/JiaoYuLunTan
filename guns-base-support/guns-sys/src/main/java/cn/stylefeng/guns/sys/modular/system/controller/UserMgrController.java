@@ -117,6 +117,10 @@ public class UserMgrController extends BaseController {
     public String registeUnitView() {
         return PREFIX + "user_addUnit.html";
     }
+    @RequestMapping("/registerSuccess")
+    public String registerSuccess() {
+        return PREFIX + "user_registerSuccess.html";
+    }
 
     /**
      * 跳转到生成账号的页面

@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * rest方式的登录控制器
@@ -54,7 +55,7 @@ public class RestLoginController extends BaseController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("登录接口")
-    public ResponseData restLogin(@RequestParam("username") String username,
+    public ResponseData restLogin(HttpServletRequest request, @RequestParam("username") String username,
                                   @RequestParam("password") String password) {
 
         if (ToolUtil.isOneEmpty(username, password)) {
@@ -62,7 +63,7 @@ public class RestLoginController extends BaseController {
         }
 
         //登录并创建token
-        String token = authService.login(username, password);
+        String token = authService.login(username, password, request);
 
         return new SuccessResponseData(token);
     }

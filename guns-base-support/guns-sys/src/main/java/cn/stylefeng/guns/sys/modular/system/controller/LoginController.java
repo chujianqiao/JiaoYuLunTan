@@ -87,14 +87,20 @@ public class LoginController extends BaseController {
             //用户信息为空，提示账号没分配角色登录不进去
             if (userIndexInfo == null) {
                 model.addAttribute("tips", "该用户没有角色，无法登陆");
-                return "/login.html";
+                return "/webIndex.html";
             } else {
                 model.addAllAttributes(userIndexInfo);
                 String url = DefaultAvatar.getLoginUrl();
                 LoginUser user = LoginContextHolder.getContext().getUser();
                 List roles = user.getRoleList();
                 long unit = 3;
-                String loginUrl = "/index.html";
+                if (user.getName() != "" && user.getName() != null){
+                    model.addAttribute("userName", user.getName());
+                }else {
+                    model.addAttribute("userName", user.getAccount());
+                }
+                model.addAttribute("roleNames", user.getRoleNames());
+                String loginUrl = "/webIndex.html";
                 if (roles.contains(unit)){
                     if (url.equals("/greatResult/add")){
                         loginUrl = "/unitResult.html";
@@ -150,12 +156,47 @@ public class LoginController extends BaseController {
                     }
                 }
 
-
+                //model.addAttribute("loginUrl", loginUrl);
                 return loginUrl;
             }
 
         } else {
-            return "/login.html";
+            model.addAttribute("tips", "请登陆！");
+            return "/webIndex.html";
+        }
+    }
+
+    /**
+     * 跳转到主页
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 5:41 PM
+     */
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String admin(Model model,HttpServletRequest request) {
+
+        //判断用户是否登录
+        if (LoginContextHolder.getContext().hasLogin()) {
+            Map<String, Object> userIndexInfo = userService.getUserIndexInfo();
+
+            //用户信息为空，提示账号没分配角色登录不进去
+            if (userIndexInfo == null) {
+                model.addAttribute("tips", "该用户没有角色，无法登陆");
+                return "/login.html";
+            } else {
+                model.addAllAttributes(userIndexInfo);
+                LoginUser user = LoginContextHolder.getContext().getUser();
+                List roles = user.getRoleList();
+                if (roles.contains(1l)){
+                    return "/index.html";
+                }else {
+                    return "/webIndex.html";
+                }
+
+            }
+
+        } else {
+            return "/webIndex.html";
         }
     }
 
@@ -166,9 +207,10 @@ public class LoginController extends BaseController {
      * @Date 2018/12/23 5:41 PM
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
+    public String login(Model model) {
         if (LoginContextHolder.getContext().hasLogin()) {
-            return REDIRECT + "/";
+            model.addAttribute("loginUrl","/webIndex.html");
+            return "/webIndex.html";
         } else {
             return "/login.html";
         }
@@ -229,7 +271,7 @@ public class LoginController extends BaseController {
         }
 
         //登录并创建token
-        String token = authService.login(username, password);
+        String token = authService.login(username, password, request);
 
         return new SuccessResponseData(token);
     }
@@ -294,7 +336,15 @@ public class LoginController extends BaseController {
      * @Date 2018/12/23 5:42 PM
      */
     @RequestMapping(value = "/index")
-    public String index() {
+    public String index(Model model) {
+        if (LoginContextHolder.getContext().hasLogin()){
+            LoginUser user = LoginContextHolder.getContext().getUser();
+            if (user != null){
+                model.addAttribute("userName",user.getName());
+                model.addAttribute("roleNames",user.getRoleNames());
+            }
+        }
+
         return "/webIndex.html";
     }
 

@@ -69,7 +69,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @date 2017年2月19日 下午7:12:38
      */
     List<String> getResUrlsByRoleId(@Param("roleId") Long roleId);
-
+    List<String> getResUrls();
     /**
      * 根据角色获取菜单
      *
@@ -103,5 +103,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @Date 2019/3/31 15:51
      */
     List<Menu> getMenusLikePcodes(@Param("code") String code);
+
+
 
 }
