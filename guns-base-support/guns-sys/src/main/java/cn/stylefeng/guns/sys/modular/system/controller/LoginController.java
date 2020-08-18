@@ -161,7 +161,7 @@ public class LoginController extends BaseController {
             }
 
         } else {
-            model.addAttribute("tips", "请登陆！");
+            //model.addAttribute("tips", "请登陆！");
             return "/webIndex.html";
         }
     }
