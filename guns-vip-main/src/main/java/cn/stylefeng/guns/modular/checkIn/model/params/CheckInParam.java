@@ -55,6 +55,16 @@ public class CheckInParam implements Serializable, BaseValidatingParam {
      */
     private String signPlace;
 
+    /**
+     * 大会或者论坛 0-大会 1-论坛
+     */
+    private Integer meetOrForum;
+
+    /**
+     * 论坛ID
+     */
+    private Long forumId;
+
     @Override
     public String checkParam() {
         return null;

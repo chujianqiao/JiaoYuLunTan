@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{js:["/assets/checkIn/checkIn.js"]}){
+@layout("/common/_container.html",{js:["/assets/checkIn/checkIn.js","/assets/modular/frame/user_info.js"]}){
 
 <div class="layui-body-header">
     <span class="layui-body-header-title">报到签到表管理</span>
@@ -9,25 +9,56 @@
         <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
             <div class="layui-card">
                 <div class="layui-card-body">
-                    <div class="layui-form toolbar">
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <div class="">
-                                    <select id="signStatus" name="signStatus" lay-filter="status">
-                                        <option value="">请选择</option>
-                                        <option value="0">未签到</option>
-                                        <option value="1">已签到</option>
-                                    </select>
+                    <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">大会报到签到信息</li>
+                            <li>分论坛报到签到信息</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
+                                <div class="layui-form toolbar">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <div class="">
+                                                <select id="signStatus" name="signStatus" lay-filter="status">
+                                                    <option value="">请选择签到状态</option>
+                                                    <option value="0">未签到</option>
+                                                    <option value="1">已签到</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                            <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                                            <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                        </div>
+                                    </div>
                                 </div>
+                                <table class="layui-table" id="checkInTable" lay-filter="checkInTable"></table>
                             </div>
-                            <div class="layui-inline">
-                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
-                                <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                            <div class="layui-tab-item">
+                                <div class="layui-form toolbar">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <div class="">
+                                                <select id="signStatusForum" name="signStatus" lay-filter="statusForum">
+                                                    <option value="">请选择签到状态</option>
+                                                    <option value="0">未签到</option>
+                                                    <option value="1">已签到</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <button id="btnSearchForum" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                            <button id="btnAddForum" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                                            <button id="btnExpForum" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="layui-table" id="checkInTableForum" lay-filter="checkInTableForum"></table>
                             </div>
                         </div>
                     </div>
-                    <table class="layui-table" id="checkInTable" lay-filter="checkInTable"></table>
                 </div>
             </div>
         </div>
@@ -37,5 +68,9 @@
 <script type="text/html" id="tableBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看详情</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>
+<script type="text/html" id="tableBarForum">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detailForum">查看详情</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="deleteForum">删除</a>
 </script>
 @}

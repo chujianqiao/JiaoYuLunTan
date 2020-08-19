@@ -103,10 +103,14 @@ public class OwnForumController extends BaseController {
      */
     @RequestMapping("/detailAdmin")
     public String detailAdmin(Integer applyType) {
-        if (applyType == 1){
-            return PREFIX + "/ownForum_detail.html";
+        if (LoginContextHolder.getContext().isAdmin()) {
+            if (applyType == 1) {
+                return PREFIX + "/ownForum_detail.html";
+            } else {
+                return PREFIX + "/ownForum_detailUnit.html";
+            }
         }else {
-            return PREFIX + "/ownForum_detailUnit.html";
+            return PREFIX + "/ownForum_detail_person.html";
         }
     }
 

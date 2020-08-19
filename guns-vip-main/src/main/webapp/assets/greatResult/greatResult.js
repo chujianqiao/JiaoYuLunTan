@@ -23,7 +23,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
             {field: 'resultName', sort: true, title: '成果名称'},
-            {field: 'belongName', sort: true, title: '归属单位/个人'},
+            {field: 'belongName', sort: true, title: '申请人姓名'},
+            {field: 'reviewName', sort: true, title: '评审专家'},
+            {field: 'reviewResult', sort: true, title: '评审状态'},
+            {field: 'score', sort: true, title: '评审分数'},
             /*{field: 'applyType', sort: true, title: '申请方式; 1-个人, 2-单位'},
             {field: 'manager', sort: true, title: '负责人姓名'},
             {field: 'manaPhone', sort: true, title: '负责人电话'},
@@ -40,10 +43,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'influence', sort: true, title: '成果影响力'},
             {field: 'slogan', sort: true, title: '宣传口号'},
             {field: 'designImg', sort: true, title: '易拉宝设计图路径'},*/
-            {field: 'keyword', sort: true, title: '关键词'},
-            {field: 'keyword', sort: true, title: '评审专家'},
-            {field: 'keyword', sort: true, title: '评审状态'},
-            {field: 'keyword', sort: true, title: '评审分数'},
+            //{field: 'keyword', sort: true, title: '关键词'},
             /*{field: 'letterPath', sort: true, title: '专家推荐信附件路径'},
             {field: 'commitPath', sort: true, title: '原创承诺书路径'},
             {field: 'form', sort: true, title: '成果形式'},
@@ -59,12 +59,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'refuseTime', sort: true, title: '申请驳回时间'},
             {field: 'passTime', sort: true, title: '审核通过时间'},
             {field: 'cancelTime', sort: true, title: '取消申请时间'},*/
-            {align: 'center', title: '操作', templet: function(data){
-                    if (data.checkStatus == 1) {
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"approve\">审批</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
-                    }else {
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
-                    }
+            {align: 'center', title: '操作',minWidth:220, templet: function(data){
+                    return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
                 }}
         ]];
     };
@@ -123,11 +121,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     GreatResult.openDetail = function (data) {
-        func.open({
+        window.location.href = Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType;
+        /*func.open({
             title: '详情信息',
             content: Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType,
             tableId: GreatResult.tableId
-        });
+        });*/
     };
 
 
@@ -162,10 +161,40 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         Feng.confirm("是否删除?", operation);
     };
 
+    GreatResult.jumpAssignPage = function (data) {
+        func.open({
+            title: '分配评审人',
+            area: ['350px', '300px'],
+            content: Feng.ctxPath + '/greatResult/assign?resultId=' + data.resultId,
+            tableId: GreatResult.tableId
+        });
+    };
+
+    GreatResult.jumpAssignPageBatch = function (data) {
+        var checkRows = table.checkStatus(GreatResult.tableId);
+        var belongDomain = $("#belongDomain").val();
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择被分配的数据");
+        } else if (belongDomain == ""){
+            Feng.error("请先根据领域筛选，再进行批量分配。");
+        } else {
+            var resultIds = "";
+            for (var i = 0;i < checkRows.data.length;i++){
+                resultIds = resultIds + checkRows.data[i].resultId + ";";
+            }
+            func.open({
+                title: '分配评审人',
+                area: ['350px', '300px'],
+                content: Feng.ctxPath + '/greatResult/assign?resultId=' + resultIds,
+                tableId: GreatResult.tableId
+            });
+        }
+    };
+
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + GreatResult.tableId,
-        url: Feng.ctxPath + '/greatResult/list',
+        url: Feng.ctxPath + '/greatResult/wrapList',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
@@ -189,6 +218,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         GreatResult.exportExcel();
     });
 
+    //批量分配
+    $('#assignBatch').click(function () {
+        GreatResult.jumpAssignPageBatch();
+    });
+
     // 工具条点击事件
     table.on('tool(' + GreatResult.tableId + ')', function (obj) {
         var data = obj.data;
@@ -202,6 +236,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             GreatResult.openApprove(data);
         } else if (layEvent === 'detail') {
             GreatResult.openDetail(data);
+        } else if (layEvent === 'assign') {
+            GreatResult.jumpAssignPage(data);
         }
     });
 });

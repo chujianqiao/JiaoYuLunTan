@@ -158,10 +158,25 @@ public class CheckInController extends BaseController {
      * @Date 2020-07-30
      */
     @ResponseBody
-    @RequestMapping("/wraplist")
-    public LayuiPageInfo wraplist(CheckInParam checkInParam) {
+    @RequestMapping("/wrapList")
+    public LayuiPageInfo wrapList(CheckInParam checkInParam) {
 
         Page<Map<String, Object>> checkIn = this.checkInService.findPageWrap(checkInParam);
+        Page wrapped = new CheckInWrapper(checkIn).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    /**
+     * 查询列表
+     *
+     * @author CHU
+     * @Date 2020-07-30
+     */
+    @ResponseBody
+    @RequestMapping("/wrapListForum")
+    public LayuiPageInfo wrapListForum(CheckInParam checkInParam) {
+
+        Page<Map<String, Object>> checkIn = this.checkInService.findPageWrapForum(checkInParam);
         Page wrapped = new CheckInWrapper(checkIn).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }

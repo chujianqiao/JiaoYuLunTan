@@ -122,7 +122,9 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
 
 
-
+    $('#cancel').click(function(){
+        window.location.href = Feng.ctxPath + '/ownForum'
+    });
 
 
     //获取详情信息，填充表单

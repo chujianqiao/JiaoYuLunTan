@@ -42,7 +42,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var result = ajax.start();
     console.log(result);
     for (var i = 0; i < result.count; i++){
-        if (i%3==0){
+        if (i!=0 && i%7==0){
             $("#divLink").append("<br><br>");
         }
         var input=$("<input>");

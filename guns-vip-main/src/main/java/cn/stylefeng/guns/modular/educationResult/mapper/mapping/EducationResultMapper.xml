@@ -85,6 +85,12 @@
         select
         <include refid="Base_Column_List"/>
         from education_result where 1 = 1
+        <if test="paramCondition.resultName != null and paramCondition.resultName != ''">
+            and result_name like CONCAT('%',#{paramCondition.resultName},'%')
+        </if>
+        <if test="paramCondition.belongDomain != null and paramCondition.belongDomain != ''">
+            and belong_domain like CONCAT('%',#{paramCondition.belongDomain},'%')
+        </if>
     </select>
 
 </mapper>

@@ -112,11 +112,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     OwnForum.openDetail = function (data) {
-        func.open({
+        window.location.href = Feng.ctxPath + '/ownForum/detailAdmin?forumId=' + data.forumId + '&applyType=' + data.applyType;
+        /*func.open({
             title: '详情信息',
             content: Feng.ctxPath + '/ownForum/detailAdmin?forumId=' + data.forumId + '&applyType=' + data.applyType,
             tableId: OwnForum.tableId
-        });
+        });*/
     };
 
     /**

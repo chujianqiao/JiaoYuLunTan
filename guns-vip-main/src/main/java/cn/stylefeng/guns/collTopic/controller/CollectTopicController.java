@@ -73,7 +73,11 @@ public class CollectTopicController extends BaseController {
      */
     @RequestMapping("/edit")
     public String edit() {
-        return PREFIX + "/collectTopic_edit.html";
+        if (LoginContextHolder.getContext().isAdmin()) {
+            return PREFIX + "/collectTopic_edit.html";
+        }else {
+            return PREFIX + "/collectTopic_edit_person.html";
+        }
     }
 
     /**

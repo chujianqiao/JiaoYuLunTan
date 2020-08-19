@@ -54,4 +54,14 @@ public class CheckInResult implements Serializable {
      */
     private String signPlace;
 
+    /**
+     * 大会或者论坛 0-大会 1-论坛
+     */
+    private Integer meetOrForum;
+
+    /**
+     * 论坛ID
+     */
+    private Long forumId;
+
 }

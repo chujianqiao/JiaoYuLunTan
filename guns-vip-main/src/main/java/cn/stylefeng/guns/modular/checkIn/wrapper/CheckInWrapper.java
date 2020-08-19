@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.modular.checkIn.wrapper;
 
+import cn.stylefeng.guns.modular.forum.model.result.ForumResult;
+import cn.stylefeng.guns.modular.forum.service.ForumService;
 import cn.stylefeng.guns.sys.modular.system.entity.Role;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.mapper.RoleMapper;
@@ -17,6 +19,8 @@ public class CheckInWrapper extends BaseControllerWrapper {
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
 
     private RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
+
+    private ForumService forumService = SpringContextHolder.getBean(ForumService.class);
 
     public CheckInWrapper(Map<String, Object> single) {
         super(single);
@@ -59,6 +63,16 @@ public class CheckInWrapper extends BaseControllerWrapper {
         }else {
             map.put("signStatus","已签到");
         }
+
+        //区分大会还是论坛
+        int meetOrForum = (Integer) map.get("meetOrForum");
+        Long forumId = (Long) map.get("forumId");
+        String forumName = "";
+        if (meetOrForum == 1){
+            ForumResult forumResult = forumService.findById(forumId);
+            forumName = forumResult.getForumName();
+        }
+        map.put("forumName",forumName);
         map.put("roleName",roleName);
         map.put("name",user.getName());
         map.put("post",user.getPost());

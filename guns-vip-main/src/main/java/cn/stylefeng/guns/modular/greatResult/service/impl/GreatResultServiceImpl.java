@@ -4,6 +4,7 @@ import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam;
 import cn.stylefeng.guns.modular.greatResult.entity.GreatResult;
 import cn.stylefeng.guns.modular.greatResult.mapper.GreatResultMapper;
 import cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -56,6 +58,12 @@ public class GreatResultServiceImpl extends ServiceImpl<GreatResultMapper, Great
     @Override
     public List<GreatResultResult> findListBySpec(GreatResultParam param){
         return null;
+    }
+
+    @Override
+    public Page<Map<String, Object>> findPageWrap(GreatResultParam param) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.customPageMapList(page,param);
     }
 
     @Override

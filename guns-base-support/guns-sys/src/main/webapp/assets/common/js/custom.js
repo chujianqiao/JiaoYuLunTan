@@ -230,7 +230,7 @@ myJs={
 		formTab:function(){
 			var $tab=$('#formTab');
 			var $forms=$('#formList').find('.form');
-			$tab.find('span').hover(function(){
+			$tab.find('span').click(function(){
 				var index=$(this).index();
 				$tab.find('span').removeClass('hover');
 				$(this).addClass('hover');

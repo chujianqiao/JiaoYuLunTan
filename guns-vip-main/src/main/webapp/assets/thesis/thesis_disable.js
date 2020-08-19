@@ -455,10 +455,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
                     options += '<option value="'+ domain.domainId+ '" >'+ domain.domainName +'</option>';
                 }
                 $('#belongDomain').empty();
-                $('#belongDomain').append("<option value=''>请选择</option>");
+                $('#belongDomain').append("<option value=''>请选择领域</option>");
                 $('#belongDomain').append(options);
                 $('#belongDomainAgain').empty();
-                $('#belongDomainAgain').append("<option value=''>请选择</option>");
+                $('#belongDomainAgain').append("<option value=''>请选择领域</option>");
                 $('#belongDomainAgain').append(options);
                 form.render('select');
             }

@@ -4,9 +4,11 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.modular.educationResult.entity.EducationResult;
 import cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam;
 import cn.stylefeng.guns.modular.educationResult.model.result.EducationResultResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -66,4 +68,10 @@ public interface EducationResultService extends IService<EducationResult> {
      */
      LayuiPageInfo findPageBySpec(EducationResultParam param);
 
+    /**
+     * 拼接数据
+     * @author wucy
+     * @Date 2020-05-25
+     */
+    Page<Map<String, Object>> findPageWrap(EducationResultParam param);
 }

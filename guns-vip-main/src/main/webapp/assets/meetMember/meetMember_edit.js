@@ -25,11 +25,12 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     // var result = ajax.start();
     // form.val('meetMemberForm', result.data);
 
-
     /**
      * 加载页面时执行
      */
     $(function(){
+        domainSelectOption();
+    })
         var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
         var result = ajax.start();
         var ownForumid = result.data.ownForumid;
@@ -76,7 +77,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         // if(title != '教授'){
         //     $('#professor').remove();
         // }
-    })
+
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
@@ -218,4 +219,34 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         form.submit();
     }
 
+    function domainSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/thesisDomain/list" ,
+            success:function(response){
+                var data=response.data;
+                var domains = [];
+                domains = data;
+
+                var options;
+                for (var i = 0 ;i < domains.length ;i++){
+                    var domain = data[i];
+                    options += '<option value="'+ domain.domainId+ '" >'+ domain.domainName +'</option>';
+                }
+                $('#belongDomain').empty();
+                //$('#belongDomain').append("<option value=''>请选择论文领域</option>");
+                $('#belongDomain').append(options);
+                //form.render('select');
+
+                var selectDomain = document.getElementById("belongDomain");
+                for (var i = 0; i < selectDomain.options.length; i++) {
+                    console.log(selectDomain.options[i].value + "----" + domiansId)
+                    if (selectDomain.options[i].value == domiansId) {
+                        selectDomain.options[i].selected = true;
+                    }
+                }
+                form.render('select');
+            }
+        })
+    }
 });

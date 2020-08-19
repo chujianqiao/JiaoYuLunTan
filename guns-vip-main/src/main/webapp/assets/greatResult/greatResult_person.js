@@ -23,7 +23,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
             {field: 'resultName', sort: true, title: '成果名称'},
-            {field: 'belongName', sort: true, title: '归属单位/个人'},
+            {field: 'belongName', sort: true, title: '申请人姓名'},
+            {field: 'team', sort: true, title: '所在单位'},
+            {field: 'score', sort: true, title: '评审分数'},
+            {field: 'reviewResult', sort: true, title: '评审结果'},
             /*{field: 'applyType', sort: true, title: '申请方式; 1-个人, 2-单位'},
             {field: 'manager', sort: true, title: '负责人姓名'},
             {field: 'manaPhone', sort: true, title: '负责人电话'},
@@ -40,18 +43,17 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'influence', sort: true, title: '成果影响力'},
             {field: 'slogan', sort: true, title: '宣传口号'},
             {field: 'designImg', sort: true, title: '易拉宝设计图路径'},*/
-            {field: 'keyword', sort: true, title: '关键词'},
+            //{field: 'keyword', sort: true, title: '关键词'},
             /*{field: 'letterPath', sort: true, title: '专家推荐信附件路径'},
             {field: 'commitPath', sort: true, title: '原创承诺书路径'},
             {field: 'form', sort: true, title: '成果形式'},
-
             {field: 'detail', sort: true, title: '成果内容'},*/
-            {field: 'checkStatus', sort: true, title: '申报状态', templet: function(data){
+            /*{field: 'checkStatus', sort: true, title: '申报状态', templet: function(data){
                     if (data.checkStatus == 1) return '申请中';
                     if (data.checkStatus == 2) return '已通过';
                     if (data.checkStatus == 3) return '未通过';
                     if (data.checkStatus == 0) return '已取消';
-                }},//; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
+                }},*///; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请
             /*{field: 'applyId', sort: true, title: '申请人/单位ID'},
             {field: 'applyTime', sort: true, title: '申请提交时间'},
             {field: 'refuseTime', sort: true, title: '申请驳回时间'},
@@ -111,11 +113,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     GreatResult.openDetail = function (data) {
-        func.open({
+        window.location.href = Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType;
+        /*func.open({
             title: '详情信息',
             content: Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType,
             tableId: GreatResult.tableId
-        });
+        });*/
     };
 
     /**

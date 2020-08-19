@@ -1,12 +1,15 @@
 package cn.stylefeng.guns.modular.greatResult.service;
 
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam;
 import cn.stylefeng.guns.modular.greatResult.entity.GreatResult;
 import cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam;
 import cn.stylefeng.guns.modular.greatResult.model.result.GreatResultResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -66,4 +69,10 @@ public interface GreatResultService extends IService<GreatResult> {
      */
      LayuiPageInfo findPageBySpec(GreatResultParam param);
 
+    /**
+     * 拼接数据
+     * @author wucy
+     * @Date 2020-05-25
+     */
+    Page<Map<String, Object>> findPageWrap(GreatResultParam param);
 }

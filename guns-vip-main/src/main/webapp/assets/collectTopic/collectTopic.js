@@ -64,11 +64,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
       * @param data 点击按钮时候的行数据
       */
       CollectTopic.openEditDlg = function (data) {
-          func.open({
+          window.location.href = Feng.ctxPath + '/collectTopic/edit?topicId=' + data.topicId;
+          /*func.open({
               title: '会议主题征集',
               content: Feng.ctxPath + '/collectTopic/edit?topicId=' + data.topicId,
               tableId: CollectTopic.tableId
-          });
+          });*/
       };
 
 

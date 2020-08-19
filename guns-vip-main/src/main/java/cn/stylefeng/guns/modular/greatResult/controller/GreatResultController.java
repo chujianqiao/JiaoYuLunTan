@@ -3,17 +3,25 @@ package cn.stylefeng.guns.modular.greatResult.controller;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.log.BussinessLog;
+import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.ResultDict;
+import cn.stylefeng.guns.expert.entity.ReviewMajor;
+import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
+import cn.stylefeng.guns.expert.service.ReviewMajorService;
 import cn.stylefeng.guns.modular.greatResult.entity.GreatResult;
 import cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam;
 import cn.stylefeng.guns.modular.greatResult.service.GreatResultService;
+import cn.stylefeng.guns.modular.greatResult.wrapper.GreatResultWrapper;
+import cn.stylefeng.guns.modular.greatReviewMiddle.model.params.GreatReviewMiddleParam;
+import cn.stylefeng.guns.modular.greatReviewMiddle.service.GreatReviewMiddleService;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -39,6 +48,12 @@ public class GreatResultController extends BaseController {
 
     @Autowired
     private GreatResultService greatResultService;
+
+    @Autowired
+    private ReviewMajorService reviewMajorService;
+
+    @Autowired
+    private GreatReviewMiddleService greatReviewMiddleService;
 
     @Value("${file.uploadFolder}")
     private String uploadFolder;
@@ -102,10 +117,14 @@ public class GreatResultController extends BaseController {
      */
     @RequestMapping("/detailAdmin")
     public String detailAdmin(Integer applyType) {
-        if (applyType == 1){
-            return PREFIX + "/greatResult_detail.html";
+        if (LoginContextHolder.getContext().isAdmin()) {
+            if (applyType == 1) {
+                return PREFIX + "/greatResult_detail.html";
+            } else {
+                return PREFIX + "/greatResult_detailUnit.html";
+            }
         }else {
-            return PREFIX + "/greatResult_detailUnit.html";
+            return PREFIX + "/greatResult_detail_person.html";
         }
     }
 
@@ -124,6 +143,50 @@ public class GreatResultController extends BaseController {
         }else {
             return PREFIX + "/greatResult_editUnit.html";
         }
+    }
+
+    /**
+     * 分配评审人
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/assign")
+    public String assign() {
+        return PREFIX + "/assign_great.html";
+    }
+
+    /**
+     * 分配评审专家接口
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/assignItem")
+    @ResponseBody
+    public ResponseData assignItem(GreatResultParam greatResultParam,String reviewUser, String resultIds) {
+        String majors = reviewUser;
+        String [] majorIds = majors.split(",");
+        for(int i =0 ;i < majorIds.length ;i++){
+            long userId = Long.parseLong(majorIds[i]);
+            ReviewMajor reviewMajor = this.reviewMajorService.getById(userId);
+            int thesisCount = reviewMajor.getThesisCount();
+            thesisCount += 1;
+            ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
+            reviewMajorParam.setReviewId(userId);
+            reviewMajorParam.setThesisCount(thesisCount);
+            this.reviewMajorService.update(reviewMajorParam);
+
+            String[] resultId = resultIds.split(";");
+            for (int j = 0;j < resultId.length;j++){
+                GreatReviewMiddleParam param = new GreatReviewMiddleParam();
+                param.setResultId(Long.parseLong(resultId[j]));
+                param.setUserId(userId);
+                param.setReviewResult(2);
+                //param.setScore(0);
+                this.greatReviewMiddleService.add(param);
+            }
+
+        }
+        return ResponseData.success();
     }
 
     /**
@@ -257,6 +320,19 @@ public class GreatResultController extends BaseController {
         Long userId = LoginContextHolder.getContext().getUserId();
         greatResultParam.setApplyId(userId);
         return this.greatResultService.findPageBySpec(greatResultParam);
+    }
+
+    /**
+     * 查询列表（拼接字段）
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @ResponseBody
+    @RequestMapping("/wrapList")
+    public Object wrapList(GreatResultParam educationResultParam) {
+        Page<Map<String, Object>> theses = this.greatResultService.findPageWrap(educationResultParam);
+        Page wrapped = new GreatResultWrapper(theses).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
     }
 
     /**

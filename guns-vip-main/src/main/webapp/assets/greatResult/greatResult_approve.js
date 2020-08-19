@@ -130,7 +130,9 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
 
 
-
+    $('#cancel').click(function(){
+        window.location.href = Feng.ctxPath + '/greatResult'
+    });
 
 
 

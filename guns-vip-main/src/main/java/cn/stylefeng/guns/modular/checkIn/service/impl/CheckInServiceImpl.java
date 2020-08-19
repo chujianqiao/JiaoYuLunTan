@@ -69,6 +69,11 @@ public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> impl
         Page page = LayuiPageFactory.defaultPage();
         return this.baseMapper.customPageMapList(page,param);
     }
+    @Override
+    public Page<Map<String, Object>> findPageWrapForum(CheckInParam param) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.customPageMapListForum(page,param);
+    }
 
     private Serializable getKey(CheckInParam param){
         return param.getCheckId();

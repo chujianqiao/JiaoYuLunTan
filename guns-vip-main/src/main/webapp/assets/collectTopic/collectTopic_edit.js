@@ -21,6 +21,10 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var form = layui.form;
     var admin = layui.admin;
 
+    $('#cancel').click(function(){
+        window.location.href = Feng.ctxPath + '/collectTopic'
+    });
+
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/collectTopic/detail?topicId=" + Feng.getUrlParam("topicId"));
     var result = ajax.start();

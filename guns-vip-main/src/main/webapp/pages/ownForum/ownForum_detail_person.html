@@ -1,0 +1,144 @@
+@layout("/common/_form.html",{js:["/assets/ownForum/ownForum_approve.js"]}){
+
+<body>
+<div class="page">
+    <!-- 头部 -->
+    @include("/common/person_header.html"){}
+    <div class="func-column-container widthC mCenter mb40">
+        <form class="layui-form" id="ownForumForm" lay-filter="ownForumForm">
+            <div class="layui-fluid" style="padding-bottom: 75px;">
+                <div class="layui-card">
+                    <div class="layui-card-header">基本信息</div>
+                    <div class="layui-card-body">
+                        <div class="layui-form-item layui-row">
+                            <input name="forumId" type="hidden"/>
+
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">论坛名称<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="forumName" name="forumName" disabled placeholder="请输入论坛名称" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <!--<div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">申报种类; 1-个人,2-单位<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="applyType" name="applyType" placeholder="请输入申报种类; 1-个人,2-单位" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="applyStatus" name="applyStatus" placeholder="请输入申报状态; 1-申请中, 2-已通过 , 3-未通过 , 0-取消申请" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>-->
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">姓名<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="manager" name="manager" disabled placeholder="请输入姓名" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">电话<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="manaPhone" name="manaPhone" disabled placeholder="请输入电话" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">邮箱<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="manaEmail" name="manaEmail" disabled placeholder="请输入邮箱" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">职称<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="title" name="title" disabled placeholder="请输入职称" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">职务<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="post" name="post" disabled placeholder="请输入职务" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">单位名称<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="unitName" name="unitName" disabled placeholder="请输入单位名称" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">研究方向<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="direction" name="direction" disabled placeholder="请输入研究方向" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">论坛主题名称<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="forumTopic" name="forumTopic" disabled placeholder="请输入论坛主题名称" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">论坛计划规模<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="forumSize" name="forumSize" disabled placeholder="请输入论坛计划规模" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">是否有课题团队<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input type="radio" disabled name="issubject" value="1" title="是" checked/>
+                                    <input type="radio" disabled name="issubject" value="0" title="否"/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">课题级别<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="subjectLev" disabled name="subjectLev" placeholder="请输入课题级别" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">课题名称<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="subjectName" disabled name="subjectName" placeholder="请输入课题名称" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <!--<div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">论坛申报方案附件路径<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="planPath" name="planPath" placeholder="请输入论坛申报方案附件路径" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>-->
+
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">论坛申报方案附件<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
+                                    <input id="planPath" name="planPath" type="hidden" class="layui-input"/>
+                                    <input id="planName" name="planName" type="hidden" class="layui-input"/>
+                                    <div style="float: left;">
+                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadPlan"><i class="layui-icon"></i>附件下载</button>
+                                    </div>
+                                    <div style="float: left;">
+                                        <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+                                        <input name="planName" id="fileNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;返回&emsp;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <!-- 尾部 -->
+    @include("/common/person_footer.html"){}
+</div>
+</body>
+@}

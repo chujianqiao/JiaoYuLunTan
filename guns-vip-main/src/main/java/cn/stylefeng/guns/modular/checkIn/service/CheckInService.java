@@ -74,6 +74,12 @@ public interface CheckInService extends IService<CheckIn> {
      * @return
      */
     Page<Map<String, Object>> findPageWrap(CheckInParam param);
+    /**
+     * 拼接字段用
+     * @param param
+     * @return
+     */
+    Page<Map<String, Object>> findPageWrapForum(CheckInParam param);
 
 
 }

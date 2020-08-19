@@ -62,6 +62,18 @@ public class CheckIn implements Serializable {
     @TableField("sign_place")
     private String signPlace;
 
+    /**
+     * 大会或者论坛 0-大会 1-论坛
+     */
+    @TableField("meet_or_forum")
+    private Integer meetOrForum;
+
+    /**
+     * 论坛ID
+     */
+    @TableField("forum_id")
+    private Long forumId;
+
 
     public Long getCheckId() {
         return checkId;
@@ -119,6 +131,22 @@ public class CheckIn implements Serializable {
         this.signPlace = signPlace;
     }
 
+    public Integer getMeetOrForum() {
+        return meetOrForum;
+    }
+
+    public void setMeetOrForum(Integer meetOrForum) {
+        this.meetOrForum = meetOrForum;
+    }
+
+    public Long getForumId() {
+        return forumId;
+    }
+
+    public void setForumId(Long forumId) {
+        this.forumId = forumId;
+    }
+
     @Override
     public String toString() {
         return "CheckIn{" +
@@ -129,6 +157,8 @@ public class CheckIn implements Serializable {
         ", signStatus=" + signStatus +
         ", signTime=" + signTime +
         ", signPlace=" + signPlace +
+        ", meetOrForum=" + meetOrForum +
+        ", forumId=" + forumId +
         "}";
     }
 }

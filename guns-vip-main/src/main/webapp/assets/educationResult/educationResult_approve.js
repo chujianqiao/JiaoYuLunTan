@@ -131,8 +131,12 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
 
 
-
-
+    $('#cancel').click(function(){
+        window.location.href = Feng.ctxPath + '/greatResult'
+    });
+    $('#eduCancel').click(function(){
+        window.location.href = Feng.ctxPath + '/educationResult'
+    });
 
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/educationResult/detail?resultId=" + Feng.getUrlParam("resultId"));

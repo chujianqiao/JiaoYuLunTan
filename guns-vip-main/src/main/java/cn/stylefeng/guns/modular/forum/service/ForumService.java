@@ -76,4 +76,6 @@ public interface ForumService extends IService<Forum> {
     Page<Map<String, Object>> findPageWrap(ForumParam param);
 
     Integer setStatus(Long forumId, Integer status);
+
+    ForumResult findById(Long forumId);
 }

@@ -70,7 +70,7 @@
         <if test="paramCondition.reviewUser != null and paramCondition.reviewUser != ''">
             and review_user like CONCAT('%',#{paramCondition.reviewUser},'%')
         </if>
-        <if test="paramCondition.belongDomain != null and paramCondition.reviewUser != ''">
+        <if test="paramCondition.belongDomain != null and paramCondition.belongDomain != ''">
             and belong_domain like CONCAT('%',#{paramCondition.belongDomain},'%')
         </if>
     </select>

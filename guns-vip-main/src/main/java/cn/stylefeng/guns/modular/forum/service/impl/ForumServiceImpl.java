@@ -93,4 +93,9 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Forum> implements
         return this.baseMapper.setStatus(forumId, status);
     }
 
+    @Override
+    public ForumResult findById(Long forumId){
+        return this.baseMapper.findById(forumId);
+    }
+
 }

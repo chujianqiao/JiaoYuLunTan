@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -56,6 +57,12 @@ public class EducationResultServiceImpl extends ServiceImpl<EducationResultMappe
     @Override
     public List<EducationResultResult> findListBySpec(EducationResultParam param){
         return null;
+    }
+
+    @Override
+    public Page<Map<String, Object>> findPageWrap(EducationResultParam param) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.customPageMapList(page,param);
     }
 
     @Override

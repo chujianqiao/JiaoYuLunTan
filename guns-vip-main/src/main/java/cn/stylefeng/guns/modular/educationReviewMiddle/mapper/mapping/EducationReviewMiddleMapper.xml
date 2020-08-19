@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.educationReviewMiddle.mapper.EducationReviewMiddleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.educationReviewMiddle.entity.EducationReviewMiddle">
+        <id column="middle_id" property="middleId" />
+        <result column="user_id" property="userId" />
+        <result column="result_id" property="resultId" />
+        <result column="score" property="score" />
+        <result column="review_result" property="reviewResult" />
+        <result column="description" property="description" />
+        <result column="review_time" property="reviewTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        middle_id AS "middleId", user_id AS "userId", result_id AS "resultId", score AS "score", review_result AS "reviewResult", description AS "description", review_time AS "reviewTime"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.educationReviewMiddle.model.result.EducationReviewMiddleResult" parameterType="cn.stylefeng.guns.modular.educationReviewMiddle.model.params.EducationReviewMiddleParam">
+        select
+        <include refid="Base_Column_List"/>
+        from education_review_middle where 1 = 1
+        <if test="paramCondition.resultId != null and paramCondition.resultId != ''">
+            and result_id = #{paramCondition.resultId}
+        </if>
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.educationReviewMiddle.model.params.EducationReviewMiddleParam">
+        select
+        <include refid="Base_Column_List"/>
+        from education_review_middle where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.educationReviewMiddle.model.result.EducationReviewMiddleResult" parameterType="cn.stylefeng.guns.modular.educationReviewMiddle.model.params.EducationReviewMiddleParam">
+        select
+        <include refid="Base_Column_List"/>
+        from education_review_middle where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.educationReviewMiddle.model.params.EducationReviewMiddleParam">
+        select
+        <include refid="Base_Column_List"/>
+        from education_review_middle where 1 = 1
+    </select>
+
+</mapper>

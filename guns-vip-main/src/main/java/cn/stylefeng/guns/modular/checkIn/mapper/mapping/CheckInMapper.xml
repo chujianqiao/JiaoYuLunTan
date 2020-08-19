@@ -11,11 +11,13 @@
         <result column="sign_status" property="signStatus" />
         <result column="sign_time" property="signTime" />
         <result column="sign_place" property="signPlace" />
+        <result column="meet_or_forum" property="meetOrForum" />
+        <result column="forum_id" property="forumId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        check_id AS "checkId", user_id AS "userId", register_status AS "registerStatus", register_time AS "registerTime", sign_status AS "signStatus", sign_time AS "signTime", sign_place AS "signPlace"
+        check_id AS "checkId", user_id AS "userId", register_status AS "registerStatus", register_time AS "registerTime", sign_status AS "signStatus", sign_time AS "signTime", sign_place AS "signPlace", meet_or_forum AS "meetOrForum", forum_id AS "forumId"
     </sql>
 
 
@@ -40,11 +42,19 @@
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam">
         select
         <include refid="Base_Column_List"/>
-        from check_in where 1 = 1
+        from check_in where 1 = 1 and meet_or_forum = 0
         <if test="paramCondition.signStatus != null and paramCondition.signStatus != ''">
             and sign_status = #{paramCondition.signStatus}
         </if>
+    </select>
 
+    <select id="customPageMapListForum" resultType="map" parameterType="cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam">
+        select
+        <include refid="Base_Column_List"/>
+        from check_in where 1 = 1 and meet_or_forum = 1
+        <if test="paramCondition.signStatus != null and paramCondition.signStatus != ''">
+            and sign_status = #{paramCondition.signStatus}
+        </if>
     </select>
 
 </mapper>

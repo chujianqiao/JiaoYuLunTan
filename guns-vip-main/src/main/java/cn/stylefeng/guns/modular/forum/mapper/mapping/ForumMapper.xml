@@ -49,4 +49,10 @@
     <update id="setStatus">
 		update forum set status = #{status} where forum_id = #{forumId}
 	</update>
+
+    <select id="findById" resultType="cn.stylefeng.guns.modular.forum.model.result.ForumResult" parameterType="cn.stylefeng.guns.modular.forum.model.params.ForumParam">
+        select
+        <include refid="Base_Column_List"/>
+        from forum where 1 = 1 and forum_id = #{forumId}
+    </select>
 </mapper>
