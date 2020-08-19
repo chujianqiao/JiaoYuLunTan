@@ -4,13 +4,16 @@ import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.model.params.MeetParam;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.entity.MeetMember;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.meetRegister.wrapper.MeetMemberWrapper;
-import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
-import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
+import cn.stylefeng.guns.modular.forum.entity.Forum;
+import cn.stylefeng.guns.modular.forum.service.ForumService;
+import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.util.DefaultImages;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
@@ -36,6 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,13 +61,16 @@ public class MeetMemberController extends BaseController {
     private MeetMemberService meetMemberService;
 
     @Autowired
-    private OwnForumService ownForumService;
+    private ForumService forumService;
 
     @Autowired
     private ThesisService thesisService;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MeetService meetService;
 
     @Value("${file.uploadFolder}")
     private String uploadFolder;
@@ -124,7 +131,12 @@ public class MeetMemberController extends BaseController {
      */
     @RequestMapping("/disable")
     public String disable(MeetMemberParam meetMemberParam) {
-        return PREFIX + "/meetMember_edit_disable.html";
+        boolean isAdmin = ToolUtil.isAdminRole();
+        if(isAdmin){
+            return PREFIX + "/meetMember_edit_admin.html";
+        } else {
+            return PREFIX + "/meetMember_edit_disable.html";
+        }
     }
 
     /**
@@ -215,15 +227,15 @@ public class MeetMemberController extends BaseController {
     @RequestMapping("/detail")
     @ResponseBody
     public ResponseData detail(MeetMemberParam meetMemberParam) {
-         MeetMember detail = this.meetMemberService.getById(meetMemberParam.getMemberId());
+        MeetMember detail = this.meetMemberService.getById(meetMemberParam.getMemberId());
         //类转Map
         Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
 
         //加入自设论坛名称
         Long ownForumId = detail.getOwnForumid();
         if(ownForumId != null){
-            OwnForum ownForum = this.ownForumService.getById(ownForumId);
-            String ownForumName = ownForum.getForumName();
+            Forum forum = this.forumService.getById(ownForumId);
+            String ownForumName = forum.getForumName();
             map.put("ownForumName",ownForumName);
         } else {
             map.put("ownForumName","未选择");
@@ -240,8 +252,94 @@ public class MeetMemberController extends BaseController {
         Date date = new Date(Long.parseLong(map.get("regTime").toString()));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = formatter.format(date);
-        map.put("regTime",dateString);
+        //个人信息
+        Long userId = Long.parseLong(map.get("userId").toString());
+        User user = this.userService.getById(userId);
+        String userName = user.getName();
+        if(userName != null && userName != ""){
+            map.put("userName",userName);
+        }
+        String unitName = user.getWorkUnit();
+        if(unitName != null && unitName != ""){
+            map.put("unitName",unitName);
+        }
+        String postName = user.getPost();
+        if(postName != null && postName != ""){
+            map.put("postName",postName);
+        } else {
+            String titleName = user.getTitle();
+            if(titleName != null && titleName != ""){
+                map.put("postName",titleName);
+            }
+        }
+        String direction = user.getDirection();
+        if(direction != null && direction != ""){
+            map.put("direction",direction);
+        }
 
+        Integer meetStatus = Integer.parseInt(map.get("meetStatus").toString());
+        if(meetStatus != null){
+            if(meetStatus == 4){
+                map.put("isPay",1);
+            } else {
+                map.put("isPay",0);
+            }
+        }
+
+
+
+        map.put("regTime",dateString);
+        return ResponseData.success(map);
+    }
+
+    /**
+     * 选择论坛时查看的详情
+     * 主要处理 会议时间、报名时间
+     * @author wucy
+     * @Date 2020-05-20
+     */
+    @RequestMapping("/checkDetail")
+    @ResponseBody
+    public ResponseData checkDetail(MeetMemberParam meetMemberParam) {
+        MeetMember detail = this.meetMemberService.getById(meetMemberParam.getMemberId());
+        //类转Map
+        Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
+
+        MeetParam meetParam = new MeetParam();
+        meetParam.setMeetStatus(1);
+
+        Page<Map<String, Object>> meets = this.meetService.findPageWrap(meetParam);
+        Map<String,Object> meetMap = meets.getRecords().get(0);
+        String begTimeStr = meetMap.get("beginTime").toString();
+        String endTimeStr = meetMap.get("endTime").toString();
+
+        String joinBegStr = meetMap.get("joinBegTime").toString();
+        String joinEndStr = meetMap.get("joinEndTime").toString();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+
+        try {
+            //会议时间
+            Date begTime = simpleDateFormat.parse(begTimeStr);
+            String begStr = sdf.format(begTime);
+            Date endTime = simpleDateFormat.parse(endTimeStr);
+            String endStr = sdf.format(endTime);
+            String meetTimeStr = begStr + " 至 " + endStr;
+            map.put("meetTimeStr",meetTimeStr);
+            //报名时间
+            Date joinBegTime = simpleDateFormat.parse(joinBegStr);
+            String joinBeg = sdf.format(joinBegTime);
+            Date joinEndTime = simpleDateFormat.parse(joinEndStr);
+            String joinEnd = sdf.format(joinEndTime);
+            String joinTimeStr = joinBeg + " 至 " + joinEnd;
+            map.put("joinTimeStr",joinTimeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        map.put("meetName",meetMap.get("meetName"));
+        map.put("place",meetMap.get("place"));
         return ResponseData.success(map);
     }
 

@@ -60,6 +60,16 @@ public class MeetResult implements Serializable {
     private Date endTime;
 
     /**
+     * 报名开始时间
+     */
+    private Date joinBegTime;
+
+    /**
+     * 报名结束时间
+     */
+    private Date joinEndTime;
+
+    /**
      * 注册人
      */
     private Long regUser;

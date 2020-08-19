@@ -69,6 +69,18 @@ public class Meet implements Serializable {
     private Date endTime;
 
     /**
+     * 报名开始时间
+     */
+    @TableField("join_begtime")
+    private Date joinBegTime;
+
+    /**
+     * 报名结束时间
+     */
+    @TableField("join_endtime")
+    private Date joinEndTime;
+
+    /**
      * 注册人
      */
     @TableField("reg_user")
@@ -188,6 +200,22 @@ public class Meet implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Date getJoinBegTime() {
+        return joinBegTime;
+    }
+
+    public void setJoinBegTime(Date joinBegTime) {
+        this.joinBegTime = joinBegTime;
+    }
+
+    public Date getJoinEndTime() {
+        return joinEndTime;
+    }
+
+    public void setJoinEndTime(Date joinEndTime) {
+        this.joinEndTime = joinEndTime;
     }
 
     @Override

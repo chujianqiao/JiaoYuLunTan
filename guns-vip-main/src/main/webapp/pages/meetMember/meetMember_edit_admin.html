@@ -8,9 +8,27 @@
                 <div class="layui-form-item layui-row">
                     <input name="memberId" type="hidden"/>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">自设论坛<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">姓名<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                        <input id="ownForumName" disabled="disabled" name="ownForumName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="userName" disabled="disabled" name="userName" placeholder="" type="text" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="unitName" disabled="disabled" name="unitName" placeholder="" type="text" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">职务/职称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="postName" disabled="disabled" name="postName" placeholder="" type="text" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">参会论坛<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="ownForumName" disabled="disabled" name="ownForumName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                         <!--<div class="layui-input-block">-->
                         <!--<select id="ownForumid" disabled="disabled" name="ownForumid" lay-verify="" lay-search></select>-->
@@ -23,29 +41,24 @@
                             <!--<button class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;附件&emsp;</button>-->
                         <!--</div>-->
                         <div class="layui-input-block">
-                            <select id="thesisId" name="thesisId" disabled="disabled" lay-verify="" lay-search></select>
+                            <!--<select id="thesisId" name="thesisId" disabled="disabled" lay-verify="" lay-search></select>-->
+                            <input id="thesisId" name="thesisId" type="hidden"/>
+                            <input id="thesisName" disabled="disabled" name="thesisName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                             <button id="btnDownload" class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;下载论文附件&emsp;</button>
-
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">是否申请发言<span style="color: red;">*</span></label>
-                        <!--<div class="layui-input-block">-->
-                            <!--<input id="speak" name="speak" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
-                        <!--</div>-->
                         <div class="layui-input-block">
-                            <input type="radio" name="speak" value="1" title="是"  checked/>
-                            <input type="radio" name="speak" value="0" title="否"/>
+                            <input type="radio" name="speak" value="1" title="是" />
+                            <input type="radio" name="speak" value="0" title="否" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12" id="professor">
                         <label class="layui-form-label">是否参加形势研判会<span style="color: red;">*</span></label>
-                        <!--<div class="layui-input-block">-->
-                            <!--<input id="judge" name="judge" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
-                        <!--</div>-->
                         <div class="layui-input-block">
-                            <input type="radio" name="judge" value="1" title="是" checked/>
-                            <input type="radio" name="judge" value="0" title="否"/>
+                            <input type="radio" name="judge" value="1" title="是" />
+                            <input type="radio" name="judge" value="0" title="否" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
@@ -54,12 +67,19 @@
                             <input id="regTime" name="regTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">是否缴费<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="isPay" value="1" title="是" />
+                            <input type="radio" name="isPay" value="0" title="否" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="form-group-bottom text-center">
-        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog" id="cancel">&emsp;关闭&emsp;</button>
     </div>
 
 </form>

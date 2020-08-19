@@ -43,7 +43,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                     } else if (data.meetStatusStr == "评审通过") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >支付宝缴费</a>";
                     } else if (data.meetStatusStr == "已缴费") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay'>申请开票</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='ticket'>申请开票</a>";
                     } else if (data.meetStatusStr == "未通过") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                     }
@@ -112,8 +112,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data
      */
     MeetMember.onForumItem = function (data) {
-        func.open({
+        layer.open({
             title: '选择论坛',
+            type: 2,
+            area: ['620px','600px'],
             content: Feng.ctxPath + '/meetMember/forum?memberId=' + data.memberId,
             tableId: MeetMember.tableId
         });

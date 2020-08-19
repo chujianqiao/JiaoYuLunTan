@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.meetRegister.wrapper;
 
+import cn.stylefeng.guns.modular.forum.entity.Forum;
+import cn.stylefeng.guns.modular.forum.mapper.ForumMapper;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
 import cn.stylefeng.guns.modular.ownForum.mapper.OwnForumMapper;
 import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
@@ -25,7 +27,9 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 
 	private ThesisMapper thesisMapper = SpringContextHolder.getBean(ThesisMapper.class);
 
-	private OwnForumMapper ownForumMapper = SpringContextHolder.getBean(OwnForumMapper.class);
+//	private OwnForumMapper ownForumMapper = SpringContextHolder.getBean(OwnForumMapper.class);
+
+	private ForumMapper forumMapper = SpringContextHolder.getBean(ForumMapper.class);
 
 	@Autowired
 	private OwnForumService ownForumService;
@@ -76,11 +80,11 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 			forumName = "未选择";
 		}else {
 			Long ownForumid = Long.parseLong(map.get("ownForumid").toString());
-			OwnForum ownForum = ownForumMapper.selectById(ownForumid);
-			if (ownForum == null){
+			Forum forum = forumMapper.selectById(ownForumid);
+			if (forum == null){
 				forumName = "未选择";
 			}else {
-				forumName = ownForum.getForumName();
+				forumName = forum.getForumName();
 			}
 
 

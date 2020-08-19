@@ -20,9 +20,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var admin = layui.admin;
     var upload = layui.upload;
 
-    debugger;
     // 获取详情信息填充表单
-    var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
+    var ajax = new $ax(Feng.ctxPath + "/meetMember/checkDetail?memberId=" + Feng.getUrlParam("memberId"));
     var result = ajax.start();
     form.val('meetMemberForm', result.data);
 
@@ -31,28 +30,29 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 加载页面时执行
      */
     $(function(){
-        var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
+        var ajax = new $ax(Feng.ctxPath + "/meetMember/checkDetail?memberId=" + Feng.getUrlParam("memberId"));
         var result = ajax.start();
         var ownForumid = result.data.ownForumid;
+
+        //构建论坛候选值
         forumSelectOption(ownForumid);
 
         var thesisId = result.data.thesisId;
 
         // thesisSelectOption(thesisId);
 
-        var userId = result.data.userId;
-        var userajax = new $ax(Feng.ctxPath + "/mgr/detail?userId=" + userId);
-        var result = userajax.start();
-        var title = result.data.title;
-        if(title != '教授'){
-            $('#professor').remove();
-        }
+        // var userId = result.data.userId;
+        // var userajax = new $ax(Feng.ctxPath + "/mgr/detail?userId=" + userId);
+        // var result = userajax.start();
+        // var title = result.data.title;
+        // if(title != '教授'){
+        //     $('#professor').remove();
+        // }
     })
 
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        debugger;
         var ajax = new $ax(Feng.ctxPath + "/meetMember/editForum", function (data) {
             Feng.success("更新成功！");
             // window.location.href = Feng.ctxPath + '/meetMember';
@@ -76,15 +76,18 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     function forumSelectOption(ownForumid){
         $.ajax({
             type:'post',
-            url:Feng.ctxPath + "/ownForum/listAll" ,
+            // url:Feng.ctxPath + "/ownForum/listAll" ,
+            url:Feng.ctxPath + "/forum/wrapList" ,
             success:function(response){
                 var data=response.data;
                 var forums = [];
                 forums = data;
-
                 var options;
                 for (i = 0 ;i < forums.length ;i++){
                     var forum = data[i];
+                    if(forum.status == "未发布"){
+                        continue;
+                    }
                     if(ownForumid == forum.forumId){
                         options += '<option value="'+ forum.forumId+ '" selected="selected">'+ forum.forumName +'</option>';
                     }else{

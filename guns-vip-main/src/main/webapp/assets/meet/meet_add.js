@@ -80,4 +80,16 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], func
         ,type: 'datetime'
         ,format: 'yyyy-MM-dd HH:mm:ss'
     });
+    laydate.render({
+        elem: '#joinBegTime'
+        ,type: 'datetime'
+        ,format: 'yyyy-MM-dd HH:mm:ss'
+        ,trigger: 'click'
+    });
+    laydate.render({
+        elem: '#joinEndTime'
+        ,type: 'datetime'
+        ,format: 'yyyy-MM-dd HH:mm:ss'
+        ,trigger: 'click'
+    });
 });

@@ -20,23 +20,28 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var admin = layui.admin;
     var upload = layui.upload;
 
-    debugger;
     // 获取详情信息填充表单
-    var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
-    var result = ajax.start();
-    form.val('meetMemberForm', result.data);
-
-
+    // var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
+    // var result = ajax.start();
+    // form.val('meetMemberForm', result.data);
     /**
      * 加载页面时执行
      */
     $(function(){
         var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
         var result = ajax.start();
-        var ownForumid = result.data.ownForumid;
 
         var thesisId = result.data.thesisId;
-        thesisSelectOption(thesisId);
+        // var thAjax = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + thesisId);
+        // var thResult = thAjax.start();
+        // var thesisName = thResult.data.thesisTitle;
+        // result.data.thesisName = thesisName;
+        //填充表单
+        form.val('meetMemberForm', result.data);
+        var ownForumid = result.data.ownForumid;
+
+
+        // thesisSelectOption(thesisId);
 
         var userId = result.data.userId;
         var userajax = new $ax(Feng.ctxPath + "/mgr/detail?userId=" + userId);
@@ -81,8 +86,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     // 下载论文附件
     $('#btnDownload').click(function () {
+        debugger;
         var thesisId = $('#thesisId').val();
         downloadThesis(thesisId);
+    });
+
+    /**
+     * 取消
+     */
+    $('#cancel').click(function () {
+        debugger;
+        window.location.href = window.location.href = Feng.ctxPath + '/meetMember';
     });
 
     function downloadThesis(thesisId){

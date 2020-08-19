@@ -288,8 +288,6 @@ public class ThesisController extends BaseController {
 
         }
         this.thesisService.update(thesisParam);
-
-
         return ResponseData.success();
     }
 
@@ -407,11 +405,20 @@ public class ThesisController extends BaseController {
         middleParam.setMiddleId(middleResult.getMiddleId());
         middleParam.setScore(thesisParam.getScore());
         middleParam.setGreat(thesisParam.getIsgreat());
+
+        //是否优秀
+        ThesisReviewMiddleParam middleParam2 = new ThesisReviewMiddleParam();
+        middleParam2.setThesisId(thesisId);
+        middleParam2.setGreat(1);
+        LayuiPageInfo greatRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+        int greatNum = greatRes.getData().size();
+        if(greatNum >= 2){
+            thesisParam.setGreat(1);
+        }
+
         Date reviewDate = new Date();
         middleParam.setReviewTime(reviewDate);
-
         thesisParam.setReviewTime(reviewDate);
-
         this.thesisReviewMiddleService.update(middleParam);
         this.thesisService.update(thesisParam);
         return ResponseData.success();
