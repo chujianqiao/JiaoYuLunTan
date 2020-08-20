@@ -1,20 +1,32 @@
-@layout("/common/_container.html",{js:["/assets/meetMember/meetMember_admin.js"]}){
-<div class="page">
+@layout("/common/_container.html",{css:["/assets/modular/frame/user_info.css"],js:["/assets/meetMember/meetMember_admin.js","/assets/modular/frame/user_info.js"]}){
+<!--<div class="page">-->
     <!-- 头部 -->
-    <div class="func-column-container widthC mCenter mb40">
+    <!--<div class="func-column-container widthC mCenter mb40">-->
         <div class="layui-body-header">
             <span class="layui-body-header-title">会议注册成员管理</span>
         </div>
 
-        <div class="layui-fluid">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
-                    <div class="layui-card">
-                        <div class="layui-card-body">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">普通人员</li>
+                        <li>会议嘉宾</li>
+                        <!--<li>评审专家</li>-->
+                    </ul>
+                    <br>
+                    <div class="layui-tab-content">
+                        <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
                             <div class="layui-form toolbar">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <input id="userName" class="layui-input" type="text" placeholder="参会人姓名"/>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <select id="forumOption" name="forumOption" lay-filter="forumOption"></select>
                                     </div>
                                     <div class="layui-inline">
                                         <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
@@ -24,13 +36,36 @@
                             </div>
                             <table class="layui-table" id="meetMemberTable" lay-filter="meetMemberTable"></table>
                         </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <input id="userNameJB" class="layui-input" type="text" placeholder="参会人姓名"/>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <select id="forumOptionJB" name="forumOptionJB" lay-filter="forumOptionJB"></select>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <button id="btnSearchJB" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                        <button id="btnExpJB" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="layui-table" id="meetMemberTableJB" lay-filter="meetMemberTableJB"></table>
+                        </div>
                     </div>
+                    <!--<div class="layui-card">-->
+                        <!---->
+                    <!--</div>-->
                 </div>
             </div>
         </div>
+        </div>
     </div>
-    <!-- 尾部 -->
 </div>
+    <!--</div>-->
+    <!-- 尾部 -->
+<!--</div>-->
 
 <script type="text/html" id="tableBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>

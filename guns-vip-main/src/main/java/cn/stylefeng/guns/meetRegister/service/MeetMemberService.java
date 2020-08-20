@@ -79,7 +79,7 @@ public interface MeetMemberService extends IService<MeetMember> {
      * @param param
      * @return
      */
-    Page<Map<String, Object>> findPageWrap(MeetMemberParam param,String userIds);
+    Page<Map<String, Object>> findPageWrap(MeetMemberParam param,List<Long> list,String listStatus);
 
     /**
      * 更新

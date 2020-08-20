@@ -77,9 +77,9 @@ public class MeetMemberServiceImpl extends ServiceImpl<MeetMemberMapper, MeetMem
     }
 
     @Override
-    public Page<Map<String, Object>> findPageWrap(MeetMemberParam param,String userIds) {
+    public Page<Map<String, Object>> findPageWrap(MeetMemberParam param,List<Long> list,String listStatus) {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.customPageMapList(page,param,userIds);
+        return this.baseMapper.customPageMapList(page,param,list,listStatus);
     }
 
     private Serializable getKey(MeetMemberParam param){

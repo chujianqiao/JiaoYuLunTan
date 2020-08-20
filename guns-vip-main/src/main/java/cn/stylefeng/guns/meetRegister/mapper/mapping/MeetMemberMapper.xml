@@ -91,13 +91,17 @@
                 and thesis_id like CONCAT('%',#{paramCondition.thesisId},'%')
             </if>
             <if test="paramCondition.ownForumid != null and paramCondition.ownForumid != ''">
-                and own_forumid like CONCAT('%',#{paramCondition.ownForumid},'%')
-            </if>
-            <if test="userIds != null and userIds != ''">
-                and user_id in (#{userIds})
+                and own_forumid=#{paramCondition.ownForumid}
             </if>
             <if test="paramCondition.userId != null and paramCondition.userId != ''">
                 and user_id=#{paramCondition.userId}
+            </if>
+            <if test="listStatus != null and listStatus != ''">
+                and user_id in
+                <foreach collection="list" index="index" item="i" open="("
+                         separator="," close=")">
+                    #{i}
+                </foreach>
             </if>
     </select>
 

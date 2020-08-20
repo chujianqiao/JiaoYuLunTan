@@ -41,10 +41,7 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 会议注册成员表控制器
@@ -362,11 +359,7 @@ public class MeetMemberController extends BaseController {
     @ResponseBody
     @RequestMapping("/wraplist")
     public Object wrapList(MeetMemberParam meetMemberParam,@RequestParam(required = false) String userName) {
-        String userIds = "";
-        if(userName != null && userName != ""){
-            ToolUtil toolUtil = new ToolUtil();
-            userIds = toolUtil.getUserIdsForName(userName);
-        }
+        List<Long> userIdList = getUserIdList(userName);
 
         boolean isAdmin = ToolUtil.isAdminRole();
         if(isAdmin){
@@ -377,7 +370,51 @@ public class MeetMemberController extends BaseController {
             meetMemberParam.setUserId(userId);
         }
 
-        Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIds);
+        String listStatus;
+        if(userIdList.size() != 0){
+            listStatus = "有条件";
+        }else{
+            listStatus = null;
+        }
+        Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIdList,listStatus);
+        Page wrapped = new MeetMemberWrapper(members).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    /**
+     * 管理员查询列表
+     * @author wucy
+     * @Date 2020-05-20
+     */
+    @ResponseBody
+    @RequestMapping("/adminList")
+    public Object adminList(MeetMemberParam meetMemberParam,@RequestParam(required = false) String roleId,@RequestParam(required = false) String userName) {
+        List<Long> userIdList = getUserIdList(userName);
+        String listStatus;
+        if(userIdList.size() != 0){
+            listStatus = "有条件";
+        }else{
+            listStatus = null;
+        }
+
+        Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIdList,listStatus);
+        List<Map<String, Object>> memberList = members.getRecords();
+        //根据角色进行筛选
+        Iterator iterator = memberList.iterator();
+        while (iterator.hasNext()){
+            Map<String, Object> resultMap = (Map<String, Object>) iterator.next();
+            Long userId = Long.parseLong(resultMap.get("userId").toString());
+            User user = this.userService.getById(userId);
+            String myRoleId = user.getRoleId();
+            String[] roleArr = myRoleId.split(",");
+            if(Arrays.asList(roleArr).contains(roleId)){
+                continue;
+            }else {
+               iterator.remove();
+            }
+        }
+        //将筛选后的list赋值给记录
+        members.setRecords(memberList);
         Page wrapped = new MeetMemberWrapper(members).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }
@@ -479,6 +516,28 @@ public class MeetMemberController extends BaseController {
             responseData.setMessage("sizeError");
             return responseData;
         }
+    }
+
+    /**
+     * 获取userId的List
+     * @param userName
+     * @return
+     */
+    private List<Long> getUserIdList(String userName){
+        String userIds = "";
+        List<Long> userIdList = new ArrayList<>();
+        if(userName != null && userName != ""){
+            ToolUtil toolUtil = new ToolUtil();
+            userIds = toolUtil.getUserIdsForName(userName);
+        }
+        if(userIds.equals("")){
+            return userIdList;
+        }
+        String[] userIdArr = userIds.split(",");
+        for (int i = 0; i < userIdArr.length; i++) {
+            userIdList.add(Long.parseLong(userIdArr[i]));
+        }
+        return userIdList;
     }
 }
 
