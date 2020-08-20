@@ -115,6 +115,5 @@ public class CheckTokenController {
             return "error";
         }
 
-
     }
 }
