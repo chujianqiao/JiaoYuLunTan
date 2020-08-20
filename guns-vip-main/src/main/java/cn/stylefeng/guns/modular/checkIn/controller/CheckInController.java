@@ -8,6 +8,8 @@ import cn.stylefeng.guns.modular.checkIn.entity.CheckIn;
 import cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam;
 import cn.stylefeng.guns.modular.checkIn.service.CheckInService;
 import cn.stylefeng.guns.modular.checkIn.wrapper.CheckInWrapper;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -36,6 +40,9 @@ public class CheckInController extends BaseController {
 
     @Autowired
     private CheckInService checkInService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 跳转到主页面
@@ -159,9 +166,26 @@ public class CheckInController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/wrapList")
-    public LayuiPageInfo wrapList(CheckInParam checkInParam) {
+    public LayuiPageInfo wrapList(CheckInParam checkInParam, Long roleId, String name) {
 
-        Page<Map<String, Object>> checkIn = this.checkInService.findPageWrap(checkInParam);
+        List<User> userList = new ArrayList<>();
+        if (roleId != null){
+            userList = userService.listByRole(roleId.toString(), name);
+        }else {
+            userList = userService.listByRole("", name);
+        }
+
+        List<Long> userIds = new ArrayList<>();
+        if (userList.size() > 0){
+            for (int i = 0;i < userList.size();i++){
+                userIds.add(userList.get(i).getUserId());
+            }
+        }else {
+            Page wrapped = new Page();
+            return LayuiPageFactory.createPageInfo(wrapped);
+        }
+
+        Page<Map<String, Object>> checkIn = this.checkInService.findPageWrap(checkInParam, userIds);
         Page wrapped = new CheckInWrapper(checkIn).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }
@@ -174,9 +198,25 @@ public class CheckInController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/wrapListForum")
-    public LayuiPageInfo wrapListForum(CheckInParam checkInParam) {
+    public LayuiPageInfo wrapListForum(CheckInParam checkInParam, Long roleId, String name) {
+        List<User> userList = new ArrayList<>();
+        if (roleId != null){
+            userList = userService.listByRole(roleId.toString(), name);
+        }else {
+            userList = userService.listByRole("", name);
+        }
 
-        Page<Map<String, Object>> checkIn = this.checkInService.findPageWrapForum(checkInParam);
+        List<Long> userIds = new ArrayList<>();
+        if (userList.size() > 0){
+            for (int i = 0;i < userList.size();i++){
+                userIds.add(userList.get(i).getUserId());
+            }
+        }else {
+            Page wrapped = new Page();
+            return LayuiPageFactory.createPageInfo(wrapped);
+        }
+
+        Page<Map<String, Object>> checkIn = this.checkInService.findPageWrapForum(checkInParam, userIds);
         Page wrapped = new CheckInWrapper(checkIn).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }

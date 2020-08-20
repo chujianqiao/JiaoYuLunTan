@@ -379,4 +379,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         layuiPageInfo.setData(list);
         return layuiPageInfo;
     }
+    public List<User> listByRole(String roleId, String name) {
+        return this.baseMapper.listByRole(roleId, name);
+    }
 }

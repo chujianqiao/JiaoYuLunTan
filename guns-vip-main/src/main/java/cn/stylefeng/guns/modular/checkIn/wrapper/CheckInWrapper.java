@@ -55,11 +55,13 @@ public class CheckInWrapper extends BaseControllerWrapper {
         int signStatus = (Integer) map.get("signStatus");
         if (registerStatus == 0){
             map.put("registerStatus","未报到");
+            map.put("registerTime","-");
         }else {
             map.put("registerStatus","已报到");
         }
         if (signStatus == 0){
             map.put("signStatus","未签到");
+            map.put("signTime","-");
         }else {
             map.put("signStatus","已签到");
         }

@@ -70,9 +70,19 @@ public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> impl
         return this.baseMapper.customPageMapList(page,param);
     }
     @Override
+    public Page<Map<String, Object>> findPageWrap(CheckInParam param, List<Long> userIds) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.customPageMapListByRole(page,param,userIds);
+    }
+    @Override
     public Page<Map<String, Object>> findPageWrapForum(CheckInParam param) {
         Page page = LayuiPageFactory.defaultPage();
         return this.baseMapper.customPageMapListForum(page,param);
+    }
+    @Override
+    public Page<Map<String, Object>> findPageWrapForum(CheckInParam param, List<Long> userIds) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.customPageMapListForumByRole(page,param,userIds);
     }
 
     private Serializable getKey(CheckInParam param){

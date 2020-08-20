@@ -16,6 +16,8 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         }
     };
 
+    roleSelectOption();
+
     /**
      * 初始化表格的列
      */
@@ -41,7 +43,8 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     CheckIn.search = function () {
         var queryData = {};
         queryData['signStatus'] = $("#signStatus").val();
-
+        queryData['roleId'] = $("#roleId").val();
+        queryData['name'] = $("#name").val();
         table.reload(CheckIn.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -51,7 +54,9 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     form.on('select(status)', function(data){
         CheckIn.search();
     });
-
+    form.on('select(roleId)', function(data){
+        CheckIn.search();
+    });
 
 
     /**
@@ -151,6 +156,30 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         }
     });
 
+    function roleSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/role/list" ,
+            success:function(response){
+                var data=response.data;
+                var roles = [];
+                roles = data;
+
+                var options;
+                for (var i = 0 ;i < roles.length ;i++){
+                    options += '<option value="'+ roles[i].roleId+ '" >'+ roles[i].name +'</option>';
+                }
+                $('#roleId').empty();
+                $('#roleId').append("<option value=''>请选择角色</option>");
+                $('#roleId').append(options);
+                $('#roleIdForum').empty();
+                $('#roleIdForum').append("<option value=''>请选择角色</option>");
+                $('#roleIdForum').append(options);
+                form.render('select');
+            }
+        })
+    }
+
 
     //-------------------------------------------------------------------------
 
@@ -160,9 +189,11 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     var CheckInForum = {
         tableId: "checkInTableForum",
         condition: {
-            signStatus: "",
+            signStatus: ""
         }
     };
+
+    forumSelectOption();
 
     /**
      * 初始化表格的列
@@ -189,8 +220,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
      */
     CheckInForum.search = function () {
         var queryData = {};
-        queryData['signStatus'] = $("#signStatus").val();
-
+        queryData['signStatus'] = $("#signStatusForum").val();
+        queryData['forumId'] = $("#forumId").val();
+        queryData['name'] = $("#nameForum").val();
+        queryData['roleId'] = $("#roleIdForum").val();
         table.reload(CheckInForum.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -200,7 +233,12 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     form.on('select(statusForum)', function(data){
         CheckInForum.search();
     });
-
+    form.on('select(forumId)', function(data){
+        CheckInForum.search();
+    });
+    form.on('select(roleIdForum)', function(data){
+        CheckInForum.search();
+    });
 
 
     /**
@@ -262,7 +300,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     // 渲染表格
     var tableResultForum = table.render({
         elem: '#' + CheckInForum.tableId,
-        url: Feng.ctxPath + '/checkIn/wrapList',
+        url: Feng.ctxPath + '/checkIn/wrapListForum',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
@@ -299,4 +337,26 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             CheckInForum.onDetail(data);
         }
     });
+
+    function forumSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/forum/list" ,
+            success:function(response){
+                var data=response.data;
+                var forums = [];
+                forums = data;
+
+                var options;
+                for (var i = 0 ;i < forums.length ;i++){
+                    options += '<option value="'+ forums[i].forumId+ '" >'+ forums[i].forumName +'</option>';
+                }
+                $('#forumId').empty();
+                $('#forumId').append("<option value=''>请选择角色</option>");
+                $('#forumId').append(options);
+                form.render('select');
+            }
+        })
+    }
+
 });

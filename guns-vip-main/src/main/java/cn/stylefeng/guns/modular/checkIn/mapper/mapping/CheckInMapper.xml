@@ -48,12 +48,49 @@
         </if>
     </select>
 
+    <select id="customPageMapListByRole" resultType="map" parameterType="cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam">
+        select
+        <include refid="Base_Column_List"/>
+        from check_in where 1 = 1 and meet_or_forum = 0
+        <if test="paramCondition.signStatus != null and paramCondition.signStatus != ''">
+            and sign_status = #{paramCondition.signStatus}
+        </if>
+        <if test="userIds != null">
+            and user_id in
+            <foreach collection="userIds" index="index" item="i" open="("
+                     separator="," close=")">
+                #{i}
+            </foreach>
+        </if>
+    </select>
+
     <select id="customPageMapListForum" resultType="map" parameterType="cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam">
         select
         <include refid="Base_Column_List"/>
         from check_in where 1 = 1 and meet_or_forum = 1
         <if test="paramCondition.signStatus != null and paramCondition.signStatus != ''">
             and sign_status = #{paramCondition.signStatus}
+        </if>
+        <if test="paramCondition.forumId != null and paramCondition.forumId != ''">
+            and forum_id = #{paramCondition.forumId}
+        </if>
+    </select>
+    <select id="customPageMapListForumByRole" resultType="map" parameterType="cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam">
+        select
+        <include refid="Base_Column_List"/>
+        from check_in where 1 = 1 and meet_or_forum = 1
+        <if test="paramCondition.signStatus != null and paramCondition.signStatus != ''">
+            and sign_status = #{paramCondition.signStatus}
+        </if>
+        <if test="paramCondition.forumId != null and paramCondition.forumId != ''">
+            and forum_id = #{paramCondition.forumId}
+        </if>
+        <if test="userIds != null   ">
+            and user_id in
+            <foreach collection="userIds" index="index" item="i" open="("
+                     separator="," close=")">
+                #{i}
+            </foreach>
         </if>
     </select>
 

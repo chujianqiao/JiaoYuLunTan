@@ -19,6 +19,15 @@
                                 <div class="layui-form toolbar">
                                     <div class="layui-form-item">
                                         <div class="layui-inline">
+                                            <input id="name" class="layui-input" type="text" placeholder="请输入姓名"/>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <div class="">
+                                                <select id="roleId" name="roleId" lay-filter="roleId">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
                                             <div class="">
                                                 <select id="signStatus" name="signStatus" lay-filter="status">
                                                     <option value="">请选择签到状态</option>
@@ -29,7 +38,6 @@
                                         </div>
                                         <div class="layui-inline">
                                             <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                            <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
                                             <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
                                         </div>
                                     </div>
@@ -40,6 +48,21 @@
                                 <div class="layui-form toolbar">
                                     <div class="layui-form-item">
                                         <div class="layui-inline">
+                                            <input id="nameForum" class="layui-input" type="text" placeholder="请输入姓名"/>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <div class="">
+                                                <select id="roleIdForum" name="roleId" lay-filter="roleIdForum">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <div class="">
+                                                <select id="forumId" name="forumId" lay-filter="forumId">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
                                             <div class="">
                                                 <select id="signStatusForum" name="signStatus" lay-filter="statusForum">
                                                     <option value="">请选择签到状态</option>
@@ -48,9 +71,9 @@
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="layui-inline">
                                             <button id="btnSearchForum" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                            <button id="btnAddForum" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
                                             <button id="btnExpForum" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
                                         </div>
                                     </div>

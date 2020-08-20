@@ -59,6 +59,16 @@ public interface CheckInMapper extends BaseMapper<CheckIn> {
      * @author CHU
      * @Date 2020-07-30
      */
+    Page<Map<String, Object>> customPageMapListByRole(@Param("page") Page page, @Param("paramCondition") CheckInParam paramCondition, @Param("userIds") List<Long> userIds);
+
+
+    /**
+     * 获取分页map列表
+     *
+     * @author CHU
+     * @Date 2020-07-30
+     */
     Page<Map<String, Object>> customPageMapListForum(@Param("page") Page page, @Param("paramCondition") CheckInParam paramCondition);
+    Page<Map<String, Object>> customPageMapListForumByRole(@Param("page") Page page, @Param("paramCondition") CheckInParam paramCondition, @Param("userIds") List<Long> userIds);
 
 }

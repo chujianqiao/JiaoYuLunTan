@@ -305,8 +305,17 @@
         <if test="roleIds != null and roleIds != ''">
             and role_id like CONCAT('%',#{roleIds},'%')
         </if>
-
-
+    </select>
+    <select id="listByRole" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user where 1 = 1
+        <if test="roleId != null and roleId != ''">
+            and role_id like CONCAT('%',#{roleId},'%')
+        </if>
+        <if test="name != null and name != ''">
+            and name like CONCAT('%',#{name},'%')
+        </if>
     </select>
 
     <select id="getById" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
