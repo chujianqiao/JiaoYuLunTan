@@ -83,7 +83,7 @@ public interface ReviewMajorService extends IService<ReviewMajor> {
      * @author wucy
      * @Date 2020-05-11
      */
-    Page<Map<String, Object>> findPageWrap(ReviewMajorParam param ,String paramIds);
+    Page<Map<String, Object>> findPageWrap(ReviewMajorParam param ,List<Long> userIdList);
 
 
     /**

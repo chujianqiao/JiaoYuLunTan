@@ -95,7 +95,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 取消
      */
     $('#cancel').click(function () {
-        debugger;
         window.location.href = window.location.href = Feng.ctxPath + '/meetMember';
     });
 

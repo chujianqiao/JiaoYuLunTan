@@ -64,7 +64,8 @@ public interface ReviewMajorMapper extends BaseMapper<ReviewMajor> {
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page,
 												@Param("paramCondition") ReviewMajorParam paramCondition,
 												@Param("userId") long userId,
-												@Param("paramIds") String paramIds
+												List<Long> list,
+												@Param("listStatus") String listStatus
 	);
 
     /**

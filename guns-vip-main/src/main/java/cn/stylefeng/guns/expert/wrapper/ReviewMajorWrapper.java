@@ -1,9 +1,10 @@
 package cn.stylefeng.guns.expert.wrapper;
 
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
 import cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult;
 import cn.stylefeng.guns.thesisDomain.service.ThesisDomainService;
-import cn.stylefeng.guns.util.TransTypeUtil;
 import cn.stylefeng.roses.core.base.warpper.BaseControllerWrapper;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.kernel.model.page.PageResult;
@@ -13,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ReviewMajorWrapper extends BaseControllerWrapper {
+
+	private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
+
 	private ThesisDomainService thesisDomainService = SpringContextHolder.getBean(ThesisDomainService.class);
 
 	public ReviewMajorWrapper (Map<String, Object> single) {
@@ -40,8 +44,27 @@ public class ReviewMajorWrapper extends BaseControllerWrapper {
 		long userId = Long.parseLong(map.get("reviewId").toString());
 		String reviewName = ConstantFactory.me().getUserNameById(userId);
 		map.put("reviewName",reviewName);
+		//个人信息
+		User user = this.userMapper.selectById(userId);
+		if(user != null){
+			String unitName = user.getWorkUnit();
+			if(unitName != null && unitName != ""){
+				map.put("unitName",unitName);
+			}
+		}
+		String userPost = user.getPost();
+		if(userPost == null || userPost.equals("")){
+			String title = user.getTitle();
+			map.put("userPost",title);
+		}else {
+			map.put("userPost",userPost);
+		}
+		String direct = user.getDirection();
+		if(direct != null && !direct.equals("")){
+			map.put("direct",direct);
+		}
 
-
+		//领域
 		String belongDomainStr = "";
 		if (map.get("belongDomain") == null){
 			belongDomainStr = "";

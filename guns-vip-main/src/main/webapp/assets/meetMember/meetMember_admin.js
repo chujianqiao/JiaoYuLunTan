@@ -25,6 +25,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'userPost', sort: true, title: '职务/职称'},
             {field: 'direct', sort: true, title: '研究方向'},
             {field: 'thesisName', sort: true, title: '参会论文'},
+            {field: 'forumName', sort: true, title: '参会论坛'},
             {field: 'meetStatusStr', sort: true, title: '会议状态'},
             {align: 'center', minWidth: 130, title: '操作', templet: function(data){
                 return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
@@ -159,8 +160,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'unitName', sort: true, title: '所在单位'},
             {field: 'userPost', sort: true, title: '职务/职称'},
             {field: 'direct', sort: true, title: '研究方向'},
-            {field: 'thesisName', sort: true, title: '参会论文'},
-            {field: 'meetStatusStr', sort: true, title: '会议状态'},
+            // {field: 'thesisName', sort: true, title: '参会论文'},
+            {field: 'forumName', sort: true, title: '参会论坛'},
             {align: 'center', minWidth: 130, title: '操作', templet: function(data){
                     return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
                 }}
@@ -251,12 +252,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     });
 
     // 添加按钮点击事件
-    $('#btnAdd').click(function () {
-        MeetMemberJB.openAddDlg();
-    });
+    // $('#btnAdd').click(function () {
+    //     MeetMemberJB.openAddDlg();
+    // });
 
     // 导出excel
-    $('#btnExp').click(function () {
+    $('#btnExpJB').click(function () {
         MeetMemberJB.exportExcel();
     });
 
@@ -309,5 +310,117 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             }
         })
     }
+
+
+
+    /**----------------------------------------------------------------------------------------------------------------------
+     * 专家
+     */
+    var MeetMemberMajor = {
+        tableId: "meetMemberTableMajor"
+    };
+
+    /**
+     * 初始化表格的列
+     */
+    MeetMemberMajor.initColumn = function () {
+        return [[
+            {type: 'checkbox'},
+            {field: 'reviewId', hide: true, title: '专家ID'},
+            {field: 'reviewName', sort: true, title: '专家姓名'},
+            {field: 'unitName', sort: true, title: '所在单位'},
+            {field: 'userPost', sort: true, title: '职务/职称'},
+            {field: 'belongDomainStr', sort: true, title: '所属领域'},
+            {field: 'direct', sort: true, title: '研究方向'},
+            {align: 'center', minWidth: 130, title: '操作', templet: function(data){
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='majorDetail'>查看详情</a>";
+                }}
+        ]];
+    };
+
+    /**
+     * 点击查询按钮
+     */
+    MeetMemberMajor.search = function () {
+        var queryData = {};
+        queryData['reviewName'] = $('#userNameMajor').val();
+        table.reload(MeetMemberMajor.tableId, {
+            where: queryData, page: {curr: 1}
+        });
+    };
+
+    /**
+     * 仅查看详情
+     * @param data 点击按钮时候的行数据
+     */
+    MeetMemberMajor.onDisableItem = function (data) {
+        window.location.href = Feng.ctxPath + Feng.ctxPath + '/reviewMajor/disable?reviewId=' + data.reviewId;
+    };
+
+    /**
+     * 导出excel按钮
+     */
+    MeetMemberMajor.exportExcel = function () {
+        var checkRows = table.checkStatus(MeetMemberMajor.tableId);
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择要导出的数据");
+        } else {
+            table.exportFile(tableResultMajor.config.id, checkRows.data, 'xls');
+        }
+    };
+
+    /**
+     * 点击删除
+     * @param data 点击按钮时候的行数据
+     */
+    MeetMemberMajor.onDeleteItem = function (data) {
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/meetMember/delete?thesisId="+data.thesisId, function (data) {
+                Feng.success("删除成功!");
+                table.reload(MeetMember.tableId);
+            }, function (data) {
+                Feng.error("删除失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("memberId", data.memberId);
+            ajax.start();
+        };
+        Feng.confirm("是否删除?", operation);
+    };
+
+
+    // 渲染表格
+    var tableResultMajor = table.render({
+        elem: '#' + MeetMemberMajor.tableId,
+        url: Feng.ctxPath + '/reviewMajor/wraplist',
+        page: true,
+        height: "full-158",
+        cellMinWidth: 100,
+        cols: MeetMemberMajor.initColumn()
+    });
+
+    // 搜索按钮点击事件
+    $('#btnSearchMajor').click(function () {
+        MeetMemberMajor.search();
+    });
+
+    // 导出excel
+    $('#btnExpMajor').click(function () {
+        MeetMemberMajor.exportExcel();
+    });
+
+    // 工具条点击事件
+    table.on('tool(' + MeetMemberMajor.tableId + ')', function (obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+
+        if (layEvent === 'edit') {
+            MeetMemberMajor.openEditDlg(data);
+        } else if (layEvent === 'delete') {
+            MeetMemberMajor.onDeleteItem(data);
+        } else if (layEvent === 'majorDetail') {
+            MeetMemberMajor.onDisableItem(data);
+        }
+
+    });
 
 });

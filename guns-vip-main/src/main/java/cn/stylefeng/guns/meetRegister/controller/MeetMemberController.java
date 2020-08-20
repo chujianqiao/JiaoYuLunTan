@@ -359,7 +359,7 @@ public class MeetMemberController extends BaseController {
     @ResponseBody
     @RequestMapping("/wraplist")
     public Object wrapList(MeetMemberParam meetMemberParam,@RequestParam(required = false) String userName) {
-        List<Long> userIdList = getUserIdList(userName);
+        List<Long> userIdList = ToolUtil.getUserIdList(userName);
 
         boolean isAdmin = ToolUtil.isAdminRole();
         if(isAdmin){
@@ -389,7 +389,7 @@ public class MeetMemberController extends BaseController {
     @ResponseBody
     @RequestMapping("/adminList")
     public Object adminList(MeetMemberParam meetMemberParam,@RequestParam(required = false) String roleId,@RequestParam(required = false) String userName) {
-        List<Long> userIdList = getUserIdList(userName);
+        List<Long> userIdList = ToolUtil.getUserIdList(userName);
         String listStatus;
         if(userIdList.size() != 0){
             listStatus = "有条件";
@@ -518,27 +518,6 @@ public class MeetMemberController extends BaseController {
         }
     }
 
-    /**
-     * 获取userId的List
-     * @param userName
-     * @return
-     */
-    private List<Long> getUserIdList(String userName){
-        String userIds = "";
-        List<Long> userIdList = new ArrayList<>();
-        if(userName != null && userName != ""){
-            ToolUtil toolUtil = new ToolUtil();
-            userIds = toolUtil.getUserIdsForName(userName);
-        }
-        if(userIds.equals("")){
-            return userIdList;
-        }
-        String[] userIdArr = userIds.split(",");
-        for (int i = 0; i < userIdArr.length; i++) {
-            userIdList.add(Long.parseLong(userIdArr[i]));
-        }
-        return userIdList;
-    }
 }
 
 

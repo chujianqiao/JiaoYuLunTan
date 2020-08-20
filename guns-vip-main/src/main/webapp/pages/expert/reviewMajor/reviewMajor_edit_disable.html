@@ -1,4 +1,4 @@
-@layout("/common/_form.html",{js:["/assets/expert/reviewMajor/reviewMajor_edit.js"]}){
+@layout("/common/_form.html",{js:["/assets/expert/reviewMajor/reviewMajor_edit_disable.js"]}){
 
 <form class="layui-form" id="reviewMajorForm" lay-filter="reviewMajorForm">
     <div class="layui-fluid" style="padding-bottom: 75px;">
@@ -9,69 +9,34 @@
                     <input name="reviewId" type="hidden"/>
 
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">研究方向和专长<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">专家姓名<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="reviewName" name="reviewName" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="unitName" name="unitName" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">职务/职称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="userPost" name="userPost" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">研究方向<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="direct" name="direct" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
+
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">论文分配数量<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">注册时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="thesisCount"  disabled="disabled" name="thesisCount" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">论文评审数量<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="reviewCount"  disabled="disabled" name="reviewCount" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">退回数量<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="refuseCount"  disabled="disabled" name="refuseCount" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">专家分类<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="majorType" name="majorType" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">来源<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="applyFrom"  disabled="disabled" name="applyFrom" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申报状态<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="checkStatus"  disabled="disabled" name="checkStatus" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">提交申请时间<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="applyTime"  disabled="disabled" name="applyTime" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">通过时间<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="agreeTime"  disabled="disabled" name="agreeTime" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">驳回时间<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="refuseTime"  disabled="disabled" name="refuseTime" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">取消时间<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="cancelTime"  disabled="disabled" name="cancelTime" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="applyTime" name="applyTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                 </div>
@@ -79,8 +44,7 @@
         </div>
     </div>
     <div class="form-group-bottom text-center">
-        <!--<button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>-->
-        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeAdmin" id="closeAdmin">&emsp;关闭&emsp;</button>
     </div>
 
 </form>

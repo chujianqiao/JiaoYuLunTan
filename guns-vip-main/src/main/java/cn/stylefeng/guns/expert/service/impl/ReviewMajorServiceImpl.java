@@ -80,7 +80,7 @@ public class ReviewMajorServiceImpl extends ServiceImpl<ReviewMajorMapper, Revie
     }
 
     @Override
-    public Page<Map<String, Object>> findPageWrap(ReviewMajorParam param ,String paramIds) {
+    public Page<Map<String, Object>> findPageWrap(ReviewMajorParam param ,List<Long> userIdList) {
         Page page = LayuiPageFactory.defaultPage();
         //普通用户查看自己，管理员查看所有
         LoginUser user = LoginContextHolder.getContext().getUser();
@@ -91,7 +91,11 @@ public class ReviewMajorServiceImpl extends ServiceImpl<ReviewMajorMapper, Revie
             //xml查询条件会忽略0的情况，返回所有
             userId = 0;
         }
-        return this.baseMapper.customPageMapList(page,param,userId,paramIds);
+        String listStatus = "";
+        if(userIdList.size() != 0){
+            listStatus = "有条件";
+        }
+        return this.baseMapper.customPageMapList(page,param,userId,userIdList,listStatus);
     }
 
     private Serializable getKey(ReviewMajorParam param){

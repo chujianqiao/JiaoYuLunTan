@@ -15,11 +15,12 @@
                     <ul class="layui-tab-title">
                         <li class="layui-this">普通人员</li>
                         <li>会议嘉宾</li>
-                        <!--<li>评审专家</li>-->
+                        <li>评审专家</li>
                     </ul>
                     <br>
                     <div class="layui-tab-content">
                         <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
+                            <!-- 普通人员 -->
                             <div class="layui-form toolbar">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
@@ -38,6 +39,7 @@
                         </div>
                         <div class="layui-tab-item">
                             <div class="layui-form toolbar">
+                                <!-- 嘉宾 -->
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <input id="userNameJB" class="layui-input" type="text" placeholder="参会人姓名"/>
@@ -52,6 +54,21 @@
                                 </div>
                             </div>
                             <table class="layui-table" id="meetMemberTableJB" lay-filter="meetMemberTableJB"></table>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-form toolbar">
+                                <!-- 专家 -->
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <input id="userNameMajor" class="layui-input" type="text" placeholder="参会人姓名"/>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <button id="btnSearchMajor" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                        <button id="btnExpMajor" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="layui-table" id="meetMemberTableMajor" lay-filter="meetMemberTableMajor"></table>
                         </div>
                     </div>
                     <!--<div class="layui-card">-->

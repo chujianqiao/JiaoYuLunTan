@@ -56,8 +56,12 @@
         <if test="userId != null and userId != '' and userId != 0">
             and review_id = #{userId}
         </if>
-        <if test="paramIds != null and paramIds != ''">
-            and review_id in (#{paramIds})
+        <if test="listStatus != null and listStatus != ''">
+            and review_id in
+            <foreach collection="list" index="index" item="i" open="("
+                     separator="," close=")">
+                #{i}
+            </foreach>
         </if>
 
     </select>

@@ -76,7 +76,7 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 
 		//论坛
 		String forumName = "";
-		if (map.get("ownForumid") == "" || map.get("ownForumid") == null){
+		if (map.get("ownForumid") == null || map.get("ownForumid") == ""){
 			forumName = "未选择";
 		}else {
 			Long ownForumid = Long.parseLong(map.get("ownForumid").toString());
@@ -86,9 +86,6 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 			}else {
 				forumName = forum.getForumName();
 			}
-
-
-
 		}
 
 //		String speak = "";

@@ -36,6 +36,7 @@ import cn.stylefeng.guns.util.TransTypeUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.models.auth.In;
@@ -52,6 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -114,7 +116,6 @@ public class ReviewMajorController extends BaseController {
         } else {
             return "/majorReport.html";
         }
-
     }
 
     /**
@@ -305,7 +306,35 @@ public class ReviewMajorController extends BaseController {
         }*/
         detail.setBelongDomain(thesisDomainResult.getDomainName());
 
-        return ResponseData.success(detail);
+        //类转Map
+        Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
+        //个人信息
+        Long userId = detail.getReviewId();
+        User user = this.userService.getById(userId);
+        String reviewName = user.getName();
+        map.put("reviewName",reviewName);
+        String unitName = user.getWorkUnit();
+        if(unitName != null && unitName != ""){
+            map.put("unitName",unitName);
+        }
+        String userPost = user.getPost();
+        if(userPost == null || userPost.equals("")){
+            String title = user.getTitle();
+            map.put("userPost",title);
+        }else {
+            map.put("userPost",userPost);
+        }
+        String direct = user.getDirection();
+        if(direct != null && !direct.equals("")){
+            map.put("direct",direct);
+        }
+
+        Date date = new Date(Long.parseLong(map.get("applyTime").toString()));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(date);
+        map.put("applyTime",dateString);
+
+        return ResponseData.success(map);
     }
 
     /**
@@ -329,25 +358,8 @@ public class ReviewMajorController extends BaseController {
     @RequestMapping("/wraplist")
     public Object wrapList(ReviewMajorParam reviewMajorParam ,
                            @RequestParam(required = false) String reviewName) {
-        //按照用户姓名模糊查询出用户id
-        String paramIds = null;
-        if(reviewName != null && !reviewName.equals("")){
-            Page<Map<String, Object>> users = userService.selectUsers(null, reviewName, null, null, null);
-            List<Map<String,Object>> usersRecords = users.getRecords();
-            StringBuilder userIds = new StringBuilder();
-            for(int i = 0;i < usersRecords.size();i++){
-                String userid = usersRecords.get(i).get("userId").toString();
-                userIds.append(userid);
-                if (i != usersRecords.size() - 1){
-                    userIds.append(",");
-                }
-            }
-            paramIds = userIds.toString();
-            if(paramIds.length() == 0){
-                paramIds = "0";
-            }
-        }
-        Page<Map<String, Object>> majors = this.reviewMajorService.findPageWrap(reviewMajorParam ,paramIds);
+        List<Long> userIdList = ToolUtil.getUserIdList(reviewName);
+        Page<Map<String, Object>> majors = this.reviewMajorService.findPageWrap(reviewMajorParam ,userIdList);
         Page wrapped = new ReviewMajorWrapper(majors).wrap();
 
         return LayuiPageFactory.createPageInfo(wrapped);

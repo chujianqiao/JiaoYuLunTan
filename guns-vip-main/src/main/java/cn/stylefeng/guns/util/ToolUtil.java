@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -112,8 +113,29 @@ public class ToolUtil {
 		return paramIds;
 	}
 
-	private static final int  BUFFER_SIZE = 2 * 1024;
+	/**
+	 * 获取userId的List
+	 * @param userName
+	 * @return
+	 */
+	public static List<Long> getUserIdList(String userName){
+		String userIds = "";
+		List<Long> userIdList = new ArrayList<>();
+		if(userName != null && userName != ""){
+			ToolUtil toolUtil = new ToolUtil();
+			userIds = toolUtil.getUserIdsForName(userName);
+		}
+		if(userIds.equals("")){
+			return userIdList;
+		}
+		String[] userIdArr = userIds.split(",");
+		for (int i = 0; i < userIdArr.length; i++) {
+			userIdList.add(Long.parseLong(userIdArr[i]));
+		}
+		return userIdList;
+	}
 
+	private static final int  BUFFER_SIZE = 2 * 1024;
 	/**
 	 * 压缩文件
 	 * @param srcFiles 需要压缩的文件列表
