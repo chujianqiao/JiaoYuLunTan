@@ -133,7 +133,12 @@ public class ThesisController extends BaseController {
      */
     @RequestMapping("/disable")
     public String disable() {
-        return PREFIX + "/thesis_disable_edit.html";
+        boolean isAdmin = ToolUtil.isAdminRole();
+        if(isAdmin){
+            return PREFIX + "/thesis_admin_edit.html";
+        } else {
+            return PREFIX + "/thesis_disable_edit.html";
+        }
     }
 
     /**
@@ -252,6 +257,24 @@ public class ThesisController extends BaseController {
     @RequestMapping("/editItem")
     @ResponseBody
     public ResponseData editItem(ThesisParam thesisParam) {
+        long thesisId = thesisParam.getThesisId();
+        Integer isPass = thesisParam.getReviewResult();
+        if(isPass != null){
+            MeetMemberParam meetMemberParam = new MeetMemberParam();
+            meetMemberParam.setThesisId(thesisId);
+            LayuiPageInfo members = this.meetMemberService.findPageBySpec(meetMemberParam);
+            List<MeetMemberResult> memberResults = members.getData();
+            MeetMemberResult meetMemberResult = memberResults.get(0);
+            long memberId = meetMemberResult.getMemberId();
+            //设置参会成员ID
+            meetMemberParam.setMemberId(memberId);
+            if(isPass == 1){
+                meetMemberParam.setMeetStatus(2);
+            }else if(isPass == 0){
+                meetMemberParam.setMeetStatus(5);
+            }
+            this.meetMemberService.update(meetMemberParam);
+        }
         this.thesisService.update(thesisParam);
         return ResponseData.success();
     }

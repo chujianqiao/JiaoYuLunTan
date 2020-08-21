@@ -29,31 +29,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             {field: 'thesisId', hide: true, title: '论文ID'},
             {field: 'thesisTitle', sort: true, title: '论文名称（中文）'},
             {field: 'engTitle', sort: true, title: '论文名称（英文）'},
-            // {field: 'engTitle', sort: true, title: '英文题目'},
-            // {field: 'thesisUser', sort: true, title: '论文作者ID'},
             {field: 'userName', sort: true, title: '作者'},
             {field: 'firstName', sort: true, title: '评审专家'},
-            //{field: 'unitsName', sort: true, title: '所在单位'},
-            // {field: 'isgreat', sort: true, title: '是否推荐优秀'},
-            // {field: 'greatNum', sort: true, title: '推荐专家人数'},
-            // {field: 'greatId', sort: true, title: '推优专家ID'},
-            // {field: 'applyTime', sort: true, title: '论文提交时间'},
-            // {field: 'thesisText', sort: true, title: '正文'},
-            // {field: 'score', sort: true, title: '分数'},
-            // {field: 'reviewUser', sort: true, title: '评审人ID'},
-            // {field: 'great', sort: true, title: '是否为优秀论文'},
-            // {field: 'cnKeyword', sort: true, title: '中文关键词'},
-            // {field: 'engKeyword', sort: true, title: '英文关键词'},
-            //{field: 'cnAbstract', sort: true, title: '中文摘要'},
-            // {field: 'engAbstract', sort: true, title: '英文摘要'},
-             {field: 'status', sort: true, title: '评审状态'},
-             {field: 'reviewTime', sort: true, title: '评审时间'},
-            // {field: 'reviewResult', sort: true, title: '评审结果'},
-            //{field: 'belongDomainStr', sort: true, title: '论文领域'},
-            //{field: 'reviewStr', sort: true, title: '评审结果'},
-            // {field: 'thesisDirect', sort: true, title: '参会论文研究方向'},
-            // {field: 'thesisPath', sort: true, title: '论文附件路径'},
-            // {field: 'fileName', sort: true, title: '论文附件文件名'},
+            {field: 'status', sort: true, title: '评审状态'},
+            {field: 'reviewTime', sort: true, title: '评审时间'},
             {align: 'center', title: '操作',minWidth:220,templet: function(data){
                         return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">查看详情</a>\n" +
                             "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
@@ -100,7 +79,6 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     Thesis.jumpDisablePage = function (data) {
-        debugger;
         window.location.href = Feng.ctxPath + '/thesis/disable?thesisId=' + data.thesisId
     };
 

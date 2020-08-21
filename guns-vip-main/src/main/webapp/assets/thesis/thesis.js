@@ -80,7 +80,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     Thesis.jumpDisablePage = function (data) {
-        debugger;
         window.location.href = Feng.ctxPath + '/thesis/disable?thesisId=' + data.thesisId
     };
 

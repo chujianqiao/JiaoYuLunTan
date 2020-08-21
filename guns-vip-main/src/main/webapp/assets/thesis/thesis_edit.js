@@ -54,13 +54,28 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
         });
         ajax.set(data.field);
         ajax.start();
-
         return false;
     });
 
     $('#cancel').click(function(){
         window.location.href = Feng.ctxPath + '/thesis'
     });
+
+    // /**
+    //  * 管理员修改
+    //  */
+    // $('#adminSubmit').click(function(data){
+    //     debugger;
+    //     var ajax = new $ax(Feng.ctxPath + "/thesis/editItem", function (data) {
+    //         Feng.success("更新成功！");
+    //         window.location.href = Feng.ctxPath + '/thesis'
+    //     }, function (data) {
+    //         Feng.error("更新失败！" + data.responseJSON.message)
+    //     });
+    //     ajax.set(data.field);
+    //     ajax.start();
+    //     return false;
+    // });
 
     //上传文件
     upload.render({
