@@ -2,7 +2,6 @@ package cn.stylefeng.guns.thesis.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
-import cn.stylefeng.guns.base.consts.ConstantsContext;
 import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
@@ -36,6 +35,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -87,6 +87,9 @@ public class ThesisController extends BaseController {
 
     @Autowired
     private ThesisReviewMiddleService thesisReviewMiddleService;
+
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
 
     /**
      * 跳转到主页面
@@ -701,29 +704,29 @@ public class ThesisController extends BaseController {
 
 
     /**
-     * 上传文件
+     * 上传Word文件
      */
-    @RequestMapping(method = RequestMethod.POST, path = "/upload")
+    @RequestMapping(method = RequestMethod.POST, path = "/uploadWord")
     @ResponseBody
-    public ResponseData thesisUpload(@RequestPart("file") MultipartFile file,HttpServletRequest request) {
-        String fileSavePath = ConstantsContext.getFileUploadPath();
-        UploadResult uploadResult = this.fileInfoService.uploadFile(file,fileSavePath);
-        String fileId = uploadResult.getFileId();
-
-        String idStr = request.getParameter("thesisId");
-        long thesisId = Long.parseLong(idStr);
-        ThesisParam thesisParam = new ThesisParam();
-        thesisParam.setThesisId(thesisId);
-        String orginName = file.getOriginalFilename();
-        thesisParam.setFileName(orginName);
-        thesisParam.setThesisPath(uploadResult.getFileSavePath());
-        //更新论文表中的数据
-        this.thesisService.update(thesisParam);
-
+    public ResponseData thesisUploadWord(@RequestPart("file") MultipartFile file,HttpServletRequest request) {
+        String message = "";
+        String path = uploadFolder;
+        String fileName = file.getOriginalFilename();
+        String fileType = fileName.substring(fileName.lastIndexOf("."));
         HashMap<String, Object> map = new HashMap<>();
-        map.put("fileId", fileId);
-
-        return ResponseData.success(0, "上传成功", map);
+        if((".doc").equalsIgnoreCase(fileType) || ".docx".equalsIgnoreCase(fileType)){
+            UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
+            String fileId = uploadResult.getFileId();
+            map.put("fileId", fileId);
+            map.put("path",uploadResult.getFileSavePath());
+            map.put("status","成功");
+            message = "上传成功";
+            return ResponseData.success(0, message, map);
+        }else{
+            message = "上传失败，文件格式不匹配";
+            map.put("status","格式问题");
+            return ResponseData.success(0, message, map);
+        }
     }
 
     /**

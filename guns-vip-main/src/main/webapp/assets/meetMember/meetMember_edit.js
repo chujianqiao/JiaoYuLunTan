@@ -29,7 +29,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 加载页面时执行
      */
     $(function(){
-        domainSelectOption();
+        // domainSelectOption();
     })
         var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
         var result = ajax.start();
@@ -40,14 +40,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         var ajaxThesis = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + thesisId);
         var resultThesis = ajaxThesis.start();
 
+        //PDF
         var fileName = resultThesis.data.fileName;
         $("#fileNameTip").html(fileName);
+        //Word
+        var wordName = resultThesis.data.wordName;
+        $("#wordNameTip").html(wordName);
         //批量赋值
         form.val('meetMemberForm', resultThesis.data);
         form.val('meetMemberForm', result.data);
 
         //领域
-        debugger;
         var domiansId = resultThesis.data.belongDomain;
         var idList = domiansId.split(",");
         var dNameStr = "";
@@ -116,7 +119,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         });
     });
 
-    //上传文件
+    //上传PDF文件
     upload.render({
         elem: '#fileBtn'
         , url: Feng.ctxPath + '/holdForum/upload'
@@ -135,6 +138,38 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }
         , error: function () {
             Feng.error("上传文件失败！");
+        }
+    });
+
+    //上传Word文件
+    upload.render({
+        elem: '#wordBtn'
+        , url: Feng.ctxPath + '/thesis/uploadWord'
+        , accept: 'file'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".doc") || fileType.compare(".docx")){
+                    debugger;
+                    $("#wordNameTip").val(file.name);
+                    $("#wordNameTip").html(file.name);
+                }
+            });
+        }
+        , done: function (res) {
+            var status = res.data.status;
+            if(status == "格式问题" || status === "格式问题"){
+                Feng.error(res.message);
+            }else {
+                $("#wordInputHidden").val(res.data.fileId);
+                $("#wordPath").val(res.data.path);
+                $("#wordName").val($("#wordNameTip").val());
+                Feng.success(res.message);
+            }
+        }
+        , error: function (res) {
+            Feng.error("上传文件失败");
         }
     });
 
@@ -202,11 +237,16 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         window.location.href = Feng.ctxPath + '/meetMember';
     });
 
-    // 下载论文附件
+    // 下载论文PDF附件
     $('#btnDownload').click(function () {
-        debugger;
         var thesisId = $('#thesisId').val();
         downloadThesis(thesisId);
+    });
+
+    // 下载论文Word附件
+    $('#btnDownloadWord').click(function () {
+        var thesisId = $('#thesisId').val();
+        downloadThesisWord(thesisId);
     });
 
     function downloadThesis(thesisId){
@@ -215,6 +255,16 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         form.attr("target","_blank");
         form.attr("method","post");
         form.attr("action",Feng.ctxPath + "/meetMember/downloadThesis?thesisId=" + thesisId);    // 此处填写文件下载提交路径
+        $("body").append(form);    // 将表单放置在web中
+        form.submit();
+    }
+
+    function downloadThesisWord(thesisId){
+        var form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        form.attr("target","_blank");
+        form.attr("method","post");
+        form.attr("action",Feng.ctxPath + "/meetMember/downloadThesisWord?thesisId=" + thesisId);    // 此处填写文件下载提交路径
         $("body").append(form);    // 将表单放置在web中
         form.submit();
     }
@@ -248,5 +298,19 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
                 form.render('select');
             }
         })
+    }
+
+    /**
+     * 不区分大小写比较字符串
+     * @param str
+     * @returns {boolean}
+     */
+    String.prototype.compare = function(str) {
+        //不区分大小写
+        if(this.toLowerCase() == str.toLowerCase()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 });

@@ -147,6 +147,18 @@ public class Thesis implements Serializable {
     private String fileName;
 
     /**
+     * word文件路径
+     */
+    @TableField("word_path")
+    private String wordPath;
+
+    /**
+     * word文件名
+     */
+    @TableField("word_name")
+    private String wordName;
+
+    /**
      * 所属领域
      */
     @TableField("belong_domain")
@@ -356,6 +368,23 @@ public class Thesis implements Serializable {
     public void setReviewBatch(Integer reviewBatch) {
         this.reviewBatch = reviewBatch;
     }
+
+    public String getWordPath() {
+        return wordPath;
+    }
+
+    public void setWordPath(String wordPath) {
+        this.wordPath = wordPath;
+    }
+
+    public String getWordName() {
+        return wordName;
+    }
+
+    public void setWordName(String wordName) {
+        this.wordName = wordName;
+    }
+
     @Override
     public String toString() {
         return "Thesis{" +

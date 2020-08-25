@@ -56,7 +56,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         return false;
     });
 
-    //上传文件
+    //上传PDF文件
     upload.render({
         elem: '#fileBtn'
         , url: Feng.ctxPath + '/holdForum/upload'
@@ -75,6 +75,37 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         }
         , error: function () {
             Feng.error("上传文件失败！");
+        }
+    });
+
+    //上传Word文件
+    upload.render({
+        elem: '#wordBtn'
+        , url: Feng.ctxPath + '/thesis/uploadWord'
+        , accept: 'file'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".doc") || fileType.compare(".docx")){
+                    $("#wordNameTip").val(file.name);
+                    $("#wordNameTip").html(file.name);
+                }
+            });
+        }
+        , done: function (res) {
+            var status = res.data.status;
+            if(status == "格式问题" || status === "格式问题"){
+                Feng.error(res.message);
+            }else {
+                $("#wordInputHidden").val(res.data.fileId);
+                $("#wordPath").val(res.data.path);
+                $("#wordName").val($("#wordNameTip").val());
+                Feng.success(res.message);
+            }
+        }
+        , error: function (res) {
+            Feng.error("上传文件失败");
         }
     });
 
@@ -172,6 +203,20 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                 form.render('select');
             }
         })
+    }
+
+    /**
+     * 不区分大小写比较字符串
+     * @param str
+     * @returns {boolean}
+     */
+    String.prototype.compare = function(str) {
+        //不区分大小写
+        if(this.toLowerCase() == str.toLowerCase()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 });

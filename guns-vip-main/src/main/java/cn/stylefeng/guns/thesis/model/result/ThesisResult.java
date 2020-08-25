@@ -125,6 +125,16 @@ public class ThesisResult implements Serializable {
     private String fileName;
 
     /**
+     * word文件路径
+     */
+    private String wordPath;
+
+    /**
+     * word文件名
+     */
+    private String wordName;
+
+    /**
      * 所属领域
      */
     private String belongDomain;

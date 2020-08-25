@@ -13,7 +13,6 @@ import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.meetRegister.wrapper.MeetMemberWrapper;
 import cn.stylefeng.guns.modular.forum.entity.Forum;
 import cn.stylefeng.guns.modular.forum.service.ForumService;
-import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.util.DefaultImages;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
@@ -420,7 +419,7 @@ public class MeetMemberController extends BaseController {
     }
 
     /**
-     * 下载模板文件
+     * 下载PDF
      * @author wucy
      */
     @RequestMapping(path = "/downloadThesis")
@@ -431,6 +430,25 @@ public class MeetMemberController extends BaseController {
         String filePath = thesis.getThesisPath();
         //下载后看到的文件名
         String fileName = thesis.getFileName();
+        try {
+            FileDownload.fileDownload(httpServletResponse, filePath, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 下载Word
+     * @author wucy
+     */
+    @RequestMapping(path = "/downloadThesisWord")
+    public void downloadWord(HttpServletResponse httpServletResponse, MeetMemberParam meetMemberParam, HttpServletRequest request) {
+        long thesisId = meetMemberParam.getThesisId();
+        Thesis thesis = this.thesisService.getById(thesisId);
+        //文件完整路径
+        String filePath = thesis.getWordPath();
+        //下载后看到的文件名
+        String fileName = thesis.getWordName();
         try {
             FileDownload.fileDownload(httpServletResponse, filePath, fileName);
         } catch (Exception e) {

@@ -9,12 +9,14 @@ import cn.stylefeng.guns.pay.model.params.VipPayParam;
 import cn.stylefeng.guns.pay.model.result.VipPayResult;
 import cn.stylefeng.guns.pay.service.VipPayService;
 import cn.stylefeng.guns.util.ToolUtil;
+import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,15 +32,15 @@ import java.util.*;
  * 支付宝支付控制器
  * @author
  */
-//@RestController
 @Controller
-//@RequestMapping(value = "/alipay")
 @RequestMapping("/alipay")
-public class AlipayController {
+public class AlipayController extends BaseController {
 
-	private static MeetMemberService meetMemberService = SpringContextHolder.getBean(MeetMemberService.class);
+	@Autowired
+	private static MeetMemberService meetMemberService;
 
-	private static VipPayService vipPayService = SpringContextHolder.getBean(VipPayService.class);
+	@Autowired
+	private static VipPayService vipPayService;
 
 	@RequestMapping(value = "/pay", produces = "text/html; charset=UTF-8")
 	@ResponseBody

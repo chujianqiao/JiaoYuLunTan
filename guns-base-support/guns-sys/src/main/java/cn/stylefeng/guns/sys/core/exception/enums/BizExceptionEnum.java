@@ -38,6 +38,7 @@ public enum BizExceptionEnum implements AbstractBaseExceptionEnum {
     FILE_READING_ERROR(400, "FILE_READING_ERROR!"),
     FILE_NOT_FOUND(400, "FILE_NOT_FOUND!"),
     UPLOAD_ERROR(500, "上传图片出错"),
+    FILE_TYPE_ERROR(400,"文件格式错误"),
 
     /**
      * 权限和数据问题
