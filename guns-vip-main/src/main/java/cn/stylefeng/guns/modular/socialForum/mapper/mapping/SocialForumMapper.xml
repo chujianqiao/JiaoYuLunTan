@@ -45,13 +45,13 @@
     <select id="customPageList" resultType="cn.stylefeng.guns.modular.socialForum.model.result.SocialForumResult" parameterType="cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam">
         select
         <include refid="Base_Column_List"/>
-        from social_forum where apply_id = #{paramCondition.applyId} and unit_name like #{paramCondition.unitName}
+        from social_forum where apply_id = #{paramCondition.applyId} and unit_name like CONCAT('%',#{paramCondition.unitName},'%')
     </select>
 
     <select id="customPageListAdmin" resultType="cn.stylefeng.guns.modular.socialForum.model.result.SocialForumResult" parameterType="cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam">
         select
         <include refid="Base_Column_List"/>
-        from social_forum where 1 = 1 and unit_name like #{paramCondition.unitName}
+        from social_forum where 1 = 1 and unit_name like CONCAT('%',#{paramCondition.unitName},'%')
     </select>
 
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam">

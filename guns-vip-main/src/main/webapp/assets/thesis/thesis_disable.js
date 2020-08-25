@@ -49,7 +49,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
 
         queryData['thesisTitle'] = $('#thesisTitle').val();
         queryData['belongDomain'] = $('#belongDomain').val();
-
+        $('#thesisTitleExp').val($('#thesisTitle').val());
         table.reload(Thesis.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -131,6 +131,53 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    Thesis.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/thesis/wrapListFirst',
+            type: 'post',
+            data: {
+                "thesisTitle":$('#thesisTitleExp').val(),
+                "belongDomain":$('#belongDomain').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '主题管理全部数据',
+        cols: [[ //表头
+            {
+                field: 'thesisTitle',
+                title: '论文名称（中文）',
+            }, {
+                field: 'engTitle',
+                title: '论文名称（英文）',
+            }, {
+                field: 'userName',
+                title: '作者',
+            }, {
+                field: 'firstName',
+                title: '评审专家',
+            }, {
+                field: 'status',
+                title: '评审状态',
+            }, {
+                field: 'reviewTime',
+                title: '评审时间',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -176,6 +223,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         Thesis.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        Thesis.exportExcelAll();
     });
 
     //批量分配
@@ -264,7 +315,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
 
         queryData['thesisTitle'] = $('#thesisTitleAgain').val();
         queryData['belongDomain'] = $("#belongDomainAgain").val();
-
+        $('#thesisTitleExpAgain').val($('#thesisTitleAgain').val());
         table.reload(ThesisAgain.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -347,6 +398,54 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResultAgain.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    ThesisAgain.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/thesis/wrapListAgain',
+            type: 'post',
+            data: {
+                "thesisTitle":$('#thesisTitleExpAgain').val(),
+                "belongDomain":$('#belongDomain').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '主题管理全部数据',
+        cols: [[ //表头
+            {
+                field: 'thesisTitle',
+                title: '论文名称（中文）',
+            }, {
+                field: 'engTitle',
+                title: '论文名称（英文）',
+            }, {
+                field: 'userName',
+                title: '作者',
+            }, {
+                field: 'againName',
+                title: '评审专家',
+            }, {
+                field: 'status',
+                title: '评审状态',
+            }, {
+                field: 'reviewTime',
+                title: '评审时间',
+            }
+        ]]
+    });
+
 
     /**
      * 点击删除
@@ -392,6 +491,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExpAgain').click(function () {
         ThesisAgain.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAllAgain').click(function () {
+        ThesisAgain.exportExcelAll();
     });
 
     //批量分配

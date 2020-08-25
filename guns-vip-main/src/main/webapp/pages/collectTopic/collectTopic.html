@@ -16,15 +16,21 @@
                             <!--</div>-->
                             <div class="layui-inline">
                                 <input id="topicName" class="layui-input" type="text" placeholder="大会主题"/>
+                                <input id="topicNameExp" style="display: none" class="layui-input" type="text" placeholder="大会主题"/>
                             </div>
                             <div class="layui-inline">
                                 <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                 <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
                                 <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                <button id="btnExpAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>
                             </div>
                         </div>
                     </div>
                     <table class="layui-table" id="collectTopicTable" lay-filter="collectTopicTable"></table>
+                    <div style="display: none">
+                        <table style="display: none" id="tableExpAll"></table>
+                    </div>
+
                 </div>
             </div>
         </div>

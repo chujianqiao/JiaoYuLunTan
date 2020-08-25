@@ -74,6 +74,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var queryData = {};
 
         queryData['resultName'] = $("#resultName").val();
+        $("#resultNameExp").val($("#resultName").val());
         table.reload(EducationResult.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -141,6 +142,52 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    EducationResult.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/educationResult/wrapList',
+            type: 'post',
+            data: {
+                "resultName":$('#resultNameExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '教改实验申报全部数据',
+        cols: [[ //表头
+            {
+                field: 'resultName',
+                title: '成果名称',
+            }, {
+                field: 'belongName',
+                title: '申请人姓名',
+            }, {
+                field: 'reviewName',
+                title: '评审专家',
+            }, {
+                field: 'reviewResult',
+                title: '评审状态',
+            }, {
+                field: 'score',
+                title: '评审分数',
+            }, {
+                field: 'description',
+                title: '评审备注',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -216,6 +263,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         EducationResult.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        EducationResult.exportExcelAll();
     });
 
     //批量分配

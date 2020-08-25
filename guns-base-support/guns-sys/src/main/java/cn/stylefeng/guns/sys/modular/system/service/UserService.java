@@ -382,4 +382,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public List<User> listByRole(String roleId, String name) {
         return this.baseMapper.listByRole(roleId, name);
     }
+    public List<Long> getUserIdByName(String name) {
+        return this.baseMapper.listByName(name);
+    }
 }

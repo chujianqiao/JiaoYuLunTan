@@ -53,6 +53,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
         // debugger;
         var queryData = {};
         queryData['reviewName'] = $("#reviewName").val();
+        $("#reviewNameExp").val($("#reviewName").val());
         table.reload(ReviewMajor.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -118,6 +119,43 @@ layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    ReviewMajor.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/reviewMajor/wraplist',
+            type: 'post',
+            data: {
+                "reviewName":$('#reviewNameExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '主题管理全部数据',
+        cols: [[ //表头
+            {
+                field: 'reviewName',
+                title: '姓名',
+            }, {
+                field: 'belongDomainStr',
+                title: '所属领域',
+            }, {
+                field: 'applyTime',
+                title: '创建时间',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -220,6 +258,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         ReviewMajor.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        ReviewMajor.exportExcelAll();
     });
 
     // 下载模板按钮点击事件

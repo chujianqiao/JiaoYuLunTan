@@ -87,6 +87,16 @@
         </if>
     </select>
 
+    <select id="listByName" resultType="Long">
+        select
+        user_id
+        from sys_user
+        where status != 'DELETED'
+        <if test="name != null and name != ''">
+            and name like CONCAT('%',#{name},'%')
+        </if>
+    </select>
+
     <select id="selectUsers" resultType="map" databaseId="sqlserver">
         select
         <include refid="Base_Column_List"/>

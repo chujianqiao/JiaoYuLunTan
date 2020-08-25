@@ -35,7 +35,8 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     SocialLink.search = function () {
         var queryData = {};
 
-
+        queryData['linkName'] = $('#linkName').val();
+        $('#linkNameExp').val($('#linkName').val());
         table.reload(SocialLink.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -77,6 +78,44 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    SocialLink.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/socialLink/listAll',
+            type: 'post',
+            data: {
+                "linkName":$('#linkNameExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '赞助字典全部数据',
+        cols: [[ //表头
+            {
+                field: 'linkName',
+                title: '环节名称',
+            }, {
+                field: 'description',
+                title: '备注',
+            }, {
+                field: 'createTime',
+                title: '创建时间',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -124,6 +163,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         SocialLink.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        SocialLink.exportExcelAll();
     });
 
     // 工具条点击事件

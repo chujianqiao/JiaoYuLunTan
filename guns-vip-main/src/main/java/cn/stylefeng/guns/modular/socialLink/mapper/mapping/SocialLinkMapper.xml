@@ -39,7 +39,11 @@
     <select id="customPageListAll" resultType="cn.stylefeng.guns.modular.socialLink.model.result.SocialLinkResult" parameterType="cn.stylefeng.guns.modular.socialLink.model.params.SocialLinkParam">
         select
         <include refid="Base_Column_List"/>
-        from social_link where 1 = 1 order by sort asc
+        from social_link where 1 = 1
+        <if test="paramCondition.linkName != null and paramCondition.linkName != ''">
+            and link_name like CONCAT('%',#{paramCondition.linkName},'%')
+        </if>
+        order by sort asc
     </select>
 
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.socialLink.model.params.SocialLinkParam">

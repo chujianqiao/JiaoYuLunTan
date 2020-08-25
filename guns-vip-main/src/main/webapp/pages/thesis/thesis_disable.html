@@ -20,6 +20,7 @@
                                     <div class="layui-form-item">
                                         <div class="layui-inline">
                                             <input id="thesisTitle" class="layui-input" type="text" placeholder="论文题目"/>
+                                            <input id="thesisTitleExp" style="display: none" class="layui-input" type="text"/>
                                         </div>
                                         <div class="layui-inline">
                                             <select id="belongDomain" name="belongDomain" lay-filter="belongDomain">
@@ -28,17 +29,22 @@
                                         <div class="layui-inline">
                                             <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                             <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                            <button id="btnExpAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>
                                             <button id="assignBatch" class="layui-btn icon-btn"><i class="layui-icon">&#xe770;</i>批量分配</button>
                                         </div>
                                     </div>
                                 </div>
                                 <table class="layui-table" id="thesisTable" lay-filter="thesisTable"></table>
+                                <div style="display: none">
+                                    <table style="display: none" id="tableExpAll"></table>
+                                </div>
                             </div>
                             <div class="layui-tab-item">
                                 <div class="layui-form toolbar">
                                     <div class="layui-form-item">
                                         <div class="layui-inline">
                                             <input id="thesisTitleAgain" class="layui-input" type="text" placeholder="论文题目"/>
+                                            <input id="thesisTitleExpAgain" style="display: none" class="layui-input" type="text"/>
                                         </div>
                                         <div class="layui-inline">
                                             <select id="belongDomainAgain" name="belongDomainAgain" lay-filter="belongDomainAgain">
@@ -47,11 +53,15 @@
                                         <div class="layui-inline">
                                             <button id="btnSearchAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                             <button id="btnExpAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                            <button id="btnExpAllAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>
                                             <button id="assignBatchAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe770;</i>批量分配</button>
                                         </div>
                                     </div>
                                 </div>
                                 <table class="layui-table" id="thesisTableAgain" lay-filter="thesisTableAgain"></table>
+                                <div style="display: none">
+                                    <table style="display: none" id="tableExpAllAgain"></table>
+                                </div>
                             </div>
                         </div>
                     </div>

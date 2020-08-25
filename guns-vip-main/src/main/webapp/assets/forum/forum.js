@@ -38,7 +38,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     Forum.search = function () {
         var queryData = {};
 
-
+        queryData['forumName'] = $('#forumName').val();
+        $('#forumNameExp').val($('#forumName').val());
         table.reload(Forum.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -71,6 +72,52 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    Forum.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/forum/wrapList',
+            type: 'post',
+            data: {
+                "forumName":$('#forumNameExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '分论坛全部数据',
+        cols: [[ //表头
+            {
+                field: 'forumName',
+                title: '分论坛名称',
+            }, {
+                field: 'existNum',
+                title: '已有人数',
+            }, {
+                field: 'status',
+                title: '发布状态',
+            }, {
+                field: 'startTime',
+                title: '参会开始时间',
+            }, {
+                field: 'endTime',
+                title: '参会结束时间',
+            }, {
+                field: 'location',
+                title: '论坛地点',
+            }
+        ]]
+    });
 
 
     /**
@@ -117,6 +164,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         Forum.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        Forum.exportExcelAll();
     });
 
     // 发布

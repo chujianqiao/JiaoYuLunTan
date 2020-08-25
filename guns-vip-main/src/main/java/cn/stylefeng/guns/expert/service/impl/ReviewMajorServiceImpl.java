@@ -92,8 +92,10 @@ public class ReviewMajorServiceImpl extends ServiceImpl<ReviewMajorMapper, Revie
             userId = 0;
         }
         String listStatus = "";
-        if(userIdList.size() != 0){
+        if(userIdList.size() != 0&&userIdList!=null){
             listStatus = "有条件";
+        }else {
+            return new Page<Map<String, Object>>();
         }
         return this.baseMapper.customPageMapList(page,param,userId,userIdList,listStatus);
     }

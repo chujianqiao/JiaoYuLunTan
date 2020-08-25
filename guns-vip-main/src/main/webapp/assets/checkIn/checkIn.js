@@ -45,6 +45,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         queryData['signStatus'] = $("#signStatus").val();
         queryData['roleId'] = $("#roleId").val();
         queryData['name'] = $("#name").val();
+        $("#nameExp").val($("#name").val());
         table.reload(CheckIn.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -95,6 +96,57 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    CheckIn.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/checkIn/wrapList',
+            type: 'post',
+            data: {
+                "name":$('#nameExp').val(),
+                "signStatus":$("#signStatus").val(),
+                "roleId":$("#roleId").val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '大会报到签到信息全部数据',
+        cols: [[ //表头
+            {
+                field: 'name',
+                title: '姓名',
+            }, {
+                field: 'roleName',
+                title: '参会角色',
+            }, {
+                field: 'registerStatus',
+                title: '报到状态',
+            }, {
+                field: 'registerTime',
+                title: '报到时间',
+            }, {
+                field: 'signStatus',
+                title: '签到状态',
+            }, {
+                field: 'signTime',
+                title: '签到时间',
+            }, {
+                field: 'signPlace',
+                title: '签到地点',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -140,6 +192,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         CheckIn.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        CheckIn.exportExcelAll();
     });
 
     // 工具条点击事件
@@ -224,6 +280,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         queryData['forumId'] = $("#forumId").val();
         queryData['name'] = $("#nameForum").val();
         queryData['roleId'] = $("#roleIdForum").val();
+        $("#nameForumExp").val($("#nameForum").val());
         table.reload(CheckInForum.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -277,6 +334,61 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResultForum.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    CheckInForum.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/checkIn/wrapListForum',
+            type: 'post',
+            data: {
+                "name":$('#nameForumExp').val(),
+                "forumId":$("#forumId").val(),
+                "signStatus":$("#signStatusForum").val(),
+                "roleId":$("#roleIdForum").val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '分论坛报到签到全部数据',
+        cols: [[ //表头
+            {
+                field: 'name',
+                title: '姓名',
+            }, {
+                field: 'roleName',
+                title: '参会角色',
+            }, {
+                field: 'forumName',
+                title: '参会分论坛',
+            }, {
+                field: 'registerStatus',
+                title: '报到状态',
+            }, {
+                field: 'registerTime',
+                title: '报到时间',
+            }, {
+                field: 'signStatus',
+                title: '签到状态',
+            }, {
+                field: 'signTime',
+                title: '签到时间',
+            }, {
+                field: 'signPlace',
+                title: '签到地点',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -323,6 +435,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     $('#btnExpForum').click(function () {
         CheckInForum.exportExcel();
     });
+    // 导出excel
+    $('#btnExpAllForum').click(function () {
+        CheckInForum.exportExcelAll();
+    });
 
     // 工具条点击事件
     table.on('tool(' + CheckInForum.tableId + ')', function (obj) {
@@ -352,7 +468,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
                     options += '<option value="'+ forums[i].forumId+ '" >'+ forums[i].forumName +'</option>';
                 }
                 $('#forumId').empty();
-                $('#forumId').append("<option value=''>请选择角色</option>");
+                $('#forumId').append("<option value=''>请选择分论坛</option>");
                 $('#forumId').append(options);
                 form.render('select');
             }

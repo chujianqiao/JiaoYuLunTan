@@ -44,6 +44,9 @@
         select
         <include refid="Base_Column_List"/>
         from forum where 1 = 1
+        <if test="paramCondition.forumName != null and paramCondition.forumName != ''">
+            and forum_name like CONCAT('%',#{paramCondition.forumName},'%')
+        </if>
     </select>
 
     <update id="setStatus">

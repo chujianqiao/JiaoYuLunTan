@@ -13,15 +13,20 @@
                         <div class="layui-form-item">
                             <div class="layui-inline">
                                 <input id="unitName" class="layui-input" type="text" placeholder="请输入企业名称"/>
+                                <input id="unitNameExp" style="display: none" class="layui-input" type="text" placeholder="请输入企业名称"/>
                             </div>
                             <div class="layui-inline">
                                 <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                 <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
                                 <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                <button id="btnExpAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>
                             </div>
                         </div>
                     </div>
                     <table class="layui-table" id="socialForumTable" lay-filter="socialForumTable"></table>
+                    <div style="display: none">
+                        <table style="display: none" id="tableExpAll"></table>
+                    </div>
                 </div>
             </div>
         </div>

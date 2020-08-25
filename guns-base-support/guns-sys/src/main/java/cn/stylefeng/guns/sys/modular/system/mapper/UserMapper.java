@@ -75,6 +75,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     List<Map<String, Object>> majorMapList(@Param("roleIds") String roleIds);
     List<User> listByRole(@Param("roleId") String roleId, @Param("name") String name);
+    List<Long> listByName(@Param("name") String name);
 
     /**
      * 修改用户状态

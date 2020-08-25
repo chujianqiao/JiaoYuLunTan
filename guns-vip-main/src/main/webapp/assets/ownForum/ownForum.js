@@ -77,6 +77,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var queryData = {};
 
         queryData['forumName'] = $("#forumName").val();
+        $("#forumNameExp").val($("#forumName").val());
         table.reload(OwnForum.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -157,6 +158,47 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    OwnForum.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/ownForum/list',
+            type: 'post',
+            data: {
+                "forumName":$('#forumNameExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '论坛申报全部数据',
+        cols: [[ //表头
+            {
+                field: 'forumName',
+                title: '论坛名称',
+            }, {
+                field: 'manager',
+                title: '申报人/单位',
+            }, {
+                field: 'forumTopic',
+                title: '论坛主题',
+            }, {
+                field: 'forumSize',
+                title: '论坛规模',
+            }
+
+        ]]
+    });
 
     /**
      * 点击删除
@@ -202,6 +244,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         OwnForum.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        OwnForum.exportExcelAll();
     });
 
     // 工具条点击事件

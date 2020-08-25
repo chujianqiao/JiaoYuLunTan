@@ -42,6 +42,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
         queryData['createUser'] = $('#createUser').val();
         queryData['topicName'] = $('#topicName').val();
+        $('#topicNameExp').val($('#topicName').val());
 
         table.reload(CollectTopic.tableId, {
             where: queryData, page: {curr: 1}
@@ -84,6 +85,52 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 全部导出excel按钮
+     */
+    CollectTopic.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/collectTopic/wraplist',
+            type: 'post',
+            data: {
+                "topicName":$('#topicNameExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '主题管理全部数据',
+        cols: [[ //表头
+            {
+                field: 'topicName',
+                title: '大会主题',
+            }, {
+                field: 'topicDesc',
+                title: '选题意义',
+            }, {
+                field: 'subTopic',
+                title: '分论坛主题',
+            }, {
+                field: 'userName',
+                title: '填报人',
+            }, {
+                field: 'unitName',
+                title: '所在单位',
+            }, {
+                field: 'userPost',
+                title: '职称/职务',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -128,6 +175,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         CollectTopic.exportExcel();
+    });
+    // 全部导出excel
+    $('#btnExpAll').click(function () {
+        CollectTopic.exportExcelAll();
     });
 
     // 工具条点击事件

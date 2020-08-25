@@ -51,13 +51,13 @@
     <select id="customPageList" resultType="cn.stylefeng.guns.modular.holdforum.model.result.HoldForumResult" parameterType="cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam">
         select
         <include refid="Base_Column_List"/>
-        from hold_forum where apply_user = #{paramCondition.applyUser} and forum_name like #{paramCondition.forumName}
+        from hold_forum where apply_user = #{paramCondition.applyUser} and forum_name like CONCAT('%',#{paramCondition.forumName},'%')
     </select>
 
     <select id="customPageListAdmin" resultType="cn.stylefeng.guns.modular.holdforum.model.result.HoldForumResult" parameterType="cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam">
         select
         <include refid="Base_Column_List"/>
-        from hold_forum where 1 = 1 and forum_name like #{paramCondition.forumName}
+        from hold_forum where 1 = 1 and forum_name like CONCAT('%',#{paramCondition.forumName},'%')
     </select>
 
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam">

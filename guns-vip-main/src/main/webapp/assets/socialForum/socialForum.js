@@ -60,6 +60,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var queryData = {};
 
         queryData['unitName'] = $("#unitName").val();
+        $("#unitNameExp").val($("#unitName").val());
         table.reload(SocialForum.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -127,6 +128,56 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    SocialForum.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/socialForum/list',
+            type: 'post',
+            data: {
+                "unitName":$('#unitNameExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '赞助列表全部数据',
+        cols: [[ //表头
+            {
+                field: 'unitName',
+                title: '企业/单位名称',
+            }, {
+                field: 'creditCode',
+                title: '统一社会信用代码',
+            }, {
+                field: 'manager',
+                title: '联系人',
+            }, {
+                field: 'manaPhone',
+                title: '联系电话',
+            }, {
+                field: 'manaEmail',
+                title: '联系邮箱',
+            }, {
+                field: 'supPlate',
+                title: '赞助环节',
+            }, {
+                field: 'supMoney',
+                title: '资助金额',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -172,6 +223,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         SocialForum.exportExcel();
+    });
+    // 全部导出excel
+    $('#btnExpAll').click(function () {
+        SocialForum.exportExcelAll();
     });
 
     // 工具条点击事件

@@ -358,7 +358,7 @@ public class ReviewMajorController extends BaseController {
     @RequestMapping("/wraplist")
     public Object wrapList(ReviewMajorParam reviewMajorParam ,
                            @RequestParam(required = false) String reviewName) {
-        List<Long> userIdList = ToolUtil.getUserIdList(reviewName);
+        List<Long> userIdList = userService.getUserIdByName(reviewName);
         Page<Map<String, Object>> majors = this.reviewMajorService.findPageWrap(reviewMajorParam ,userIdList);
         Page wrapped = new ReviewMajorWrapper(majors).wrap();
 
