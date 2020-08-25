@@ -100,6 +100,7 @@ public class LoginController extends BaseController {
                     model.addAttribute("userName", user.getAccount());
                 }
                 model.addAttribute("roleNames", user.getRoleNames());
+                //String loginUrl = "redirect:http://cesf.nies.net.cn/pub/lt_new_6/";
                 String loginUrl = "/webIndex.html";
                 if (roles.contains(unit)){
                     if (url.equals("/greatResult/add")){
