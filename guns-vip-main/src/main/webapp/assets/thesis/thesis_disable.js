@@ -155,7 +155,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     table.render({
         elem: '#tableExpAll',
         id: 'exportTable',
-        title: '主题管理全部数据',
+        title: '论文初评全部数据',
         cols: [[ //表头
             {
                 field: 'thesisTitle',
@@ -415,14 +415,14 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             success: function (res) {
                 //使用table.exportFile()导出数据
                 //console.log(res.data);
-                table.exportFile('exportTable', res.data, 'xlsx');
+                table.exportFile('exportTableAgain', res.data, 'xlsx');
             }
         });
     };
     table.render({
-        elem: '#tableExpAll',
-        id: 'exportTable',
-        title: '主题管理全部数据',
+        elem: '#tableExpAllAgain',
+        id: 'exportTableAgain',
+        title: '论文复评全部数据',
         cols: [[ //表头
             {
                 field: 'thesisTitle',

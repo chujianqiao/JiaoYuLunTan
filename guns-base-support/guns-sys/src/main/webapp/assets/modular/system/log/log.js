@@ -1,9 +1,10 @@
-layui.use(['layer', 'table', 'ax', 'laydate'], function () {
+layui.use(['layer', 'table', 'form', 'ax', 'laydate'], function () {
     var $ = layui.$;
     var $ax = layui.ax;
     var layer = layui.layer;
     var table = layui.table;
     var laydate = layui.laydate;
+    var form = layui.form;
 
     /**
      * 系统管理--操作日志
@@ -39,10 +40,17 @@ layui.use(['layer', 'table', 'ax', 'laydate'], function () {
         queryData['endTime'] = $("#endTime").val();
         queryData['logName'] = $("#logName").val();
         queryData['logType'] = $("#logType").val();
+        $("#beginTimeExp").val($("#beginTime").val());
+        $("#endTimeExp").val($("#endTime").val());
+        $("#logNameExp").val($("#logName").val());
         table.reload(LoginLog.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
+
+    form.on('select(logType)', function(data){
+        LoginLog.search();
+    });
 
     /**
      * 导出excel按钮
@@ -83,6 +91,61 @@ layui.use(['layer', 'table', 'ax', 'laydate'], function () {
         });
     };
 
+
+    /**
+     * 全部导出excel按钮
+     */
+    LoginLog.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/log/list',
+            type: 'post',
+            data: {
+                "logType":$("#logType").val(),
+                "beginTime":$("#beginTimeExp").val(),
+                "endTime":$("#endTimeExp").val(),
+                "logName":$("#logNameExp").val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '业务日志全部数据',
+        cols: [[ //表头
+            {
+                field: 'logType',
+                title: '日志类型',
+            }, {
+                field: 'logName',
+                title: '日志名称',
+            }, {
+                field: 'userName',
+                title: '用户名称',
+            }, {
+                field: 'className',
+                title: '类名',
+            }, {
+                field: 'method',
+                title: '方法名',
+            }, {
+                field: 'createTime',
+                title: '时间',
+            }, {
+                field: 'regularMessage',
+                title: '具体消息',
+            }
+        ]]
+    });
+
+
     //渲染时间选择框
     laydate.render({
         elem: '#beginTime'
@@ -111,6 +174,11 @@ layui.use(['layer', 'table', 'ax', 'laydate'], function () {
     // 搜索按钮点击事件
     $('#btnClean').click(function () {
         LoginLog.cleanLog();
+    });
+
+    // 全部导出excel
+    $('#btnExpAll').click(function () {
+        LoginLog.exportExcelAll();
     });
 
     // 工具条点击事件

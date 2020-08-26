@@ -102,11 +102,11 @@ public class EducationResultController extends BaseController {
      */
     @RequestMapping("/approve")
     public String approve(Integer applyType) {
-        if (applyType == 1){
+        //if (applyType == 1){
             return PREFIX + "/educationResult_approve.html";
-        }else {
-            return PREFIX + "/educationResult_approveUnit.html";
-        }
+        //}else {
+        //    return PREFIX + "/educationResult_approveUnit.html";
+        //}
     }
 
     /**
@@ -118,11 +118,11 @@ public class EducationResultController extends BaseController {
     @RequestMapping("/detailAdmin")
     public String detailAdmin(Integer applyType) {
         if (LoginContextHolder.getContext().isAdmin()){
-            if (applyType == 1){
+            //if (applyType == 1){
                 return PREFIX + "/educationResult_detail.html";
-            }else {
-                return PREFIX + "/educationResult_detailUnit.html";
-            }
+            //}else {
+            //    return PREFIX + "/educationResult_detailUnit.html";
+            //}
         }else {
             return PREFIX + "/educationResult_detail_person.html";
         }
@@ -139,11 +139,11 @@ public class EducationResultController extends BaseController {
     public String edit(Integer applyType,@RequestParam Long resultId) {
         EducationResult educationResult = educationResultService.getById(resultId);
         LogObjectHolder.me().set(educationResult);
-        if (applyType == 1){
+        //if (applyType == 1){
             return PREFIX + "/educationResult_edit.html";
-        }else {
-            return PREFIX + "/educationResult_editUnit.html";
-        }
+        //}else {
+        //    return PREFIX + "/educationResult_editUnit.html";
+        //}
     }
 
     /**

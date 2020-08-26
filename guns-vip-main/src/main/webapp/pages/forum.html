@@ -86,6 +86,15 @@
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
+												<label class="layui-form-label">论坛归属类别 ：<span style="color: red;">*</span></label>
+												<div class="layui-input-block">
+													<div class="layui-input-inline" style="width: 300px;">
+														&nbsp;&nbsp;<input type="radio" name="applyType" value="1" title="个人申报" checked/>
+														<input type="radio" name="applyType" value="2" title="单位申报"/>
+													</div>
+												</div>
+											</div>
+											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">自设论坛计划规模 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
 													<input name="forumSize" type="text" placeholder="请输入自设论坛计划规模（不超过100人）" class="layui-input" lay-verify="required" required/>
@@ -305,7 +314,7 @@
 				</div>
 			</div>
 		</div>
-		<footer>
+		<!--<footer>
 			<div class="widthC mCenter foot fontSize14">
 				<div class="inlineBlock d1">
 					<img src="${ctxPath}/assets/common/images/icon2_10.png" class="fl" />
@@ -336,7 +345,9 @@
 					<p>京公网安备   110402430096</p>
 				</div>
 			</div>
-		</footer>
+		</footer>-->
+		<!-- 尾部 -->
+		@include("/common/person_footer.html"){}
 	</div>
 	
 	<script src="${ctxPath}/assets/common/js/jquery.min.js"></script>

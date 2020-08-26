@@ -353,13 +353,13 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             success: function (res) {
                 //使用table.exportFile()导出数据
                 //console.log(res.data);
-                table.exportFile('exportTable', res.data, 'xlsx');
+                table.exportFile('exportTableForum', res.data, 'xlsx');
             }
         });
     };
     table.render({
-        elem: '#tableExpAll',
-        id: 'exportTable',
+        elem: '#tableExpAllForum',
+        id: 'exportTableForum',
         title: '分论坛报到签到全部数据',
         cols: [[ //表头
             {
@@ -465,6 +465,9 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
 
                 var options;
                 for (var i = 0 ;i < forums.length ;i++){
+                    if(forums[i].status == "0"){
+                        continue;
+                    }
                     options += '<option value="'+ forums[i].forumId+ '" >'+ forums[i].forumName +'</option>';
                 }
                 $('#forumId').empty();

@@ -358,7 +358,7 @@ public class MeetMemberController extends BaseController {
     @ResponseBody
     @RequestMapping("/wraplist")
     public Object wrapList(MeetMemberParam meetMemberParam,@RequestParam(required = false) String userName) {
-        List<Long> userIdList = ToolUtil.getUserIdList(userName);
+        List<Long> userIdList = userService.getUserIdByName(userName);
 
         boolean isAdmin = ToolUtil.isAdminRole();
         if(isAdmin){
@@ -370,10 +370,10 @@ public class MeetMemberController extends BaseController {
         }
 
         String listStatus;
-        if(userIdList.size() != 0){
+        if(userIdList.size() != 0&&userIdList!=null){
             listStatus = "有条件";
         }else{
-            listStatus = null;
+            return LayuiPageFactory.createPageInfo(new Page());
         }
         Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIdList,listStatus);
         Page wrapped = new MeetMemberWrapper(members).wrap();
@@ -388,12 +388,12 @@ public class MeetMemberController extends BaseController {
     @ResponseBody
     @RequestMapping("/adminList")
     public Object adminList(MeetMemberParam meetMemberParam,@RequestParam(required = false) String roleId,@RequestParam(required = false) String userName) {
-        List<Long> userIdList = ToolUtil.getUserIdList(userName);
+        List<Long> userIdList = userService.getUserIdByName(userName);
         String listStatus;
-        if(userIdList.size() != 0){
+        if(userIdList.size() != 0&&userIdList!=null){
             listStatus = "有条件";
         }else{
-            listStatus = null;
+            return LayuiPageFactory.createPageInfo(new Page());
         }
 
         Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIdList,listStatus);

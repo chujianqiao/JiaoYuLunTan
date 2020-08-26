@@ -37,6 +37,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax', 'func'], function () {
     Role.search = function () {
         var queryData = {};
         queryData['roleName'] = $("#roleName").val();
+        $("#roleNameExp").val($("#roleName").val());
         table.reload(Role.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -79,6 +80,43 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    Role.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/role/list',
+            type: 'post',
+            data: {
+                "roleName":$('#roleNameExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '角色管理全部数据',
+        cols: [[ //表头
+            {
+                field: 'name',
+                title: '名称',
+            }, {
+                field: 'pName',
+                title: '上级角色',
+            }, {
+                field: 'description',
+                title: '别名',
+            }
+        ]]
+    });
 
     /**
      * 点击删除角色
@@ -141,6 +179,10 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         Role.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        Role.exportExcelAll();
     });
 
     // 工具条点击事件

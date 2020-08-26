@@ -142,7 +142,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
     table.render({
         elem: '#tableExpAll',
         id: 'exportTable',
-        title: '主题管理全部数据',
+        title: '专家管理全部数据',
         cols: [[ //表头
             {
                 field: 'reviewName',

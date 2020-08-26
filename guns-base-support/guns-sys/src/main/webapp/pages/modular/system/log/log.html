@@ -13,15 +13,18 @@
                         <div class="layui-form-item">
                             <div class="layui-inline">
                                 <input id="beginTime" class="layui-input" type="text" placeholder="开始时间"/>
+                                <input id="beginTimeExp" style="display: none" class="layui-input" type="text" />
                             </div>
                             <div class="layui-inline">
                                 <input id="endTime" class="layui-input" type="text" placeholder="结束时间"/>
+                                <input id="endTimeExp" style="display: none" class="layui-input" type="text" />
                             </div>
                             <div class="layui-inline">
                                 <input id="logName" class="layui-input" type="text" placeholder="日志名称"/>
+                                <input id="logNameExp" style="display: none" class="layui-input" type="text" />
                             </div>
-                            <div class="layui-inline">
-                                <select id="logType">
+                            <div class="layui-inline" style="width: 130px;">
+                                <select id="logType" name="logType" lay-filter="logType">
                                     <option value="">类型</option>
                                     <option value="0">全部</option>
                                     <option value="1">业务日志</option>
@@ -33,10 +36,14 @@
                                 @if(shiro.hasPermission("/log/delLog")){
                                 <button id="btnClean" class="layui-btn icon-btn layui-btn-danger"><i class="layui-icon">&#xe67d;</i>清空日志</button>
                                 @}
+                                <button id="btnExpAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>
                             </div>
                         </div>
                     </div>
                     <table class="layui-table" id="logTable" lay-filter="logTable"></table>
+                    <div style="display: none">
+                        <table style="display: none" id="tableExpAll"></table>
+                    </div>
                 </div>
             </div>
         </div>

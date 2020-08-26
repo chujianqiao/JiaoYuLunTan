@@ -47,6 +47,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
         var queryData = {};
         queryData['domainName'] = $("#name").val();
         queryData['domainId'] = ThesisDomain.condition.domainId;
+        $("#nameExp").val($("#name").val());
         table.reload(ThesisDomain.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -102,6 +103,46 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    ThesisDomain.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/thesisDomain/wrapList',
+            type: 'post',
+            data: {
+                "domainName":$('#nameExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '领域管理全部数据',
+        cols: [[ //表头
+            {
+                field: 'domainName',
+                title: '领域名称',
+            }, {
+                field: 'belongMajor',
+                title: '所属专家',
+            }, {
+                field: 'description',
+                title: '备注',
+            }, {
+                field: 'createTime',
+                title: '创建时间',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -168,6 +209,10 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         ThesisDomain.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        ThesisDomain.exportExcelAll();
     });
 
     // 工具条点击事件

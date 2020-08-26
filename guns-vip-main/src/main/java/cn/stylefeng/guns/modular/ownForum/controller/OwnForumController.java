@@ -88,11 +88,11 @@ public class OwnForumController extends BaseController {
      */
     @RequestMapping("/approve")
     public String approve(Integer applyType) {
-        if (applyType == 1){
+        //if (applyType == 1){
             return PREFIX + "/ownForum_approve.html";
-        }else {
-            return PREFIX + "/ownForum_approveUnit.html";
-        }
+        //}else {
+        //    return PREFIX + "/ownForum_approveUnit.html";
+        //}
     }
 
     /**
@@ -104,11 +104,11 @@ public class OwnForumController extends BaseController {
     @RequestMapping("/detailAdmin")
     public String detailAdmin(Integer applyType) {
         if (LoginContextHolder.getContext().isAdmin()) {
-            if (applyType == 1) {
+            //if (applyType == 1) {
                 return PREFIX + "/ownForum_detail.html";
-            } else {
-                return PREFIX + "/ownForum_detailUnit.html";
-            }
+            //} else {
+            //    return PREFIX + "/ownForum_detailUnit.html";
+            //}
         }else {
             return PREFIX + "/ownForum_detail_person.html";
         }
@@ -124,11 +124,11 @@ public class OwnForumController extends BaseController {
     public String edit(Integer applyType,@RequestParam Long forumId) {
         OwnForum ownForum = ownForumService.getById(forumId);
         LogObjectHolder.me().set(ownForum);
-        if (applyType == 1){
+        //if (applyType == 1){
             return PREFIX + "/ownForum_edit.html";
-        }else {
-            return PREFIX + "/ownForum_editUnit.html";
-        }
+        //}else {
+        //    return PREFIX + "/ownForum_editUnit.html";
+        //}
     }
 
     /**

@@ -39,7 +39,7 @@ public class LayuiPageFactory {
     public static Page defaultPage() {
         HttpServletRequest request = HttpContext.getRequest();
 
-        int limit = 20;
+        int limit = 10000;
         int page = 1;
 
         //每页多少条数据

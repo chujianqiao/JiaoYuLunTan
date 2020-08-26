@@ -187,6 +187,10 @@ public class LoginController extends BaseController {
             } else {
                 model.addAllAttributes(userIndexInfo);
                 LoginUser user = LoginContextHolder.getContext().getUser();
+                if (user != null){
+                    model.addAttribute("userName",user.getName());
+                    model.addAttribute("roleNames",user.getRoleNames());
+                }
                 List roles = user.getRoleList();
                 if (roles.contains(1l)){
                     return "/index.html";

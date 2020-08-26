@@ -40,6 +40,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var queryData = {};
         queryData['userName'] = $('#userName').val();
         queryData['ownForumid'] = $('#forumOption').val();
+        $('#userNameExp').val($('#userName').val());
         table.reload(MeetMember.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -81,6 +82,56 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    MeetMember.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/meetMember/adminList?roleId=2',
+            type: 'post',
+            data: {
+                "userName":$('#userNameExp').val(),
+                "ownForumid":$('#forumOption').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '普通人员参会列表全部数据',
+        cols: [[ //表头
+            {
+                field: 'memberName',
+                title: '参会人姓名',
+            }, {
+                field: 'unitName',
+                title: '所在单位',
+            }, {
+                field: 'userPost',
+                title: '职务/职称',
+            }, {
+                field: 'direct',
+                title: '研究方向',
+            }, {
+                field: 'thesisName',
+                title: '参会论文',
+            }, {
+                field: 'forumName',
+                title: '参会论坛',
+            }, {
+                field: 'meetStatusStr',
+                title: '会议状态',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -124,6 +175,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         MeetMember.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        MeetMember.exportExcelAll();
     });
 
     // 工具条点击事件
@@ -175,6 +230,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var queryData = {};
         queryData['userName'] = $('#userNameJB').val();
         queryData['ownForumid'] = $('#forumOptionJB').val();
+        $('#userNameJBExp').val($('#userNameJB').val());
         table.reload(MeetMemberJB.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -216,6 +272,50 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResultJB.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    MeetMemberJB.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/meetMember/adminList?roleId=5',
+            type: 'post',
+            data: {
+                "userName":$('#userNameJBExp').val(),
+                "ownForumid":$('#forumOptionJB').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTableJB', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpJBAll',
+        id: 'exportTableJB',
+        title: '会议嘉宾参会列表全部数据',
+        cols: [[ //表头
+            {
+                field: 'memberName',
+                title: '嘉宾姓名',
+            }, {
+                field: 'unitName',
+                title: '所在单位',
+            }, {
+                field: 'userPost',
+                title: '职务/职称',
+            }, {
+                field: 'direct',
+                title: '研究方向',
+            }, {
+                field: 'forumName',
+                title: '参会论坛',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -259,6 +359,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExpJB').click(function () {
         MeetMemberJB.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpJBAll').click(function () {
+        MeetMemberJB.exportExcelAll();
     });
 
     // 工具条点击事件
@@ -344,6 +448,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     MeetMemberMajor.search = function () {
         var queryData = {};
         queryData['reviewName'] = $('#userNameMajor').val();
+        $('#userNameMajorExp').val($('#userNameMajor').val());
         table.reload(MeetMemberMajor.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -368,6 +473,49 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResultMajor.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    MeetMemberMajor.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/reviewMajor/wraplist',
+            type: 'post',
+            data: {
+                "reviewName":$('#userNameMajorExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTableMajor', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpMajorAll',
+        id: 'exportTableMajor',
+        title: '评审专家参会列表全部数据',
+        cols: [[ //表头
+            {
+                field: 'reviewName',
+                title: '专家姓名',
+            }, {
+                field: 'unitName',
+                title: '所在单位',
+            }, {
+                field: 'userPost',
+                title: '职务/职称',
+            }, {
+                field: 'belongDomainStr',
+                title: '所属领域',
+            }, {
+                field: 'direct',
+                title: '研究方向',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -406,6 +554,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExpMajor').click(function () {
         MeetMemberMajor.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpMajorAll').click(function () {
+        MeetMemberMajor.exportExcelAll();
     });
 
     // 工具条点击事件

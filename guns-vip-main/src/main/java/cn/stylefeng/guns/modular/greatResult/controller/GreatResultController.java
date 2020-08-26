@@ -102,11 +102,11 @@ public class GreatResultController extends BaseController {
      */
     @RequestMapping("/approve")
     public String approve(Integer applyType) {
-        if (applyType == 1){
+        //if (applyType == 1){
             return PREFIX + "/greatResult_approve.html";
-        }else {
-            return PREFIX + "/greatResult_approveUnit.html";
-        }
+        //}else {
+        //    return PREFIX + "/greatResult_approveUnit.html";
+        //}
     }
 
     /**
@@ -118,11 +118,11 @@ public class GreatResultController extends BaseController {
     @RequestMapping("/detailAdmin")
     public String detailAdmin(Integer applyType) {
         if (LoginContextHolder.getContext().isAdmin()) {
-            if (applyType == 1) {
+            //if (applyType == 1) {
                 return PREFIX + "/greatResult_detail.html";
-            } else {
-                return PREFIX + "/greatResult_detailUnit.html";
-            }
+            //} else {
+            //    return PREFIX + "/greatResult_detailUnit.html";
+            //}
         }else {
             return PREFIX + "/greatResult_detail_person.html";
         }
@@ -138,11 +138,11 @@ public class GreatResultController extends BaseController {
     public String edit(Integer applyType,@RequestParam Long resultId) {
         GreatResult greatResult = greatResultService.getById(resultId);
         LogObjectHolder.me().set(greatResult);
-        if (applyType == 1){
+        //if (applyType == 1){
             return PREFIX + "/greatResult_edit.html";
-        }else {
-            return PREFIX + "/greatResult_editUnit.html";
-        }
+        //}else {
+        //    return PREFIX + "/greatResult_editUnit.html";
+        //}
     }
 
     /**

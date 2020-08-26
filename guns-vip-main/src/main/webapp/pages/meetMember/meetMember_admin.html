@@ -17,7 +17,7 @@
                         <li>会议嘉宾</li>
                         <li>评审专家</li>
                     </ul>
-                    <br>
+
                     <div class="layui-tab-content">
                         <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
                             <!-- 普通人员 -->
@@ -25,6 +25,7 @@
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <input id="userName" class="layui-input" type="text" placeholder="参会人姓名"/>
+                                        <input id="userNameExp" style="display: none" class="layui-input" type="text"/>
                                     </div>
                                     <div class="layui-inline">
                                         <select id="forumOption" name="forumOption" lay-filter="forumOption"></select>
@@ -32,10 +33,14 @@
                                     <div class="layui-inline">
                                         <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                         <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                        <button id="btnExpAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>
                                     </div>
                                 </div>
                             </div>
                             <table class="layui-table" id="meetMemberTable" lay-filter="meetMemberTable"></table>
+                            <div style="display: none">
+                                <table style="display: none" id="tableExpAll"></table>
+                            </div>
                         </div>
                         <div class="layui-tab-item">
                             <div class="layui-form toolbar">
@@ -43,6 +48,7 @@
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <input id="userNameJB" class="layui-input" type="text" placeholder="参会人姓名"/>
+                                        <input id="userNameJBExp" style="display: none" class="layui-input" type="text"/>
                                     </div>
                                     <div class="layui-inline">
                                         <select id="forumOptionJB" name="forumOptionJB" lay-filter="forumOptionJB"></select>
@@ -50,10 +56,14 @@
                                     <div class="layui-inline">
                                         <button id="btnSearchJB" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                         <button id="btnExpJB" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                        <button id="btnExpJBAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>
                                     </div>
                                 </div>
                             </div>
                             <table class="layui-table" id="meetMemberTableJB" lay-filter="meetMemberTableJB"></table>
+                            <div style="display: none">
+                                <table style="display: none" id="tableExpJBAll"></table>
+                            </div>
                         </div>
                         <div class="layui-tab-item">
                             <div class="layui-form toolbar">
@@ -61,14 +71,19 @@
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <input id="userNameMajor" class="layui-input" type="text" placeholder="参会人姓名"/>
+                                        <input id="userNameMajorExp" style="display: none" class="layui-input" type="text"/>
                                     </div>
                                     <div class="layui-inline">
                                         <button id="btnSearchMajor" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                         <button id="btnExpMajor" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                        <button id="btnExpMajorAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>
                                     </div>
                                 </div>
                             </div>
                             <table class="layui-table" id="meetMemberTableMajor" lay-filter="meetMemberTableMajor"></table>
+                            <div style="display: none">
+                                <table style="display: none" id="tableExpMajorAll"></table>
+                            </div>
                         </div>
                     </div>
                     <!--<div class="layui-card">-->

@@ -23,9 +23,11 @@
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <input id="name" class="layui-input" type="text" placeholder="${lang.get("TIPS_NAME_PHONE","账号/姓名/手机号")}"/>
+                                        <input id="nameExp" style="display: none" class="layui-input" type="text"/>
                                     </div>
                                     <div class="layui-inline">
                                         <input id="timeLimit" class="layui-input" type="text" placeholder="${lang.get("TIPS_REG_TIME","注册时间")}"/>
+                                        <input id="timeLimitExp" style="display: none" class="layui-input" type="text"/>
                                     </div>
                                     <div class="layui-inline">
                                         <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get("BTN_SEARCH","搜索")}</button>
@@ -35,10 +37,14 @@
                                         <button id="btnAddA" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>生成账号</button>
                                         @}
                                         <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>${lang.get("BTN_EXPORT","导出")}</button>
+                                        <button id="btnExpAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>${lang.get("BTN_EXPORTAll","全部导出")}</button>
                                     </div>
                                 </div>
                             </div>
                             <table class="layui-table" id="userTable" lay-filter="userTable"></table>
+                            <div style="display: none">
+                                <table style="display: none" id="tableExpAll"></table>
+                            </div>
                         </div>
                     </div>
                 </div>

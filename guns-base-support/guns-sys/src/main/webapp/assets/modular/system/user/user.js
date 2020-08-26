@@ -35,9 +35,9 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
             {field: 'userId', hide: true, sort: true, title: '用户id'},
             {field: 'account', align: "center", sort: true, title: langs.FIELD_ACCOUNT},
             {field: 'name', align: "center", sort: true, title: langs.FIELD_NAME},
-            {field: 'vip', align: "center", sort: true, title: "是否会员", templet: function(data){
+            /*{field: 'vip', align: "center", sort: true, title: "是否会员", templet: function(data){
                 return data.vip == '1' ? '是' : '否';
-                }},
+                }},*/
             {field: 'phone', align: "center", sort: true, title: langs.FIELD_PHONE, minWidth: 117},
             {field: 'createTime', align: "center", sort: true, title: langs.FIELD_CREATE_TIME, minWidth: 160},
             {field: 'status', align: "center", sort: true, templet: '#statusTpl', title: langs.FIELD_STATUS},
@@ -61,6 +61,8 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
         queryData['deptId'] = MgrUser.condition.deptId;
         queryData['name'] = $("#name").val();
         queryData['timeLimit'] = $("#timeLimit").val();
+        $("#nameExp").val($("#name").val());
+        $("#timeLimitExp").val($("#timeLimit").val());
         table.reload(MgrUser.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -137,6 +139,47 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+    /**
+     * 导出excel按钮
+     */
+    MgrUser.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/mgr/list',
+            type: 'post',
+            data: {
+                "name":$('#nameExp').val(),
+                "timeLimit":$('#timeLimitExp').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '用户管理全部数据',
+        cols: [[ //表头
+            {
+                field: 'account',
+                title: '账号',
+            }, {
+                field: 'name',
+                title: '姓名',
+            }, {
+                field: 'phone',
+                title: '电话',
+            }, {
+                field: 'createTime',
+                title: '创建时间',
+            }
+        ]]
+    });
 
     /**
      * 点击删除用户按钮
@@ -273,6 +316,10 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
     // 导出excel
     $('#btnExp').click(function () {
         MgrUser.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        MgrUser.exportExcelAll();
     });
 
     // 工具条点击事件

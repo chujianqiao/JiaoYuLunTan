@@ -64,7 +64,7 @@ public interface MeetMemberMapper extends BaseMapper<MeetMember> {
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page,
                                                 @Param("paramCondition") MeetMemberParam paramCondition,
-                                                List<Long> list,
+                                                @Param("list") List<Long> list,
                                                 @Param("listStatus") String listStatus);
 
     void updateWord(@Param("userId") Long userId, @Param("wordName") String wordName, @Param("wordPath") String wordPath);
