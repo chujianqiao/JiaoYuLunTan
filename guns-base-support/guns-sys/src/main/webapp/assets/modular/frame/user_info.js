@@ -23,26 +23,49 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
 
     //用这个方法必须用在class有layui-form的元素上
     form.val('userInfoForm', result.data);
-
-    //获取嘉宾附件信息
+    $("#pptNameTip").val(result.data.pptName);
+    $("#wordNameTip").val(result.data.wordName);
+    $("#introduction").val(result.data.introduction);
+    /*//获取嘉宾附件信息
     var ajax = new $ax(Feng.ctxPath + "/meetMember/wraplist");
     var result = ajax.start();
     //console.log(result)
     if (result.data != null){
         $("#pptNameTip").val(result.data[0].pptName);
         $("#wordNameTip").val(result.data[0].wordName);
-    }
+        $("#introduction").val(result.data[0].introduction);
+    }*/
 
 
 
     //表单提交事件
     form.on('submit(userInfoSubmit)', function (data) {
+        console.log(data)
+        var ajax = new $ax(Feng.ctxPath + "/mgr/edit", function (data) {
+            if (data.message == "phoneError"){
+                Feng.error("修改失败,该手机号已被绑定！");
+            } else {
+                Feng.success("修改成功!");
+            }
+        }, function (data) {
+            Feng.error("修改失败!" + data.responseJSON.message + "!");
+        });
+        ajax.set(data.field);
+        ajax.start();
+    });
+    //表单提交事件
+    form.on('submit(guestInfoSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/mgr/edit", function (data) {
             Feng.success("修改成功!");
         }, function (data) {
             Feng.error("修改失败!" + data.responseJSON.message + "!");
         });
-        ajax.set(data.field);
+        ajax.set("userId",$("#userId").val());
+        ajax.set("pptPath",$("#pptPath").val());
+        ajax.set("pptName",$("#pptNameTip").val());
+        ajax.set("wordPath",$("#wordPath").val());
+        ajax.set("wordName",$("#wordNameTip").val());
+        ajax.set("introduction",$("#introduction").val());
         ajax.start();
     });
 
@@ -83,7 +106,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
             $("#pptInputHidden").val(res.data.fileId);
             $("#pptPath").val(res.data.path);
             $("#pptName").val($("#pptNameTip").val());
-            var ajax = new $ax(Feng.ctxPath + "/meetMember/updateFile", function (data) {
+            /*var ajax = new $ax(Feng.ctxPath + "/meetMember/updateFile", function (data) {
                 if (data.message == "sizeError"){
                     Feng.error("上传失败，无参会信息！");
                 } else if (data.message == "success") {
@@ -97,7 +120,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
             });
             ajax.set("pptPath",res.data.path);
             ajax.set("pptName",$("#pptNameTip").val());
-            ajax.start();
+            ajax.start();*/
             //Feng.success(res.message);
         }
         , error: function () {
@@ -120,7 +143,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
             $("#wordPath").val(res.data.path);
             $("#wordName").val($("#wordNameTip").val());
 
-            var ajax = new $ax(Feng.ctxPath + "/meetMember/updateFile", function (data) {
+            /*var ajax = new $ax(Feng.ctxPath + "/meetMember/updateFile", function (data) {
                 if (data.message == "sizeError"){
                     Feng.error("上传失败，无参会信息！");
                 } else if (data.message == "success") {
@@ -134,7 +157,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
             });
             ajax.set("wordPath",res.data.path);
             ajax.set("wordName",$("#wordNameTip").val());
-            ajax.start();
+            ajax.start();*/
 
             //Feng.success(res.message);
         }

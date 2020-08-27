@@ -54,7 +54,7 @@
                                 </ul>
                                 <div class="layui-tab-content">
                                     <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
-                                        <input type="hidden" name="userId"/>
+                                        <input type="hidden" id="userId" name="userId"/>
                                         <div class="layui-form user-info-form" style="max-width: 450px;padding-top: 25px;">
                                             <div class="layui-form-item">
                                                 <label class="layui-form-label">${lang.get("FIELD_ACCOUNT","账号")}:</label>
@@ -182,6 +182,23 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="bd-list-item">
+                                                <div class="bd-list-item-content">
+                                                    <div class="layui-inline layui-col-md12">
+                                                        <label class="layui-form-label">嘉宾简介<span style="color: red;">*</span></label>
+                                                        <div class="layui-input-block" style="width: 500px;">
+                                                            <textarea id="introduction" name="introduction" class="layui-textarea" lay-verify="required" required placeholder="请输入嘉宾简介"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-block">
+                                                    <button class="layui-btn" lay-filter="guestInfoSubmit" lay-submit>
+                                                        更新嘉宾信息
+                                                    </button>
                                                 </div>
                                             </div>
                                             <!--<div class="bd-list-item">

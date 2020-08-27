@@ -232,8 +232,8 @@ public class UserMgrController extends BaseController {
         LogObjectHolder.me().set(user);
         String[] roles = user.getRoleId().split(",");
         for (String role : roles){
-            if (role.equals("3")){
-                return PREFIX + "user_editUnit.html";
+            if (role.equals("5")){
+                return PREFIX + "guest_edit.html";
             }
         }
         return PREFIX + "user_edit.html";
@@ -362,6 +362,17 @@ public class UserMgrController extends BaseController {
     @BussinessLog(value = "修改管理员", key = "account", dict = UserDict.class)
     @ResponseBody
     public ResponseData edit(UserDto user) {
+        // 判断手机号是否重复
+        ResponseData responseData = new ResponseData();
+        User pUser = this.userService.getByPhone(user.getPhone());
+        if (pUser != null) {
+            if (!user.getAccount().equals(pUser.getAccount())){
+                responseData.setMessage("phoneError");
+                return responseData;
+            }else {
+            }
+        }
+
         this.userService.editUser(user);
         return SUCCESS_TIP;
     }

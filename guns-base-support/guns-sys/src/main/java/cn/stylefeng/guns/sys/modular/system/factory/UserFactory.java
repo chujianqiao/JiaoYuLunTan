@@ -111,6 +111,21 @@ public class UserFactory {
             if (ToolUtil.isNotEmpty(newUser.getBankCard())) {
                 oldUser.setBankCard(newUser.getBankCard());
             }
+            if (ToolUtil.isNotEmpty(newUser.getWordPath())) {
+                oldUser.setWordPath(newUser.getWordPath());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getWordName())) {
+                oldUser.setWordName(newUser.getWordName());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getPptPath())) {
+                oldUser.setPptPath(newUser.getPptPath());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getPptName())) {
+                oldUser.setPptName(newUser.getPptName());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getIntroduction())) {
+                oldUser.setIntroduction(newUser.getIntroduction());
+            }
             return oldUser;
         }
     }

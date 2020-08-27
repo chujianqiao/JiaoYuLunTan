@@ -58,11 +58,16 @@
         <result column="wrong_times" property="wrongTimes" />
         <result column="id_card" property="idCard" />
         <result column="bank_card" property="bankCard" />
+        <result column="word_path" property="wordPath" />
+        <result column="word_name" property="wordName" />
+        <result column="ppt_path" property="pptPath" />
+        <result column="ppt_name" property="pptName" />
+        <result column="introduction" property="introduction" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id AS "userId", avatar AS "avatar", account AS "account", password AS "password", salt AS "salt", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", vip AS "vip", work_unit AS "workUnit", title AS "title", post AS "post", education AS "education", direction AS "direction"
+        user_id AS "userId", avatar AS "avatar", account AS "account", password AS "password", salt AS "salt", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", vip AS "vip", work_unit AS "workUnit", title AS "title", post AS "post", education AS "education", direction AS "direction",word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",introduction AS "introduction"
     </sql>
 
     <sql id="Base_Column_List_With_Pwd">

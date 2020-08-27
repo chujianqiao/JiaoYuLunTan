@@ -75,6 +75,30 @@ public class UserDto {
 
     private String bankCard;
 
+    /**
+     * 发言稿路径
+     */
+    private String wordPath;
+
+    /**
+     * 发言稿名称
+     */
+    private String wordName;
+
+    /**
+     * ppt路径
+     */
+    private String pptPath;
+
+    /**
+     * ppt名称
+     */
+    private String pptName;
+    /**
+     * 嘉宾简介
+     */
+    private String introduction;
+
     /*@NotBlank
     private String position;*/
 

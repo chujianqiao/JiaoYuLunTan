@@ -26,40 +26,8 @@
 </head>
 <body>
 <div class="page">
-    <header>
-        <div class="head mCenter widthC pr">
-            <img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
-            <div class="language-select pa">
-                <img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
-                <div class="language-select-box pr">
-                    <div class="language fontSize16">
-                        <a href="#">中文</a>
-                        <a href="#" class="hover">英文</a>
-                    </div>
-                    <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn pa" id="langSelect" />
-                </div>
-            </div>
-        </div>
-    </header>
-    <nav class="widthC mCenter pr">
-        <div class="inlineBlock"><a href="首页.html" class="fontSize18 item" target="_blank">首页</a></div>
-        <div class="inlineBlock"><a href="关于论坛.html" class="fontSize18 item" target="_blank">关于论坛</a></div>
-        <div class="inlineBlock"><a href="论坛活动.html" class="fontSize18 item" target="_blank">论坛活动</a></div>
-        <div>
-            <a href="javascript:void(0)" class="fontSize18 item" target="_blank">论坛之声</a>
-            <div class="childNav pa fontSize16 hide">
-                <div class="childNav-items inlineBlock">
-                    <a href="" target="_blank">参会嘉宾</a>
-                    <a href="" target="_blank">参会学者</a>
-                    <a href="" target="_blank">青年之声</a>
-                    <a href="" target="_blank">科研战线</a>
-                </div>
-            </div>
-        </div>
-        <div><a href="论坛成果.html" class="fontSize18 item" target="_blank">论坛成果</a></div>
-        <div><a href="javascript:void(0)" class="fontSize18 item" target="_blank">国内外会议信息</a></div>
-        <div><a href="javascript:void(0)" class="fontSize18 item" target="_blank">联系我们</a></div>
-    </nav>
+
+    @include("/common/_nav.html"){}
     <div class="func-column-container widthC mCenter mb40">
         <div class="func-column-content mCenter mb20">
             <div  class="form-title mCenter">
