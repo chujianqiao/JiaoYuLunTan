@@ -30,7 +30,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'greatStr', sort: true, title: '是否优秀'},
             {align: 'center', title: '操作',templet: function(data){
                     if(data.firstStatus == "未评审"){
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='review'>评审</a>";
+                        return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review'>评审</a>";
                     }else{
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
                     }
@@ -210,6 +210,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         });
     };
 
+
     /**
      * 跳转到编辑页面
      * @param data 点击按钮时候的行数据
@@ -223,7 +224,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     ThesisAgain.jumpDisablePage = function (data) {
-        debugger;
         window.location.href = Feng.ctxPath + '/thesis/disable?thesisId=' + data.thesisId
     };
 
@@ -285,7 +285,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         ThesisAgain.jumpAssignPageBatchAgain();
     });
 
-
     // 工具条点击事件
     table.on('tool(' + ThesisAgain.tableId + ')', function (obj) {
         var data = obj.data;
@@ -305,4 +304,127 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             ThesisAgain.jumpSecondDetailPage(data);
         }
     });
+
+
+    /**--------------------------------------------------教改实验---------------------------------------------------------------------**/
+    /**
+     * 优秀成果表管理
+     */
+    var EducationResult = {
+        tableId: "educationResultTable",
+        condition: {
+            resultName: "",
+        }
+    };
+
+    /**
+     * 初始化表格的列
+     */
+    EducationResult.initColumn = function () {
+        return [[
+            {type: 'checkbox'},
+            {field: 'resultId', hide: true, title: '成果ID'},
+            {field: 'resultName', sort: true, title: '成果名称'},
+            {field: 'belongName', sort: true, title: '申请人姓名'},
+            {field: 'reviewName', sort: true, title: '评审专家'},
+            {field: 'reviewResult', sort: true, title: '评审状态'},
+            {field: 'score', sort: true, title: '评审分数'},
+            {align: 'center', title: '操作',templet: function(data){
+                    if(data.reviewStatus == "未评审"){
+                        return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"reviewEdu\">评审</a>";
+                    }else{
+                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>";
+                    }
+                    // return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
+                    //     "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"reviewEdu\">评审</a>";
+                }}
+        ]];
+    };
+
+    /**
+     * 点击查询按钮
+     */
+    EducationResult.search = function () {
+        var queryData = {};
+        queryData['resultName'] = $("#resultName").val();
+        // $("#resultNameExp").val($("#resultName").val());
+        table.reload(EducationResult.tableId, {
+            where: queryData, page: {curr: 1}
+        });
+    };
+
+    /**
+     * 点击编辑
+     * @param data 点击按钮时候的行数据
+     */
+    EducationResult.openEditDlg = function (data) {
+        func.open({
+            title: '修改优秀成果表',
+            content: Feng.ctxPath + '/educationResult/edit?resultId=' + data.resultId + '&applyType=' + data.applyType,
+            tableId: EducationResult.tableId
+        });
+    };
+
+    /**
+     * 点击详情
+     * @param data 点击按钮时候的行数据
+     */
+    EducationResult.openDetail = function (data) {
+        window.location.href = Feng.ctxPath + '/educationResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType;
+    };
+
+    /**
+     * 评审
+     * @param data
+     */
+    EducationResult.reviewEduPage = function (data) {
+        debugger;
+        window.location.href = Feng.ctxPath + '/educationResult/reviewPage?resultId=' + data.resultId;
+    };
+
+    /**
+     * 导出excel按钮
+     */
+    EducationResult.exportExcel = function () {
+        var checkRows = table.checkStatus(EducationResult.tableId);
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择要导出的数据");
+        } else {
+            table.exportFile(tableResult.config.id, checkRows.data, 'xls');
+        }
+    };
+
+    //点击li标签事件
+    $("#eduRes").click(function(){
+        EducationResult.search();
+    });
+
+    // 渲染表格
+    var tableResultEdu = table.render({
+        elem: '#' + EducationResult.tableId,
+        url: Feng.ctxPath + '/educationResult/wrapList',
+        page: true,
+        height: "full-158",
+        cellMinWidth: 100,
+        cols: EducationResult.initColumn()
+    });
+
+    // 搜索按钮点击事件
+    $('#btnSearchEdu').click(function () {
+        EducationResult.search();
+    });
+
+    // 工具条点击事件
+    table.on('tool(' + EducationResult.tableId + ')', function (obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        if (layEvent === 'edit') {
+            EducationResult.openEditDlg(data);
+        } else if (layEvent === 'detail') {
+            EducationResult.openDetail(data);
+        } else if (layEvent === 'reviewEdu'){
+            EducationResult.reviewEduPage(data);
+        }
+    });
+
 });

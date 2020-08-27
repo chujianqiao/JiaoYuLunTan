@@ -60,9 +60,9 @@ public class EducationResultServiceImpl extends ServiceImpl<EducationResultMappe
     }
 
     @Override
-    public Page<Map<String, Object>> findPageWrap(EducationResultParam param) {
+    public Page<Map<String, Object>> findPageWrap(EducationResultParam param,List<Long> list,String listStatus) {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.customPageMapList(page,param);
+        return this.baseMapper.customPageMapList(page,param,list,listStatus);
     }
 
     @Override

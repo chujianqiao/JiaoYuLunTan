@@ -46,96 +46,15 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var form = layui.form;
     var admin = layui.admin;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $('#cancel').click(function(){
         window.location.href = Feng.ctxPath + '/greatResult'
     });
     $('#eduCancel').click(function(){
         window.location.href = Feng.ctxPath + '/educationResult'
+    });
+
+    $('#reviewCancel').click(function(){
+        window.location.href = Feng.ctxPath + '/thesis'
     });
 
     //获取详情信息，填充表单
@@ -241,6 +160,27 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         form.append(input2);
         form.submit();    // 表单提交
 
+    });
+
+    /**
+     * 提交评审结果
+     */
+    form.on('submit(reviewSubmit)', function (data) {
+        debugger;
+        var score = data.field.score;
+        if (score >= 0 && score <=100) {
+            var ajax = new $ax(Feng.ctxPath + "/educationResult/reviewItem", function (data) {
+                Feng.success("评审成功！");
+                window.location.href = Feng.ctxPath + '/thesis';
+            }, function (data) {
+                Feng.error("评审失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.start();
+        }else {
+            Feng.error("评分区间 0~100分");
+        }
+        return false;
     });
 
 });

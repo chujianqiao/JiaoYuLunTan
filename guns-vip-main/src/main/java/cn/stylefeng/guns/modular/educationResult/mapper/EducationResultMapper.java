@@ -58,6 +58,8 @@ public interface EducationResultMapper extends BaseMapper<EducationResult> {
      * @author CHUJIANQIAO
      * @Date 2020-05-19
      */
-    Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") EducationResultParam paramCondition);
+    Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") EducationResultParam paramCondition,
+                                                @Param("list") List<Long> list,
+                                                @Param("listStatus") String listStatus);
 
 }

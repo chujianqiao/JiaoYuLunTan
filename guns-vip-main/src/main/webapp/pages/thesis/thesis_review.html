@@ -7,67 +7,102 @@
         <div class="layui-body-header">
             <span class="layui-body-header-title">论文表管理</span>
         </div>
-
-        <div class="layui-fluid">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
-                    <div class="layui-card">
-                        <div class="layui-card-body" style="padding-right: 15px">
-                            <!--<div class="layui-form toolbar">-->
-                                <!--<div class="layui-form-item">-->
-                                    <!--<div class="layui-inline">-->
-                                        <!--<input id="thesisTitle" class="layui-input" type="text" placeholder="论文题目"/>-->
-                                    <!--</div>-->
-                                    <!--<div class="layui-inline">-->
-                                        <!--<button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>-->
-                                        <!--&lt;!&ndash;<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>&ndash;&gt;-->
-                                        <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<table class="layui-table" id="thesisTable" lay-filter="thesisTable"></table>-->
-                            <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
-                                <ul class="layui-tab-title">
-                                    <li class="layui-this">专家初评</li>
-                                    <li>专家复评</li>
-                                </ul>
-                                <br>
-                                <div class="layui-tab-content">
-                                    <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
-                                        <div class="layui-form toolbar">
-                                            <div class="layui-form-item">
-                                                <div class="layui-inline">
-                                                    <input id="thesisTitle" class="layui-input" type="text" placeholder="论文题目"/>
-                                                </div>
-                                                <div class="layui-inline">
-                                                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                                    <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table class="layui-table" id="thesisTable" lay-filter="thesisTable"></table>
-                                    </div>
-                                    <div class="layui-tab-item">
-                                        <div class="layui-form toolbar">
-                                            <div class="layui-form-item">
-                                                <div class="layui-inline">
-                                                    <input id="thesisTitleAgain" class="layui-input" type="text" placeholder="论文题目"/>
-                                                </div>
-                                                <div class="layui-inline">
-                                                    <button id="btnSearchAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                                    <!--<button id="btnExpAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
+        <div class="layui-card-body" style="padding-right: 15px">
+            <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">论文评审</li>
+                    <li id="eduRes">教改实验评审</li>
+                    <li id="greatRes">优秀论著评审</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-form layui-tab-item layui-show">
+                        <div class="layui-fluid">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-body" style="padding-right: 15px">
+                                            <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
+                                                <ul class="layui-tab-title">
+                                                    <li class="layui-this">专家初评</li>
+                                                    <li>专家复评</li>
+                                                </ul>
+                                                <br>
+                                                <div class="layui-tab-content">
+                                                    <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
+                                                        <div class="layui-form toolbar">
+                                                            <div class="layui-form-item">
+                                                                <div class="layui-inline">
+                                                                    <input id="thesisTitle" class="layui-input" type="text" placeholder="论文题目"/>
+                                                                </div>
+                                                                <div class="layui-inline">
+                                                                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <table class="layui-table" id="thesisTable" lay-filter="thesisTable"></table>
+                                                    </div>
+                                                    <div class="layui-tab-item">
+                                                        <div class="layui-form toolbar">
+                                                            <div class="layui-form-item">
+                                                                <div class="layui-inline">
+                                                                    <input id="thesisTitleAgain" class="layui-input" type="text" placeholder="论文题目"/>
+                                                                </div>
+                                                                <div class="layui-inline">
+                                                                    <button id="btnSearchAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <table class="layui-table" id="thesisTableAgain" lay-filter="thesisTableAgain"></table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <table class="layui-table" id="thesisTableAgain" lay-filter="thesisTableAgain"></table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- 教改实验 -->
+                    <div class="layui-tab-item">
+                        <div class="layui-fluid">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-body">
+                                            <div class="layui-form toolbar">
+                                                <div class="layui-form-item">
+                                                    <div class="layui-inline">
+                                                        <input id="resultName" class="layui-input" type="text" placeholder="请输入名称"/>
+                                                        <!--<input id="resultNameExp" style="display: none" class="layui-input" type="text" />-->
+                                                    </div>
+                                                    <div class="layui-inline">
+                                                        <button id="btnSearchEdu" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                        <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
+                                                        <!--<button id="btnExpAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>-->
+                                                        <!--<button id="assignBatch" class="layui-btn icon-btn"><i class="layui-icon">&#xe770;</i>批量分配</button>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <table class="layui-table" id="educationResultTable" lay-filter="educationResultTable"></table>
+                                            <div style="display: none">
+                                                <table style="display: none" id="tableExpAll"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 优秀论著 -->
+                    <div class="layui-tab-item">
+                        <span>333</span>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
     </div>
     <!-- 尾部 -->
     @include("/common/person_footer.html"){}

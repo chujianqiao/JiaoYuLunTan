@@ -54,6 +54,6 @@ public interface ThesisMapper extends BaseMapper<Thesis> {
      * 评审专家查询列表
      * @return
      */
-    Page<Map<String, Object>> customReview(@Param("page") Page page, List<Long> list,@Param("paramCondition") ThesisParam paramCondition);
+    Page<Map<String, Object>> customReview(@Param("page") Page page,@Param("list") List<Long> list,@Param("paramCondition") ThesisParam paramCondition);
 
 }

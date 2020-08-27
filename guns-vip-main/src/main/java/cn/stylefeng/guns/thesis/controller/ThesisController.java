@@ -71,12 +71,6 @@ public class ThesisController extends BaseController {
     private UserService userService;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private RestRoleService restRoleService;
-
-    @Autowired
     private MeetMemberService meetMemberService;
 
     @Autowired

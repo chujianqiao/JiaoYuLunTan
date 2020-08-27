@@ -1,5 +1,9 @@
 package cn.stylefeng.guns.modular.educationResult.wrapper;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
+import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.modular.educationReviewMiddle.entity.EducationReviewMiddle;
 import cn.stylefeng.guns.modular.educationReviewMiddle.model.params.EducationReviewMiddleParam;
 import cn.stylefeng.guns.modular.educationReviewMiddle.model.result.EducationReviewMiddleResult;
 import cn.stylefeng.guns.modular.educationReviewMiddle.service.EducationReviewMiddleService;
@@ -13,6 +17,7 @@ import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.kernel.model.page.PageResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +78,19 @@ public class EducationResultWrapper extends BaseControllerWrapper {
             map.put("reviewResult","推荐参会");
         } else {
             map.put("reviewResult","未评审");
+        }
+
+        EducationReviewMiddleParam middleParam = new EducationReviewMiddleParam();
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        middleParam.setUserId(user.getId());
+        middleParam.setResultId(Long.parseLong(map.get("resultId").toString()));
+        List<EducationReviewMiddleResult> records = this.educationReviewMiddleService.findListBySpec(middleParam);
+        if(records.size() != 0){
+            EducationReviewMiddleResult result = records.get(0);
+            Date date = result.getReviewTime();
+            if(date == null || date.getTime() == 0L){
+                map.put("reviewStatus","未评审");
+            }
         }
 
     }
