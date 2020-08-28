@@ -58,6 +58,8 @@ public interface GreatResultMapper extends BaseMapper<GreatResult> {
      * @author CHUJIANQIAO
      * @Date 2020-05-19
      */
-    Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") GreatResultParam paramCondition);
+    Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") GreatResultParam paramCondition,
+                                                @Param("list") List<Long> list,
+                                                @Param("listStatus") String listStatus);
 
 }

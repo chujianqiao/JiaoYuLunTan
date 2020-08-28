@@ -1,0 +1,149 @@
+@layout("/common/_form.html",{js:["/assets/greatResult/greatResult_approve.js"]}){
+
+<body>
+<div class="page">
+    <!-- 头部 -->
+    @include("/common/person_header.html"){}
+    <div class="func-column-container widthC mCenter mb40">
+
+        <form class="layui-form" id="greatResultForm" lay-filter="greatResultForm">
+            <div class="layui-fluid" style="padding-bottom: 75px;">
+                <div class="layui-card">
+                    <div class="layui-card-header">基本信息</div>
+                    <div class="layui-card-body">
+                        <div class="layui-form-item layui-row">
+                            <input name="resultId" type="hidden"/>
+
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">成果名称<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="resultName" disabled name="resultName" placeholder="请输入成果名称" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">论坛归属类别<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input type="radio" disabled name="applyType" value="1" title="个人申报" checked/>
+                                    <input type="radio" disabled name="applyType" value="2" title="单位申报"/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">申请人姓名<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="belongName" disabled name="belongName" placeholder="请输入负责人姓名" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">申请人电话<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="manaPhone" disabled name="manaPhone" placeholder="请输入负责人电话" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">申请人邮箱<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="manaEmail" disabled name="manaEmail" placeholder="请输入负责人邮箱" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="team" name="team" disabled placeholder="请输入攻关团队" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">申请人职称/职务<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="manaPost" disabled name="manaPost" placeholder="请输入负责人职称/职务" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">申请人研究方向<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="manaDirect" disabled name="manaDirect" placeholder="请输入负责人研究方向" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">关键词<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="keyword" disabled name="keyword" placeholder="请输入关键词" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">优秀成果简介附件<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="introducefileInputHidden" name="introducefileInputHidden" type="hidden" class="layui-input"/>
+                                    <input id="introducePath" name="introducePath" type="hidden" class="layui-input"/>
+                                    <input id="introduceName" name="introduceName" type="hidden" class="layui-input"/>
+                                    <div style="float: left;">
+                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadintroduce"><i class="layui-icon"></i>附件下载</button>
+                                    </div>
+                                    <div style="float: left;">
+                                        <input name="introduceName" id="introducefileNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">专家推荐信附件<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="letterfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
+                                    <input id="letterPath" name="letterPath" type="hidden" class="layui-input"/>
+                                    <input id="letterName" name="letterName" type="hidden" class="layui-input"/>
+                                    <div style="float: left;">
+                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadletter"><i class="layui-icon"></i>附件下载</button>
+                                    </div>
+                                    <div style="float: left;">
+                                        <input name="letterName" id="letterfileNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">原创承诺书<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="commitfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
+                                    <input id="commitPath" name="commitPath" type="hidden" class="layui-input"/>
+                                    <input id="commitName" name="commitName" type="hidden" class="layui-input"/>
+                                    <div style="float: left;">
+                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadcommit"><i class="layui-icon"></i>附件下载</button>
+                                    </div>
+                                    <div style="float: left;">
+                                        <input name="commitName" id="commitfileNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">分数<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="score" name="score" placeholder="请输入分数" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">评审意见<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="reviewResult" lay-filter="reviewResult"  value="1" title="推荐参会" checked>
+                                    <input type="radio" name="reviewResult" lay-filter="reviewResult" value="0" title="不推荐参会">
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">备注<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="description" name="description" placeholder="请输入备注" type="text" class="layui-input" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="btns sb-btns fontSize16">
+                                <button class="layui-btn layui-btn-danger" lay-filter="reviewSubmit" lay-submit>&emsp;提交评审结果&emsp;</button>
+                                <button type="reset" class="layui-btn layui-btn-primary" id="reviewGreCan">&emsp;返回&emsp;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- 尾部 -->
+    @include("/common/person_footer.html"){}
+</div>
+</body>
+
+@}

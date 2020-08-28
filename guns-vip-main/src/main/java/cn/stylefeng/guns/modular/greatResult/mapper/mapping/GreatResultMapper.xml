@@ -91,6 +91,13 @@
         <if test="paramCondition.belongDomain != null and paramCondition.belongDomain != ''">
             and belong_domain like CONCAT('%',#{paramCondition.belongDomain},'%')
         </if>
+        <if test="listStatus != null and listStatus != ''">
+            and result_id IN
+            <foreach collection="list" index="index" item="i" open="("
+                     separator="," close=")">
+                #{i}
+            </foreach>
+        </if>
     </select>
 
 </mapper>

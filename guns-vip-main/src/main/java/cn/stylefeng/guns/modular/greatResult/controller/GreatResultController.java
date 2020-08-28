@@ -14,6 +14,7 @@ import cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam;
 import cn.stylefeng.guns.modular.greatResult.service.GreatResultService;
 import cn.stylefeng.guns.modular.greatResult.wrapper.GreatResultWrapper;
 import cn.stylefeng.guns.modular.greatReviewMiddle.model.params.GreatReviewMiddleParam;
+import cn.stylefeng.guns.modular.greatReviewMiddle.model.result.GreatReviewMiddleResult;
 import cn.stylefeng.guns.modular.greatReviewMiddle.service.GreatReviewMiddleService;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
@@ -21,6 +22,7 @@ import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,15 +30,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
  * 优秀成果表控制器
- *
  * @author CHUJIANQIAO
  * @Date 2020-05-19 14:14:51
  */
@@ -63,7 +61,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 跳转到主页面
-     *
      * @author CHUJIANQIAO
      * @Date 2020-05-19
      */
@@ -78,7 +75,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 新增页面
-     *
      * @author CHUJIANQIAO
      * @Date 2020-05-19
      */
@@ -96,7 +92,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 审批页面
-     *
      * @author
      * @Date 2020-05-13
      */
@@ -111,7 +106,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 详情页面
-     *
      * @author
      * @Date 2020-05-13
      */
@@ -129,8 +123,22 @@ public class GreatResultController extends BaseController {
     }
 
     /**
+     * 详情页面
+     * @author wucy
+     * @Date 2020-08-28
+     */
+    @RequestMapping("/reviewDetail")
+    public String reviewDetail() {
+        boolean isReview = ToolUtil.isReviewRole();
+        if(isReview){
+            return PREFIX + "/greatResult_detail_review.html";
+        }else {
+            return "没有权限";
+        }
+    }
+
+    /**
      * 编辑页面
-     *
      * @author CHUJIANQIAO
      * @Date 2020-05-19
      */
@@ -143,6 +151,21 @@ public class GreatResultController extends BaseController {
         //}else {
         //    return PREFIX + "/greatResult_editUnit.html";
         //}
+    }
+
+    /**
+     * 评审页面
+     * @author wucy
+     * @Date 2020-08-27
+     */
+    @RequestMapping("/reviewPage")
+    public String reviewPage(Integer applyType,@RequestParam Long resultId) {
+        boolean isReview = ToolUtil.isReviewRole();
+        if(isReview){
+            return PREFIX + "/greatResult_edit_review.html";
+        } else {
+            return "无权限查看";
+        }
     }
 
     /**
@@ -191,7 +214,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 新增接口
-     *
      * @author CHUJIANQIAO
      * @Date 2020-05-19
      */
@@ -209,7 +231,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 编辑接口
-     *
      * @author CHUJIANQIAO
      * @Date 2020-05-19
      */
@@ -222,8 +243,33 @@ public class GreatResultController extends BaseController {
     }
 
     /**
+     * 评审接口
+     * @author wucy
+     * @Date 2020-08-28
+     */
+    @RequestMapping("/reviewItem")
+    @BussinessLog(value = "评审优秀论著申报信息", key = "resultId", dict = ResultDict.class)
+    @ResponseBody
+    public ResponseData reviewItem(GreatResultParam greatResultParam,GreatReviewMiddleParam middleParam) {
+        Long resultId = greatResultParam.getResultId();
+        middleParam.setResultId(resultId);
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        Long userId = user.getId();
+        middleParam.setUserId(userId);
+
+        List<GreatReviewMiddleResult> middleResults = this.greatReviewMiddleService.findListBySpec(middleParam);
+        GreatReviewMiddleResult result = middleResults.get(0);
+        Long middleId = result.getMiddleId();
+        middleParam.setMiddleId(middleId);
+        middleParam.setReviewTime(new Date());
+
+        this.greatReviewMiddleService.update(middleParam);
+//        this.greatResultService.update(greatResultParam);
+        return ResponseData.success();
+    }
+
+    /**
      * 审批通过接口
-     *
      * @author
      * @Date 2020-05-13
      */
@@ -238,7 +284,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 审批驳回接口
-     *
      * @author
      * @Date 2020-05-13
      */
@@ -253,7 +298,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 取消接口
-     *
      * @author
      * @Date 2020-05-13
      */
@@ -268,7 +312,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 申请接口
-     *
      * @author
      * @Date 2020-05-13
      */
@@ -283,7 +326,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 删除接口
-     *
      * @author CHUJIANQIAO
      * @Date 2020-05-19
      */
@@ -297,7 +339,6 @@ public class GreatResultController extends BaseController {
 
     /**
      * 查看详情接口
-     *
      * @author CHUJIANQIAO
      * @Date 2020-05-19
      */
@@ -305,7 +346,23 @@ public class GreatResultController extends BaseController {
     @ResponseBody
     public ResponseData detail(GreatResultParam greatResultParam) {
         GreatResult detail = this.greatResultService.getById(greatResultParam.getResultId());
-        return ResponseData.success(detail);
+        Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
+
+        GreatReviewMiddleParam middleParam = new GreatReviewMiddleParam();
+        middleParam.setResultId(greatResultParam.getResultId());
+        List<GreatReviewMiddleResult> records = this.greatReviewMiddleService.findListBySpec(middleParam);
+        if(records.size() != 0){
+            GreatReviewMiddleResult result = records.get(0);
+            Integer score = result.getScore();
+            Integer reviewResult = result.getReviewResult();
+            String desc = result.getDescription();
+            if(reviewResult != null){
+                map.put("reviewResult",reviewResult);
+                map.put("score",score);
+                map.put("description",desc);
+            }
+        }
+        return ResponseData.success(map);
     }
 
     /**
@@ -330,14 +387,22 @@ public class GreatResultController extends BaseController {
     @ResponseBody
     @RequestMapping("/wrapList")
     public Object wrapList(GreatResultParam educationResultParam) {
-        Page<Map<String, Object>> theses = this.greatResultService.findPageWrap(educationResultParam);
+        boolean isReview = ToolUtil.isReviewRole();
+        List<Long> greatIdList = new ArrayList<>();
+        String listStatus = "";
+        if(isReview){
+            greatIdList = getGreatIdList();
+            if(greatIdList.size() != 0){
+                listStatus = "有数据";
+            }
+        }
+        Page<Map<String, Object>> theses = this.greatResultService.findPageWrap(educationResultParam,greatIdList,listStatus);
         Page wrapped = new GreatResultWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }
 
     /**
      * 上传文件
-     *
      * @author fengshuonan
      * @Date 2019-2-23 10:48:29
      */
@@ -355,6 +420,25 @@ public class GreatResultController extends BaseController {
         map.put("path",uploadResult.getFileSavePath());
 
         return ResponseData.success(0, "上传成功", map);
+    }
+
+    /**
+     * 获取成果ID
+     * @return
+     */
+    private List<Long> getGreatIdList(){
+        List<Long> greatIdList = new ArrayList<>();
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        Long userId = user.getId();
+        GreatReviewMiddleParam middleParam = new GreatReviewMiddleParam();
+        middleParam.setUserId(userId);
+        List<GreatReviewMiddleResult> middles = this.greatReviewMiddleService.findListBySpec(middleParam);
+        for (int i = 0; i < middles.size(); i++) {
+            GreatReviewMiddleResult result = middles.get(i);
+            Long resultId = result.getResultId();
+            greatIdList.add(resultId);
+        }
+        return greatIdList;
     }
 }
 

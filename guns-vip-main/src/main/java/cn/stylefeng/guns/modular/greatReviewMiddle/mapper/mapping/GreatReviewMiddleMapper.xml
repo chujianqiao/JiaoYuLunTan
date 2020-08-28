@@ -26,6 +26,9 @@
         <if test="paramCondition.resultId != null and paramCondition.resultId != ''">
             and result_id = #{paramCondition.resultId}
         </if>
+        <if test="paramCondition.userId != null and paramCondition.userId != ''">
+            and user_id = #{paramCondition.userId}
+        </if>
     </select>
 
     <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.greatReviewMiddle.model.params.GreatReviewMiddleParam">

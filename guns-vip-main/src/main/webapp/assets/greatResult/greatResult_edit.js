@@ -47,94 +47,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var admin = layui.admin;
     var upload = layui.upload;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/greatResult/detail?resultId=" + Feng.getUrlParam("resultId"));
     var result = ajax.start();
@@ -157,7 +69,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }else {
             Feng.success("请先取消申请再进行修改！");
         }
-
         return false;
     });
 

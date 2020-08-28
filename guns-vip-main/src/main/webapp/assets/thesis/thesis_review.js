@@ -335,8 +335,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                     }else{
                         return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>";
                     }
-                    // return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
-                    //     "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"reviewEdu\">评审</a>";
                 }}
         ]];
     };
@@ -347,21 +345,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     EducationResult.search = function () {
         var queryData = {};
         queryData['resultName'] = $("#resultName").val();
-        // $("#resultNameExp").val($("#resultName").val());
         table.reload(EducationResult.tableId, {
             where: queryData, page: {curr: 1}
-        });
-    };
-
-    /**
-     * 点击编辑
-     * @param data 点击按钮时候的行数据
-     */
-    EducationResult.openEditDlg = function (data) {
-        func.open({
-            title: '修改优秀成果表',
-            content: Feng.ctxPath + '/educationResult/edit?resultId=' + data.resultId + '&applyType=' + data.applyType,
-            tableId: EducationResult.tableId
         });
     };
 
@@ -378,20 +363,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data
      */
     EducationResult.reviewEduPage = function (data) {
-        debugger;
         window.location.href = Feng.ctxPath + '/educationResult/reviewPage?resultId=' + data.resultId;
-    };
-
-    /**
-     * 导出excel按钮
-     */
-    EducationResult.exportExcel = function () {
-        var checkRows = table.checkStatus(EducationResult.tableId);
-        if (checkRows.data.length === 0) {
-            Feng.error("请选择要导出的数据");
-        } else {
-            table.exportFile(tableResult.config.id, checkRows.data, 'xls');
-        }
     };
 
     //点击li标签事件
@@ -418,13 +390,104 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     table.on('tool(' + EducationResult.tableId + ')', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
-        if (layEvent === 'edit') {
-            EducationResult.openEditDlg(data);
-        } else if (layEvent === 'detail') {
+        if (layEvent === 'detail') {
             EducationResult.openDetail(data);
         } else if (layEvent === 'reviewEdu'){
             EducationResult.reviewEduPage(data);
         }
     });
 
+
+    /**-------------------------------------------------优秀论著---------------------------------------------------**/
+    /**
+     * 优秀成果表管理
+     */
+    var GreatResult = {
+        tableId: "greatResultTable",
+        condition: {
+            resultName: "",
+        }
+    };
+
+    /**
+     * 初始化表格的列
+     */
+    GreatResult.initColumn = function () {
+        return [[
+            {type: 'checkbox'},
+            {field: 'resultId', hide: true, title: '成果ID'},
+            {field: 'resultName', sort: true, title: '成果名称'},
+            {field: 'belongName', sort: true, title: '申请人姓名'},
+            {field: 'reviewName', sort: true, title: '评审专家'},
+            {field: 'reviewResult', sort: true, title: '评审状态'},
+            {field: 'score', sort: true, title: '评审分数'},
+            {align: 'center', title: '操作',templet: function(data){
+                    // return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"reviewDetail\">查看详情</a>\n" +
+                    //     "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"reviewGreat\">评审</a>\n";
+                    if(data.reviewResult == "未评审"){
+                        return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"reviewGreat\">评审</a>";
+                    }else{
+                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"reviewDetail\">查看详情</a>";
+                    }
+                }}
+        ]];
+    };
+
+    /**
+     * 点击查询按钮
+     */
+    GreatResult.search = function () {
+        var queryData = {};
+        queryData['resultName'] = $("#greatResultName").val();
+        table.reload(GreatResult.tableId, {
+            where: queryData, page: {curr: 1}
+        });
+    };
+
+    //点击li标签事件
+    $("#greatRes").click(function(){
+        GreatResult.search();
+    });
+
+    /**
+     * 点击详情
+     * @param data 点击按钮时候的行数据
+     */
+    GreatResult.openDetail = function (data) {
+        window.location.href = Feng.ctxPath + '/greatResult/reviewDetail?resultId=' + data.resultId;
+    };
+
+    /**
+     * 评审页面
+     * @param data
+     */
+    GreatResult.reviewGreatPage = function (data) {
+        window.location.href = Feng.ctxPath + '/greatResult/reviewPage?resultId=' + data.resultId;
+    };
+
+    // 渲染表格
+    var tableResult = table.render({
+        elem: '#' + GreatResult.tableId,
+        url: Feng.ctxPath + '/greatResult/wrapList',
+        page: true,
+        height: "full-158",
+        cellMinWidth: 100,
+        cols: GreatResult.initColumn()
+    });
+
+    // 搜索按钮点击事件
+    $('#btnSearchGreat').click(function () {
+        GreatResult.search();
+    });
+
+    // 工具条点击事件
+    table.on('tool(' + GreatResult.tableId + ')', function (obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        if (layEvent === 'reviewDetail') {
+            GreatResult.openDetail(data);
+        } else if (layEvent === 'reviewGreat'){
+            GreatResult.reviewGreatPage(data);
+        }
+    });
 });

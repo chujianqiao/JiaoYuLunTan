@@ -166,7 +166,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 提交评审结果
      */
     form.on('submit(reviewSubmit)', function (data) {
-        debugger;
         var score = data.field.score;
         if (score >= 0 && score <=100) {
             var ajax = new $ax(Feng.ctxPath + "/educationResult/reviewItem", function (data) {
