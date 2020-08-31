@@ -31,25 +31,16 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         var ajax = new $ax(Feng.ctxPath + "/meetMember/detail?memberId=" + Feng.getUrlParam("memberId"));
         var result = ajax.start();
 
-        var thesisId = result.data.thesisId;
+        // var thesisId = result.data.thesisId;
         // var thAjax = new $ax(Feng.ctxPath + "/thesis/detail?thesisId=" + thesisId);
         // var thResult = thAjax.start();
         // var thesisName = thResult.data.thesisTitle;
         // result.data.thesisName = thesisName;
         //填充表单
         form.val('meetMemberForm', result.data);
-        var ownForumid = result.data.ownForumid;
-
+        // var ownForumid = result.data.ownForumid;
 
         // thesisSelectOption(thesisId);
-
-        var userId = result.data.userId;
-        var userajax = new $ax(Feng.ctxPath + "/mgr/detail?userId=" + userId);
-        var result = userajax.start();
-        var title = result.data.title;
-        if(title != '教授'){
-            $('#professor').remove();
-        }
     })
 
 
@@ -95,6 +86,13 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 取消
      */
     $('#cancel').click(function () {
+        window.location.href = window.location.href = Feng.ctxPath + '/meetMember';
+    });
+
+    /**
+     * 取消
+     */
+    $('#cancelGuest').click(function () {
         window.location.href = window.location.href = Feng.ctxPath + '/meetMember';
     });
 

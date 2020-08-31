@@ -217,8 +217,9 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'direct', sort: true, title: '研究方向'},
             // {field: 'thesisName', sort: true, title: '参会论文'},
             {field: 'forumName', sort: true, title: '参会论坛'},
+            {field: 'material', sort: true, title: '是否上传材料'},
             {align: 'center', minWidth: 130, title: '操作', templet: function(data){
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detailJB'>查看详情</a>";
                 }}
         ]];
     };
@@ -246,7 +247,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     MeetMemberJB.onDisableItem = function (data) {
-        window.location.href = Feng.ctxPath + '/meetMember/disable?memberId=' + data.memberId ;
+        window.location.href = Feng.ctxPath + '/meetMember/guestDetail?memberId=' + data.memberId ;
     };
 
     /**
@@ -351,11 +352,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         MeetMemberJB.search();
     });
 
-    // 添加按钮点击事件
-    // $('#btnAdd').click(function () {
-    //     MeetMemberJB.openAddDlg();
-    // });
-
     // 导出excel
     $('#btnExpJB').click(function () {
         MeetMemberJB.exportExcel();
@@ -374,7 +370,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             MeetMemberJB.openEditDlg(data);
         } else if (layEvent === 'delete') {
             MeetMemberJB.onDeleteItem(data);
-        } else if (layEvent === 'detail') {
+        } else if (layEvent === 'detailJB') {
             MeetMemberJB.onDisableItem(data);
         }
 

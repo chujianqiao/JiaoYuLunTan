@@ -136,6 +136,16 @@ public class MeetMemberController extends BaseController {
     }
 
     /**
+     * 查看嘉宾详情
+     * @author wucy
+     * @Date 2020-08-31
+     */
+    @RequestMapping("/guestDetail")
+    public String guestDetail(MeetMemberParam meetMemberParam) {
+        return PREFIX + "/meetMember_edit_disable_guest.html";
+    }
+
+    /**
      * 选择论坛
      * @author wucy
      * @Date 2020-07-14
@@ -239,7 +249,7 @@ public class MeetMemberController extends BaseController {
 
         //加入论文题目
         Long thesisId = detail.getThesisId();
-        if(thesisId != null){
+        if(thesisId != null && thesisId != 0){
             Thesis thesis = this.thesisService.getById(thesisId);
             String thesisName = thesis.getThesisTitle();
             map.put("thesisName",thesisName);
@@ -273,16 +283,31 @@ public class MeetMemberController extends BaseController {
             map.put("direction",direction);
         }
 
-        Integer meetStatus = Integer.parseInt(map.get("meetStatus").toString());
-        if(meetStatus != null){
-            if(meetStatus == 4){
-                map.put("isPay",1);
-            } else {
-                map.put("isPay",0);
-            }
-        }
-
-
+        Object meetStatusObj = map.get("meetStatus");
+        if(meetStatusObj != null){
+			String meetStatusStr = map.get("meetStatus").toString();
+			if(meetStatusStr != null && meetStatusStr.equals("")){
+				Integer meetStatus = Integer.parseInt(meetStatusStr);
+				if(meetStatus != null){
+					if(meetStatus == 4){
+						map.put("isPay",1);
+					} else {
+						map.put("isPay",0);
+					}
+				}
+			}
+		}
+		//嘉宾材料
+		String wordName = user.getWordName();
+        String pptName = user.getPptName();
+        if(!wordName.equals("") || !pptName.equals("")){
+        	String wordPath = user.getWordPath();
+        	String pptPath = user.getPptPath();
+			map.put("wordName",wordName);
+			map.put("pptName",pptName);
+        	map.put("wordPath",wordPath);
+        	map.put("pptPath",pptPath);
+		}
 
         map.put("regTime",dateString);
         return ResponseData.success(map);
@@ -419,7 +444,7 @@ public class MeetMemberController extends BaseController {
     }
 
     /**
-     * 下载PDF
+     * 下载论文PDF
      * @author wucy
      */
     @RequestMapping(path = "/downloadThesis")
@@ -535,6 +560,48 @@ public class MeetMemberController extends BaseController {
             return responseData;
         }
     }
+
+	/**
+	 * 下载嘉宾PDF
+	 * @author wucy
+	 */
+	@RequestMapping(path = "/downloadGuestPDF")
+	public void downloadGuestPDF(HttpServletResponse httpServletResponse, MeetMemberParam meetMemberParam, HttpServletRequest request) {
+		long memberId = meetMemberParam.getMemberId();
+		MeetMember meetMember = this.meetMemberService.getById(memberId);
+		long userId = meetMember.getUserId();
+		User user = this.userService.getById(userId);
+		//文件完整路径
+		String filePath = user.getPptPath();
+		//下载后看到的文件名
+		String fileName = user.getPptName();
+		try {
+			FileDownload.fileDownload(httpServletResponse, filePath, fileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 下载嘉宾发言稿
+	 * @author wucy
+	 */
+	@RequestMapping(path = "/downloadGuestWord")
+	public void downloadGuestWord(HttpServletResponse httpServletResponse, MeetMemberParam meetMemberParam, HttpServletRequest request) {
+		long memberId = meetMemberParam.getMemberId();
+		MeetMember meetMember = this.meetMemberService.getById(memberId);
+		long userId = meetMember.getUserId();
+		User user = this.userService.getById(userId);
+		//文件完整路径
+		String filePath = user.getWordPath();
+		//下载后看到的文件名
+		String fileName = user.getWordName();
+		try {
+			FileDownload.fileDownload(httpServletResponse, filePath, fileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }
 

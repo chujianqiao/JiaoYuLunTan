@@ -1,0 +1,103 @@
+@layout("/common/_form.html",{js:["/assets/meetMember/meetMember_edit_guest.js"]}){
+
+<form class="layui-form" id="meetMemberForm" lay-filter="meetMemberForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input id="memberId" name="memberId" type="hidden"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">嘉宾姓名<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="userName" disabled="disabled" name="userName" placeholder="" type="text" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="unitName" disabled="disabled" name="unitName" placeholder="" type="text" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">职务/职称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="postName" disabled="disabled" name="postName" placeholder="" type="text" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">研究方向<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="direction" disabled="disabled" name="direction" placeholder="" type="text" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">参会论坛<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="ownForumName" disabled="disabled" name="ownForumName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">参会论文<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="thesisId" name="thesisId" type="hidden"/>-->
+                            <!--<input id="thesisName" disabled="disabled" name="thesisName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                            <!--<button id="btnDownload" class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;下载论文附件&emsp;</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">是否申请发言<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input type="radio" name="speak" value="1" title="是" />-->
+                            <!--<input type="radio" name="speak" value="0" title="否" />-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12" id="professor">-->
+                        <!--<label class="layui-form-label">是否参加形势研判会<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input type="radio" name="judge" value="1" title="是" />-->
+                            <!--<input type="radio" name="judge" value="0" title="否" />-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">注册时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="regTime" name="regTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">PPT<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="pptPath" name="pptPath" type="hidden" class="layui-input"/>
+                            <div style="float: left;">
+                                <button type="button" class="layui-btn layui-btn-sm" id="downloadPPT" lay-filter="downloadPPT"><i class="layui-icon"></i>下载PPT</button>
+                            </div>
+                            <div style="float: left;">
+                                <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="pptName" name="pptName"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">发言稿<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
+                            <div style="float: left;">
+                                <button type="button" class="layui-btn layui-btn-sm" id="downloadWord" lay-filter="downloadWord"><i class="layui-icon"></i>下载发言稿</button>
+                            </div>
+                            <div style="float: left;">
+                                <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordName" name="wordName"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog" id="cancelGuest">&emsp;关闭&emsp;</button>
+    </div>
+
+</form>
+
+@}

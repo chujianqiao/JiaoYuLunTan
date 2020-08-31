@@ -100,6 +100,15 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 			map.put("meetStatusStr",meetStatusStr);
 		}
 
+		//是否上传材料
+		String wordName = user.getWordName();
+		String pptName = user.getPptName();
+		if(wordName != null || pptName !=null){
+			map.put("material","是");
+		}else{
+			map.put("material","否");
+		}
+
 		map.put("memberName",memberName);
 		map.put("unitName",unitName);
 		map.put("userPost",userPost);
