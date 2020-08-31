@@ -24,7 +24,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'forumId', hide: true, title: '论坛ID'},
             {field: 'forumName', sort: true, title: '论坛名称'},
             {field: 'manager', sort: true, title: '申报人'},
-            {field: 'forumTopic', sort: true, title: '论坛主题'},
+            //{field: 'forumTopic', sort: true, title: '论坛主题'},
             {field: 'forumSize', sort: true, title: '论坛规模'},
             /*{field: 'manager', sort: true, title: '负责人'},
             {field: 'manaPhone', sort: true, title: '负责人电话'},
