@@ -70,6 +70,25 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     });
 
     /**
+     * 选择论坛
+     */
+    form.on('submit(btnSubmitForum)', function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/meetMember/editForum", function (data) {
+            Feng.success("选择论坛成功！");
+            // window.location.href = Feng.ctxPath + '/meetMember';
+            // 传给上个页面，刷新table用
+            admin.putTempData('formOk', true);
+            // 关掉对话框
+            admin.closeThisDialog();
+        }, function (data) {
+            Feng.error("选择论坛失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.start();
+        return false;
+    });
+
+    /**
      * 构建论坛下拉框候选值
      * @param ownForumid
      */
