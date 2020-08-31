@@ -17,44 +17,44 @@
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">成果申报类型<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input type="radio" name="applyType" value="1" title="个人申报" checked/>
-                            <input type="radio" name="applyType" value="2" title="单位申报"/>
+                            <input type="radio" lay-filter="applyType" name="applyType" value="1" title="个人申报" checked/>
+                            <input type="radio" lay-filter="applyType" name="applyType" value="2" title="单位申报"/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人姓名<span style="color: red;">*</span></label>
+                    <div id="belongNameDiv" class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请人姓名 ：<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="belongName" name="belongName" placeholder="请输入负责人姓名" type="text" class="layui-input" lay-verify="required" required/>
+                            <input name="belongName" placeholder="请输入申请人姓名" class="layui-input" type="text" lay-verify="required" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人电话<span style="color: red;">*</span></label>
+                    <div id="manaPhoneDiv" class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请人电话 ：<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manaPhone" name="manaPhone" placeholder="请输入负责人电话" type="text" class="layui-input" lay-verify="required|phone" required/>
+                            <input name="manaPhone" placeholder="请输入申请人电话" class="layui-input" type="text" lay-verify="required|phone" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人邮箱<span style="color: red;">*</span></label>
+                    <div id="manaEmailDiv" class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请人邮箱 ：<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manaEmail" name="manaEmail" placeholder="请输入负责人邮箱" type="text" class="layui-input" lay-verify="required|email" required/>
+                            <input name="manaEmail" placeholder="请输入申请人邮箱" class="layui-input" type="text" lay-verify="required|email" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
+                    <div id="teamDiv" class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">所在单位 ：<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="team" name="team" placeholder="请输入攻关团队" type="text" class="layui-input" lay-verify="required" required/>
+                            <input name="team" type="text" placeholder="请输入所在单位" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人职称/职务<span style="color: red;">*</span></label>
+                    <div id="manaPostDiv" class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请人职称/职务 ：<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manaPost" name="manaPost" placeholder="请输入负责人职称/职务" type="text" class="layui-input" lay-verify="required" required/>
+                            <input name="manaPost" type="text" placeholder="请输入申请人职称/职务" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">申请人研究方向<span style="color: red;">*</span></label>
+                    <div id="manaDirectDiv" class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请人研究方向 ：<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manaDirect" name="manaDirect" placeholder="请输入负责人研究方向" type="text" class="layui-input" lay-verify="required" required/>
+                            <input name="manaDirect" type="text" placeholder="请输入申请人研究方向" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
 

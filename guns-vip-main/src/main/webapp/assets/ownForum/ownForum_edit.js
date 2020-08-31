@@ -47,6 +47,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
 
 
+    form.on('radio(applyType)', function(data){
+
+        if (data.value == 1){
+            $("#manaEmailDiv").attr("style","display:block")
+            $("#postDiv").attr("style","display:block")
+            $("#managerDiv").children('label').html("姓名：");
+            $("#managerDiv").children('div').children('input').attr("placeholder","请输入姓名");
+        } else {
+            $("#manaEmailDiv").attr("style","display:none")
+            $("#postDiv").attr("style","display:none")
+            $("#managerDiv").children('label').html("负责人：");
+            $("#managerDiv").children('div').children('input').attr("placeholder","请输入负责人");
+        }
+    });
+
 
 
     // 渲染时间选择框
@@ -78,80 +93,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/ownForum/detail?forumId=" + Feng.getUrlParam("forumId"));
     var result = ajax.start();
     form.val('ownForumForm', result.data);
+    if (result.data.applyType == 1){
+        $("#manaEmailDiv").attr("style","display:block")
+        $("#postDiv").attr("style","display:block")
+        $("#managerDiv").children('label').html("姓名：");
+        $("#managerDiv").children('div').children('input').attr("placeholder","请输入姓名");
+    } else {
+        $("#manaEmailDiv").attr("style","display:none")
+        $("#postDiv").attr("style","display:none")
+        $("#managerDiv").children('label').html("负责人：");
+        $("#managerDiv").children('div').children('input').attr("placeholder","请输入负责人");
+    }
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {

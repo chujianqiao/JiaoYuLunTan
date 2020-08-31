@@ -42,6 +42,23 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         elem: '#birthday'
     });
 
+
+    form.on('radio(applyType)', function(data){
+
+        if (data.value == 1){
+            $("#manaEmailDiv").attr("style","display:block")
+            $("#postDiv").attr("style","display:block")
+            $("#managerDiv").children('label').html("姓名：");
+            $("#managerDiv").children('div').children('input').attr("placeholder","请输入姓名");
+        } else {
+            $("#manaEmailDiv").attr("style","display:none")
+            $("#postDiv").attr("style","display:none")
+            $("#managerDiv").children('label').html("负责人：");
+            $("#managerDiv").children('div').children('input').attr("placeholder","请输入负责人");
+        }
+    });
+
+
 //表单提交事件
     form.on('submit(holdSubmit)', function (data) {
         var flag = 0;

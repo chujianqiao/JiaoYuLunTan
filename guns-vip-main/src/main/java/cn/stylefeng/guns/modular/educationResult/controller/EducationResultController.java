@@ -126,10 +126,7 @@ public class EducationResultController extends BaseController {
             //}else {
             //    return PREFIX + "/educationResult_detailUnit.html";
             //}
-        }else if(isReview){
-            return PREFIX + "/educationResult_detail_review.html";
-        }
-        else {
+        }else {
             return PREFIX + "/educationResult_detail_person.html";
         }
 

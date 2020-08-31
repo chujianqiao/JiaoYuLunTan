@@ -46,6 +46,32 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     });
 
 
+    form.on('radio(applyType)', function(data){
+
+        if (data.value == 1){
+            $("#manaEmailDiv").attr("style","display:block")
+            $("#manaPostDiv").attr("style","display:block")
+            $("#manaDirectDiv").attr("style","display:block")
+            $("#belongNameDiv").children('label').html("申请人姓名：");
+            $("#belongNameDiv").children('div').children('input').attr("placeholder","请输入申请人姓名");
+            $("#manaPhoneDiv").children('label').html("申请人电话：");
+            $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入申请人电话");
+            $("#teamDiv").children('label').html("所在单位：");
+            $("#teamDiv").children('div').children('input').attr("placeholder","请输入所在单位");
+        } else {
+            $("#manaEmailDiv").attr("style","display:none")
+            $("#manaPostDiv").attr("style","display:none")
+            $("#manaDirectDiv").attr("style","display:none")
+            $("#belongNameDiv").children('label').html("负责人：");
+            $("#belongNameDiv").children('div').children('input').attr("placeholder","请输入负责人");
+            $("#manaPhoneDiv").children('label').html("联系电话：");
+            $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入联系电话");
+            $("#teamDiv").children('label').html("单位名称：");
+            $("#teamDiv").children('div').children('input').attr("placeholder","请输入单位名称");
+        }
+    });
+
+
 
     //表单提交事件
     form.on('submit(personSubmit)', function (data) {

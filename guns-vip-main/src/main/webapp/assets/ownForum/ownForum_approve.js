@@ -45,83 +45,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $('#cancel').click(function(){
         window.location.href = Feng.ctxPath + '/ownForum'
     });
@@ -131,6 +54,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var ajax = new $ax(Feng.ctxPath + "/ownForum/detail?forumId=" + Feng.getUrlParam("forumId"));
     var result = ajax.start();
     form.val('ownForumForm', result.data);
+    if (result.data.applyType == 1){
+        $("#manaEmailDiv").attr("style","display:block")
+        $("#postDiv").attr("style","display:block")
+        $("#managerDiv").children('label').html("姓名：");
+        $("#managerDiv").children('div').children('input').attr("placeholder","请输入姓名");
+    } else {
+        $("#manaEmailDiv").attr("style","display:none")
+        $("#postDiv").attr("style","display:none")
+        $("#managerDiv").children('label').html("负责人：");
+        $("#managerDiv").children('div').children('input').attr("placeholder","请输入负责人");
+    }
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
