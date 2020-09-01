@@ -48,7 +48,7 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], func
 
     //获取详情信息，填充表单
     var meetId = Feng.getUrlParam("meetId");
-    if(meetId == null || meetId == undefined){
+    if(meetId == null || meetId == "" || meetId == 'undefined'){
         meetId = $("#meetIdParam").val();
     }
     var ajax = new $ax(Feng.ctxPath + "/meet/detail?meetId=" + meetId);
@@ -65,7 +65,19 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], func
         });
         ajax.set(data.field);
         ajax.start();
+        return false;
+    });
 
+    //表单提交事件
+    form.on('submit(btnSubmitAdmin)', function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/meet/editItem", function (data) {
+            Feng.success("更新成功！");
+            window.location.href = Feng.ctxPath + '/meet/info'
+        }, function (data) {
+            Feng.error("更新失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.start();
         return false;
     });
 

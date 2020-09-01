@@ -84,7 +84,7 @@ public class MeetController extends BaseController {
         Long meetId = Long.parseLong(list.get(0).get("meetId").toString());
         meetParam.setMeetId(meetId);
         request.setAttribute("meetIdParam",meetId);
-        return PREFIX + "/meet_edit.html";
+        return PREFIX + "/meet_edit_admin.html";
     }
 
     /**
