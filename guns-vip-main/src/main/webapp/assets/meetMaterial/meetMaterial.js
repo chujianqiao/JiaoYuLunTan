@@ -108,7 +108,7 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
         var materialId = data.materialId;
         var form=$("<form>");    // 定义一个form表单
         form.attr("style","display:none");
-        form.attr("target","_blank");
+        // form.attr("target","_blank");
         form.attr("method","post");
         form.attr("action",Feng.ctxPath + "/meetMaterial/downloadOne?materialId=" + materialId);    // 此处填写文件下载提交路径
         $("body").append(form);    // 将表单放置在web中
