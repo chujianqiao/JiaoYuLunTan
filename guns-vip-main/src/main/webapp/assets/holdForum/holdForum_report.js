@@ -46,14 +46,18 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     form.on('radio(applyType)', function(data){
 
         if (data.value == 1){
-            $("#manaEmailDiv").attr("style","display:block")
-            $("#postDiv").attr("style","display:block")
-            $("#managerDiv").children('label').html("姓名：");
+            $("#manaEmailDiv").attr("style","display:block");
+            $("#manaEmailDiv").children('div').children('input').attr("lay-verify","required|email");
+            $("#postDiv").attr("style","display:block");
+            $("#postDiv").children('div').children('input').attr("lay-verify","required");
+            $("#managerDiv").children('label').html("姓名：<span style='color: red;'>*</span>");
             $("#managerDiv").children('div').children('input').attr("placeholder","请输入姓名");
         } else {
-            $("#manaEmailDiv").attr("style","display:none")
-            $("#postDiv").attr("style","display:none")
-            $("#managerDiv").children('label').html("负责人：");
+            $("#manaEmailDiv").attr("style","display:none");
+            $("#manaEmailDiv").children('div').children('input').attr("lay-verify","");
+            $("#postDiv").attr("style","display:none");
+            $("#postDiv").children('div').children('input').attr("lay-verify","");
+            $("#managerDiv").children('label').html("负责人：<span style='color: red;'>*</span>");
             $("#managerDiv").children('div').children('input').attr("placeholder","请输入负责人");
         }
     });

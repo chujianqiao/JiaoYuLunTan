@@ -50,23 +50,29 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
         if (data.value == 1){
             $("#manaEmailDiv").attr("style","display:block")
+            $("#manaEmailDiv").children('div').children('input').attr("lay-verify","required|email");
             $("#manaPostDiv").attr("style","display:block")
+            $("#manaPostDiv").children('div').children('input').attr("lay-verify","required");
             $("#manaDirectDiv").attr("style","display:block")
-            $("#belongNameDiv").children('label').html("申请人姓名：");
+            $("#manaDirectDiv").children('div').children('input').attr("lay-verify","required");
+            $("#belongNameDiv").children('label').html("申请人姓名：<span style='color: red;'>*</span>");
             $("#belongNameDiv").children('div').children('input').attr("placeholder","请输入申请人姓名");
-            $("#manaPhoneDiv").children('label').html("申请人电话：");
+            $("#manaPhoneDiv").children('label').html("申请人电话：<span style='color: red;'>*</span>");
             $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入申请人电话");
-            $("#teamDiv").children('label').html("所在单位：");
+            $("#teamDiv").children('label').html("所在单位：<span style='color: red;'>*</span>");
             $("#teamDiv").children('div').children('input').attr("placeholder","请输入所在单位");
         } else {
             $("#manaEmailDiv").attr("style","display:none")
+            $("#manaEmailDiv").children('div').children('input').attr("lay-verify","");
             $("#manaPostDiv").attr("style","display:none")
+            $("#manaPostDiv").children('div').children('input').attr("lay-verify","");
             $("#manaDirectDiv").attr("style","display:none")
-            $("#belongNameDiv").children('label').html("负责人：");
+            $("#manaDirectDiv").children('div').children('input').attr("lay-verify","");
+            $("#belongNameDiv").children('label').html("负责人：<span style='color: red;'>*</span>");
             $("#belongNameDiv").children('div').children('input').attr("placeholder","请输入负责人");
-            $("#manaPhoneDiv").children('label').html("联系电话：");
+            $("#manaPhoneDiv").children('label').html("联系电话：<span style='color: red;'>*</span>");
             $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入联系电话");
-            $("#teamDiv").children('label').html("单位名称：");
+            $("#teamDiv").children('label').html("单位名称：<span style='color: red;'>*</span>");
             $("#teamDiv").children('div').children('input').attr("placeholder","请输入单位名称");
         }
     });
