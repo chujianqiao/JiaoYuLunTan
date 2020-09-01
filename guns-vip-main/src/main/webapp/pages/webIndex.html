@@ -16,10 +16,29 @@
     <link rel="stylesheet" href="${ctxPath}/assets/expand/css/style.css?v=${constants.getReleaseVersion()}" media="all"/>
 </head>
 <body>
+<style>
+    .myvideo{
+        z-index: 100;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: fill;/*这里是关键*/
+        width: auto;
+        height: auto;
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        /*background: url(../video/cover.jpg) no-repeat;*/
+        background-size: cover;
+    }
+</style>
 <div class="pc">
-    <!--<div class="poster-container">-->
-        <!--<div class="poster-bg"></div>-->
-    <!--</div>&lt;!&ndash;end of 开屏动画&ndash;&gt;-->
+
+    <!--<div class="poster-container" style="position:relative">
+        <video src="${ctxPath}/assets/common/images/poster.mp4" autoplay="autoplay" width="100%" height="100%" muted class='myvideo'></video>
+    </div>-->
     <div class="page">
         <header>
             <div class="head mCenter widthC pr">
