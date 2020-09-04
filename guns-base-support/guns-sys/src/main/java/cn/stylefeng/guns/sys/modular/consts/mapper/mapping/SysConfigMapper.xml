@@ -137,4 +137,13 @@
         </if>
     </select>
 
+    <select id="findByCode" resultType="cn.stylefeng.guns.sys.modular.consts.model.result.SysConfigResult" parameterType="cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_config where 1 = 1
+        <if test="paramCondition.code != null and paramCondition.code != ''">
+            and code = #{paramCondition.code}
+        </if>
+    </select>
+
 </mapper>

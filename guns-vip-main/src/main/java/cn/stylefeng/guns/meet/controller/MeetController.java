@@ -164,6 +164,18 @@ public class MeetController extends BaseController {
     }
 
     /**
+     * 查看发布会议详情
+     * @author wucy
+     * @Date 2020-08-05
+     */
+    @RequestMapping("/detailPub")
+    @ResponseBody
+    public ResponseData detailPub(MeetParam meetParam) {
+        Meet detail = this.meetService.getByStatus(1);
+        return ResponseData.success(detail);
+    }
+
+    /**
      * 查询列表
      * @author wucy
      * @Date 2020-08-05

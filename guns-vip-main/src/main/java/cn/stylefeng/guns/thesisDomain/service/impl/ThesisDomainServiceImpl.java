@@ -39,7 +39,7 @@ public class ThesisDomainServiceImpl extends ServiceImpl<ThesisDomainMapper, The
     @Override
     public void add(ThesisDomainParam param){
         ThesisDomain entity = getEntity(param);
-        if (ToolUtil.isOneEmpty(entity, entity.getDomainName(), entity.getPid())) {
+        if (ToolUtil.isOneEmpty(entity, entity.getDomainName())) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
         }
 

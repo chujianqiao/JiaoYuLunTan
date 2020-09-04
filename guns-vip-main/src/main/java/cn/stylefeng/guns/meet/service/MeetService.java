@@ -52,6 +52,8 @@ public interface MeetService extends IService<Meet> {
      */
     MeetResult findBySpec(MeetParam param);
 
+    Meet getByStatus(Integer status);
+
     /**
      * 查询列表，Specification模式
      *

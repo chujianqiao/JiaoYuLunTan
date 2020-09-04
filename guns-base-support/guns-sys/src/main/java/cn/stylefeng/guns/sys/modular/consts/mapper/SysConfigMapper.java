@@ -52,4 +52,6 @@ public interface SysConfigMapper extends BaseMapper<SysConfig> {
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") SysConfigParam paramCondition);
 
+    SysConfigResult findByCode(@Param("paramCondition") SysConfigParam paramCondition);
+
 }

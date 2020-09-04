@@ -15,6 +15,7 @@
  */
 package cn.stylefeng.guns.sys.modular.system.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.stylefeng.guns.base.auth.annotion.Permission;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
@@ -23,9 +24,11 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.sys.core.constant.Const;
 import cn.stylefeng.guns.sys.core.constant.dictmap.UserDict;
+import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.constant.state.ManagerStatus;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
+import cn.stylefeng.guns.sys.core.util.DefaultImages;
 import cn.stylefeng.guns.sys.core.util.SaltUtil;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
@@ -86,6 +89,23 @@ public class UserMgrController extends BaseController {
     @RequestMapping("")
     public String index() {
         return PREFIX + "user.html";
+    }
+
+    /**
+     * 跳转到个人中心
+     *
+     * @author CHU
+     * @Date 2020/09/02
+     */
+    @RequestMapping("toPersonCenter")
+    public String toPersonCenter(Model model) {
+        Long userId = LoginContextHolder.getContext().getUserId();
+        User user = this.userService.getById(userId);
+
+        model.addAllAttributes(BeanUtil.beanToMap(user));
+        model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
+        LogObjectHolder.me().set(user);
+        return "/modular/frame/person_center.html";
     }
 
     /**

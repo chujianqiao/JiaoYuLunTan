@@ -3,6 +3,7 @@ package cn.stylefeng.guns.modular.demos.controller;
 import cn.stylefeng.guns.modular.demos.util.SignUtil;
 import cn.stylefeng.guns.modular.email.service.EmailService;
 import cn.stylefeng.guns.modular.sms.service.SMSService;
+import cn.stylefeng.guns.modular.weixin.service.CoreService;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
@@ -17,11 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 
 @Controller
@@ -42,8 +46,8 @@ public class CheckTokenController {
      * @return
      */
     @ApiOperation("微信公众号服务器配置校验token")
-    @RequestMapping("/checkToken")
-    public void checkToken(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/checkToken", method = RequestMethod.GET)
+    public void checkToken(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         //token验证代码段
         try {
             log.info("请求已到达，开始校验token");
@@ -62,6 +66,28 @@ public class CheckTokenController {
             log.error("校验出错");
             e.printStackTrace();
         }
+
+    }
+    /**
+     * @description 微信公众号服务器配置校验token
+     * @author: CHU
+     * @date 2019-05-09 9:38
+     * @return
+     */
+    @ApiOperation("微信公众号服务器配置校验token")
+    @RequestMapping(value = "/checkToken", method = RequestMethod.POST)
+    public void weiXinCore(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        // 调用核心业务类接收消息、处理消息
+        String respXml = CoreService.processRequest(request);
+
+        // 响应消息
+        PrintWriter out = response.getWriter();
+        out.print(respXml);
+        out.close();
     }
 
     /**

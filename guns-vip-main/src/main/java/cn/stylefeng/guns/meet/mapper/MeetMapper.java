@@ -6,6 +6,7 @@ import cn.stylefeng.guns.meet.model.result.MeetResult;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -53,4 +54,5 @@ public interface MeetMapper extends BaseMapper<Meet> {
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") MeetParam paramCondition);
 
+    Meet getByStatus(@Param("status") Integer status);
 }

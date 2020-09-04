@@ -732,6 +732,126 @@ public class ThesisController extends BaseController {
         return this.reviewMajorService.majorMapList(thesisParam.getBelongDomain());
     }
 
+    /**
+     * 查看详情接口
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/detailPub")
+    @ResponseBody
+    public ResponseData detailPub() {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        Long userId = user.getId();
+        List<MeetMemberResult> list = this.meetMemberService.findListByUserId(userId);
+        Long thesisId = null;
+        if (list != null){
+            if (list.size() == 1){
+                thesisId = list.get(0).getThesisId();
+            }else {
+                for (int i = 0;i < list.size();i++){
+                    if (list.get(i).getMeetStatus() != 5){
+                        thesisId = list.get(i).getThesisId();
+                    }
+                }
+            }
+        }
+
+        Thesis detail = this.thesisService.getById(thesisId);
+        //类转Map
+        Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
+        Integer reviewNum = detail.getReviewResult();
+        if(reviewNum != null){
+            String reviewStr = TransTypeUtil.getIsPass().get(reviewNum).toString();
+            map.put("reviewStr",reviewStr);
+        }else {
+            map.put("reviewStr","未评审");
+        }
+
+        Integer isGreatNum = detail.getGreat();
+        if(isGreatNum != null){
+            String isGreatStr = TransTypeUtil.getIsOrNo().get(isGreatNum).toString();
+            map.put("isGreatStr",isGreatStr);
+        }
+
+        String domainObj = detail.getBelongDomain();
+        String belongDomainStr = "";
+
+        if (domainObj.equals("") || domainObj == null){
+            belongDomainStr = "";
+        }else {
+            String[] domainList = domainObj.split(",");
+            for (int i = 0;i < domainList.length;i++){
+                Long pid = Long.parseLong(domainList[i]);
+                if (pid == null) {
+                    belongDomainStr = belongDomainStr + "";
+                } else if (pid == 0L) {
+                    belongDomainStr = belongDomainStr + "顶级;";
+                } else {
+                    ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(pid);
+                    if (cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult) && cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult.getDomainName())) {
+                        belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + "";
+                    }
+                }
+            }
+        }
+        map.put("belongDomainStr",belongDomainStr);
+
+        Date date = new Date(Long.parseLong(map.get("applyTime").toString()));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(date);
+        map.put("applyTime",dateString);
+
+
+        //初评
+        ThesisReviewMiddleParam middleParam = new ThesisReviewMiddleParam();
+        Thesis thesis = this.thesisService.getById(thesisId);
+        middleParam.setThesisId(thesisId);
+        middleParam.setUserId(user.getId());
+        middleParam.setReviewSort(1);
+        LayuiPageInfo midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+        List<ThesisReviewMiddleResult> midList = midRes.getData();
+        if(midList.size() != 0){
+            ThesisReviewMiddleResult middleResult = midList.get(0);
+            Integer firstScore = middleResult.getScore();
+            if(firstScore != null){
+                map.put("firstScore",firstScore);
+            }
+            Integer reviewResult = thesis.getReviewResult();
+            if(reviewResult != null && reviewResult == 1){
+                String status = thesis.getStatus();
+                if(status == null || ("").equals(status)){
+                    map.put("firstReviewStr","同意参会");
+                }else{
+                    map.put("firstReviewStr",status);
+                }
+            }else if(reviewResult != null && reviewResult == 0){
+                map.put("firstReviewStr","不同意参会");
+            }
+        }
+
+        //复评
+        middleParam.setReviewSort(2);
+        LayuiPageInfo midResAgain = this.thesisReviewMiddleService.findPageBySpec(middleParam);
+        List<ThesisReviewMiddleResult> midListAgain = midResAgain.getData();
+        if(midListAgain.size() != 0){
+            ThesisReviewMiddleResult middleResult = midListAgain.get(0);
+            Integer secondScore = middleResult.getScore();
+            if(secondScore != null){
+                map.put("secondScore",secondScore);
+            }
+
+            Integer great = middleResult.getGreat();
+            if(great != null && great == 0){
+                map.put("secondGreat",0);
+            }else if(great != null && great == 1){
+                map.put("secondGreat",1);
+            }
+        }
+        map.put("thesisUser", user.getName());
+        return ResponseData.success(map);
+
+
+    }
 }
 
 

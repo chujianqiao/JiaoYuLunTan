@@ -99,6 +99,10 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public SysConfigResult findBySpec(SysConfigParam param) {
         return null;
     }
+    @Override
+    public SysConfigResult findByCode(SysConfigParam param) {
+        return this.baseMapper.findByCode(param);
+    }
 
     @Override
     public List<SysConfigResult> findListBySpec(SysConfigParam param) {

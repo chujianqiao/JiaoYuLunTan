@@ -51,6 +51,10 @@ public class MeetServiceImpl extends ServiceImpl<MeetMapper, Meet> implements Me
     public MeetResult findBySpec(MeetParam param){
         return null;
     }
+    @Override
+    public Meet getByStatus(Integer status){
+        return this.baseMapper.getByStatus(status);
+    }
 
     @Override
     public List<MeetResult> findListBySpec(MeetParam param){

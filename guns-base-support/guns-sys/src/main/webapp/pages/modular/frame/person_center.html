@@ -1,10 +1,394 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
-</html>
+
+<link rel="stylesheet" href="${ctxPath}/assets/common/layuiadmin/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="${ctxPath}/assets/common/layuiadmin/style/admin.css" media="all">
+<style>
+    .user-info-head {
+        width: 110px;
+        height: 110px;
+        position: relative;
+        display: inline-block;
+    }
+    .user-info-head img {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+    }
+    .info-list-item {
+        position: relative;
+        padding-bottom: 8px;
+    }
+
+    .info-list-item > .layui-icon {
+        position: absolute;
+    }
+
+    .info-list-item > p {
+        padding-left: 30px;
+    }
+    .info-forum{
+        font-size: 25px;
+        text-align: center;
+    }
+    .layui-col-xs2{
+        margin-left: 20px;
+        margin-top: 60px;
+    }
+    .layui-col-xs6{
+        margin-top: 40px;
+    }
+    .layui-col-xs12{
+        margin-top: 40px;
+    }
+</style>
+<div class="page">
+    <!-- 头部 -->
+    @include("/common/person_header.html"){}
+    <!-- 正文开始 -->
+    <div class="func-column-container widthC mCenter mb40">
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-body" style="padding: 25px;">
+                            <div class="text-center layui-text">
+                                <div class="user-info-head" id="imgHead">
+                                    <img id="avatarPreview" src="${avatar}"/>
+                                </div>
+                                <h2 style="padding-top: 20px;">${name}</h2>
+                                <p style="padding-top: 8px;">${workUnit!} &nbsp;&nbsp;${post!}</p>
+
+                            </div>
+                            <div class="layui-text" style="padding-left: 50px;">
+                                <!--<div class="info-list-item">
+                                    <i class="layui-icon layui-icon-notice"></i>
+                                    <p>${email!}</p>
+                                </div>-->
+
+                                <div class="info-list-item">
+                                    <i class="layui-icon layui-icon-cellphone"></i>
+                                    <p>${phone!}</p>
+                                </div>
+                            </div>
+                            <div class="info-forum">中国教育科学论坛</div>
+                        </div>
+                    </div>
+
+                    <!--<div class="layui-card">
+                        <div class="layui-card-header">效果报告</div>
+                        <div class="layui-card-body layadmin-takerates">
+                            <div class="layui-progress" lay-showPercent="yes">
+                                <h3>转化率（日同比 28% <span class="layui-edge layui-edge-top" lay-tips="增长" lay-offset="-15"></span>）</h3>
+                                <div class="layui-progress-bar" lay-percent="65%"></div>
+                            </div>
+                            <div class="layui-progress" lay-showPercent="yes">
+                                <h3>签到率（日同比 11% <span class="layui-edge layui-edge-bottom" lay-tips="下降" lay-offset="-15"></span>）</h3>
+                                <div class="layui-progress-bar" lay-percent="32%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">实时监控</div>
+                        <div class="layui-card-body layadmin-takerates">
+                            <div class="layui-progress" lay-showPercent="yes">
+                                <h3>CPU使用率</h3>
+                                <div class="layui-progress-bar" lay-percent="58%"></div>
+                            </div>
+                            <div class="layui-progress" lay-showPercent="yes">
+                                <h3>内存占用率</h3>
+                                <div class="layui-progress-bar layui-bg-red" lay-percent="90%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">产品动态</div>
+                        <div class="layui-card-body">
+                            <div class="layui-carousel layadmin-carousel layadmin-news" data-autoplay="true" data-anim="fade" lay-filter="news">
+                                <div carousel-item>
+                                    <div><a href="http://fly.layui.com/docs/2/" target="_blank" class="layui-bg-red">layuiAdmin 快速上手文档</a></div>
+                                    <div><a href="http://fly.layui.com/vipclub/list/layuiadmin/" target="_blank" class="layui-bg-green">layuiAdmin 会员讨论专区</a></div>
+                                    <div><a href="http://www.layui.com/admin/#get" target="_blank" class="layui-bg-blue">获得 layui 官方后台模板系统</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            作者心语
+                            <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
+                        </div>
+                        <div class="layui-card-body layui-text layadmin-text">
+                            <p>一直以来，layui 秉承无偿开源的初心，虔诚致力于服务各层次前后端 Web 开发者，在商业横飞的当今时代，这一信念从未动摇。即便身单力薄，仍然重拾决心，埋头造轮，以尽可能地填补产品本身的缺口。</p>
+                            <p>在过去的一段的时间，我一直在寻求持久之道，已维持你眼前所见的一切。而 layuiAdmin 是我们尝试解决的手段之一。我相信真正有爱于 layui 生态的你，定然不会错过这一拥抱吧。</p>
+                            <p>子曰：君子不用防，小人防不住。请务必通过官网正规渠道，获得 <a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>！</p>
+                            <p>—— 贤心（<a href="http://www.layui.com/" target="_blank">layui.com</a>）</p>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="layui-col-md9">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-md12">
+                            <div class="layui-card">
+                                <div class="layui-card-header">个人中心</div>
+                                <div class="layui-card-body" style="height: 244px;">
+                                    <div class="layui-carousel layadmin-carousel layadmin-shortcut">
+                                        <div carousel-item style="height: 224px;">
+                                            <ul class="layui-row layui-col-space10">
+                                                <li class="layui-col-xs2">
+                                                    <a href="${ctxPath}/system/person_info">
+                                                        <i style="font-size: 60px" class="layui-icon layui-icon-friends"></i>
+                                                        <cite>个人信息</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs2">
+                                                    <a lay-href="home/homepage2.html">
+                                                        <i style="font-size: 60px" class="layui-icon layui-icon-dialogue"></i>
+                                                        <cite>消息提醒</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs2">
+                                                    <a lay-href="component/layer/list.html">
+                                                        <i style="font-size: 60px" class="layui-icon layui-icon-notice"></i>
+                                                        <cite>缴费提醒</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs2">
+                                                    <a layadmin-event="im">
+                                                        <i style="font-size: 60px" class="layui-icon layui-icon-edit"></i>
+                                                        <cite>论坛报名</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs2">
+                                                    <a lay-href="component/progress/index.html">
+                                                        <i style="font-size: 60px" class="layui-icon layui-icon-table"></i>
+                                                        <cite>我的座位</cite>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                           <!-- <ul class="layui-row layui-col-space10">
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="set/user/info.html">
+                                                        <i class="layui-icon layui-icon-set"></i>
+                                                        <cite>我的资料</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="set/user/info.html">
+                                                        <i class="layui-icon layui-icon-set"></i>
+                                                        <cite>我的资料</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="set/user/info.html">
+                                                        <i class="layui-icon layui-icon-set"></i>
+                                                        <cite>我的资料</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="set/user/info.html">
+                                                        <i class="layui-icon layui-icon-set"></i>
+                                                        <cite>我的资料</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="set/user/info.html">
+                                                        <i class="layui-icon layui-icon-set"></i>
+                                                        <cite>我的资料</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="set/user/info.html">
+                                                        <i class="layui-icon layui-icon-set"></i>
+                                                        <cite>我的资料</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="set/user/info.html">
+                                                        <i class="layui-icon layui-icon-set"></i>
+                                                        <cite>我的资料</cite>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="set/user/info.html">
+                                                        <i class="layui-icon layui-icon-set"></i>
+                                                        <cite>我的资料</cite>
+                                                    </a>
+                                                </li>
+                                            </ul>-->
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="layui-col-md6">
+                            <div class="layui-card">
+                                <div class="layui-card-header">待办事项</div>
+                                <div class="layui-card-body">
+
+                                    <div class="layui-carousel layadmin-carousel layadmin-backlog">
+                                        <div carousel-item>
+                                            <ul class="layui-row layui-col-space10">
+                                                <li class="layui-col-xs6">
+                                                    <a lay-href="app/content/comment.html" class="layadmin-backlog-body">
+                                                        <h3>待审评论</h3>
+                                                        <p><cite>66</cite></p>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs6">
+                                                    <a lay-href="app/forum/list.html" class="layadmin-backlog-body">
+                                                        <h3>待审帖子</h3>
+                                                        <p><cite>12</cite></p>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs6">
+                                                    <a lay-href="template/goodslist.html" class="layadmin-backlog-body">
+                                                        <h3>待审商品</h3>
+                                                        <p><cite>99</cite></p>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs6">
+                                                    <a href="javascript:;" onclick="layer.tips('不跳转', this, {tips: 3});" class="layadmin-backlog-body">
+                                                        <h3>待发货</h3>
+                                                        <p><cite>20</cite></p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <ul class="layui-row layui-col-space10">
+                                                <li class="layui-col-xs6">
+                                                    <a href="javascript:;" class="layadmin-backlog-body">
+                                                        <h3>待审友情链接</h3>
+                                                        <p><cite style="color: #FF5722;">5</cite></p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <!--<div class="layui-col-md12">
+                            <div class="layui-card">
+                                <div class="layui-card-header">数据概览</div>
+                                <div class="layui-card-body">
+
+                                    <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-dataview">
+                                        <div carousel-item id="LAY-index-dataview">
+                                            <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="layui-card">
+                                <div class="layui-tab layui-tab-brief layadmin-latestData">
+                                    <ul class="layui-tab-title">
+                                        <li class="layui-this">今日热搜</li>
+                                        <li>今日热帖</li>
+                                    </ul>
+                                    <div class="layui-tab-content">
+                                        <div class="layui-tab-item layui-show">
+                                            <table id="LAY-index-topSearch"></table>
+                                        </div>
+                                        <div class="layui-tab-item">
+                                            <table id="LAY-index-topCard"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="layui-col-md8">
+                    <div class="layui-card">
+                        <div class="layui-card-header">会议信息</div>
+                        <div class="layui-card-body" style="padding: 25px;height: 205px">
+
+                            <div id="meetData1" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div>
+                            <div id="meetData2" class="">主办单位：全国教育科学规划领导小组办公室、中国教育科学研究院</div>
+                            <div id="meetData3" class="">召开日期：2020年11月25日~2020年11月26日</div>
+                            <div id="meetData4" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
+                            <div id="meetData5" class="">签到时间：24日下午报到，16日开会。</div>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">我的论文</div>
+                        <div class="layui-card-body" style="padding: 25px;height: 205px">
+
+                            <div id="thesisData1" class=""></div>
+                            <div id="thesisData2" class=""></div>
+                            <div id="thesisData3" class=""></div>
+                            <div id="thesisData4" class=""></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md4">
+                    <div class="layui-card">
+                        <div class="layui-card-header">会议材料</div>
+                        <div class="layui-card-body">
+                            <div class="layui-carousel layadmin-carousel layadmin-shortcut">
+                                <div carousel-item>
+                                    <ul class="layui-row layui-col-space10">
+                                        <li class="layui-col-xs12">
+                                            <a href="${ctxPath}/system/person_info">
+                                                <i style="font-size: 60px" class="layui-icon layui-icon-download-circle"></i>
+                                                <cite>材料下载</cite>
+                                            </a>
+                                        </li>
+                                        <!--<li class="layui-col-xs6">
+                                            <a lay-href="home/homepage2.html">
+                                                <i style="font-size: 60px" class="layui-icon layui-icon-list"></i>
+                                                <cite>在线预览</cite>
+                                            </a>
+                                        </li>-->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">论文评审状态</div>
+                        <div class="layui-card-body">
+                            <div class="layui-carousel layadmin-carousel layadmin-shortcut">
+                                <div carousel-item>
+                                    <ul class="layui-row layui-col-space10">
+                                        <li class="layui-col-xs12">
+                                            <a href="${ctxPath}/system/person_info">
+                                                <i style="font-size: 60px" class="layui-icon layui-icon-form"></i>
+                                                <cite>评审报告</cite>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 尾部 -->
+    @include("/common/person_footer.html"){}
+</div>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script src="${ctxPath}/assets/common/layuiadmin/layui/layui.js?t=1"></script>
+<script src="${ctxPath}/assets/modular/frame/person_center.js"></script>
+<script>
+    layui.config({
+        base: '${ctxPath}/assets/common/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'console']);
+</script>

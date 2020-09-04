@@ -433,7 +433,7 @@
         } else if ("${userName! }" == "" || "${userName! }" == null) {
             $("#userDiv").append("<a id='btnLogin' style=\"color: white;cursor:pointer \">登录</a>");
         } else {
-            $("#userDiv").append("<a href=\"/system/person_info\" target=\"_blank\" style=\"color: white;margin-right: 10px\"><i class=\"layui-icon\">&#xe770;</i>${userName! }</a>");
+            $("#userDiv").append("<a href=\"/mgr/toPersonCenter\" target=\"_blank\" style=\"color: white;margin-right: 10px\"><i class=\"layui-icon\">&#xe770;</i>${userName! }</a>");
             $("#userDiv").append("<a href=\"/#\" id='btnLogout' target=\"_blank\" style=\"color: white\">退出</a>");
         }
     });
@@ -447,7 +447,8 @@
         var func = layui.func;
         var admin = layui.admin;
 
-        var loginUrl = "${loginUrl!}";
+        var loginUrl = "${loginUrl!}"
+        console.log(loginUrl);
         if (loginUrl == "/webIndex.html"){
             parent.location.reload();
             admin.closeThisDialog();

@@ -49,6 +49,7 @@ public interface SysConfigService extends IService<SysConfig> {
      * @Date 2019-06-20
      */
     SysConfigResult findBySpec(SysConfigParam param);
+    SysConfigResult findByCode(SysConfigParam param);
 
     /**
      * 查询列表，Specification模式
