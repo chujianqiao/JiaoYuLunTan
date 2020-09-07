@@ -300,7 +300,7 @@ public class MeetMemberController extends BaseController {
 		//嘉宾材料
 		String wordName = user.getWordName();
         String pptName = user.getPptName();
-        if(!wordName.equals("") || !pptName.equals("")){
+        if(!("").equals(wordName) || !("").equals(pptName)){
         	String wordPath = user.getWordPath();
         	String pptPath = user.getPptPath();
 			map.put("wordName",wordName);
