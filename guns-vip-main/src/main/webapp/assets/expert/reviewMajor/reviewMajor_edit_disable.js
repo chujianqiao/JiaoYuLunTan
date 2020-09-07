@@ -28,7 +28,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     var layer = layui.layer;
 
     //获取详情信息，填充表单
-    var ajax = new $ax(Feng.ctxPath + "/reviewMajor/detail?reviewId=" + Feng.getUrlParam("reviewId"));
+    var ajax = new $ax(Feng.ctxPath + "/reviewMajor/adminDetail?reviewId=" + Feng.getUrlParam("reviewId"));
     var result = ajax.start();
 
     //转换状态值
@@ -74,6 +74,20 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
      */
     $('#closeAdmin').click(function () {
         window.location.href = window.location.href = Feng.ctxPath + '/meetMember';
+    });
+
+    //表单提交事件
+    form.on('submit(btnSubmit)', function (data) {
+        debugger;
+        var ajax = new $ax(Feng.ctxPath + "/reviewMajor/adminEditItem", function (data) {
+            Feng.success("更新成功！");
+            window.location.href = Feng.ctxPath + '/meetMember';
+        }, function (data) {
+            Feng.error("更新失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.start();
+        return false;
     });
 
 });

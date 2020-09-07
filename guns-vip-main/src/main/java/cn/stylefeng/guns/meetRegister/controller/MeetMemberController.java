@@ -17,6 +17,7 @@ import cn.stylefeng.guns.sys.core.util.DefaultImages;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
+import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.thesis.entity.Thesis;
@@ -36,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
@@ -182,6 +184,23 @@ public class MeetMemberController extends BaseController {
     }
 
     /**
+     * 管理员接口
+     * @author wucy
+     * @Date 2020-05-20
+     */
+    @RequestMapping("/adminEditItem")
+    @ResponseBody
+    public ResponseData adminEditItem(MeetMemberParam meetMemberParam,@Valid UserDto user) {
+        Long memberId = meetMemberParam.getMemberId();
+        MeetMember member = this.meetMemberService.getById(memberId);
+        Long userId = member.getUserId();
+        user.setUserId(userId);
+        this.meetMemberService.update(meetMemberParam);
+        this.userService.editUser(user);
+        return ResponseData.success();
+    }
+
+    /**
      * 取消申请
      * @author wucy
      * @Date 2020-07-13
@@ -283,31 +302,94 @@ public class MeetMemberController extends BaseController {
             map.put("direction",direction);
         }
 
+        map.put("regTime",dateString);
+        return ResponseData.success(map);
+    }
+
+
+    /**
+     * 管理员查看详情接口
+     * @author wucy
+     * @Date 2020-05-20
+     */
+    @RequestMapping("/adminDetail")
+    @ResponseBody
+    public ResponseData adminDetail(MeetMemberParam meetMemberParam) {
+        MeetMember detail = this.meetMemberService.getById(meetMemberParam.getMemberId());
+        //类转Map
+        Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
+
+        //加入自设论坛名称
+        Long ownForumId = detail.getOwnForumid();
+        if(ownForumId != null){
+            Forum forum = this.forumService.getById(ownForumId);
+            String ownForumName = forum.getForumName();
+            map.put("ownForumName",ownForumName);
+        } else {
+            map.put("ownForumName","未选择");
+        }
+
+        //加入论文题目
+        Long thesisId = detail.getThesisId();
+        if(thesisId != null && thesisId != 0){
+            Thesis thesis = this.thesisService.getById(thesisId);
+            String thesisName = thesis.getThesisTitle();
+            map.put("thesisName",thesisName);
+        }
+
+        Date date = new Date(Long.parseLong(map.get("regTime").toString()));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(date);
+        //个人信息
+        Long userId = Long.parseLong(map.get("userId").toString());
+        User user = this.userService.getById(userId);
+        String name = user.getName();
+        if(name != null && name != ""){
+            map.put("name",name);
+        }
+        String workUnit = user.getWorkUnit();
+        if(workUnit != null && workUnit != ""){
+            map.put("workUnit",workUnit);
+        }
+        String post = user.getPost();
+        if(post != null && post != ""){
+            map.put("post",post);
+        } else {
+            String titleName = user.getTitle();
+            if(titleName != null && titleName != ""){
+                map.put("post",titleName);
+            }
+        }
+        String direction = user.getDirection();
+        if(direction != null && direction != ""){
+            map.put("direction",direction);
+        }
+
         Object meetStatusObj = map.get("meetStatus");
         if(meetStatusObj != null){
-			String meetStatusStr = map.get("meetStatus").toString();
-			if(meetStatusStr != null && meetStatusStr.equals("")){
-				Integer meetStatus = Integer.parseInt(meetStatusStr);
-				if(meetStatus != null){
-					if(meetStatus == 4){
-						map.put("isPay",1);
-					} else {
-						map.put("isPay",0);
-					}
-				}
-			}
-		}
-		//嘉宾材料
-		String wordName = user.getWordName();
+            String meetStatusStr = map.get("meetStatus").toString();
+            if(meetStatusStr != null && !meetStatusStr.equals("")){
+                Integer meetStatus = Integer.parseInt(meetStatusStr);
+                if(meetStatus != null){
+                    if(meetStatus == 4){
+                        map.put("isPay",1);
+                    } else {
+                        map.put("isPay",0);
+                    }
+                }
+            }
+        }
+        //嘉宾材料
+        String wordName = user.getWordName();
         String pptName = user.getPptName();
         if(!("").equals(wordName) || !("").equals(pptName)){
-        	String wordPath = user.getWordPath();
-        	String pptPath = user.getPptPath();
-			map.put("wordName",wordName);
-			map.put("pptName",pptName);
-        	map.put("wordPath",wordPath);
-        	map.put("pptPath",pptPath);
-		}
+            String wordPath = user.getWordPath();
+            String pptPath = user.getPptPath();
+            map.put("wordName",wordName);
+            map.put("pptName",pptName);
+            map.put("wordPath",wordPath);
+            map.put("pptPath",pptPath);
+        }
 
         map.put("regTime",dateString);
         return ResponseData.success(map);

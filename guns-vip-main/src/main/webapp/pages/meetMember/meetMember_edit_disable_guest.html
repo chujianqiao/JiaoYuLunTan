@@ -10,55 +10,35 @@
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">嘉宾姓名<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="userName" disabled="disabled" name="userName" placeholder="" type="text" class="layui-input" />
+                            <input id="name" name="name" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="unitName" disabled="disabled" name="unitName" placeholder="" type="text" class="layui-input" />
+                            <input id="workUnit" name="workUnit" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">职务/职称<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="postName" disabled="disabled" name="postName" placeholder="" type="text" class="layui-input" />
+                            <input id="post" name="post" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">研究方向<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="direction" disabled="disabled" name="direction" placeholder="" type="text" class="layui-input" />
+                            <input id="direction" name="direction" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">参会论坛<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="ownForumName" disabled="disabled" name="ownForumName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">参会论坛<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <select id="ownForumid" name="ownForumid" lay-verify="" lay-search></select>
+                            </div>
                         </div>
                     </div>
-                    <!--<div class="layui-inline layui-col-md12">-->
-                        <!--<label class="layui-form-label">参会论文<span style="color: red;">*</span></label>-->
-                        <!--<div class="layui-input-block">-->
-                            <!--<input id="thesisId" name="thesisId" type="hidden"/>-->
-                            <!--<input id="thesisName" disabled="disabled" name="thesisName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
-                            <!--<button id="btnDownload" class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;下载论文附件&emsp;</button>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="layui-inline layui-col-md12">-->
-                        <!--<label class="layui-form-label">是否申请发言<span style="color: red;">*</span></label>-->
-                        <!--<div class="layui-input-block">-->
-                            <!--<input type="radio" name="speak" value="1" title="是" />-->
-                            <!--<input type="radio" name="speak" value="0" title="否" />-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="layui-inline layui-col-md12" id="professor">-->
-                        <!--<label class="layui-form-label">是否参加形势研判会<span style="color: red;">*</span></label>-->
-                        <!--<div class="layui-input-block">-->
-                            <!--<input type="radio" name="judge" value="1" title="是" />-->
-                            <!--<input type="radio" name="judge" value="0" title="否" />-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">注册时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
@@ -95,6 +75,7 @@
         </div>
     </div>
     <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
         <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog" id="cancelGuest">&emsp;关闭&emsp;</button>
     </div>
 

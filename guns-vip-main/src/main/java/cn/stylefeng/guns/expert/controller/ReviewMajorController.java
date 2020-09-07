@@ -183,6 +183,22 @@ public class ReviewMajorController extends BaseController {
     }
 
     /**
+     * 管理员编辑
+     * @author wucy
+     * @Date 2020-05-11
+     */
+    @RequestMapping("/adminEditItem")
+    @ResponseBody
+    @BussinessLog(value = "管理员修改", key = "direct", dict = ReviewMajorDict.class)
+    public ResponseData adminEditItem(ReviewMajorParam reviewMajorParam,@Valid UserDto user) {
+        Long userId = reviewMajorParam.getReviewId();
+        user.setUserId(userId);
+        this.reviewMajorService.update(reviewMajorParam);
+        this.userService.editUser(user);
+        return ResponseData.success();
+    }
+
+    /**
      * 重新申请
      * @author wucy
      * @Date 2020-05-11
@@ -334,6 +350,50 @@ public class ReviewMajorController extends BaseController {
         String dateString = formatter.format(date);
         map.put("applyTime",dateString);
 
+        return ResponseData.success(map);
+    }
+
+    /**
+     * 管理员查看详情接口
+     * @author wucy
+     * @Date 2020-05-11
+     */
+    @RequestMapping("/adminDetail")
+    @ResponseBody
+    public ResponseData adminDetail(ReviewMajorParam reviewMajorParam) {
+        ReviewMajor detail = this.reviewMajorService.getById(reviewMajorParam.getReviewId());
+        Long domainObj = Long.parseLong(detail.getBelongDomain());
+        String belongDomainStr = "";
+        ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
+        detail.setBelongDomain(thesisDomainResult.getDomainName());
+
+        //类转Map
+        Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
+        //个人信息
+        Long userId = detail.getReviewId();
+        User user = this.userService.getById(userId);
+        String name = user.getName();
+        map.put("name",name);
+        String workUnit = user.getWorkUnit();
+        if(workUnit != null && workUnit != ""){
+            map.put("workUnit",workUnit);
+        }
+        String post = user.getPost();
+        if(post == null || post.equals("")){
+            String title = user.getTitle();
+            map.put("post",title);
+        }else {
+            map.put("post",post);
+        }
+        String direction = user.getDirection();
+        if(direction != null && !direction.equals("")){
+            map.put("direction",direction);
+        }
+
+        Date date = new Date(Long.parseLong(map.get("applyTime").toString()));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(date);
+        map.put("applyTime",dateString);
         return ResponseData.success(map);
     }
 
