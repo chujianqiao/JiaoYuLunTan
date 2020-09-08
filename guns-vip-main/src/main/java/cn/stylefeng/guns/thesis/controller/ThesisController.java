@@ -722,6 +722,32 @@ public class ThesisController extends BaseController {
     }
 
     /**
+     * 上传PPT文件
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/uploadPPT")
+    @ResponseBody
+    public ResponseData thesisUploadPPT(@RequestPart("file") MultipartFile file,HttpServletRequest request) {
+        String message = "";
+        String path = uploadFolder;
+        String fileName = file.getOriginalFilename();
+        String fileType = fileName.substring(fileName.lastIndexOf("."));
+        HashMap<String, Object> map = new HashMap<>();
+        if((".ppt").equalsIgnoreCase(fileType) || ".pptx".equalsIgnoreCase(fileType)){
+            UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
+            String fileId = uploadResult.getFileId();
+            map.put("fileId", fileId);
+            map.put("path",uploadResult.getFileSavePath());
+            map.put("status","成功");
+            message = "上传成功";
+            return ResponseData.success(0, message, map);
+        }else{
+            message = "上传失败，文件格式不匹配";
+            map.put("status","格式问题");
+            return ResponseData.success(0, message, map);
+        }
+    }
+
+    /**
      * 根据领域查询论文评审专家
      * @author wucy
      * @Date 2020-05-21

@@ -34,11 +34,15 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         if(pptName != null && pptName != "" && pptName != 'undefined'){
             $("#pptName").html(pptName);
             $("#pptName").val(pptName);
+            $("#pptNameTip").html(pptName);
+            $("#pptNameTip").val(pptName);
         }
         var wordName = result.data.wordName;
         if(wordName != null && wordName != "" && wordName != 'undefined'){
             $("#wordName").html(wordName);
             $("#wordName").val(wordName);
+            $("#wordNameTip").html(wordName);
+            $("#wordNameTip").val(wordName);
         }
     })
 
@@ -117,7 +121,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     function forumSelectOption(ownForumid){
         $.ajax({
             type:'post',
-            // url:Feng.ctxPath + "/ownForum/listAll" ,
             url:Feng.ctxPath + "/forum/wrapList" ,
             success:function(response){
                 var data=response.data;
@@ -140,6 +143,82 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
                 form.render('select');
             }
         })
+    }
+
+    //上传Word文件
+    upload.render({
+        elem: '#uploadWord'
+        , url: Feng.ctxPath + '/thesis/uploadWord'
+        , accept: 'file'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".doc") || fileType.compare(".docx")){
+                    $("#wordNameTip").html(fileName);
+                    $("#wordNameTip").val(fileName);
+                }
+            });
+        }
+        , done: function (res) {
+            debugger;
+            var status = res.data.status;
+            if(status == "格式问题" || status === "格式问题"){
+                Feng.error(res.message);
+            }else {
+                $("#wordPath").val(res.data.path);
+                $("#wordName").val($("#wordNameTip").val());
+                Feng.success(res.message);
+            }
+        }
+        , error: function (res) {
+            Feng.error("上传文件失败");
+        }
+    });
+
+    //上传PPT文件
+    upload.render({
+        elem: '#uploadPPT'
+        , url: Feng.ctxPath + '/thesis/uploadPPT'
+        , accept: 'file'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".ppt") || fileType.compare(".pptx")){
+                    $("#pptNameTip").html(fileName);
+                    $("#pptNameTip").val(fileName);
+                }
+            });
+        }
+        , done: function (res) {
+            debugger;
+            var status = res.data.status;
+            if(status == "格式问题" || status === "格式问题"){
+                Feng.error(res.message);
+            }else {
+                $("#pptPath").val(res.data.path);
+                $("#pptName").val($("#pptNameTip").val());
+                Feng.success(res.message);
+            }
+        }
+        , error: function (res) {
+            Feng.error("上传文件失败");
+        }
+    });
+
+    /**
+     * 不区分大小写比较字符串
+     * @param str
+     * @returns {boolean}
+     */
+    String.prototype.compare = function(str) {
+        //不区分大小写
+        if(this.toLowerCase() == str.toLowerCase()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 });

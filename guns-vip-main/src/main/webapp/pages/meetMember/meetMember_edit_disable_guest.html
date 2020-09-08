@@ -50,11 +50,13 @@
                         <label class="layui-form-label">PPT<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="pptPath" name="pptPath" type="hidden" class="layui-input"/>
+                            <input id="pptName" name="pptName" type="hidden" class="layui-input"/>
                             <div style="float: left;">
+                                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="uploadPPT" lay-filter="uploadPPT"><i class="layui-icon"></i>上传PPT</button>
                                 <button type="button" class="layui-btn layui-btn-sm" id="downloadPPT" lay-filter="downloadPPT"><i class="layui-icon"></i>下载PPT</button>
                             </div>
                             <div style="float: left;">
-                                <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="pptName" name="pptName"></span>
+                                <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="pptNameTip" name="pptNameTip"></span>
                             </div>
                         </div>
                     </div>
@@ -62,11 +64,13 @@
                         <label class="layui-form-label">发言稿<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
+                            <input id="wordName" name="wordName" type="hidden" class="layui-input"/>
                             <div style="float: left;">
+                                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="uploadWord" lay-filter="uploadWord"><i class="layui-icon"></i>上传发言稿</button>
                                 <button type="button" class="layui-btn layui-btn-sm" id="downloadWord" lay-filter="downloadWord"><i class="layui-icon"></i>下载发言稿</button>
                             </div>
                             <div style="float: left;">
-                                <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordName" name="wordName"></span>
+                                <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordNameTip" name="wordNameTip"></span>
                             </div>
                         </div>
                     </div>
