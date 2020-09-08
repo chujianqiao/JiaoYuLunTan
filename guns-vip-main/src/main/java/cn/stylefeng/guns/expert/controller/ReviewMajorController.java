@@ -290,6 +290,19 @@ public class ReviewMajorController extends BaseController {
     }
 
     /**
+     * 管理员删除接口
+     * @author wucy
+     * @Date 2020-05-11
+     */
+    @RequestMapping("/adminDelete")
+    @ResponseBody
+    @BussinessLog(value = "管理员删除", key = "reviewId", dict = ReviewMajorDict.class)
+    public ResponseData adminDelete(ReviewMajorParam reviewMajorParam) {
+        this.reviewMajorService.delete(reviewMajorParam);
+        return ResponseData.success();
+    }
+
+    /**
      * 查看详情接口
      * @author wucy
      * @Date 2020-05-11

@@ -28,7 +28,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'forumName', sort: true, title: '参会论坛'},
             {field: 'meetStatusStr', sort: true, title: '会议状态'},
             {align: 'center', minWidth: 130, title: '操作', templet: function(data){
-                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
+                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>"
+                    +  "<a class='layui-btn layui-btn-xs layui-btn-danger' lay-event='delete'>删除</a>";
                 }}
         ]];
     };
@@ -219,7 +220,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'forumName', sort: true, title: '参会论坛'},
             {field: 'material', sort: true, title: '是否上传材料'},
             {align: 'center', minWidth: 130, title: '操作', templet: function(data){
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detailJB'>查看详情</a>";
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detailJB'>查看详情</a>"
+                        + "<a class='layui-btn layui-btn-xs layui-btn-danger' lay-event='deleteJB'>删除</a>";
                 }}
         ]];
     };
@@ -326,7 +328,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var operation = function () {
             var ajax = new $ax(Feng.ctxPath + "/meetMember/delete?thesisId="+data.thesisId, function (data) {
                 Feng.success("删除成功!");
-                table.reload(MeetMember.tableId);
+                table.reload(MeetMemberJB.tableId);
             }, function (data) {
                 Feng.error("删除失败!" + data.responseJSON.message + "!");
             });
@@ -368,7 +370,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
         if (layEvent === 'edit') {
             MeetMemberJB.openEditDlg(data);
-        } else if (layEvent === 'delete') {
+        } else if (layEvent === 'deleteJB') {
             MeetMemberJB.onDeleteItem(data);
         } else if (layEvent === 'detailJB') {
             MeetMemberJB.onDisableItem(data);
@@ -433,7 +435,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'belongDomainStr', sort: true, title: '所属领域'},
             {field: 'direct', sort: true, title: '研究方向'},
             {align: 'center', minWidth: 130, title: '操作', templet: function(data){
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='majorDetail'>查看详情</a>";
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='majorDetail'>查看详情</a>"
+                        + "<a class='layui-btn layui-btn-xs layui-btn-danger' lay-event='deleteMajor'>删除</a>";
                 }}
         ]];
     };
@@ -519,13 +522,14 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      */
     MeetMemberMajor.onDeleteItem = function (data) {
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/meetMember/delete?thesisId="+data.thesisId, function (data) {
+            var ajax = new $ax(Feng.ctxPath + "/reviewMajor/adminDelete", function (data) {
                 Feng.success("删除成功!");
-                table.reload(MeetMember.tableId);
+                table.reload(MeetMemberMajor.tableId);
             }, function (data) {
                 Feng.error("删除失败!" + data.responseJSON.message + "!");
             });
-            ajax.set("memberId", data.memberId);
+            // ajax.set("memberId", data.memberId);
+            ajax.set("reviewId", data.reviewId);
             ajax.start();
         };
         Feng.confirm("是否删除?", operation);
@@ -563,7 +567,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
         if (layEvent === 'edit') {
             MeetMemberMajor.openEditDlg(data);
-        } else if (layEvent === 'delete') {
+        } else if (layEvent === 'deleteMajor') {
             MeetMemberMajor.onDeleteItem(data);
         } else if (layEvent === 'majorDetail') {
             MeetMemberMajor.onDisableItem(data);
