@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.seat.mapper.SeatDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.seat.entity.SeatDetail">
+        <id column="seat_detail_id" property="seatDetailId" />
+        <result column="seat_col" property="seatCol" />
+        <result column="seat_row" property="seatRow" />
+        <result column="meet_id" property="meetId" />
+        <result column="meet_type" property="meetType" />
+        <result column="user_id" property="userId" />
+        <result column="creat_time" property="creatTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        seat_detail_id AS "seatDetailId", seat_col AS "seatCol", seat_row AS "seatRow", meet_id AS "meetId", meet_type AS "meetType", user_id AS "userId", creat_time AS "creatTime"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.seat.model.result.SeatDetailResult" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam">
+        select
+        <include refid="Base_Column_List"/>
+        from seat_detail where 1 = 1
+            <if test="paramCondition.seatCol != null and paramCondition.seatCol != ''">
+                and seat_col like CONCAT('%',#{paramCondition.seatCol},'%')
+            </if>
+            <if test="paramCondition.seatRow != null and paramCondition.seatRow != ''">
+                and seat_row like CONCAT('%',#{paramCondition.seatRow},'%')
+            </if>
+            <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+            </if>
+            <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
+                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+            </if>
+            <if test="paramCondition.userId != null and paramCondition.userId != ''">
+                and user_id like CONCAT('%',#{paramCondition.userId},'%')
+            </if>
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam">
+        select
+        <include refid="Base_Column_List"/>
+        from seat_detail where 1 = 1
+            <if test="paramCondition.seatCol != null and paramCondition.seatCol != ''">
+                and seat_col like CONCAT('%',#{paramCondition.seatCol},'%')
+            </if>
+            <if test="paramCondition.seatRow != null and paramCondition.seatRow != ''">
+                and seat_row like CONCAT('%',#{paramCondition.seatRow},'%')
+            </if>
+            <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+            </if>
+            <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
+                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+            </if>
+            <if test="paramCondition.userId != null and paramCondition.userId != ''">
+                and user_id like CONCAT('%',#{paramCondition.userId},'%')
+            </if>
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.seat.model.result.SeatDetailResult" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam">
+        select
+        <include refid="Base_Column_List"/>
+        from seat_detail where 1 = 1
+            <if test="paramCondition.seatCol != null and paramCondition.seatCol != ''">
+                and seat_col like CONCAT('%',#{paramCondition.seatCol},'%')
+            </if>
+            <if test="paramCondition.seatRow != null and paramCondition.seatRow != ''">
+                and seat_row like CONCAT('%',#{paramCondition.seatRow},'%')
+            </if>
+            <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+            </if>
+            <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
+                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+            </if>
+            <if test="paramCondition.userId != null and paramCondition.userId != ''">
+                and user_id like CONCAT('%',#{paramCondition.userId},'%')
+            </if>
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam">
+        select
+        <include refid="Base_Column_List"/>
+        from seat_detail where 1 = 1
+            <if test="paramCondition.seatCol != null and paramCondition.seatCol != ''">
+                and seat_col like CONCAT('%',#{paramCondition.seatCol},'%')
+            </if>
+            <if test="paramCondition.seatRow != null and paramCondition.seatRow != ''">
+                and seat_row like CONCAT('%',#{paramCondition.seatRow},'%')
+            </if>
+            <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+            </if>
+            <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
+                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+            </if>
+            <if test="paramCondition.userId != null and paramCondition.userId != ''">
+                and user_id like CONCAT('%',#{paramCondition.userId},'%')
+            </if>
+    </select>
+
+</mapper>

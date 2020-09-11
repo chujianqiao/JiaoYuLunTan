@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.seat.mapper.SeatMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.seat.entity.Seat">
+        <id column="seat_id" property="seatId" />
+        <result column="meet_id" property="meetId" />
+        <result column="meet_type" property="meetType" />
+        <result column="col_num" property="colNum" />
+        <result column="row_num" property="rowNum" />
+        <result column="seat_type" property="seatType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        seat_id AS "seatId", meet_id AS "meetId", meet_type AS "meetType", col_num AS "colNum", row_num AS "rowNum", seat_type AS "seatType"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.seat.model.result.SeatResult" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatParam">
+        select
+        <include refid="Base_Column_List"/>
+        from seat where 1 = 1
+            <if test="paramCondition.seatId != null and paramCondition.seatId != ''">
+                and seat_id like CONCAT('%',#{paramCondition.seatId},'%')
+            </if>
+            <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+            </if>
+            <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
+                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+            </if>
+            <if test="paramCondition.colNum != null and paramCondition.colNum != ''">
+                and col_num like CONCAT('%',#{paramCondition.colNum},'%')
+            </if>
+            <if test="paramCondition.rowNum != null and paramCondition.rowNum != ''">
+                and row_num like CONCAT('%',#{paramCondition.rowNum},'%')
+            </if>
+            <if test="paramCondition.seatType != null and paramCondition.seatType != ''">
+                and seat_type like CONCAT('%',#{paramCondition.seatType},'%')
+            </if>
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatParam">
+        select
+        <include refid="Base_Column_List"/>
+        from seat where 1 = 1
+            <if test="paramCondition.seatId != null and paramCondition.seatId != ''">
+                and seat_id like CONCAT('%',#{paramCondition.seatId},'%')
+            </if>
+            <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+            </if>
+            <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
+                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+            </if>
+            <if test="paramCondition.colNum != null and paramCondition.colNum != ''">
+                and col_num like CONCAT('%',#{paramCondition.colNum},'%')
+            </if>
+            <if test="paramCondition.rowNum != null and paramCondition.rowNum != ''">
+                and row_num like CONCAT('%',#{paramCondition.rowNum},'%')
+            </if>
+            <if test="paramCondition.seatType != null and paramCondition.seatType != ''">
+                and seat_type like CONCAT('%',#{paramCondition.seatType},'%')
+            </if>
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.seat.model.result.SeatResult" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatParam">
+        select
+        <include refid="Base_Column_List"/>
+        from seat where 1 = 1
+            <if test="paramCondition.seatId != null and paramCondition.seatId != ''">
+                and seat_id like CONCAT('%',#{paramCondition.seatId},'%')
+            </if>
+            <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+            </if>
+            <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
+                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+            </if>
+            <if test="paramCondition.colNum != null and paramCondition.colNum != ''">
+                and col_num like CONCAT('%',#{paramCondition.colNum},'%')
+            </if>
+            <if test="paramCondition.rowNum != null and paramCondition.rowNum != ''">
+                and row_num like CONCAT('%',#{paramCondition.rowNum},'%')
+            </if>
+            <if test="paramCondition.seatType != null and paramCondition.seatType != ''">
+                and seat_type like CONCAT('%',#{paramCondition.seatType},'%')
+            </if>
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatParam">
+        select
+        <include refid="Base_Column_List"/>
+        from seat where 1 = 1
+            <if test="paramCondition.seatId != null and paramCondition.seatId != ''">
+                and seat_id like CONCAT('%',#{paramCondition.seatId},'%')
+            </if>
+            <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+            </if>
+            <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
+                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+            </if>
+            <if test="paramCondition.colNum != null and paramCondition.colNum != ''">
+                and col_num like CONCAT('%',#{paramCondition.colNum},'%')
+            </if>
+            <if test="paramCondition.rowNum != null and paramCondition.rowNum != ''">
+                and row_num like CONCAT('%',#{paramCondition.rowNum},'%')
+            </if>
+            <if test="paramCondition.seatType != null and paramCondition.seatType != ''">
+                and seat_type like CONCAT('%',#{paramCondition.seatType},'%')
+            </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,28 @@
+@layout("/common/_form.html",{js:["/assets/seat/seat_change.js"]}){
+
+<form class="layui-form" id="meetMemberForm" lay-filter="meetMemberForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input id="divId" name="divId" type="hidden" value="${divId}"/>
+                    <input id="meetId" name="meetId" type="hidden" value="${meetId}"/>
+                    <input id="seatId" name="seatId" type="hidden" value="${seatId}"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">参会人员<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select id="userId" name="userId" lay-verify="" lay-search></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmitSeat" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}
