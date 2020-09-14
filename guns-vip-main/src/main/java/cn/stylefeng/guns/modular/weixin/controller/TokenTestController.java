@@ -2,10 +2,12 @@ package cn.stylefeng.guns.modular.weixin.controller;
 
 
 import cn.stylefeng.guns.modular.weixin.pojo.Token;
+import cn.stylefeng.guns.modular.weixin.pojo.WeiXinUserInfo;
 import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
 import cn.stylefeng.guns.modular.weixin.util.MyX509TrustManager;
 import cn.stylefeng.guns.modular.weixin.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,10 +26,16 @@ import java.util.Map;
 @Slf4j
 public class TokenTestController {
 
+    @Value("${weiXin.appid}")
+    private String appid;
+
+    @Value("${weiXin.secret}")
+    private String secret;
+
     @RequestMapping(value = "/tokenTest")
     public void tokenTest() throws Exception{
         //修改appID，secret
-        String tokenUrl="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxa793b68b39e5187d&secret=0d88a01841562104ae7a6791acb85fae";
+        String tokenUrl="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + secret;
         // 建立连接
         URL url = new URL(tokenUrl);
         HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
@@ -84,5 +92,25 @@ public class TokenTestController {
         Map<String, Object> token=TokenUtil.getToken();
         System.out.println(token.get("access_token"));
         System.out.println(token.get("expires_in"));
+    }
+
+    @RequestMapping(value = "/getUserInfo")
+    public void getUserInfo() {
+        // 获取接口访问凭证
+        String accessToken = CommonUtil.getToken("appID", "appsecret").getAccessToken();
+        /**
+         * 获取用户信息
+         */
+        WeiXinUserInfo user = CommonUtil.getUserInfo(accessToken, "ooK-yuJvd9gEegH6nRIen-gnLrVw");
+        System.out.println("OpenID：" + user.getOpenId());
+        System.out.println("关注状态：" + user.getSubscribe());
+        System.out.println("关注时间：" + user.getSubscribeTime());
+        System.out.println("昵称：" + user.getNickname());
+        System.out.println("性别：" + user.getSex());
+        System.out.println("国家：" + user.getCountry());
+        System.out.println("省份：" + user.getProvince());
+        System.out.println("城市：" + user.getCity());
+        System.out.println("语言：" + user.getLanguage());
+        System.out.println("头像：" + user.getHeadImgUrl());
     }
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
+</head>
+<body id="body" style="">
+<img id="img" src="">
+</body>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script>
+    $(document).ready(function() {
+        //步骤二 ： 页面加载完后ajax请求生成二维码图片
+        var uuid;
+        $.ajax({
+            type: "post",
+            url: "${ctxPath}/weiXin/getLinkImage",
+            success: function (data) {
+                //存储UUID
+                uuid = data.uuid;
+                //显示二维码，chrome出于安全机制，不能访问本地文件，打不开图片
+                //可以把photo放到浏览器的地址栏访问。图片会显示
+                var photo = data.name;
+                //$("#body").attr("style","background-image: url(" + photo + ")");
+                $("#body").attr("style","background-image: url('data:image/jpeg;base64," + photo + "')");
+                //开始验证登录
+                keepPool(uuid);
+            }
+        });
+    });
+    /*var uuid = "${uuid!}";
+    imageName();
+    keepPool(uuid);
+    function imageName() {
+        //$("#img").attr("src","data:image/jpeg;base64," + name);
+        $("#body").attr("style","background-image: url('data:image/jpeg;base64,${name!}')");
+    }*/
+
+    function keepPool(uuid){
+        layui.use(['layer', 'element', 'admin', 'index', 'ax'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var admin = layui.admin;
+            var index = layui.index;
+            var $ax = layui.ax;
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            $.post("${ctxPath}/weiXin/pool", {
+                uuid: uuid,
+            }, function (data) {
+                if (data == 'success') {
+                    alert("登录成功");
+                    parent.location.reload();
+                    admin.closeThisDialog();
+                } else if (data == 'timeout') {
+                    alert("登录超时，请刷新重试");
+                } else {
+                    keepPool(uuid);
+                }
+            });
+        });
+    }
+
+</script>
+</html>

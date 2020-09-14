@@ -4,6 +4,7 @@ import cn.stylefeng.guns.modular.weixin.message.resp.TextMessage;
 import cn.stylefeng.guns.modular.weixin.util.MessageUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class CoreService {
         try {
             // 调用parseXml方法解析请求消息
             Map<String, String> requestMap = MessageUtil.parseXml(request);
+            System.out.println(requestMap);
             // 发送方帐号
             String fromUserName = requestMap.get("FromUserName");
             // 开发者微信号
@@ -74,6 +76,7 @@ public class CoreService {
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
                 // 事件类型
                 String eventType = requestMap.get("Event");
+                String eventKey = requestMap.get("EventKey");
                 // 关注
                 if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
                     respContent = "谢谢您的关注！";
@@ -85,6 +88,12 @@ public class CoreService {
                 // 扫描带参数二维码
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_SCAN)) {
                     // TODO 处理扫描带参数二维码事件
+
+                    if (eventKey.equals("temp_qrcode_test")) { //临时二维码
+                        respContent = "扫描临时二维码！";
+                    } else if (eventKey.equals("permanent_qrcode_test")) {
+                        respContent = "扫描永久二维码！";
+                    }
                 }
                 // 上报地理位置
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_LOCATION)) {

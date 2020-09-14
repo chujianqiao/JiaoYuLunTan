@@ -71,6 +71,7 @@ public class NoneAuthedResources {
 
             //微信Token
             "/check/checkToken",
+            "/weiXin/*",
 
             // session登录失效之后的跳转
             "/global/sessionError",
