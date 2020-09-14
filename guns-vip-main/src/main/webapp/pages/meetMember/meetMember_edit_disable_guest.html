@@ -8,6 +8,12 @@
                 <div class="layui-form-item layui-row">
                     <input id="memberId" name="memberId" type="hidden"/>
                     <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">头像 ：<span style="color: red;">*</span></label>
+                        <div class="user-info-head" id="imgHead">
+                            <img id="avatarPreview" src="${avatar}"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">嘉宾姓名<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="name" name="name" placeholder="" type="text" class="layui-input" />
@@ -43,6 +49,13 @@
                         <label class="layui-form-label">注册时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="regTime" name="regTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">嘉宾简介<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <!--<input id="introduction" name="introduction" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                            <textarea id="introduction" name="introduction" type="text" lay-verify="required" required class="layui-textarea"></textarea>
                         </div>
                     </div>
 
@@ -84,5 +97,18 @@
     </div>
 
 </form>
-
+<style type="text/css">
+    .user-info-head {
+        width: 110px;
+        height: 110px;
+        display: inline-block;
+        text-align:center;
+        margin:0 auto;
+    }
+    .user-info-head img {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+    }
+</style>
 @}

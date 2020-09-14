@@ -143,7 +143,9 @@ public class MeetMemberController extends BaseController {
      * @Date 2020-08-31
      */
     @RequestMapping("/guestDetail")
-    public String guestDetail(MeetMemberParam meetMemberParam) {
+    public String guestDetail(MeetMemberParam meetMemberParam,Model model) {
+        //头像
+        model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
         return PREFIX + "/meetMember_edit_disable_guest.html";
     }
 
@@ -380,7 +382,7 @@ public class MeetMemberController extends BaseController {
                 }
             }
         }
-        //嘉宾材料
+        //嘉宾信息
         String wordName = user.getWordName();
         String pptName = user.getPptName();
         if(!("").equals(wordName) || !("").equals(pptName)){
@@ -391,6 +393,11 @@ public class MeetMemberController extends BaseController {
             map.put("wordPath",wordPath);
             map.put("pptPath",pptPath);
         }
+        String introduction = user.getIntroduction();
+        if(introduction != null && !("").equals(introduction)){
+            map.put("introduction",introduction);
+        }
+
 
         map.put("regTime",dateString);
         return ResponseData.success(map);

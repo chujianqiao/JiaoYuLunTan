@@ -24,6 +24,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 加载页面时执行
      */
     $(function(){
+        debugger;
         var ajax = new $ax(Feng.ctxPath + "/meetMember/adminDetail?memberId=" + Feng.getUrlParam("memberId"));
         var result = ajax.start();
         var ownForumid = result.data.ownForumid;
@@ -204,6 +205,31 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }
         , error: function (res) {
             Feng.error("上传文件失败");
+        }
+    });
+
+    /**
+     * 上传头像
+     */
+    upload.render({
+        elem: '#imgHead'
+        , url: Feng.ctxPath + '/system/upload'
+        , before: function (obj) {
+            obj.preview(function (index, file, result) {
+                $('#avatarPreview').attr('src', result);
+            });
+        }
+        , done: function (res) {
+            var ajax = new $ax(Feng.ctxPath + "/system/updateAvatar", function (data) {
+                Feng.success(res.message);
+            }, function (data) {
+                Feng.error("修改失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("fileId", res.data.fileId);
+            ajax.start();
+        }
+        , error: function () {
+            Feng.error("上传头像失败！");
         }
     });
 
