@@ -58,11 +58,11 @@
                 uuid: uuid,
             }, function (data) {
                 if (data == 'success') {
-                    alert("登录成功");
+                    alert("绑定成功");
                     parent.location.reload();
                     admin.closeThisDialog();
                 } else if (data == 'timeout') {
-                    alert("登录超时，请刷新重试");
+                    alert("绑定超时，请刷新重试");
                 } else {
                     keepPool(uuid);
                 }

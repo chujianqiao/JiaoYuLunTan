@@ -11,13 +11,16 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
     });
     meetDetail();
     thesisDetail();
+    meetMemberDetail();
+
+
     function meetDetail() {
         $.ajax({
             type: 'post',
             url: Feng.ctxPath + "/meet/detailPub",
             success: function (response) {
                 var data = response.data;
-                console.log(data);
+                //console.log(data);
 
                 $("#meetData1").html(data.meetName);
                 $("#meetData2").html("会议描述：" + data.meetDesc);
@@ -35,7 +38,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             url: Feng.ctxPath + "/thesis/detailPub",
             success: function (response) {
                 var data = response.data;
-                console.log(data);
+                //console.log(data);
                 $("#thesisData1").html(data.thesisTitle);
                 $("#thesisData2").html(data.engTitle);
                 $("#thesisData3").html("作者：" + data.thesisUser);
@@ -44,6 +47,66 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             }
         });
     }
+
+    function meetMemberDetail() {
+        $.ajax({
+            type: 'post',
+            url: Feng.ctxPath + '/meetMember/wraplist',
+            success: function (response) {
+                var data = response.data;
+                //console.log(data);
+
+                for (var i = 0;i < data.length;i++){
+                    console.log(data[i].meetStatus);
+                    if (data[i].meetStatus == 4){
+                        $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')")
+                        forumSelectOption(data[i].ownForumid);
+                        break;
+                    }else {
+                        $("#forum").attr("href","javascript:forumAdd('')")
+                        $("#forumData1").html("无");
+                        $("#forumData2").empty();
+                        $("#forumData3").empty();
+                        $("#forumData4").empty();
+                    }
+
+                }
+            }
+        });
+    }
+
+    function forumSelectOption(ownForumid){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/forum/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var forums = [];
+                forums = data;
+                var options;
+                for (i = 0 ;i < forums.length ;i++){
+                    var forum = data[i];
+                    if(forum.status == "未发布"){
+                        continue;
+                    }
+                    if(ownForumid == forum.forumId){
+                        $("#forumData1").html(forum.forumName);
+                        $("#forumData2").html("论坛地点：" + forum.location);
+                        $("#forumData3").html("论坛时间：" + forum.startTime + "-" + forum.endTime);
+                        $("#forumData4").html("报名时间：" + forum.registerStartTime + "-" + forum.registerEndTime);
+                        break;
+                    }else{
+                        $("#forumData1").html("无");
+                        $("#forumData2").empty();
+                        $("#forumData3").empty();
+                        $("#forumData4").empty();
+                    }
+                }
+            }
+        })
+    }
+
+
 
     //获取用户详情
     /*var ajax = new $ax(Feng.ctxPath + "/meet/detailPub");

@@ -11,7 +11,6 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
 
 import javax.imageio.ImageIO;
@@ -37,14 +36,8 @@ import java.util.Map;
 public class CommonUtil {
     private static Logger log = LoggerFactory.getLogger(CommonUtil.class);
 
-    @Value("${weiXin.appid}")
-    private static String appid;
-
-    @Value("${weiXin.secret}")
-    private static String secret;
-
     // 凭证获取（GET）
-    public final static String token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + secret;
+    public final static String token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 
     // 菜单创建（POST） 限100（次/天）
     public static String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";

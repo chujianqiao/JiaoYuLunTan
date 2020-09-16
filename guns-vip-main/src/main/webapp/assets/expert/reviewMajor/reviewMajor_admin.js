@@ -76,11 +76,12 @@ layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
       * @param data 点击按钮时候的行数据
       */
       ReviewMajor.openEditDlg = function (data) {
-          func.open({
+          /*func.open({
               title: '查看详情',
               content: Feng.ctxPath + '/reviewMajor/edit?reviewId=' + data.reviewId,
               tableId: ReviewMajor.tableId
-          });
+          });*/
+          window.location.href = Feng.ctxPath + '/reviewMajor/edit?reviewId=' + data.reviewId;
       };
 
     /**

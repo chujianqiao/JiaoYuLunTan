@@ -229,7 +229,7 @@ public class WeiXinController {
 
         //2,推送消息
         WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
-                .toUser("oe9p8wmSOnbvURekVJPo5Xg2ZEDI")//要推送的用户openid oe9p8wmSOnbvURekVJPo5Xg2ZEDI  oe9p8wrDJD5_Mm9l9Mv9BM9CuKqI
+                .toUser("oe9p8wrDJD5_Mm9l9Mv9BM9CuKqI")//要推送的用户openid oe9p8wmSOnbvURekVJPo5Xg2ZEDI  oe9p8wrDJD5_Mm9l9Mv9BM9CuKqI
                 .templateId(templateId)//模版id
                 .url("https://www.baidu.com/")//点击模版消息要访问的网址
                 .build();

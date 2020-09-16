@@ -1,5 +1,5 @@
-
-
+<!doctype html>
+<html>
 <link rel="stylesheet" href="${ctxPath}/assets/common/layuiadmin/layui/css/layui.css" media="all">
 <link rel="stylesheet" href="${ctxPath}/assets/common/layuiadmin/style/admin.css" media="all">
 <style>
@@ -41,6 +41,7 @@
         margin-top: 40px;
     }
 </style>
+<body>
 <div class="page">
     <!-- 头部 -->
     @include("/common/person_header.html"){}
@@ -48,22 +49,47 @@
     <div class="func-column-container widthC mCenter mb40">
         <div class="layui-fluid">
             <div class="layui-row layui-col-space15">
-                <div class="layui-col-md3">
-                    <div class="layui-card">
+                <div class="layui-col-md5">
+                    <div class="layui-card" style="background-color:#f8f8f8;width: 458px;height: 286px;border-radius:10%">
+                        <div class="layui-card-body" style="width: 228px;height: 100px;float: left;margin-top: 20px;margin-left: 20px">
+                            <div class="layui-text">
+                                <h3 style="padding-top: 10px;">姓名：${name}</h3>
+                                <h3 style="padding-top: 10px;">单位：${workUnit}</h3>
+                                <h3 style="padding-top: 10px;">职务：${post}</h3>
+                            </div>
+
+                        </div>
+                        <div class="layui-card-body" style="width: 210px;height: 100px;float: left;margin-top: 20px;">
+                            <div class="user-info-head" id="imgHead">
+                                <img id="avatarPreview" style="border-radius: 0%;" src="${avatar}"/>
+                            </div>
+                        </div>
+                        <div class="layui-card-body" style="width: 458px;height: 166px;float: left;margin-left: 20px">
+                            <div class="layui-text">
+                                <h3 style="padding-top: 10px;">电话：${phone}</h3>
+                                <h3 style="padding-top: 10px;">大会：2020年全国教育科研工作会议</h3>
+                                <h3 style="padding-top: 10px;">论坛：2020年中国教育科学论坛</h3>
+                            </div>
+                        </div>
+
+
+                        <!--<div class="layui-card-body" style="padding: 25px;display: block">
+                            <div class="user-info-head" id="imgHead">
+                                <img id="avatarPreview" style="border-radius: 0%;" src="${avatar}"/>
+                            </div>
+                        </div>
                         <div class="layui-card-body" style="padding: 25px;">
+
                             <div class="text-center layui-text">
-                                <div class="user-info-head" id="imgHead">
-                                    <img id="avatarPreview" src="${avatar}"/>
-                                </div>
                                 <h2 style="padding-top: 20px;">${name}</h2>
                                 <p style="padding-top: 8px;">${workUnit!} &nbsp;&nbsp;${post!}</p>
 
                             </div>
                             <div class="layui-text" style="padding-left: 50px;">
-                                <!--<div class="info-list-item">
+                                &lt;!&ndash;<div class="info-list-item">
                                     <i class="layui-icon layui-icon-notice"></i>
                                     <p>${email!}</p>
-                                </div>-->
+                                </div>&ndash;&gt;
 
                                 <div class="info-list-item">
                                     <i class="layui-icon layui-icon-cellphone"></i>
@@ -71,7 +97,7 @@
                                 </div>
                             </div>
                             <div class="info-forum">中国教育科学论坛</div>
-                        </div>
+                        </div>-->
                     </div>
 
                     <!--<div class="layui-card">
@@ -128,7 +154,7 @@
                         </div>
                     </div>-->
                 </div>
-                <div class="layui-col-md9">
+                <div class="layui-col-md7">
                     <div class="layui-row layui-col-space15">
                         <div class="layui-col-md12">
                             <div class="layui-card">
@@ -156,7 +182,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="layui-col-xs2">
-                                                    <a layadmin-event="im">
+                                                    <a id="forum">
                                                         <i style="font-size: 60px" class="layui-icon layui-icon-edit"></i>
                                                         <cite>论坛报名</cite>
                                                     </a>
@@ -308,7 +334,29 @@
                 </div>
                 <div class="layui-col-md8">
                     <div class="layui-card">
-                        <div class="layui-card-header">会议信息</div>
+                        <div class="layui-tab layui-tab-brief layadmin-latestData">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">会议信息</li>
+                                <li>论坛信息</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-card-body layui-show" style="padding: 25px;height: 185px">
+                                    <div id="meetData1" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div>
+                                    <div id="meetData2" class="">主办单位：全国教育科学规划领导小组办公室、中国教育科学研究院</div>
+                                    <div id="meetData3" class="">召开日期：2020年11月25日~2020年11月26日</div>
+                                    <div id="meetData4" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
+                                    <div id="meetData5" class="">签到时间：24日下午报到，16日开会。</div>
+                                </div>
+                                <div id="forumData" class="layui-tab-item layui-card-body" style="padding: 25px;height: 185px">
+                                    <div id="forumData1" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div>
+                                    <div id="forumData2" class="">召开日期：2020年11月25日~2020年11月26日</div>
+                                    <div id="forumData3" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
+                                    <div id="forumData4" class="">签到时间：24日下午报到，16日开会。</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="layui-card-header">会议信息</div>
                         <div class="layui-card-body" style="padding: 25px;height: 205px">
 
                             <div id="meetData1" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div>
@@ -316,16 +364,18 @@
                             <div id="meetData3" class="">召开日期：2020年11月25日~2020年11月26日</div>
                             <div id="meetData4" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
                             <div id="meetData5" class="">签到时间：24日下午报到，16日开会。</div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="layui-card">
                         <div class="layui-card-header">我的论文</div>
-                        <div class="layui-card-body" style="padding: 25px;height: 205px">
+                        <div class="layui-tab-content">
+                        <div class="layui-card-body" style="padding: 25px;height: 185px">
 
                             <div id="thesisData1" class=""></div>
                             <div id="thesisData2" class=""></div>
                             <div id="thesisData3" class=""></div>
                             <div id="thesisData4" class=""></div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -377,6 +427,7 @@
     <!-- 尾部 -->
     @include("/common/person_footer.html"){}
 </div>
+</body>
 <script type="text/javascript">
     var Feng = {
         ctxPath: "${ctxPath}",
@@ -391,4 +442,18 @@
     }).extend({
         index: 'lib/index' //主入口模块
     }).use(['index', 'console']);
+
+    function forumAdd(memberId) {
+        if (memberId == "" || memberId == null){
+            layer.alert("还不满足条件进行论坛报名！");
+        } else {
+            layer.open({
+                title: '选择论坛',
+                type: 2,
+                area: ['620px', '600px'],
+                content: Feng.ctxPath + '/meetMember/forum?memberId=' + memberId,
+            });
+        }
+    }
 </script>
+</html>

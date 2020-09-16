@@ -17,11 +17,19 @@
         <result column="refuse_time" property="refuseTime" />
         <result column="cancel_time" property="cancelTime" />
         <result column="belong_domain" property="belongDomain" />
+        <result column="id_card_type" property="idCardType" />
+        <result column="id_card" property="idCard" />
+        <result column="account_province" property="accountProvince" />
+        <result column="account_city" property="accountCity" />
+        <result column="bank" property="bank" />
+        <result column="union_number" property="unionNumber" />
+        <result column="account_bank" property="accountBank" />
+        <result column="personal_account" property="personalAccount" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        review_id AS "reviewId", direct AS "direct", thesis_count AS "thesisCount", review_count AS "reviewCount", refuse_count AS "refuseCount", major_type AS "majorType", apply_from AS "applyFrom", check_status AS "checkStatus", apply_time AS "applyTime", agree_time AS "agreeTime", refuse_time AS "refuseTime", cancel_time AS "cancelTime", belong_domain AS "belongDomain"
+        review_id AS "reviewId", direct AS "direct", thesis_count AS "thesisCount", review_count AS "reviewCount", refuse_count AS "refuseCount", major_type AS "majorType", apply_from AS "applyFrom", check_status AS "checkStatus", apply_time AS "applyTime", agree_time AS "agreeTime", refuse_time AS "refuseTime", cancel_time AS "cancelTime", belong_domain AS "belongDomain", id_card_type AS "idCardType", id_card AS "idCard", account_province AS "accountProvince", account_city AS "accountCity", bank AS "bank", union_number AS "unionNumber", account_bank AS "accountBank", personal_account AS "personalAccount"
     </sql>
 
 

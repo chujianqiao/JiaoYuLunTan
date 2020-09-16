@@ -75,14 +75,14 @@ public class TokenTestController {
     }
     @RequestMapping(value = "/tokenTestNew")
     public void tokenTestNew() {
-        Token token = CommonUtil.getToken("appID","appsecret");
+        Token token = CommonUtil.getToken(appid,secret);
         System.out.println("access_token:"+token.getAccessToken());
         System.out.println("expires_in:"+token.getExpiresIn());
     }
 
     @RequestMapping(value = "/tokenTestSave")
     public void tokenTestSave() {
-        Token token=CommonUtil.getToken("appID", "appsecret");
+        Token token=CommonUtil.getToken(appid, secret);
         System.out.println(token.getAccessToken());
         TokenUtil.saveToken(token);
     }
@@ -97,7 +97,7 @@ public class TokenTestController {
     @RequestMapping(value = "/getUserInfo")
     public void getUserInfo() {
         // 获取接口访问凭证
-        String accessToken = CommonUtil.getToken("appID", "appsecret").getAccessToken();
+        String accessToken = CommonUtil.getToken(appid, secret).getAccessToken();
         /**
          * 获取用户信息
          */

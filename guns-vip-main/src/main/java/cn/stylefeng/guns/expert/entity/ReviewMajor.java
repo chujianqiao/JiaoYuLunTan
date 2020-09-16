@@ -98,6 +98,54 @@ public class ReviewMajor implements Serializable {
     @TableField("belong_domain")
     private String belongDomain;
 
+    /**
+     * 证件类型
+     */
+    @TableField("id_card_type")
+    private String idCardType;
+
+    /**
+     * 证件号
+     */
+    @TableField("id_card")
+    private String idCard;
+
+    /**
+     * 开户省份
+     */
+    @TableField("account_province")
+    private String accountProvince;
+
+    /**
+     * 开户城市
+     */
+    @TableField("account_city")
+    private String accountCity;
+
+    /**
+     * 银行机构
+     */
+    @TableField("bank")
+    private String bank;
+
+    /**
+     * 联行号
+     */
+    @TableField("union_number")
+    private String unionNumber;
+
+    /**
+     * 开户行
+     */
+    @TableField("account_bank")
+    private String accountBank;
+
+    /**
+     * 个人账号
+     */
+    @TableField("personal_account")
+    private String personalAccount;
+
     public Long getReviewId() {
         return reviewId;
     }
@@ -202,6 +250,70 @@ public class ReviewMajor implements Serializable {
         this.belongDomain = belongDomain;
     }
 
+    public String getIdCardType() {
+        return idCardType;
+    }
+
+    public void setIdCardType(String idCardType) {
+        this.idCardType = idCardType;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String getAccountProvince() {
+        return accountProvince;
+    }
+
+    public void setAccountProvince(String accountProvince) {
+        this.accountProvince = accountProvince;
+    }
+
+    public String getAccountCity() {
+        return accountCity;
+    }
+
+    public void setAccountCity(String accountCity) {
+        this.accountCity = accountCity;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public String getUnionNumber() {
+        return unionNumber;
+    }
+
+    public void setUnionNumber(String unionNumber) {
+        this.unionNumber = unionNumber;
+    }
+
+    public String getAccountBank() {
+        return accountBank;
+    }
+
+    public void setAccountBank(String accountBank) {
+        this.accountBank = accountBank;
+    }
+
+    public String getPersonalAccount() {
+        return personalAccount;
+    }
+
+    public void setPersonalAccount(String personalAccount) {
+        this.personalAccount = personalAccount;
+    }
+
     @Override
     public String toString() {
         return "ReviewMajor{" +
@@ -218,6 +330,14 @@ public class ReviewMajor implements Serializable {
         ", refuseTime=" + refuseTime +
         ", cancelTime=" + cancelTime +
         ", belongDomain=" + belongDomain +
+        ", idCardType=" + idCardType +
+        ", idCard=" + idCard +
+        ", accountProvince=" + accountProvince +
+        ", accountCity=" + accountCity +
+        ", bank=" + bank +
+        ", unionNumber=" + unionNumber +
+        ", accountBank=" + accountBank +
+        ", personalAccount=" + personalAccount +
         "}";
     }
 }

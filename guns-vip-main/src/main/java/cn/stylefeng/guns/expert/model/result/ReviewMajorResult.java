@@ -85,4 +85,44 @@ public class ReviewMajorResult implements Serializable {
      */
     private String belongDomain;
 
+    /**
+     * 证件类型
+     */
+    private String idCardType;
+
+    /**
+     * 证件号
+     */
+    private String idCard;
+
+    /**
+     * 开户省份
+     */
+    private String accountProvince;
+
+    /**
+     * 开户城市
+     */
+    private String accountCity;
+
+    /**
+     * 银行机构
+     */
+    private String bank;
+
+    /**
+     * 联行号
+     */
+    private String unionNumber;
+
+    /**
+     * 开户行
+     */
+    private String accountBank;
+
+    /**
+     * 个人账号
+     */
+    private String personalAccount;
+
 }

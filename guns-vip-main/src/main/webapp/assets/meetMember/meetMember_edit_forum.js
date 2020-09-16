@@ -77,6 +77,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             Feng.success("选择论坛成功！");
             // window.location.href = Feng.ctxPath + '/meetMember';
             // 传给上个页面，刷新table用
+            parent.location.reload();
             admin.putTempData('formOk', true);
             // 关掉对话框
             admin.closeThisDialog();
