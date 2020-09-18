@@ -95,22 +95,29 @@
         <include refid="Base_Column_List"/>
         from seat where 1 = 1
             <if test="paramCondition.seatId != null and paramCondition.seatId != ''">
-                and seat_id like CONCAT('%',#{paramCondition.seatId},'%')
+                and seat_id = #{paramCondition.seatId}
             </if>
             <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
-                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+                and meet_id = #{paramCondition.meetId}
             </if>
             <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
-                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+                and meet_type = #{paramCondition.meetType}
             </if>
             <if test="paramCondition.colNum != null and paramCondition.colNum != ''">
-                and col_num like CONCAT('%',#{paramCondition.colNum},'%')
+                and col_num = #{paramCondition.colNum}
             </if>
             <if test="paramCondition.rowNum != null and paramCondition.rowNum != ''">
-                and row_num like CONCAT('%',#{paramCondition.rowNum},'%')
+                and row_num = #{paramCondition.rowNum}
             </if>
             <if test="paramCondition.seatType != null and paramCondition.seatType != ''">
-                and seat_type like CONCAT('%',#{paramCondition.seatType},'%')
+                and seat_type = #{paramCondition.seatType}
+            </if>
+            <if test="listStatus != null and listStatus != ''">
+                and meet_id in
+                <foreach collection="list" index="index" item="i" open="("
+                         separator="," close=")">
+                    #{i}
+                </foreach>
             </if>
     </select>
 

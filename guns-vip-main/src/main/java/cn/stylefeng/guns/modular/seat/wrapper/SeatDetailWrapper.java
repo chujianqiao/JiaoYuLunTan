@@ -27,8 +27,12 @@ public class SeatDetailWrapper extends BaseControllerWrapper {
 
 	@Override
 	protected void wrapTheMap(Map<String, Object> map) {
-		Long userId = Long.parseLong(map.get("userId").toString());
-		String userName = ConstantFactory.me().getUserNameById(userId);
-		map.put("userName",userName);
+		Object userIdObj = map.get("userId");
+		if(userIdObj != null){
+			Long userId = Long.parseLong(userIdObj.toString());
+			String userName = ConstantFactory.me().getUserNameById(userId);
+			map.put("userName",userName);
+		}
+
 	}
 }

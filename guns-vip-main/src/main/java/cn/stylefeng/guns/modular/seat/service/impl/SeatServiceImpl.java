@@ -65,9 +65,13 @@ public class SeatServiceImpl extends ServiceImpl<SeatMapper, Seat> implements Se
     }
 
     @Override
-    public Page<Map<String, Object>> findPageWrap(SeatParam param) {
+    public Page<Map<String, Object>> findPageWrap(SeatParam param,List<Long> meetIdList) {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.customPageMapList(page,param);
+        String listStatus = "";
+        if(meetIdList.size() != 0){
+            listStatus = "有数据";
+        }
+        return this.baseMapper.customPageMapList(page,param,meetIdList,listStatus);
     }
 
     private Serializable getKey(SeatParam param){

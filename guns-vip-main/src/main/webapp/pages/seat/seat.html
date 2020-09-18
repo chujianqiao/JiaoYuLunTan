@@ -12,7 +12,7 @@
                     <div class="layui-form toolbar">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <input id="seatId" class="layui-input" type="text" placeholder="会议名称"/>
+                                <input id="seatName" class="layui-input" type="text" placeholder="会议名称"/>
                             </div>
                             <div class="layui-inline">
                                 <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
@@ -30,7 +30,8 @@
 
 <script type="text/html" id="tableBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="seat">分配座位</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="seat">分配座位</a>
+    <a class="layui-btn layui-btn-xs" lay-event="reset">重置座次表</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
 @}

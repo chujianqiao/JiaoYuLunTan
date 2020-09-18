@@ -32,14 +32,15 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * 点击查询按钮
      */
     Seat.search = function () {
+        debugger;
         var queryData = {};
-
-        queryData['seatId'] = $('#seatId').val();
-        queryData['meetId'] = $('#meetId').val();
-        queryData['meetType'] = $('#meetType').val();
-        queryData['colNum'] = $('#colNum').val();
-        queryData['rowNum'] = $('#rowNum').val();
-        queryData['seatType'] = $('#seatType').val();
+        var a = $('#seatName').val();
+        queryData['seatName'] = $('#seatName').val();
+        // queryData['meetId'] = $('#meetId').val();
+        // queryData['meetType'] = $('#meetType').val();
+        // queryData['colNum'] = $('#colNum').val();
+        // queryData['rowNum'] = $('#rowNum').val();
+        // queryData['seatType'] = $('#seatType').val();
 
         table.reload(Seat.tableId, {
             where: queryData, page: {curr: 1}
@@ -55,7 +56,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
     /**
     * 跳转到编辑页面
-    *
     * @param data 点击按钮时候的行数据
     */
     Seat.jumpEditPage = function (data) {
@@ -66,11 +66,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * 跳转到座次页面
      */
     Seat.jumpSeatPage = function (data) {
-        // window.location.href = Feng.ctxPath + '/meetSeat?seatId=' + data.seatId
         layer.open({
-            title: '选择参会人员',
+            title: '分配座位',
             type: 2,
-            area: ['1200px','500px'],
+            area: ['1200px','580px'],
+            // resize:false,
             content: Feng.ctxPath + '/meetSeat?seatId=' + data.seatId
         });
     };
@@ -89,7 +89,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
     /**
      * 点击删除
-     *
      * @param data 点击按钮时候的行数据
      */
     Seat.onDeleteItem = function (data) {
@@ -105,6 +104,24 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         };
         Feng.confirm("是否删除?", operation);
     };
+
+    /**
+     * 重置座次
+     * @param data
+     */
+    Seat.resetSeat = function (data) {
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/seat/reset", function (data) {
+                Feng.success("重置成功!");
+                table.reload(Seat.tableId);
+            }, function (data) {
+                Feng.error("重置失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("seatId", data.seatId);
+            ajax.start();
+        };
+        Feng.confirm("是否要重置该会议的座次表?", operation);
+    }
 
     // 渲染表格
     var tableResult = table.render({
@@ -123,9 +140,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
     // 添加按钮点击事件
     $('#btnAdd').click(function () {
-
-    Seat.jumpAddPage();
-
+        Seat.jumpAddPage();
     });
 
     // 导出excel
@@ -144,6 +159,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             Seat.onDeleteItem(data);
         } else if (layEvent === 'seat') {
             Seat.jumpSeatPage(data);
+        } else if (layEvent === 'reset') {
+            Seat.resetSeat(data);
         }
     });
 });

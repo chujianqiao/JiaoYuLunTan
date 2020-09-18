@@ -55,6 +55,11 @@ public class SeatDetailParam implements Serializable, BaseValidatingParam {
      */
     private Date creatTime;
 
+    /**
+     * 单位名称
+     */
+    private String unitName;
+
     @Override
     public String checkParam() {
         return null;

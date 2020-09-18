@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 座次基本信息
  * </p>
  *
  * @author wucy

@@ -111,9 +111,15 @@ public enum BizExceptionEnum implements AbstractBaseExceptionEnum {
     ACT_ADD_ERROR(901, "新建流程错误"),
 
     /**
+     * 参数为空
+     */
+    PARAM_IS_NULL(2333,"参数为空"),
+
+    /**
      * 租户相关的异常
      */
     NO_TENANT_ERROR(1901, "没有相关租户");
+
 
     BizExceptionEnum(int code, String message) {
         this.code = code;

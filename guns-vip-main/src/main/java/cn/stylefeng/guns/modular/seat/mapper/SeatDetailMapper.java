@@ -53,4 +53,11 @@ public interface SeatDetailMapper extends BaseMapper<SeatDetail> {
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") SeatDetailParam paramCondition);
 
+
+    /**
+     * 删除数据
+     * @param paramCondition
+     * @return
+     */
+    int deleteData(@Param("paramCondition") SeatDetailParam paramCondition);
 }

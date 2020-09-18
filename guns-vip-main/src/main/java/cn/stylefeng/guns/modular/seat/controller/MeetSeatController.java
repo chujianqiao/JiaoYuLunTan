@@ -48,6 +48,21 @@ public class MeetSeatController {
 	}
 
 	/**
+	 * 批量分配页面（选择单位）
+	 * @return
+	 */
+	@RequestMapping("batch")
+	public String batch(HttpServletRequest request){
+		String divIds = request.getParameter("divIds");
+		String meetId = request.getParameter("meetId");
+		String seatId = request.getParameter("seatId");
+		request.setAttribute("divIds",divIds);
+		request.setAttribute("meetId",meetId);
+		request.setAttribute("seatId",seatId);
+		return PREFIX + "/seat_batch.html";
+	}
+
+	/**
 	 * 提交座位信息
 	 * @return
 	 */

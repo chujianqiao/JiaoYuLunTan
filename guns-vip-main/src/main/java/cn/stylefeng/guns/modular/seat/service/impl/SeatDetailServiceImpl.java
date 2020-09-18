@@ -70,6 +70,11 @@ public class SeatDetailServiceImpl extends ServiceImpl<SeatDetailMapper, SeatDet
         return this.baseMapper.customPageMapList(page,param);
     }
 
+    @Override
+    public int deleteData(SeatDetailParam param) {
+        return baseMapper.deleteData(param);
+    }
+
     private Serializable getKey(SeatDetailParam param){
         return param.getSeatDetailId();
     }

@@ -434,6 +434,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'userPost', sort: true, title: '职务/职称'},
             {field: 'belongDomainStr', sort: true, title: '所属领域'},
             {field: 'direct', sort: true, title: '研究方向'},
+            {field: 'reviewCount', sort: true, title: '评审数量'},
             {align: 'center', minWidth: 130, title: '操作', templet: function(data){
                     return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='majorDetail'>查看详情</a>"
                         + "<a class='layui-btn layui-btn-xs layui-btn-danger' lay-event='deleteMajor'>删除</a>";

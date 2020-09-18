@@ -57,6 +57,12 @@ public class SeatDetail implements Serializable {
     private Long userId;
 
     /**
+     * 单位名称
+     */
+    @TableField("unit_name")
+    private String unitName;
+
+    /**
      * 分配时间
      */
     @TableField("creat_time")
@@ -117,6 +123,14 @@ public class SeatDetail implements Serializable {
 
     public void setCreatTime(Date creatTime) {
         this.creatTime = creatTime;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 
     @Override

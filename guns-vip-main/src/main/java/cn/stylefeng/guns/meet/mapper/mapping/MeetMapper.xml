@@ -47,6 +47,9 @@
         <if test="paramCondition.meetStatus != null and paramCondition.meetStatus != ''">
             and meet_status = #{paramCondition.meetStatus}
         </if>
+        <if test="paramCondition.meetName != null and paramCondition.meetName != ''">
+            and meet_name like CONCAT('%',#{paramCondition.meetName},'%')
+        </if>
     </select>
 
     <select id="getByStatus" resultType="cn.stylefeng.guns.meet.entity.Meet">

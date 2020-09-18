@@ -24,38 +24,29 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 加载页面时执行
      */
     $(function(){
-        var divId = $('#divId').val();
-        var seatRow = divId.substring(divId.indexOf('_') + 1,divId.lastIndexOf('_'));
-        var seatCol = divId.substring(divId.lastIndexOf('_') + 1);
-        var seatStr = '第' + seatRow + '排，' + '第' + seatCol + '列';
-        $("#seatStr").val(seatStr);
-        //构建参会人员候选值
-        userSelectOption();
+
     })
 
     /**
-     * 分配座位
+     * 批量分配座位（指定单位）
      */
-    form.on('submit(btnSubmitSeat)', function (data) {
-        let changVal = $('#userId').val();
-        if(changVal === '' || changVal === 'undefined'){
-            Feng.error('请选择用户');
+    form.on('submit(btnSubmitBatch)', function (data) {
+        let unitName = $('#unitName').val();
+        if(unitName === '' || unitName === 'undefined'){
+            Feng.error('请输入单位名称');
         }else{
-            let divId = $('#divId').val();
+            let divIds = $('#divIds').val();
             let meetId = $('#meetId').val();
             let seatId = $('#seatId').val();
-            let seatDiv = $('#divId');
-            let seatRow = divId.substring(divId.indexOf('_') + 1,divId.lastIndexOf('_'));
-            let seatCol = divId.substring(divId.lastIndexOf('_') + 1);
-            data.field.seatRow = seatRow;
-            data.field.seatCol = seatCol;
-            let ajax = new $ax(Feng.ctxPath + "/seatDetail/editItem?seatId=" + seatId, function (data) {
-                Feng.success("分配座位成功！");
+            data.field.unitName = unitName;
+            data.field.meetId = meetId;
+            let ajax = new $ax(Feng.ctxPath + "/seatDetail/batchItem?divIds=" + divIds + "&seatId" + seatId, function (data) {
+                Feng.success("批量分配成功！");
                 let index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                 window.parent.location.reload();   //刷新父界面
                 parent.layer.close(index);    //关闭弹出层
             }, function (data) {
-                Feng.error("分配座位失败！" + data.responseJSON.message)
+                Feng.error("批量分配失败！" + data.responseJSON.message)
             });
             ajax.set(data.field);
             ajax.start();
@@ -97,38 +88,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }
         return false;
     });
-
-    /**
-     * 构建用户下拉框候选值
-     */
-    function userSelectOption(){
-        $.ajax({
-            type:'post',
-            url:Feng.ctxPath + "/meetMember/wraplist" ,
-            success:function(response){
-                var divId = $('#divId').val();
-                var seatDiv = $('#' + divId);
-
-                var data=response.data;
-                var members = [];
-                members = data;
-                var options;
-                options = '<option value="" >请选择用户</option>';
-                for (i = 0 ;i < members.length ;i++){
-                    var member = data[i];
-                    if(false){
-                        options += '<option value="'+ member.userId+ '" selected="selected">'+ member.memberName +'</option>';
-                    }
-                    else{
-                        options += '<option value="'+ member.userId+ '" >'+ member.memberName +'</option>';
-                    }
-                }
-                $('#userId').empty();
-                $('#userId').append(options);
-                form.render('select');
-            }
-        })
-    }
 
 
 });

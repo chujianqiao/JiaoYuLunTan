@@ -54,4 +54,9 @@ public class SeatDetailResult implements Serializable {
      */
     private Date creatTime;
 
+    /**
+     * 单位名称
+     */
+    private String unitName;
+
 }

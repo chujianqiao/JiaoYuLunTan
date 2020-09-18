@@ -6,6 +6,7 @@ import cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam;
 import cn.stylefeng.guns.modular.seat.model.result.SeatDetailResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -68,5 +69,13 @@ public interface SeatDetailService extends IService<SeatDetail> {
      * @return
      */
     Page<Map<String, Object>> findPageWrap(SeatDetailParam param);
+
+    /**
+     * 删除数据
+     * @param param
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    int deleteData(SeatDetailParam param);
 
 }

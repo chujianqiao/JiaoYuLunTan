@@ -2,7 +2,6 @@ package cn.stylefeng.guns.modular.seat.controller;
 
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
-import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.seat.entity.Seat;
 import cn.stylefeng.guns.modular.seat.entity.SeatDetail;
@@ -14,6 +13,7 @@ import cn.stylefeng.guns.modular.seat.wrapper.SeatDetailWrapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -118,9 +118,93 @@ public class SeatDetailController extends BaseController {
             seatDetailParam.setSeatDetailId(result.getSeatDetailId());
             this.seatDetailService.update(seatDetailParam);
         }else {
-            //添加
-            this.seatDetailService.add(seatDetailParam);
+            //继续判断座位是否被占用
+            SeatDetailParam seatDetailParam1 = new SeatDetailParam();
+            BeanUtils.copyProperties(seatDetailParam, seatDetailParam1);
+            seatDetailParam1.setUserId(null);
+            LayuiPageInfo seatRes = this.seatDetailService.findPageBySpec(seatDetailParam1);
+            List<SeatDetailResult> seatResList = seatRes.getData();
+            if(seatResList.size() !=0){
+                //更新
+                SeatDetailResult result = seatResList.get(0);
+                seatDetailParam.setSeatDetailId(result.getSeatDetailId());
+                String unitName = result.getUnitName();
+                //如果有单位名称，删除数据后再添加（直接更新不起作用）
+                if(unitName != null && !("").equals(unitName)){
+                    this.seatDetailService.removeById(seatDetailParam.getSeatDetailId());
+                    seatDetailParam.setUnitName(null);
+                    this.seatDetailService.add(seatDetailParam);
+                }else{
+                    //没有单位，直接更新
+                    this.seatDetailService.update(seatDetailParam);
+                }
+            }else{
+                //添加
+                this.seatDetailService.add(seatDetailParam);
+            }
         }
+        return ResponseData.success();
+    }
+
+    /**
+     *  重置单个座位
+     */
+    @RequestMapping("/resetSeat")
+    @ResponseBody
+    public ResponseData resetItem(SeatDetailParam seatDetailParam, HttpServletRequest request) {
+        String seatIdStr = request.getParameter("seatId");
+        Seat seat = this.seatService.getById(Long.parseLong(seatIdStr));
+        Long meetType = seat.getMeetType();
+        seatDetailParam.setMeetType(meetType);
+        LayuiPageInfo results = this.seatDetailService.findPageBySpec(seatDetailParam);
+        List<SeatDetailResult> list = results.getData();
+        SeatDetailResult seatDetailResult = list.get(0);
+        Long seatDetailId = seatDetailResult.getSeatDetailId();
+        this.seatDetailService.removeById(seatDetailId);
+        return ResponseData.success();
+    }
+
+    /**
+     *  批量分配（选择单位）
+     */
+    @RequestMapping("/batchItem")
+    @ResponseBody
+    public ResponseData batchItem(SeatDetailParam seatDetailParam, HttpServletRequest request) {
+        Long seatId = Long.parseLong(request.getParameter("seatId"));
+        Seat seat = this.seatService.getById(seatId);
+        Long meetType = seat.getMeetType();
+        //确定会议类型
+        seatDetailParam.setMeetType(meetType);
+        String divIds = request.getParameter("divIds");
+        String [] idArr = divIds.split(",");
+        Date createDate = new Date();
+        for (int i = 0; i < idArr.length; i++) {
+            String divId = idArr[i];
+            String rowNum = divId.substring(divId.indexOf("_") + 1,divId.lastIndexOf("_"));
+            String colNum = divId.substring(divId.lastIndexOf("_") + 1);
+            seatDetailParam.setSeatRow(Integer.parseInt(rowNum));
+            seatDetailParam.setSeatCol(Integer.parseInt(colNum));
+            LayuiPageInfo Res = this.seatDetailService.findPageBySpec(seatDetailParam);
+            List<SeatDetailResult> list = Res.getData();
+
+            seatDetailParam.setCreatTime(createDate);
+            if(list.size() == 0){
+                this.seatDetailService.add(seatDetailParam);
+            }else{
+                SeatDetailResult seatDetailResult = list.get(0);
+                seatDetailParam.setSeatDetailId(seatDetailResult.getSeatDetailId());
+                Long userId = seatDetailResult.getUserId();
+                if(userId != null){
+                    this.seatDetailService.removeById(seatDetailParam.getSeatDetailId());
+                    seatDetailParam.setUserId(null);
+                    this.seatDetailService.add(seatDetailParam);
+                }else{
+                    this.seatDetailService.update(seatDetailParam);
+                }
+
+            }
+        }
+
         return ResponseData.success();
     }
 

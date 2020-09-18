@@ -66,6 +66,6 @@ public interface SeatService extends IService<Seat> {
      * 查询数据（用于拼接字段）
      * @return
      */
-    Page<Map<String, Object>> findPageWrap(SeatParam param);
+    Page<Map<String, Object>> findPageWrap(SeatParam param,List<Long> meetIdList);
 
 }

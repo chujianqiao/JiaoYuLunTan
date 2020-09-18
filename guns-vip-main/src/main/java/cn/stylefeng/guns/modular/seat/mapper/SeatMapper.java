@@ -4,7 +4,6 @@ import cn.stylefeng.guns.modular.seat.entity.Seat;
 import cn.stylefeng.guns.modular.seat.model.params.SeatParam;
 import cn.stylefeng.guns.modular.seat.model.result.SeatResult;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
@@ -51,6 +50,9 @@ public interface SeatMapper extends BaseMapper<Seat> {
      * @author wucy
      * @Date 2020-09-10
      */
-    Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") SeatParam paramCondition);
+    Page<Map<String, Object>> customPageMapList(@Param("page") Page page,
+                                                @Param("paramCondition") SeatParam paramCondition,
+                                                @Param("list") List<Long> meetIdList,
+                                                @Param("listStatus") String listStatus);
 
 }
