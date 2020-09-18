@@ -4,9 +4,11 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.thesisReviewMiddle.entity.ThesisReviewMiddle;
 import cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam;
 import cn.stylefeng.guns.thesisReviewMiddle.model.result.ThesisReviewMiddleResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,5 +67,7 @@ public interface ThesisReviewMiddleService extends IService<ThesisReviewMiddle> 
      * @Date 2020-08-05
      */
      LayuiPageInfo findPageBySpec(ThesisReviewMiddleParam param);
+
+    List<ThesisReviewMiddleResult> getByThesisId(Long thesisId, Integer reviewBatch);
 
 }

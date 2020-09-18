@@ -40,6 +40,22 @@
     .layui-col-xs12{
         margin-top: 40px;
     }
+
+    .layadmin-shortcut li .layui-icon{
+        color: #6b9eb5;
+    }
+
+    .layui-card-header{
+        font-size: 18px !important;
+        color: #3f95de !important;
+        font-weight: 600;
+    }
+    .layui-tab-title li {
+        font-size: 18px !important;
+        color: #3f95de !important;
+        font-weight: 600;
+    }
+
 </style>
 <body>
 <div class="page">
@@ -50,25 +66,26 @@
         <div class="layui-fluid">
             <div class="layui-row layui-col-space15">
                 <div class="layui-col-md5">
-                    <div class="layui-card" style="background-color:#f8f8f8;width: 458px;height: 286px;border-radius:10%">
-                        <div class="layui-card-body" style="width: 228px;height: 100px;float: left;margin-top: 20px;margin-left: 20px">
+                    <div class="layui-card" style="background-color:#ecffec;width: 448px;height: 286px;border-radius:10%">
+                        <input value="${roleId! }" id="roleId" hidden>
+                        <div class="layui-card-body" style="width: 218px;height: 100px;float: left;margin-top: 20px;margin-left: 20px">
                             <div class="layui-text">
-                                <h3 style="padding-top: 10px;">姓名：${name}</h3>
-                                <h3 style="padding-top: 10px;">单位：${workUnit}</h3>
-                                <h3 style="padding-top: 10px;">职务：${post}</h3>
+                                <h4 style="padding-top: 10px;">姓名：${name}</h4>
+                                <h4 style="padding-top: 10px;">单位：${workUnit}</h4>
+                                <h4 style="padding-top: 10px;">职务：${post}</h4>
                             </div>
 
                         </div>
                         <div class="layui-card-body" style="width: 210px;height: 100px;float: left;margin-top: 20px;">
                             <div class="user-info-head" id="imgHead">
-                                <img id="avatarPreview" style="border-radius: 0%;" src="${avatar}"/>
+                                <img id="avatarPreview" style="border-radius: 50%;" src="${avatar}"/>
                             </div>
                         </div>
                         <div class="layui-card-body" style="width: 458px;height: 166px;float: left;margin-left: 20px">
                             <div class="layui-text">
-                                <h3 style="padding-top: 10px;">电话：${phone}</h3>
-                                <h3 style="padding-top: 10px;">大会：2020年全国教育科研工作会议</h3>
-                                <h3 style="padding-top: 10px;">论坛：2020年中国教育科学论坛</h3>
+                                <h4 style="padding-top: 10px;">电话：${phone}</h4>
+                                <h4 id="meetName" style="padding-top: 10px;">会议：无</h4>
+                                <h4 id="forumName" style="padding-top: 10px;">论坛：无</h4>
                             </div>
                         </div>
 
@@ -366,7 +383,7 @@
                             <div id="meetData5" class="">签到时间：24日下午报到，16日开会。</div>
                         </div>-->
                     </div>
-                    <div class="layui-card">
+                    <div class="layui-card" id="thesisDataDiv">
                         <div class="layui-card-header">我的论文</div>
                         <div class="layui-tab-content">
                         <div class="layui-card-body" style="padding: 25px;height: 185px">
@@ -403,14 +420,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="layui-card">
+                    <div class="layui-card" id="thesisDiv">
                         <div class="layui-card-header">论文评审状态</div>
                         <div class="layui-card-body">
                             <div class="layui-carousel layadmin-carousel layadmin-shortcut">
                                 <div carousel-item>
                                     <ul class="layui-row layui-col-space10">
                                         <li class="layui-col-xs12">
-                                            <a href="${ctxPath}/system/person_info">
+                                            <a id="thesisResult">
                                                 <i style="font-size: 60px" class="layui-icon layui-icon-form"></i>
                                                 <cite>评审报告</cite>
                                             </a>
@@ -454,6 +471,15 @@
                 content: Feng.ctxPath + '/meetMember/forum?memberId=' + memberId,
             });
         }
+    }
+
+    function thesisResult(thesisId) {
+        layer.open({
+            title: '评审报告',
+            type: 2,
+            area: ['620px', '600px'],
+            content: Feng.ctxPath + '/thesisReviewMiddle/toThesisResult?thesisId=' + thesisId,
+        });
     }
 </script>
 </html>

@@ -5,6 +5,9 @@ import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.modular.weixin.cache.PoolCache;
 import cn.stylefeng.guns.modular.weixin.cache.ScanPool;
 import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.model.UserDto;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -38,6 +41,9 @@ import java.util.UUID;
 @Slf4j
 public class WeiXinController {
     private String PREFIX = "/weiXin";
+
+    @Autowired
+    private UserService userService;
 
     @Value("${weiXin.url}")
     private String systemUrl;
@@ -115,6 +121,17 @@ public class WeiXinController {
                 + "头像-----" + userInfo.getString("headimgurl") + "\n"
                 + "openID-----" + userInfo.getString("openid") + "\n"
                 + "性别-----" + userInfo.getString("sex"));
+
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        UserDto user = new UserDto();
+        if (loginUser != null){
+            user.setUserId(loginUser.getId());
+            user.setWechatName(userInfo.getString("nickname"));
+            user.setWechatId(userInfo.getString("openid"));
+            this.userService.editUser(user);
+        }
+
+
         ScanPool pool = PoolCache.cacheMap.get(uuid);
 
         if(pool == null){

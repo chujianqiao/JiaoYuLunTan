@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -61,6 +62,11 @@ public class ThesisReviewMiddleServiceImpl extends ServiceImpl<ThesisReviewMiddl
         Page pageContext = getPageContext();
         IPage page = this.baseMapper.customPageList(pageContext, param);
         return LayuiPageFactory.createPageInfo(page);
+    }
+
+    @Override
+    public List<ThesisReviewMiddleResult>  getByThesisId(Long thesisId, Integer reviewBatch){
+        return this.baseMapper.getByThesisId(thesisId, reviewBatch);
     }
 
     private Serializable getKey(ThesisReviewMiddleParam param){

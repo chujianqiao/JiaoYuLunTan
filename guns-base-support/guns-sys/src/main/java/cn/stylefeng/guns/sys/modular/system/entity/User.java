@@ -212,6 +212,18 @@ public class User implements Serializable {
     @TableField("introduction")
     private String introduction;
 
+    /**
+     * 微信昵称
+     */
+    @TableField("wechat_name")
+    private String wechatName;
+
+    /**
+     * 微信openid
+     */
+    @TableField("wechat_id")
+    private String wechatId;
+
 
     public Long getUserId() {
         return userId;
@@ -469,6 +481,21 @@ public class User implements Serializable {
         this.introduction = introduction;
     }
 
+    public String getWechatName() {
+        return wechatName;
+    }
+
+    public void setWechatName(String wechatName) {
+        this.wechatName = wechatName;
+    }
+
+    public String getWechatId() {
+        return wechatId;
+    }
+
+    public void setWechatId(String wechatId) {
+        this.wechatId = wechatId;
+    }
 
     @Override
     public String toString() {
@@ -505,6 +532,8 @@ public class User implements Serializable {
         ", pptPath=" + pptPath +
         ", pptName=" + pptName +
         ", introduction=" + introduction +
+        ", wechatName=" + wechatName +
+        ", wechatId=" + wechatId +
         "}";
     }
 }

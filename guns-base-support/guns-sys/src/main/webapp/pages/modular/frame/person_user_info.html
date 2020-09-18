@@ -74,10 +74,10 @@
                                             </div>
                                             <div class="layui-form-item">
                                                 <label class="layui-form-label">${lang.get("FIELD_weChat","微信")}:</label>
-                                                <div class="layui-input-inline">
-                                                    <span>当前未绑定绑定微信账号</span>
-                                                </div>
                                                 <div class="layui-input-block">
+                                                    <div class="layui-input-inline">
+                                                        <input type="wechatName" name="wechatName" class="layui-input layui-disabled" placeholder="当前未绑定微信账号" lay-verify="required" required disabled/>
+                                                    </div>
                                                     <a onclick="weChatBand()" href="#" style="line-height: 36px">绑定</a>
                                                 </div>
                                             </div>

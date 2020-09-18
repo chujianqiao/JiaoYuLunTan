@@ -1,9 +1,11 @@
 layui.use(['form', 'upload', 'element', 'laydate'], function () {
     var $ = layui.jquery;
+    var $ax = layui.ax;
     var form = layui.form;
     var upload = layui.upload;
     var element = layui.element;
     var laydate = layui.laydate;
+
 
     //渲染时间选择框
     laydate.render({
@@ -13,6 +15,10 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
     thesisDetail();
     meetMemberDetail();
 
+    if ($("#roleId").val().indexOf(4) > -1 || $("#roleId").val().indexOf(5) > -1 || $("#roleId").val().indexOf(1) > -1){
+        $("#thesisDataDiv").attr("style","display:none");
+        $("#thesisDiv").attr("style","display:none");
+    }
 
     function meetDetail() {
         $.ajax({
@@ -27,7 +33,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                 $("#meetData3").html("会议地点：" + data.place);
                 $("#meetData4").html("会议时间：" + data.beginTime + "-" + data.endTime);
                 $("#meetData5").html("报名时间：" + data.joinBegTime + "-" + data.joinEndTime);
-
+                $("#meetName").html("会议：" + data.meetName);
             }
         });
     }
@@ -43,7 +49,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                 $("#thesisData2").html(data.engTitle);
                 $("#thesisData3").html("作者：" + data.thesisUser);
                 $("#thesisData4").html("摘要：" + data.cnAbstract);
-
+                $("#thesisResult").attr("href","javascript:thesisResult('" + data.thesisId + "')")
             }
         });
     }
@@ -57,7 +63,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                 //console.log(data);
 
                 for (var i = 0;i < data.length;i++){
-                    console.log(data[i].meetStatus);
+
                     if (data[i].meetStatus == 4){
                         $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')")
                         forumSelectOption(data[i].ownForumid);
@@ -94,6 +100,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                         $("#forumData2").html("论坛地点：" + forum.location);
                         $("#forumData3").html("论坛时间：" + forum.startTime + "-" + forum.endTime);
                         $("#forumData4").html("报名时间：" + forum.registerStartTime + "-" + forum.registerEndTime);
+                        $("#forumName").html("论坛：" + forum.forumName);
                         break;
                     }else{
                         $("#forumData1").html("无");

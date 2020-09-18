@@ -55,4 +55,10 @@
         from thesis_review_middle where 1 = 1
     </select>
 
+
+    <select id="getByThesisId" resultType="cn.stylefeng.guns.thesisReviewMiddle.model.result.ThesisReviewMiddleResult" parameterType="cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam">
+        select
+        <include refid="Base_Column_List"/>
+        from thesis_review_middle where thesis_id = #{thesisId} and review_sort = #{reviewBatch}
+    </select>
 </mapper>

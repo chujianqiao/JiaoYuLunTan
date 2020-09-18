@@ -98,6 +98,14 @@ public class UserDto {
      * 嘉宾简介
      */
     private String introduction;
+    /**
+     * 微信昵称
+     */
+    private String wechatName;
+    /**
+     * 微信openid
+     */
+    private String wechatId;
 
     /*@NotBlank
     private String position;*/

@@ -235,13 +235,12 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
     }
     if (role.indexOf('4') > -1) {
         $("#expertLi").attr("style","display: inline-block");
-        alert(111)
         var ajaxExpert = new $ax(Feng.ctxPath + "/reviewMajor/detail?reviewId=" + result.data.userId);
         var resultExpert = ajaxExpert.start();
         form.val('expertInfoForm', resultExpert.data);
         var selProvince = document.getElementById("selProvince");
         for (var i = 0; i < selProvince.options.length; i++) {
-            console.log(selProvince.options[i].text + "----" + resultExpert.data.accountProvince)
+            //console.log(selProvince.options[i].text + "----" + resultExpert.data.accountProvince)
             if (selProvince.options[i].text == resultExpert.data.accountProvince) {
                 selProvince.options[i].selected = true;
                 setCity(selProvince.options[i].text);
@@ -250,7 +249,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
 
         var selCity = document.getElementById("selCity");
         for (var i = 0; i < selCity.options.length; i++) {
-            console.log(selCity.options[i].text + "----" + resultExpert.data.accountCity)
+            //console.log(selCity.options[i].text + "----" + resultExpert.data.accountCity)
             if (selCity.options[i].text == resultExpert.data.accountCity) {
                 selCity.options[i].selected = true;
             }
@@ -272,7 +271,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
 
     //表单提交事件
     form.on('submit(userInfoSubmit)', function (data) {
-        console.log(data)
+        //console.log(data)
         var ajax = new $ax(Feng.ctxPath + "/mgr/edit", function (data) {
             if (data.message == "phoneError"){
                 Feng.error("修改失败,该手机号已被绑定！");

@@ -53,4 +53,5 @@ public interface ThesisReviewMiddleMapper extends BaseMapper<ThesisReviewMiddle>
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") ThesisReviewMiddleParam paramCondition);
 
+    List<ThesisReviewMiddleResult> getByThesisId(@Param("thesisId") Long thesisId, @Param("reviewBatch") Integer reviewBatch);
 }

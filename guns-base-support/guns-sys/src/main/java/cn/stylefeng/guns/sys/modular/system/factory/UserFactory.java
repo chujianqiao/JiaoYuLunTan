@@ -126,6 +126,13 @@ public class UserFactory {
             if (ToolUtil.isNotEmpty(newUser.getIntroduction())) {
                 oldUser.setIntroduction(newUser.getIntroduction());
             }
+            if (ToolUtil.isNotEmpty(newUser.getWechatName())) {
+                oldUser.setWechatName(newUser.getWechatName());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getWechatId())) {
+                oldUser.setWechatId(newUser.getWechatId());
+            }
+
             return oldUser;
         }
     }
