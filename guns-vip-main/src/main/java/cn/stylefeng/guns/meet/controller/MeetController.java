@@ -8,21 +8,39 @@ import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.model.params.MeetParam;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meet.wrapper.MeetWrapper;
+import cn.stylefeng.guns.sys.core.util.FileDownload;
+import cn.stylefeng.guns.sys.modular.system.entity.FileInfo;
+import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
+import cn.stylefeng.guns.util.MSOfficeGeneratorUtils;
 import cn.stylefeng.guns.util.WordUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import me.chanjar.weixin.mp.bean.device.RespMsg;
+import org.apache.poi.poifs.filesystem.DirectoryEntry;
+import org.apache.poi.poifs.filesystem.DocumentEntry;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 
 /**
@@ -39,6 +57,13 @@ public class MeetController extends BaseController {
 
     @Autowired
     private MeetService meetService;
+
+    @Autowired
+    private FileInfoService fileInfoService;
+
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
+
 
     /**
      * 跳转到主页面
@@ -199,15 +224,124 @@ public class MeetController extends BaseController {
         return LayuiPageFactory.createPageInfo(wrapped);
     }
 
-    @RequestMapping("/exportWord")
-    public void exportWord(HttpServletRequest request, HttpServletResponse response) {
-        String idStr = request.getParameter("meetId");
-        Long meetId = Long.parseLong(idStr);
+    /**
+     * 导出word
+     * @return
+     */
+    @RequestMapping(path = "/exportWord")
+    public void exportWord(@RequestParam("meetId")String meetIdStr,HttpServletResponse response) {
+        Long meetId = Long.parseLong(meetIdStr);
         Meet meet = this.meetService.getById(meetId);
-        String html = meet.getContent();
+        String content = meet.getContent();
         String title = meet.getMeetName();
-        WordUtil.exportWords(request,response,html,title);
+        try {
+            String str = " <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:TrackMoves>false</w:TrackMoves><w:TrackFormatting/><w:ValidateAgainstSchemas/><w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid><w:IgnoreMixedContent>false</w:IgnoreMixedContent><w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText><w:DoNotPromoteQF/><w:LidThemeOther>EN-US</w:LidThemeOther><w:LidThemeAsian>ZH-CN</w:LidThemeAsian><w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript><w:Compatibility><w:BreakWrappedTables/><w:SnapToGridInCell/><w:WrapTextWithPunct/><w:UseAsianBreakRules/><w:DontGrowAutofit/><w:SplitPgBreakAndParaMark/><w:DontVertAlignCellWithSp/><w:DontBreakConstrainedForcedTables/><w:DontVertAlignInTxbx/><w:Word11KerningPairs/><w:CachedColBalance/><w:UseFELayout/></w:Compatibility><w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel><m:mathPr><m:mathFont m:val='Cambria Math'/><m:brkBin m:val='before'/><m:brkBinSub m:val='--'/><m:smallFrac m:val='off'/><m:dispDef/><m:lMargin m:val='0'/> <m:rMargin m:val='0'/><m:defJc m:val='centerGroup'/><m:wrapIndent m:val='1440'/><m:intLim m:val='subSup'/><m:naryLim m:val='undOvr'/></m:mathPr></w:WordDocument></xml><![endif]-->";
+            String h = " <html xmlns:v='urn:schemas-microsoft-com:vml'xmlns:o='urn:schemas-microsoft-com:office:office'xmlns:w='urn:schemas-microsoft-com:office:word'xmlns:m='http://schemas.microsoft.com/office/2004/12/omml'xmlns='http://www.w3.org/TR/REC-html40'  ";
+            content =h+"<head>"+"<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />"+str+"</head><body>"+content+"</body> </html>";
+            String dirPath = uploadFolder + "ueditor" + File.separator;
+            String wordPath = dirPath + "ueditor.doc";
+            File wordFile = new File(wordPath);
+            if(!wordFile.getParentFile().exists()){
+                wordFile.getParentFile().mkdirs();
+            }else{
+                wordFile.createNewFile();
+            }
+            jacob_html2word(content,title,wordPath);
+
+            //下载
+            String downName = title + "会议手册.doc";
+            FileDownload.fileDownload(response, wordPath, downName);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
+
+    public void jacob_html2word(String html,String title,String wordPath){
+        // 将生成过程设置为不可见
+        MSOfficeGeneratorUtils officeUtils = new MSOfficeGeneratorUtils();
+        int imgIndex = 1;
+        //存放图片标识符及物理路径  {"image_1","D:\img.png"};
+        Map<String, String> imgMap = new HashMap<>();
+        try {
+            Document document = Jsoup.parse(html);
+            Elements elements = document.select("img");
+
+            for (Element img : elements){
+                // 为img添加同级p标签，内容为<p>${image_imgIndexNumber}</p>
+                img.after("<p>${image_" + imgIndex + "}</p>");
+                String eleTitle = img.attr("title");
+                String src = uploadFolder + eleTitle;
+                // 保存图片标识符及物理路径
+                imgMap.put("${image_" + imgIndex++ + "}", src);
+                // 删除Img标签
+                img.remove();
+            }
+            String htmlPath = uploadFolder + "ueditor" + File.separator + "ueditor.html";
+//            File htmlFile = new File(htmlPath);
+            // 将html代码写到html文件中
+            FileWriter fw = new FileWriter(htmlPath);
+            // 写入文件
+            fw.write(document.html(), 0, document.html().length());
+            fw.flush();
+            fw.close();
+
+//            String newFileName = wordPath+title+".doc";
+//            String newFileName = wordPath;
+//            String newWordPath = uploadFolder + "Ueditor.doc";
+//            File newWordFile = new File(newWordPath);
+//            if(!newWordFile.exists()){
+//                newWordFile.createNewFile();
+//            }
+            // html文件转为word
+            writeWordFile(htmlPath,wordPath);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Html文件转word
+     * @param htmlPath
+     * @param wordPath
+     * @return
+     */
+    private boolean writeWordFile(String htmlPath,String wordPath) {
+        boolean flag = false;
+        ByteArrayInputStream bais = null;
+        FileOutputStream fos = null;
+        try {
+            String content = readFile(htmlPath);
+            byte b[] = content.getBytes();
+            bais = new ByteArrayInputStream(b);
+            POIFSFileSystem poifs = new POIFSFileSystem();
+            DirectoryEntry directory = poifs.getRoot();
+            DocumentEntry documentEntry = directory.createDocument(
+                    "WordDocument", bais);
+            fos = new FileOutputStream(wordPath);
+            poifs.writeFilesystem(fos);
+            bais.close();
+            fos.close();
+        } catch (Exception e) {
+
+        }
+        return flag;
+    }
+
+    private String readFile(String filename) throws Exception {
+        StringBuffer buffer = new StringBuffer("");
+        BufferedReader br = new BufferedReader(new FileReader(
+                new File(filename)));
+        try {
+            while (br.ready()) {
+                buffer.append(br.readLine());
+            }
+        } catch (Exception e) {
+
+        }
+        return buffer.toString();
+    }
+
 
 }
 

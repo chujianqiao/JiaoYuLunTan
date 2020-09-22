@@ -29,7 +29,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             // {field: 'regUser', sort: true, title: '注册人'},
             {field: 'regName', sort: true, title: '注册人'},
             {field: 'regTime', sort: true, title: '注册时间'},
-            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth:180}
+            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth:230}
         ]];
     };
 
@@ -106,6 +106,27 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         Feng.confirm("是否要发布该会议?", operation);
     };
 
+    /**
+     * 下载会议手册
+     * @param data
+     */
+    Meet.downloadWord = function (data) {
+        let content = data.content;
+        if(content == '' || content == undefined || content == 'undefined'){
+            Feng.error("没有内容！");
+        }else{
+            Feng.info("正在生成文档，请稍等");
+            let meetId = data.meetId;
+            let form=$("<form>");    // 定义一个form表单
+            form.attr("style","display:none");
+            // form.attr("target","_blank");
+            form.attr("method","post");
+            form.attr("action",Feng.ctxPath + "/meet/exportWord?meetId=" + meetId);    // 此处填写文件下载提交路径
+            $("body").append(form);    // 将表单放置在web中
+            form.submit();
+        }
+    };
+
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + Meet.tableId,
@@ -142,6 +163,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             Meet.onDeleteItem(data);
         } else if (layEvent === 'publish') {
             Meet.onPublishItem(data);
+        } else if (layEvent === 'meetWord') {
+            Meet.downloadWord(data);
         }
     });
 });

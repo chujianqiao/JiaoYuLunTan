@@ -16,13 +16,16 @@ var MeetInfoDlg = {
     }
 };
 
-layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], function () {
+layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table','func','upload'], function () {
     var $ = layui.jquery;
     var $ax = layui.ax;
     var form = layui.form;
     var admin = layui.admin;
     var laydate = layui.laydate;
     var layer = layui.layer;
+    var table = layui.table;
+    var func = layui.func;
+    var upload = layui.upload;
 
     //实例化编辑器
     var ue = UE.getEditor('container', {
@@ -84,20 +87,29 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], func
     /**
      * 导出Word
      */
-    $('#exportWord').click(function(){
-        debugger;
-        var form=$("<form>");    // 定义一个form表单
-        form.attr("style","display:none");
-        form.attr("target","_blank");
-        form.attr("method","post");
-        form.attr("action",Feng.ctxPath + "/meet/exportWord?meetId=" + meetId);    // 此处填写文件下载提交路径
-        $("body").append(form);    // 将表单放置在web中
-        form.submit();
+    $('#exportWord').click(function(data){
+        let content = result.data.content;
+        if(content == '' || content == undefined || content == 'undefined'){
+            Feng.error("没有内容！");
+        }else {
+            downLoadMeet();
+        }
     });
 
     $('#cancel').click(function(){
         window.location.href = Feng.ctxPath + '/meet'
     });
+
+    function downLoadMeet(){
+        Feng.info("正在生成文档，请稍等");
+        let form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        // form.attr("target","_blank");
+        form.attr("method","post");
+        form.attr("action",Feng.ctxPath + "/meet/exportWord?meetId=" + meetId);    // 此处填写文件下载提交路径
+        $("body").append(form);    // 将表单放置在web中
+        form.submit();
+    }
 
     //执行一个laydate实例
     laydate.render({
