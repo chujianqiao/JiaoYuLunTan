@@ -86,7 +86,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
               content: Feng.ctxPath + '/thesisDomain/edit?domainId=' + data.domainId,
               tableId: ThesisDomain.tableId,
               endCallback: function () {
-                  //ThesisDomain.loadDomainTree();
+                  ThesisDomain.loadDomainTree();
               }
           });
       };
@@ -170,7 +170,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
     /**
      * 左侧树加载
      */
-    /*ThesisDomain.loadDomainTree = function () {
+    ThesisDomain.loadDomainTree = function () {
         var ajax = new $ax(Feng.ctxPath + "/thesisDomain/layuiTree", function (data) {
             tree.render({
                 elem: '#domainTree',
@@ -181,7 +181,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
         }, function (data) {
         });
         ajax.start();
-    };*/
+    };
 
     // 渲染表格
     var tableResult = table.render({
@@ -194,7 +194,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
     });
 
     //初始化左侧部门树
-    //ThesisDomain.loadDomainTree();
+    ThesisDomain.loadDomainTree();
 
     // 搜索按钮点击事件
     $('#btnSearch').click(function () {

@@ -71,7 +71,7 @@ public class UserDto {
 
     private Integer wrongTimes;
 
-    private String idCard;
+    private Integer canDownload;
 
     private String bankCard;
 

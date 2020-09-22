@@ -55,13 +55,17 @@
 		<if test="paramCondition.domainName != null and paramCondition.domainName != ''">
 			and domain_name like CONCAT('%',#{paramCondition.domainName},'%')
 		</if>
+		<if test="paramCondition.domainId != null and paramCondition.domainId != ''">
+			and (domain_id = #{paramCondition.domainId} or domain_id in ( select domain_id from thesis_domain where pids like CONCAT('%$[', #{paramCondition.domainId}, '$]%') escape '$' ))
+		</if>
+		order by sort ASC
     </select>
 
     <select id="layuiTree" resultType="cn.stylefeng.guns.base.pojo.node.LayuiTreeNode">
 		select domain_id AS id, pid as "pid", domain_name as title,
 		(
 		CASE
-		WHEN (pid = 0 OR pid IS NULL) THEN
+		WHEN (pid IS NULL) THEN
 		'true'
 		ELSE
 		'false'
@@ -97,7 +101,7 @@
 		select domain_id AS id, pid as "pId", domain_name as name,
 		(
 		CASE
-		WHEN (pid = 0 OR pid IS NULL) THEN
+		WHEN (pid IS NULL) THEN
 		'true'
 		ELSE
 		'false'

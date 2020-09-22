@@ -109,6 +109,9 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 			map.put("material","否");
 		}
 
+		String introduction = user.getIntroduction();
+		map.put("introduction",introduction);
+
 		map.put("memberName",memberName);
 		map.put("unitName",unitName);
 		map.put("userPost",userPost);

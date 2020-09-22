@@ -28,7 +28,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     var layer = layui.layer;
 
     $(function () {
-        domainSelectOption();
+        //domainSelectOption();
     })
 
     //定义数组，存储省份信息
@@ -241,7 +241,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/reviewMajor/detail?reviewId=" + Feng.getUrlParam("reviewId"));
     var result = ajax.start();
-    //$('#pName').val(result.data.belongDomain);
+    $('#pName').val(result.data.belongDomain);
 
     //转换状态值
     var checkStatus = result.data.checkStatus;
@@ -369,7 +369,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     }
 
     // 点击上级角色时
-    /*$('#pName').click(function () {
+    $('#pName').click(function () {
         var formName = encodeURIComponent("parent.ReviewMajorInfoDlg.data.pName");
         var formId = encodeURIComponent("parent.ReviewMajorInfoDlg.data.belongDomain");
         var treeUrl = encodeURIComponent("/thesisDomain/tree");
@@ -378,15 +378,16 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             type: 2,
             title: '父级领域',
             area: ['300px', '400px'],
-            content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            //content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             end: function () {
                 $("#belongDomain").val(ReviewMajorInfoDlg.data.belongDomain);
                 $("#pName").val(ReviewMajorInfoDlg.data.pName);
             }
         });
-    });*/
+    });
 
-    function domainSelectOption(){
+    /*function domainSelectOption(){
         $.ajax({
             type:'post',
             url:Feng.ctxPath + "/thesisDomain/list" ,
@@ -415,7 +416,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                 form.render('select');
             }
         })
-    }
+    }*/
 
     //取消
     $('#cancel').click(function () {

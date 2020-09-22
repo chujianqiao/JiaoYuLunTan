@@ -111,7 +111,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             type: 2,
             title: '父级领域',
             area: ['300px', '400px'],
-            content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            //content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             end: function () {
                 $("#belongDomain").val(MeetMemberInfoDlg.data.belongDomain);
                 $("#pName").val(MeetMemberInfoDlg.data.pName);
@@ -269,7 +270,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         form.submit();
     }
 
-    function domainSelectOption(){
+    /*function domainSelectOption(){
         $.ajax({
             type:'post',
             url:Feng.ctxPath + "/thesisDomain/list" ,
@@ -298,7 +299,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
                 form.render('select');
             }
         })
-    }
+    }*/
 
     /**
      * 不区分大小写比较字符串

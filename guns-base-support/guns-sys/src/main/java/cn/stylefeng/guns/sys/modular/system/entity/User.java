@@ -172,10 +172,10 @@ public class User implements Serializable {
     private Integer wrongTimes;
 
     /**
-     * 身份证号码
+     * ppt发言稿能否被下载
      */
-    @TableField("id_card")
-    private String idCard;
+    @TableField("can_download")
+    private Integer canDownload;
 
     /**
      * 银行卡号码
@@ -425,12 +425,12 @@ public class User implements Serializable {
         this.wrongTimes = wrongTimes;
     }
 
-    public String getIdCard() {
-        return idCard;
+    public Integer getCanDownload() {
+        return canDownload;
     }
 
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
+    public void setCanDownload(Integer canDownload) {
+        this.canDownload = canDownload;
     }
 
     public String getBankCard() {
@@ -525,7 +525,7 @@ public class User implements Serializable {
         ", education=" + education +
         ", direction=" + direction +
         ", wrongTimes=" + wrongTimes +
-        ", idCard=" + idCard +
+        ", canDownload=" + canDownload +
         ", bankCard=" + bankCard +
         ", wordPath=" + wordPath +
         ", wordName=" + wordName +

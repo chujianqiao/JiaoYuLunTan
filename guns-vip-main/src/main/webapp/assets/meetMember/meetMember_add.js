@@ -25,7 +25,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     var layer = layui.layer;
 
     $(function () {
-        domainSelectOption();
+        //domainSelectOption();
     })
 
     var userTitle = $("#userTitle").val();
@@ -166,7 +166,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
 
 
     // 点击上级角色时
-    /*$('#pName').click(function () {
+    $('#pName').click(function () {
         var formName = encodeURIComponent("parent.MeetMemberInfoDlg.data.pName");
         var formId = encodeURIComponent("parent.MeetMemberInfoDlg.data.belongDomain");
         var treeUrl = encodeURIComponent("/thesisDomain/tree");
@@ -175,15 +175,16 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             type: 2,
             title: '父级领域',
             area: ['300px', '400px'],
-            content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            //content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             end: function () {
                 $("#belongDomain").val(MeetMemberInfoDlg.data.belongDomain);
                 $("#pName").val(MeetMemberInfoDlg.data.pName);
             }
         });
-    });*/
+    });
 
-    function domainSelectOption(){
+    /*function domainSelectOption(){
         $.ajax({
             type:'post',
             url:Feng.ctxPath + "/thesisDomain/list" ,
@@ -203,7 +204,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                 form.render('select');
             }
         })
-    }
+    }*/
 
     /**
      * 不区分大小写比较字符串

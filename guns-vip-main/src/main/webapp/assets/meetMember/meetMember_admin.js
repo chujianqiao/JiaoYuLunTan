@@ -80,7 +80,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         if (checkRows.data.length === 0) {
             Feng.error("请选择要导出的数据");
         } else {
-            table.exportFile(tableResult.config.id, checkRows.data, 'xls');
+            table.exportFile('exportTable', checkRows.data, 'xls');
         }
     };
     /**
@@ -130,6 +130,9 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             }, {
                 field: 'meetStatusStr',
                 title: '会议状态',
+            }, {
+                field: 'regTime',
+                title: '注册时间',
             }
         ]]
     });
@@ -268,11 +271,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * 导出excel按钮
      */
     MeetMemberJB.exportExcel = function () {
-        var checkRows = table.checkStatus(MeetMember.tableId);
+        var checkRows = table.checkStatus(MeetMemberJB.tableId);
         if (checkRows.data.length === 0) {
             Feng.error("请选择要导出的数据");
         } else {
-            table.exportFile(tableResultJB.config.id, checkRows.data, 'xls');
+            table.exportFile('exportTableJB', checkRows.data, 'xls');
         }
     };
     /**
@@ -316,6 +319,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             }, {
                 field: 'forumName',
                 title: '参会论坛',
+            }, {
+                field: 'regTime',
+                title: '注册时间',
+            }, {
+                field: 'introduction',
+                title: '嘉宾简介',
             }
         ]]
     });
@@ -470,7 +479,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         if (checkRows.data.length === 0) {
             Feng.error("请选择要导出的数据");
         } else {
-            table.exportFile(tableResultMajor.config.id, checkRows.data, 'xls');
+            table.exportFile('exportTableMajor', checkRows.data, 'xls');
         }
     };
     /**
@@ -513,6 +522,33 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             }, {
                 field: 'direct',
                 title: '研究方向',
+            }, {
+                field: 'idCardType',
+                title: '证件类型',
+            }, {
+                field: 'idCard',
+                title: '证件号',
+            }, {
+                field: 'accountProvince',
+                title: '开户省份',
+            }, {
+                field: 'accountCity',
+                title: '开户城市',
+            }, {
+                field: 'bank',
+                title: '银行机构',
+            }, {
+                field: 'unionNumber',
+                title: '联行号',
+            }, {
+                field: 'accountBank',
+                title: '开户行',
+            }, {
+                field: 'personalAccount',
+                title: '个人账号',
+            }, {
+                field: 'applyTime',
+                title: '注册时间',
             }
         ]]
     });

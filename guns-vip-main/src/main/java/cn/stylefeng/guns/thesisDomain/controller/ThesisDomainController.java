@@ -150,7 +150,7 @@ public class ThesisDomainController extends BaseController {
         ThesisDomainDto thesisDomainDto = new ThesisDomainDto();
         BeanUtil.copyProperties(detail, thesisDomainDto);
 
-        /*Long pid = thesisDomainDto.getPid();
+        Long pid = thesisDomainDto.getPid();
         String PName = "";
 
         if (pid == null) {
@@ -164,7 +164,7 @@ public class ThesisDomainController extends BaseController {
             }
         }
 
-        thesisDomainDto.setPName(PName);*/
+        thesisDomainDto.setPName(PName);
 
         String domainId = detail.getDomainId().toString();
         ReviewMajorParam param = new ReviewMajorParam();

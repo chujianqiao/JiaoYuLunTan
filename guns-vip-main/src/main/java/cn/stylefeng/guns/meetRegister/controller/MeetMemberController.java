@@ -397,7 +397,13 @@ public class MeetMemberController extends BaseController {
         if(introduction != null && !("").equals(introduction)){
             map.put("introduction",introduction);
         }
-
+        int canDownload = 0;
+        if (user.getCanDownload() == null){
+            canDownload = 0;
+        }else {
+            canDownload = user.getCanDownload();
+        }
+        map.put("canDownload", canDownload);
 
         map.put("regTime",dateString);
         return ResponseData.success(map);

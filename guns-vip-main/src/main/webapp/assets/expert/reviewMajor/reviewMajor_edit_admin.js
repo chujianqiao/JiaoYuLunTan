@@ -155,7 +155,8 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             type: 2,
             title: '父级领域',
             area: ['300px', '400px'],
-            content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            //content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             end: function () {
                 $("#belongDomain").val(ReviewMajorInfoDlg.data.belongDomain);
                 $("#pName").val(ReviewMajorInfoDlg.data.pName);
