@@ -257,44 +257,17 @@ public class MeetController extends BaseController {
     }
 
     public void jacob_html2word(String html,String title,String wordPath){
-        // 将生成过程设置为不可见
-        MSOfficeGeneratorUtils officeUtils = new MSOfficeGeneratorUtils();
-        int imgIndex = 1;
-        //存放图片标识符及物理路径  {"image_1","D:\img.png"};
-        Map<String, String> imgMap = new HashMap<>();
         try {
             Document document = Jsoup.parse(html);
-            Elements elements = document.select("img");
-
-            for (Element img : elements){
-                // 为img添加同级p标签，内容为<p>${image_imgIndexNumber}</p>
-                img.after("<p>${image_" + imgIndex + "}</p>");
-                String eleTitle = img.attr("title");
-                String src = uploadFolder + eleTitle;
-                // 保存图片标识符及物理路径
-                imgMap.put("${image_" + imgIndex++ + "}", src);
-                // 删除Img标签
-                img.remove();
-            }
             String htmlPath = uploadFolder + "ueditor" + File.separator + "ueditor.html";
-//            File htmlFile = new File(htmlPath);
             // 将html代码写到html文件中
             FileWriter fw = new FileWriter(htmlPath);
             // 写入文件
             fw.write(document.html(), 0, document.html().length());
             fw.flush();
             fw.close();
-
-//            String newFileName = wordPath+title+".doc";
-//            String newFileName = wordPath;
-//            String newWordPath = uploadFolder + "Ueditor.doc";
-//            File newWordFile = new File(newWordPath);
-//            if(!newWordFile.exists()){
-//                newWordFile.createNewFile();
-//            }
             // html文件转为word
             writeWordFile(htmlPath,wordPath);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

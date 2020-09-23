@@ -13,6 +13,7 @@ import cn.stylefeng.guns.modular.seat.wrapper.SeatDetailWrapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.models.auth.In;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -113,10 +114,31 @@ public class SeatDetailController extends BaseController {
         List<SeatDetailResult> list = results.getData();
         seatDetailParam.setCreatTime(new Date());
         if(list.size() != 0){
-            //更新
+            //该用户之前有座位，更新
             SeatDetailResult result = list.get(0);
-            seatDetailParam.setSeatDetailId(result.getSeatDetailId());
+            Long dataId = result.getSeatDetailId();
+            seatDetailParam.setSeatDetailId(dataId);
             this.seatDetailService.update(seatDetailParam);
+            //继续判断有没有单位占用该座位
+            SeatDetailParam tempParam1 = new SeatDetailParam();
+            tempParam1.setSeatCol(seatDetailParam.getSeatCol());
+            tempParam1.setSeatRow(seatDetailParam.getSeatRow());
+            results = this.seatDetailService.findPageBySpec(tempParam1);
+            list = results.getData();
+            int size = list.size();
+            if(size != 0){
+                for (int i = 0; i < size; i++) {
+                    SeatDetailResult seatDetailResult = list.get(i);
+                    if(seatDetailResult.getUnitName() != null ){
+                        this.seatDetailService.removeById(seatDetailResult.getSeatDetailId());
+                        continue;
+                    }
+                    Long orgUserId = seatDetailResult.getUserId();
+                    if(orgUserId != null && !orgUserId.equals(seatDetailParam.getUserId())){
+                        this.seatDetailService.removeById(seatDetailResult.getSeatDetailId());
+                    }
+                }
+            }
         }else {
             //继续判断座位是否被占用
             SeatDetailParam seatDetailParam1 = new SeatDetailParam();
@@ -184,16 +206,22 @@ public class SeatDetailController extends BaseController {
             String colNum = divId.substring(divId.lastIndexOf("_") + 1);
             seatDetailParam.setSeatRow(Integer.parseInt(rowNum));
             seatDetailParam.setSeatCol(Integer.parseInt(colNum));
-            LayuiPageInfo Res = this.seatDetailService.findPageBySpec(seatDetailParam);
+            SeatDetailParam tempParam = new SeatDetailParam();
+            BeanUtils.copyProperties(seatDetailParam,tempParam);
+            //查询座位时参数不包含单位名称
+            tempParam.setUnitName(null);
+            LayuiPageInfo Res = this.seatDetailService.findPageBySpec(tempParam);
             List<SeatDetailResult> list = Res.getData();
 
             seatDetailParam.setCreatTime(createDate);
             if(list.size() == 0){
+                seatDetailParam.setSeatDetailId(null);
                 this.seatDetailService.add(seatDetailParam);
             }else{
                 SeatDetailResult seatDetailResult = list.get(0);
                 seatDetailParam.setSeatDetailId(seatDetailResult.getSeatDetailId());
                 Long userId = seatDetailResult.getUserId();
+                //如果有userId,删除数据再添加，直接更新不起作用
                 if(userId != null){
                     this.seatDetailService.removeById(seatDetailParam.getSeatDetailId());
                     seatDetailParam.setUserId(null);
