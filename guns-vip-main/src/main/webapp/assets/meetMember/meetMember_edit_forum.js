@@ -53,9 +53,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/meetMember/editForum", function (data) {
+        let ajax = new $ax(Feng.ctxPath + "/meetMember/editForum", function (data) {
             Feng.success("更新成功！");
-            // window.location.href = Feng.ctxPath + '/meetMember';
             // 传给上个页面，刷新table用
             admin.putTempData('formOk', true);
             // 关掉对话框
@@ -65,7 +64,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         });
         ajax.set(data.field);
         ajax.start();
-
         return false;
     });
 
@@ -73,14 +71,20 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 选择论坛
      */
     form.on('submit(btnSubmitForum)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/meetMember/editForum", function (data) {
-            Feng.success("选择论坛成功！");
-            // window.location.href = Feng.ctxPath + '/meetMember';
+        let forumId = result.data.ownForumid;
+        if(forumId != null && forumId != undefined && forumId != 'undefined'){
+            if(forumId == data.field.ownForumid){
+                Feng.error("未改变论坛");
+                return false;
+            }
+        }
+        let ajax = new $ax(Feng.ctxPath + "/meetMember/editForum", function (data) {
             // 传给上个页面，刷新table用
             parent.location.reload();
             admin.putTempData('formOk', true);
             // 关掉对话框
             admin.closeThisDialog();
+            Feng.success("选择论坛成功！");
         }, function (data) {
             Feng.error("选择论坛失败！" + data.responseJSON.message)
         });

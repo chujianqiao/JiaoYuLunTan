@@ -15,11 +15,13 @@
         <result column="word_name" property="wordName" />
         <result column="ppt_path" property="pptPath" />
         <result column="ppt_name" property="pptName" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime" ,meet_status AS "meetStatus" ,pay_id AS "payId",word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName"
+        member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime" ,meet_status AS "meetStatus" ,pay_id AS "payId",word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",province AS "province",city AS "city"
     </sql>
 
     <select id="customListAll" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">

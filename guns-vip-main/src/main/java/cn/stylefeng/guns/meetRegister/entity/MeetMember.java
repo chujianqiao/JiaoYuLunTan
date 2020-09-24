@@ -99,6 +99,18 @@ public class MeetMember implements Serializable {
     @TableField("ppt_name")
     private String pptName;
 
+    /**
+     *  所属省份
+     */
+    @TableField("province")
+    private String province;
+
+    /**
+     * 所属城市
+     */
+    @TableField("city")
+    private String city;
+
     public MeetMember() {
     }
 
@@ -205,6 +217,22 @@ public class MeetMember implements Serializable {
 
     public void setPptName(String pptName) {
         this.pptName = pptName;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Override

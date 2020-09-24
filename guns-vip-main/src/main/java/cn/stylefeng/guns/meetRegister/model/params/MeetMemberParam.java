@@ -86,6 +86,16 @@ public class MeetMemberParam implements Serializable, BaseValidatingParam {
      */
     private String pptName;
 
+    /**
+     *  所属省份
+     */
+    private String province;
+
+    /**
+     * 所属城市
+     */
+    private String city;
+
     @Override
     public String checkParam() {
         return null;

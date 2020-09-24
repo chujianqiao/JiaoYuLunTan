@@ -64,12 +64,6 @@
 													<input type="radio" name="sex" value="F" title="女"/>
 												</div>
 											</div>
-											<!--<div class="layui-inline layui-col-md12">-->
-												<!--<label class="layui-form-label">电话 ：<span style="color: red;">*</span></label>-->
-												<!--<div class="layui-input-block">-->
-													<!--<input name="phone" placeholder="请输入电话" class="layui-input" type="text" lay-verify="required" required/>-->
-												<!--</div>-->
-											<!--</div>-->
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">邮箱 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
@@ -91,7 +85,6 @@
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">学历 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<!--<input name="education" placeholder="请输入学历" class="layui-input" type="text" lay-verify="required" required/>-->
 													<select name="education" lay-verify="required">
 														<option value=""></option>
 														<option value="专科">专科</option>
@@ -105,6 +98,18 @@
 												<label class="layui-form-label">研究方向 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
 													<input name="direction" placeholder="请输入研究方向" class="layui-input" type="text" lay-verify="required" required/>
+												</div>
+											</div>
+											<div class="layui-inline layui-col-md12">
+												<label class="layui-form-label">所属省份<span style="color: red;">*</span></label>
+												<div class="layui-input-block">
+													<select name="province" id="selProvince" lay-filter="Province" lay-verify="required"></select>
+												</div>
+											</div>
+											<div class="layui-inline layui-col-md12">
+												<label class="layui-form-label">所属城市<span style="color: red;">*</span></label>
+												<div class="layui-input-block">
+													<select name="city" id="selCity" lay-verify="required"></select>
 												</div>
 											</div>
 										</div>

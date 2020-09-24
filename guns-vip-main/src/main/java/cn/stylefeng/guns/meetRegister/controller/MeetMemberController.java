@@ -12,7 +12,9 @@ import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.meetRegister.wrapper.MeetMemberWrapper;
 import cn.stylefeng.guns.modular.forum.entity.Forum;
+import cn.stylefeng.guns.modular.forum.model.params.ForumParam;
 import cn.stylefeng.guns.modular.forum.service.ForumService;
+import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.guns.sys.core.util.DefaultImages;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
@@ -25,6 +27,7 @@ import cn.stylefeng.guns.thesis.model.params.ThesisParam;
 import cn.stylefeng.guns.thesis.service.ThesisService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -223,6 +226,36 @@ public class MeetMemberController extends BaseController {
     @RequestMapping("/editForum")
     @ResponseBody
     public ResponseData editForum(MeetMemberParam meetMemberParam) {
+        Long forumId = meetMemberParam.getOwnForumid();
+        //判断论坛报名人数
+        Forum forum = this.forumService.getById(forumId);
+        Integer existNum = forum.getExistNum();
+        Integer setNum = forum.getSetNum();
+        if(existNum + 1 > setNum){
+            //人数已满，抛出异常
+            throw new ServiceException(BizExceptionEnum.FORUM_NUM_OVER);
+        }else{
+            existNum++;
+            ForumParam forumParam = new ForumParam();
+            forumParam.setForumId(forumId);
+            forumParam.setExistNum(existNum);
+            this.forumService.update(forumParam);
+        }
+
+        //如果原先已经选择了论坛，将原先论坛的报名数减1
+        Long memberId = meetMemberParam.getMemberId();
+        MeetMember meetMember = this.meetMemberService.getById(memberId);
+        Long orgForumId =  meetMember.getOwnForumid();
+        if(orgForumId != null){
+            Forum orgForum = this.forumService.getById(orgForumId);
+            Integer orgForumNum = orgForum.getExistNum();
+            orgForumNum--;
+            ForumParam orgForumParam = new ForumParam();
+            orgForumParam.setForumId(orgForumId);
+            orgForumParam.setExistNum(orgForumNum);
+            this.forumService.update(orgForumParam);
+        }
+        //更新会议成员表
         this.meetMemberService.update(meetMemberParam);
         return ResponseData.success();
     }

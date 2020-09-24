@@ -85,4 +85,14 @@ public class MeetMemberResult implements Serializable {
      */
     private String pptName;
 
+    /**
+     *  所属省份
+     */
+    private String province;
+
+    /**
+     * 所属城市
+     */
+    private String city;
+
 }
