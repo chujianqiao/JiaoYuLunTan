@@ -129,7 +129,9 @@ public class SeatDetailController extends BaseController {
             if(size != 0){
                 for (int i = 0; i < size; i++) {
                     SeatDetailResult seatDetailResult = list.get(i);
-                    if(seatDetailResult.getUnitName() != null ){
+                    String unitName = seatDetailResult.getUnitName();
+                    if(seatDetailResult.getUnitName() != null && !("").equals(unitName)){
+                        //删除单位的数据
                         this.seatDetailService.removeById(seatDetailResult.getSeatDetailId());
                         continue;
                     }

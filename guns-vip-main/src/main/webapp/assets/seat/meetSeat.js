@@ -63,10 +63,10 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             one.onclick = function () {
                 let id=$(this).attr("id");
                 layer.open({
-                    title: '选择参会人员',
+                    title: '分配单个座位',
                     type: 2,
                     area: ['620px','450px'],
-                    content: Feng.ctxPath + '/meetSeat/changeUser?divId=' + id + '&meetId=' + meetId + '&seatId=' + seatId
+                    content: Feng.ctxPath + '/meetSeat/changeOne?divId=' + id + '&meetId=' + meetId + '&seatId=' + seatId
                 });
             }
         }

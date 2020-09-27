@@ -31,34 +31,71 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         $("#seatStr").val(seatStr);
         //构建参会人员候选值
         userSelectOption();
+        $("#writeUnit").hide();
     })
+
+    /**
+     * radio监听
+     */
+    form.on('radio', function (data) {
+        if(data.value == "people") {
+            $("#writeUnit").hide();
+            $("#changeUser").show();
+        }
+        if(data.value == "unit") {
+            $("#changeUser").hide();
+            $("#writeUnit").show();
+        }
+    });
 
     /**
      * 分配座位
      */
     form.on('submit(btnSubmitSeat)', function (data) {
-        let changVal = $('#userId').val();
-        if(changVal === '' || changVal === 'undefined'){
-            Feng.error('请选择用户');
-        }else{
-            let divId = $('#divId').val();
-            let meetId = $('#meetId').val();
-            let seatId = $('#seatId').val();
-            let seatDiv = $('#divId');
-            let seatRow = divId.substring(divId.indexOf('_') + 1,divId.lastIndexOf('_'));
-            let seatCol = divId.substring(divId.lastIndexOf('_') + 1);
-            data.field.seatRow = seatRow;
-            data.field.seatCol = seatCol;
-            let ajax = new $ax(Feng.ctxPath + "/seatDetail/editItem?seatId=" + seatId, function (data) {
-                Feng.success("分配座位成功！");
-                let index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-                window.parent.location.reload();   //刷新父界面
-                parent.layer.close(index);    //关闭弹出层
-            }, function (data) {
-                Feng.error("分配座位失败！" + data.responseJSON.message)
-            });
-            ajax.set(data.field);
-            ajax.start();
+        debugger;
+        let type = data.field.type;
+        let divId = $('#divId').val();
+        let meetId = $('#meetId').val();
+        let seatId = $('#seatId').val();
+        // let seatDiv = $('#divId');
+        let seatRow = divId.substring(divId.indexOf('_') + 1,divId.lastIndexOf('_'));
+        let seatCol = divId.substring(divId.lastIndexOf('_') + 1);
+        data.field.seatRow = seatRow;
+        data.field.seatCol = seatCol;
+        if(type == 'people'){
+            //个人
+            let changVal = $('#userId').val();
+            if(changVal == '' || changVal == 'undefined'|| changVal == undefined){
+                Feng.error('请选择用户');
+            }else{
+                let ajax = new $ax(Feng.ctxPath + "/seatDetail/editItem?seatId=" + seatId, function (data) {
+                    Feng.success("分配座位成功！");
+                    let index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    window.parent.location.reload();   //刷新父界面
+                    parent.layer.close(index);    //关闭弹出层
+                }, function (data) {
+                    Feng.error("分配座位失败！" + data.responseJSON.message)
+                });
+                ajax.set(data.field);
+                ajax.start();
+            }
+        }else if (type == 'unit'){
+            //单位
+            let unitVal = $('#unitName').val();
+            if(unitVal == '' || unitVal == 'undefined'|| unitVal == undefined){
+                Feng.error('请填写单位名称');
+            }else{
+                let ajax = new $ax(Feng.ctxPath + "/seatDetail/batchItem?divIds=" + divId + "&seatId" + seatId, function (data) {
+                    Feng.success("分配座位成功！");
+                    let index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    window.parent.location.reload();   //刷新父界面
+                    parent.layer.close(index);    //关闭弹出层
+                }, function (data) {
+                    Feng.error("分配座位失败！" + data.responseJSON.message)
+                });
+                ajax.set(data.field);
+                ajax.start();
+            }
         }
         return false;
     });

@@ -33,10 +33,10 @@ public class MeetSeatController {
 	}
 
 	/**
-	 * 选择用户页面
+	 * 分配单个座位
 	 * @return
 	 */
-	@RequestMapping("changeUser")
+	@RequestMapping("changeOne")
 	public String changeUser(HttpServletRequest request){
 		String divId = request.getParameter("divId");
 		String meetId = request.getParameter("meetId");
