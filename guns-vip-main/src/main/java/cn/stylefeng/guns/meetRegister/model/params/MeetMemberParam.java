@@ -96,6 +96,11 @@ public class MeetMemberParam implements Serializable, BaseValidatingParam {
      */
     private String city;
 
+    /**
+     * 排序
+     */
+    private Double sort;
+
     @Override
     public String checkParam() {
         return null;

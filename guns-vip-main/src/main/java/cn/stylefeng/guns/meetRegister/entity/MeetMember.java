@@ -111,6 +111,12 @@ public class MeetMember implements Serializable {
     @TableField("city")
     private String city;
 
+    /**
+     * 排序
+     */
+    @TableField("sort")
+    private Double sort;
+
     public MeetMember() {
     }
 
@@ -233,6 +239,14 @@ public class MeetMember implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Double getSort() {
+        return sort;
+    }
+
+    public void setSort(Double sort) {
+        this.sort = sort;
     }
 
     @Override

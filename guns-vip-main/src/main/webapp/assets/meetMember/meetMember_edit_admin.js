@@ -48,7 +48,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             type:'post',
             url:Feng.ctxPath + "/thesis/list" ,
             success:function(response){
-                debugger;
                 var data=response.data;
                 var theses = [];
                 theses = data;
@@ -101,7 +100,15 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
         debugger;
-        var ajax = new $ax(Feng.ctxPath + "/meetMember/adminEditItem", function (data) {
+        let sort = data.field.sort;
+        if(sort != "" && sort != undefined && sort != null){
+            let double = isDouble(sort);
+            if(!double || isNaN(sort)){
+                Feng.error("排序权重格式错误！");
+                return false;
+            }
+        }
+        let ajax = new $ax(Feng.ctxPath + "/meetMember/adminEditItem", function (data) {
             Feng.success("更新成功！");
             window.location.href = Feng.ctxPath + '/meetMember';
         }, function (data) {
@@ -111,6 +118,19 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         ajax.start();
         return false;
     });
+
+    /**
+     * 是否符合格式
+     */
+    function isDouble(x) {
+        let y = String(x).indexOf(".") + 1;//获取小数点的位置
+        let count = String(x).length - y;//获取小数点后的个数
+        if(y > 0 && count == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 构建论坛下拉框候选值

@@ -95,4 +95,9 @@ public class MeetMemberResult implements Serializable {
      */
     private String city;
 
+    /**
+     * 排序
+     */
+    private Double sort;
+
 }
