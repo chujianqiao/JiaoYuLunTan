@@ -59,8 +59,8 @@ public class WXMenuController {
 
         CommonButton btn13 = new CommonButton();
         btn13.setName("新闻速递");
-        btn13.setType("click");
-        btn13.setKey("13");
+        btn13.setType("media_id");
+        btn13.setMedia_id("iCqOxs5LX8aGVLxc317f9n0NRf0KV98LHneHhUNjkxM");
 
         CommonButton btn14 = new CommonButton();
         btn14.setName("会议日程");

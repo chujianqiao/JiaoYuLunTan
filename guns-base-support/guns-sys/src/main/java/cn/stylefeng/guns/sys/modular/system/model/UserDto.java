@@ -71,9 +71,9 @@ public class UserDto {
 
     private Integer wrongTimes;
 
-    private Integer canDownload;
+    private Integer canDownloadWord;
 
-    private String bankCard;
+    private Integer canDownloadPpt;
 
     /**
      * 发言稿路径

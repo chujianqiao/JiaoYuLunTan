@@ -13,6 +13,7 @@ import java.util.Date;
 @Service
 public class Task {
 
+    //定时生成AccessToken并存储数据库
     @Scheduled(fixedDelay = 7000000)
     public void taskToken(){
         //Token token= CommonUtil.getToken("appID", "appsecret");

@@ -172,16 +172,16 @@ public class User implements Serializable {
     private Integer wrongTimes;
 
     /**
-     * ppt发言稿能否被下载
+     * 发言稿能否被下载
      */
-    @TableField("can_download")
-    private Integer canDownload;
+    @TableField("can_download_word")
+    private Integer canDownloadWord;
 
     /**
-     * 银行卡号码
+     * ppt能否被下载
      */
-    @TableField("bank_card")
-    private String bankCard;
+    @TableField("can_download_ppt")
+    private Integer canDownloadPpt;
 
     /**
      * 发言稿路径
@@ -425,20 +425,20 @@ public class User implements Serializable {
         this.wrongTimes = wrongTimes;
     }
 
-    public Integer getCanDownload() {
-        return canDownload;
+    public Integer getCanDownloadWord() {
+        return canDownloadWord;
     }
 
-    public void setCanDownload(Integer canDownload) {
-        this.canDownload = canDownload;
+    public void setCanDownloadWord(Integer canDownloadWord) {
+        this.canDownloadWord = canDownloadWord;
     }
 
-    public String getBankCard() {
-        return bankCard;
+    public Integer getCanDownloadPpt() {
+        return canDownloadPpt;
     }
 
-    public void setBankCard(String bankCard) {
-        this.bankCard = bankCard;
+    public void setCanDownloadPpt(Integer canDownloadPpt) {
+        this.canDownloadPpt = canDownloadPpt;
     }
 
     public String getWordPath() {
@@ -525,8 +525,8 @@ public class User implements Serializable {
         ", education=" + education +
         ", direction=" + direction +
         ", wrongTimes=" + wrongTimes +
-        ", canDownload=" + canDownload +
-        ", bankCard=" + bankCard +
+        ", canDownloadWord=" + canDownloadWord +
+        ", canDownloadPpt=" + canDownloadPpt +
         ", wordPath=" + wordPath +
         ", wordName=" + wordName +
         ", pptPath=" + pptPath +
