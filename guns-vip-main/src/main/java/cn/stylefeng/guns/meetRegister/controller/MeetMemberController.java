@@ -430,13 +430,20 @@ public class MeetMemberController extends BaseController {
         if(introduction != null && !("").equals(introduction)){
             map.put("introduction",introduction);
         }
-        int canDownload = 0;
-        if (user.getCanDownload() == null){
-            canDownload = 0;
+        int canDownloadWord = 0;
+        int canDownloadPpt = 0;
+        if (user.getCanDownloadWord() == null){
+            canDownloadWord = 0;
         }else {
-            canDownload = user.getCanDownload();
+            canDownloadWord = user.getCanDownloadWord();
         }
-        map.put("canDownload", canDownload);
+        if (user.getCanDownloadPpt() == null){
+            canDownloadPpt = 0;
+        }else {
+            canDownloadPpt = user.getCanDownloadPpt();
+        }
+        map.put("canDownloadWord", canDownloadWord);
+        map.put("canDownloadPpt", canDownloadPpt);
 
         map.put("regTime",dateString);
         return ResponseData.success(map);

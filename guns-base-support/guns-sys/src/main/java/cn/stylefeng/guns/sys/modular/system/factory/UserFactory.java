@@ -105,11 +105,11 @@ public class UserFactory {
             if (ToolUtil.isNotEmpty(newUser.getWrongTimes())) {
                 oldUser.setWrongTimes(newUser.getWrongTimes());
             }
-            if (ToolUtil.isNotEmpty(newUser.getCanDownload())) {
-                oldUser.setCanDownload(newUser.getCanDownload());
+            if (ToolUtil.isNotEmpty(newUser.getCanDownloadWord())) {
+                oldUser.setCanDownloadWord(newUser.getCanDownloadWord());
             }
-            if (ToolUtil.isNotEmpty(newUser.getBankCard())) {
-                oldUser.setBankCard(newUser.getBankCard());
+            if (ToolUtil.isNotEmpty(newUser.getCanDownloadPpt())) {
+                oldUser.setCanDownloadPpt(newUser.getCanDownloadPpt());
             }
             if (ToolUtil.isNotEmpty(newUser.getWordPath())) {
                 oldUser.setWordPath(newUser.getWordPath());
