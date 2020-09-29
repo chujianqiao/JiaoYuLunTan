@@ -26,25 +26,6 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     var form = layui.form;
     var admin = layui.admin;
     var layer = layui.layer;
-
-    //获取详情信息，填充表单
-    var ajax = new $ax(Feng.ctxPath + "/reviewMajor/adminDetail?reviewId=" + Feng.getUrlParam("reviewId"));
-    var result = ajax.start();
-    //转换状态值
-    var checkStatus = result.data.checkStatus;
-    if(checkStatus == 0){
-        result.data.checkStatus = "已取消";
-    }else if(checkStatus == 1){
-        result.data.checkStatus = "申请中";
-    }else if(checkStatus == 2){
-        result.data.checkStatus = "已通过";
-    }else if(checkStatus == 3){
-        result.data.checkStatus = "未通过";
-    }else{
-        result.data.checkStatus = "-";
-    }
-    form.val('reviewMajorForm', result.data);
-
     //定义数组，存储省份信息
     var province = ["北京", "上海", "天津", "重庆", "浙江", "江苏", "广东", "福建", "湖南", "湖北", "辽宁",
         "吉林", "黑龙江", "河北", "河南", "山东", "陕西", "甘肃", "新疆", "青海", "山西", "四川",
@@ -88,7 +69,6 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     $(function () {
         layui.use('form', function () {
             form = layui.form;
-            //各种基于事件的操作，下面会有进一步介绍
             //设置省份数据
             setProvince();
             //监听下拉事件
@@ -96,8 +76,9 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                 setCity(data.value);
             });
         });
-
     });
+    form.on('select(Province)', function (data) { setCity(data.value); });
+
     //设置省份数据
     function setProvince() {
         //给省份下拉列表赋值
@@ -233,6 +214,42 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         }
         form.render('select');
     }
+    //获取详情信息，填充表单
+    var ajax = new $ax(Feng.ctxPath + "/reviewMajor/adminDetail?reviewId=" + Feng.getUrlParam("reviewId"));
+    var result = ajax.start();
+    //转换状态值
+    var checkStatus = result.data.checkStatus;
+    if(checkStatus == 0){
+        result.data.checkStatus = "已取消";
+    }else if(checkStatus == 1){
+        result.data.checkStatus = "申请中";
+    }else if(checkStatus == 2){
+        result.data.checkStatus = "已通过";
+    }else if(checkStatus == 3){
+        result.data.checkStatus = "未通过";
+    }else{
+        result.data.checkStatus = "-";
+    }
+    form.val('reviewMajorForm', result.data);
+
+    /**
+     * 初始化省市下拉框
+     */
+    let selProvince = document.getElementById("selProvince");
+    for (let i = 0; i < selProvince.options.length; i++) {
+        if (selProvince.options[i].text == result.data.accountProvince) {
+            selProvince.options[i].selected = true;
+            setCity(selProvince.options[i].text);
+        }
+    }
+
+    let selCity = document.getElementById("selCity");
+    for (let i = 0; i < selCity.options.length; i++) {
+        if (selCity.options[i].text == result.data.accountCity) {
+            selCity.options[i].selected = true;
+        }
+    }
+    form.render('select');
 
     /**
      * 转换申请状态
@@ -266,7 +283,6 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        debugger;
         var ajax = new $ax(Feng.ctxPath + "/reviewMajor/adminEditItem", function (data) {
             Feng.success("更新成功！");
             window.location.href = Feng.ctxPath + '/meetMember';

@@ -24,7 +24,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             // {field: 'colNum', sort: true, title: '列数'},
             // {field: 'rowNum', sort: true, title: '行数'},
             {field: 'seatTypeStr', sort: true, title: '排列方式'},
-            {align: 'center', toolbar: '#tableBar', title: '操作'}
+            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth:400}
         ]];
     };
 
@@ -123,6 +123,15 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         Feng.confirm("是否要重置该会议的座次表?", operation);
     }
 
+    /**
+     * 重置座次
+     * @param data
+     */
+    Seat.autoAssignSeat = function (data) {
+
+        Feng.confirm("是否要重置该会议的座次表?", operation);
+    }
+
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + Seat.tableId,
@@ -161,6 +170,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             Seat.jumpSeatPage(data);
         } else if (layEvent === 'reset') {
             Seat.resetSeat(data);
+        } else if (layEvent === 'autoAssign') {
+            Seat.autoAssignSeat(data);
         }
     });
 });

@@ -14,6 +14,18 @@
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">所属省份<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="province" id="selProvince" lay-filter="Province" lay-verify="required"></select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">所属城市<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="city" id="selCity" lay-verify="required"></select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="workUnit" name="workUnit" placeholder="" type="text" class="layui-input" />
@@ -35,12 +47,7 @@
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">参会论文<span style="color: red;">*</span></label>
-                        <!--<div class="layui-input-block">-->
-                        <!--<input id="thesisName" name="thesisName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
-                            <!--<button class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;附件&emsp;</button>-->
-                        <!--</div>-->
                         <div class="layui-input-block">
-                            <!--<select id="thesisId" name="thesisId" disabled="disabled" lay-verify="" lay-search></select>-->
                             <input id="thesisId" name="thesisId" type="hidden"/>
                             <input id="thesisName" disabled="disabled" name="thesisName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                             <button id="btnDownload" class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;下载论文附件&emsp;</button>
