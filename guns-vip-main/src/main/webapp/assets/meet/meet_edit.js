@@ -27,6 +27,9 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
     var func = layui.func;
     var upload = layui.upload;
 
+    getCheckImage();
+    getSignImage();
+
     //实例化编辑器
     var ue = UE.getEditor('container', {
         enableAutoSave: false,
@@ -57,6 +60,13 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
     var ajax = new $ax(Feng.ctxPath + "/meet/detail?meetId=" + meetId);
     var result = ajax.start();
     form.val('meetForm', result.data);
+    console.log(result.data)
+    $("#meetData1").html(result.data.meetName);
+    $("#meetData2").html("会议时间：" + result.data.beginTime + "-" + result.data.endTime);
+    $("#meetData3").html("会议地点：" + result.data.place);
+    $("#meetData4").html(result.data.meetName);
+    $("#meetData5").html("会议时间：" + result.data.beginTime + "-" + result.data.endTime);
+    $("#meetData6").html("会议地点：" + result.data.place);
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
@@ -94,6 +104,30 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
         }else {
             downLoadMeet();
         }
+    });
+    $('#getImage').click(function(data){
+        var meetId = Feng.getUrlParam("meetId");
+        if(meetId == null || meetId == "" || meetId == 'undefined'){
+            meetId = $("#meetIdParam").val();
+        }
+        $.ajax({
+            type: "post",
+            url: Feng.ctxPath + "/weiXin/getCheckImage?meetId=" + meetId,
+            success: function (data) {
+                var photo = data.checkName;
+                Feng.success("二维码生成成功！");
+                $("#checkImg").attr("style","height:300px;background-image: url('data:image/jpeg;base64," + photo + "');background-repeat:no-repeat;background-size: 100% 100%;");
+            }
+        });
+        $.ajax({
+            type: "post",
+            url: Feng.ctxPath + "/weiXin/getSignImage?meetId=" + meetId,
+            success: function (data) {
+                var photo = data.signName;
+                Feng.success("二维码生成成功！");
+                $("#signImg").attr("style","height:300px;background-image: url('data:image/jpeg;base64," + photo + "');background-repeat:no-repeat;background-size: 100% 100%;");
+            }
+        });
     });
 
     $('#cancel').click(function(){
@@ -136,4 +170,37 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
         ,format: 'yyyy-MM-dd HH:mm:ss'
         ,trigger: 'click'
     });
+
+
+    function getCheckImage(){
+        //获取详情信息，填充表单
+        var meetId = Feng.getUrlParam("meetId");
+        if(meetId == null || meetId == "" || meetId == 'undefined'){
+            meetId = $("#meetIdParam").val();
+        }
+        $.ajax({
+            type: "post",
+            url: Feng.ctxPath + "/checkIn/getCheckImage?meetId=" + meetId,
+            success: function (data) {
+                var photo = data.checkName;
+                $("#checkImg").attr("style","height:300px;background-image: url('data:image/jpeg;base64," + photo + "');background-repeat:no-repeat;background-size: 100% 100%;");
+            }
+        });
+    }
+    function getSignImage(){
+        //获取详情信息，填充表单
+        var meetId = Feng.getUrlParam("meetId");
+        if(meetId == null || meetId == "" || meetId == 'undefined'){
+            meetId = $("#meetIdParam").val();
+        }
+        $.ajax({
+            type: "post",
+            url: Feng.ctxPath + "/checkIn/getSignImage?meetId=" + meetId,
+            success: function (data) {
+                var photo = data.signName;
+                $("#signImg").attr("style","height:300px;background-image: url('data:image/jpeg;base64," + photo + "');background-repeat:no-repeat;background-size: 100% 100%;");
+            }
+        });
+    }
+
 });

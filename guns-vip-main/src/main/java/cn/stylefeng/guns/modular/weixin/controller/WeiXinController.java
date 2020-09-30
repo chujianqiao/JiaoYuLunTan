@@ -189,6 +189,65 @@ public class WeiXinController {
         return map;
     }
 
+    @RequestMapping("/getCheckImage")
+    @ResponseBody
+    public Map<String, Object> getCheckImage(String meetId){
+        String url = systemUrl + "/checkIn/check";
+        //	指定路径：D:\User\Desktop\testQrcode
+        //String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
+        String path = imagesFolder;
+        System.out.println(path);
+        //	指定二维码图片名字
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        //String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+        String fileName = meetId + "_check.jpg";
+        CommonUtil.createQrCode(url, path, fileName);
+
+        InputStream in = null;
+        byte[] data = null;
+        // 读取图片字节数组
+        try {
+            in = new FileInputStream(path + "\\" + fileName);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("checkName",Base64.encodeBase64String(data));
+        return map;
+    }
+    @RequestMapping("/getSignImage")
+    @ResponseBody
+    public Map<String, Object> getSignImage(String meetId){
+        String url = systemUrl + "/checkIn/sign";
+        //	指定路径：D:\User\Desktop\testQrcode
+        //String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
+        String path = imagesFolder;
+        System.out.println(path);
+        //	指定二维码图片名字
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        //String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+        String fileName = meetId + "_sign.jpg";
+        CommonUtil.createQrCode(url, path, fileName);
+
+        InputStream in = null;
+        byte[] data = null;
+        // 读取图片字节数组
+        try {
+            in = new FileInputStream(path + "\\" + fileName);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("signName",Base64.encodeBase64String(data));
+        return map;
+    }
+
     @RequestMapping("/weChatBand")
     public String weChatBand(Model model){
 

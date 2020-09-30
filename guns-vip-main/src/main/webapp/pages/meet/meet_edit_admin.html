@@ -1,88 +1,135 @@
-@layout("/common/_form.html",{js:["/assets/meet/meet_edit.js"],plugins:["ue"]}){
+@layout("/common/_form.html",{js:["/assets/meet/meet_edit.js","/assets/modular/frame/user_info.js"],plugins:["ue"]}){
 
 <form class="layui-form" id="meetForm" lay-filter="meetForm">
     <div class="layui-fluid" style="padding-bottom: 75px;">
         <div class="layui-card">
-            <div class="layui-card-header">基本信息</div>
+            <!--<div class="layui-card-header">基本信息</div>-->
             <div class="layui-card-body">
-                <div class="layui-form-item layui-row">
-                    <input name="meetId" type="hidden"/>
-                    <input id="meetIdParam" value="${meetIdParam}" type="hidden"/>
+                <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">基本信息</li>
+                        <li>报到二维码</li>
+                        <li>签到二维码</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item layui-row">
+                                    <input name="meetId" type="hidden"/>
+                                    <input id="meetIdParam" value="${meetIdParam}" type="hidden"/>
 
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">会议名称<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="meetName" name="meetName" placeholder="请输入会议名称" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">参会人数<span style="color: red;">*</span></label>
-                            <div class="layui-input-block">
-                                <input id="peopleNum" name="peopleNum" placeholder="请输参会人数" type="text" class="layui-input" lay-verify="required" required/>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">会议名称<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input id="meetName" name="meetName" placeholder="请输入会议名称" type="text" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">参会人数<span style="color: red;">*</span></label>
+                                            <div class="layui-input-block">
+                                                <input id="peopleNum" name="peopleNum" placeholder="请输参会人数" type="text" class="layui-input" lay-verify="required" required/>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">投稿人数<span style="color: red;">*</span></label>
+                                            <div class="layui-input-block">
+                                                <input id="thesisNum" name="thesisNum" placeholder="请输入投稿人数" type="text" class="layui-input" lay-verify="required" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">注册时间<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input id="regTime" name="regTime" placeholder="请输入注册时间" disabled="disabled" type="text" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">会议开始时间<span style="color: red;">*</span></label>
+                                            <div class="layui-input-block">
+                                                <input id="beginTime" name="beginTime" placeholder="请输入会议开始时间" type="text" class="layui-input" lay-verify="required" required/>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">会议结束时间<span style="color: red;">*</span></label>
+                                            <div class="layui-input-block">
+                                                <input id="endTime" name="endTime" placeholder="请输入会议结束时间" type="text" class="layui-input" lay-verify="required" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">报名开始时间<span style="color: red;">*</span></label>
+                                            <div class="layui-input-block">
+                                                <input id="joinBegTime" name="joinBegTime" placeholder="请输入报名开始时间" type="text" class="layui-input" lay-verify="required" required/>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">会议结束时间<span style="color: red;">*</span></label>
+                                            <div class="layui-input-block">
+                                                <input id="joinEndTime" name="joinEndTime" placeholder="请输入报名结束时间" type="text" class="layui-input" lay-verify="required" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">会议地点<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input id="place" name="place" placeholder="请输入会议地点" type="text" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">会议详细</label>
+                                        <div class="layui-input-block">
+                                            <script id="container" name="content" type="text/plain"></script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-bottom text-center">
+                                <button class="layui-btn" lay-filter="btnSubmitAdmin" lay-submit>&emsp;提交&emsp;</button>
+                                <button type="button" class="layui-btn layui-btn-normal" id="exportWord">下载手册</button>
+                                <button type="button" class="layui-btn layui-btn-normal" id="getImage">生成二维码</button>
                             </div>
                         </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">投稿人数<span style="color: red;">*</span></label>
-                            <div class="layui-input-block">
-                                <input id="thesisNum" name="thesisNum" placeholder="请输入投稿人数" type="text" class="layui-input" lay-verify="required" required/>
+                        <div class="layui-tab-item">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item">
+                                    <div style="height: 300px;font-size: 20px;margin-left: 60px" class="layui-col-md7">
+                                        <br><br><h1 style="text-align: center;">会议报到</h1>
+                                        <br><br><div id="meetData1" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div><br>
+                                        <div id="meetData2" class="">会议日期：2020年11月25日~2020年11月26日</div><br>
+                                        <div id="meetData3" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
+                                    </div>
+                                    <div style="height: 300px;width: 300px" class="layui-col-md5">
+                                        <div id="checkImg" >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">注册时间<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="regTime" name="regTime" placeholder="请输入注册时间" disabled="disabled" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">会议开始时间<span style="color: red;">*</span></label>
-                            <div class="layui-input-block">
-                                <input id="beginTime" name="beginTime" placeholder="请输入会议开始时间" type="text" class="layui-input" lay-verify="required" required/>
+                        <div class="layui-tab-item">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item">
+                                    <div style="height: 300px;font-size: 20px;margin-left: 60px" class="layui-col-md7">
+                                        <br><br><h1 style="text-align: center;">会议签到</h1>
+                                        <br><br><div id="meetData4" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div><br>
+                                        <div id="meetData5" class="">会议日期：2020年11月25日~2020年11月26日</div><br>
+                                        <div id="meetData6" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
+                                    </div>
+                                    <div style="height: 300px;width: 300px" class="layui-col-md5">
+                                        <div id="signImg" >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">会议结束时间<span style="color: red;">*</span></label>
-                            <div class="layui-input-block">
-                                <input id="endTime" name="endTime" placeholder="请输入会议结束时间" type="text" class="layui-input" lay-verify="required" required/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">报名开始时间<span style="color: red;">*</span></label>
-                            <div class="layui-input-block">
-                                <input id="joinBegTime" name="joinBegTime" placeholder="请输入报名开始时间" type="text" class="layui-input" lay-verify="required" required/>
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">会议结束时间<span style="color: red;">*</span></label>
-                            <div class="layui-input-block">
-                                <input id="joinEndTime" name="joinEndTime" placeholder="请输入报名结束时间" type="text" class="layui-input" lay-verify="required" required/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">会议地点<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="place" name="place" placeholder="请输入会议地点" type="text" class="layui-input" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">会议详细</label>
-                        <div class="layui-input-block">
-                            <script id="container" name="content" type="text/plain"></script>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group-bottom text-center">
-        <button class="layui-btn" lay-filter="btnSubmitAdmin" lay-submit>&emsp;提交&emsp;</button>
-        <button type="button" class="layui-btn layui-btn-normal" id="exportWord">下载手册</button>
-    </div>
+
 
 </form>
 

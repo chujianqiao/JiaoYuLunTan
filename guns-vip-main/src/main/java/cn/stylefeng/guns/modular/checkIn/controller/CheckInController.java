@@ -15,13 +15,19 @@ import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +43,12 @@ import java.util.Map;
 public class CheckInController extends BaseController {
 
     private String PREFIX = "/checkIn";
+
+    @Value("${weiXin.url}")
+    private String systemUrl;
+
+    @Value("${file.imagesFolder}")
+    private String imagesFolder;
 
     @Autowired
     private CheckInService checkInService;
@@ -221,6 +233,55 @@ public class CheckInController extends BaseController {
         return LayuiPageFactory.createPageInfo(wrapped);
     }
 
+    @RequestMapping("/getCheckImage")
+    @ResponseBody
+    public Map<String, Object> getCheckImage(String meetId){
+        //	指定路径：D:\User\Desktop\testQrcode
+        //String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
+        String path = imagesFolder;
+        System.out.println(path);
+        String fileName = meetId + "_check.jpg";
+
+        InputStream in = null;
+        byte[] data = null;
+        // 读取图片字节数组
+        try {
+            in = new FileInputStream(path + "\\" + fileName);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("checkName", Base64.encodeBase64String(data));
+        return map;
+    }
+
+    @RequestMapping("/getSignImage")
+    @ResponseBody
+    public Map<String, Object> getSignImage(String meetId){
+        //	指定路径：D:\User\Desktop\testQrcode
+        //String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
+        String path = imagesFolder;
+        System.out.println(path);
+        String fileName = meetId + "_sign.jpg";
+
+        InputStream in = null;
+        byte[] data = null;
+        // 读取图片字节数组
+        try {
+            in = new FileInputStream(path + "\\" + fileName);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("signName", Base64.encodeBase64String(data));
+        return map;
+    }
 }
 
 
