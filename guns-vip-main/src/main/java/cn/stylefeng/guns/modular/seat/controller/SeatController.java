@@ -30,7 +30,6 @@ import java.util.Map;
 
 /**
  * 座位表控制器
- *
  * @author wucy
  * @Date 2020-09-10 15:21:15
  */
@@ -126,9 +125,11 @@ public class SeatController extends BaseController {
         Long seatId = seatParam.getSeatId();
         Seat seat = this.seatService.getById(seatId);
         Long meetId = seat.getMeetId();
+        Long meetType = seat.getMeetType();
         if(meetId != null){
             SeatDetailParam seatDetailParam = new SeatDetailParam();
             seatDetailParam.setMeetId(meetId);
+            seatDetailParam.setMeetType(meetType);
             this.seatDetailService.deleteData(seatDetailParam);
             return ResponseData.success();
         }else {

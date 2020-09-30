@@ -68,4 +68,7 @@ public interface MeetMemberMapper extends BaseMapper<MeetMember> {
                                                 @Param("listStatus") String listStatus);
 
     void updateWord(@Param("userId") Long userId, @Param("wordName") String wordName, @Param("wordPath") String wordPath);
+
+    List<Long> sortMember();
+    List<Long> generalMember();
 }

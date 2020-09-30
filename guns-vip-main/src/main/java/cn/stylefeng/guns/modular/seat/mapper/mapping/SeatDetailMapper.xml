@@ -106,6 +106,9 @@
 
     <delete id="deleteData" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam">
 		delete from seat_detail where meet_id = #{paramCondition.meetId}
+        <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
+            and meet_type = #{paramCondition.meetType}
+        </if>
 	</delete>
 
 </mapper>

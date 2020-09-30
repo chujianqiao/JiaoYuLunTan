@@ -105,4 +105,14 @@ public class MeetMemberServiceImpl extends ServiceImpl<MeetMemberMapper, MeetMem
         this.baseMapper.updateWord(userId,wordName,wordPath);
     }
 
+    @Override
+    public List<Long> sortMember() {
+        return baseMapper.sortMember();
+    }
+
+    @Override
+    public List<Long> generalMember() {
+        return baseMapper.generalMember();
+    }
+
 }

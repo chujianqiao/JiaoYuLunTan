@@ -87,4 +87,15 @@ public interface MeetMemberService extends IService<MeetMember> {
      * @Date 2020-05-20
      */
     void updateWord(Long userId, String wordName, String wordPath);
+
+    /**
+     * 有排序字段的数据
+     */
+    List<Long> sortMember();
+
+    /**
+     * 没有排序字段的数据
+     * @return
+     */
+    List<Long> generalMember();
 }

@@ -124,12 +124,21 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     }
 
     /**
-     * 重置座次
+     * 自动分配
      * @param data
      */
     Seat.autoAssignSeat = function (data) {
-
-        Feng.confirm("是否要重置该会议的座次表?", operation);
+        let operation = function () {
+            let ajax = new $ax(Feng.ctxPath + "/meetSeat/autoAssign?seatId=" + data.seatId, function (data) {
+                Feng.success("自动分配成功!");
+                table.reload(Seat.tableId);
+            }, function (data) {
+                Feng.error("自动分配失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("seatId", data.seatId);
+            ajax.start();
+        };
+        Feng.confirm("自动分配之前会重置该会议的座次表，是否分配?", operation);
     }
 
     // 渲染表格
