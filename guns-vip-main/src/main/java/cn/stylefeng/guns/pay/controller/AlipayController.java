@@ -37,14 +37,14 @@ import java.util.*;
 public class AlipayController extends BaseController {
 
 	@Autowired
-	private static MeetMemberService meetMemberService;
+	private MeetMemberService meetMemberService;
 
 	@Autowired
-	private static VipPayService vipPayService;
+	private VipPayService vipPayService;
 
 	@RequestMapping(value = "/pay", produces = "text/html; charset=UTF-8")
 	@ResponseBody
-	public static String pay(Map<String,Object> map,HttpServletRequest request) throws Exception {
+	public String pay(Map<String,Object> map,HttpServletRequest request) throws Exception {
 		//会议ID
 		String memberIdStr = request.getParameter("memberId");
 //		request.setAttribute("memberId",memberIdStr);
@@ -130,11 +130,11 @@ public class AlipayController extends BaseController {
 						: valueStr + values[i] + ",";
 			}
 			//乱码解决，这段代码在出现乱码时使用
-//			try {
-//				valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
-//			} catch (UnsupportedEncodingException e) {
-//				e.printStackTrace();
-//			}
+			try {
+				valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 			params.put(name, valueStr);
 			content += valueStr;
 		}
@@ -146,7 +146,7 @@ public class AlipayController extends BaseController {
 //			signVerified = AlipaySignature.rsaCheckV1(params,  AlipayConfig.alipay_public_key, AlipayConfig.charset);
 //			signVerified =AlipaySignature.rsaCheck(params, sign,  AlipayConfig.alipay_public_key, AlipayConfig.charset,  AlipayConfig.sign_type);
 //			signVerified = AlipaySignature.rsa256CheckContent(content, sign, AlipayConfig.alipay_public_key,AlipayConfig.charset);
-			signVerified = true;
+//			signVerified = true;
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 		}

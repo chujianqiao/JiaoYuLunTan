@@ -7,7 +7,6 @@ import cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam;
 import cn.stylefeng.guns.modular.seat.service.SeatDetailService;
 import cn.stylefeng.guns.modular.seat.service.SeatService;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

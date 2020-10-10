@@ -103,7 +103,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             ajax.set("meetId", data.meetId);
             ajax.start();
         };
-        Feng.confirm("是否要发布该会议?", operation);
+        Feng.confirm("只能有一个状态为“发布”的会议，是否发布?", operation);
     };
 
     /**
