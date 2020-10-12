@@ -27,6 +27,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  *
  * @author stylefeng
  * @Date 2017/5/21 12:06
+ * wzctest
  */
 @SpringBootApplication(exclude = {MybatisDataSourceAutoConfiguration.class})
 @EnableScheduling
