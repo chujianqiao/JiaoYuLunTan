@@ -385,4 +385,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public List<Long> getUserIdByName(String name) {
         return this.baseMapper.listByName(name);
     }
+
+    public List<User> getByCanDownloadFile() {
+        return this.baseMapper.getByCanDownloadFile();
+    }
 }

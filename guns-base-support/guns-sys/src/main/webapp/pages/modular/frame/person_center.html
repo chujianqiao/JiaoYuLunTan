@@ -404,7 +404,7 @@
                                 <div carousel-item>
                                     <ul class="layui-row layui-col-space10">
                                         <li class="layui-col-xs12">
-                                            <a href="${ctxPath}/system/person_info">
+                                            <a href="javascript:fileDownload();">
                                                 <i style="font-size: 60px" class="layui-icon layui-icon-download-circle"></i>
                                                 <cite>材料下载</cite>
                                             </a>
@@ -479,6 +479,15 @@
             type: 2,
             area: ['620px', '600px'],
             content: Feng.ctxPath + '/thesisReviewMiddle/toThesisResult?thesisId=' + thesisId,
+        });
+    }
+
+    function fileDownload() {
+        layer.open({
+            title: '材料下载',
+            type: 2,
+            area: ['620px', '600px'],
+            content: Feng.ctxPath + '/meetMaterial/toFileDownload' ,
         });
     }
 </script>

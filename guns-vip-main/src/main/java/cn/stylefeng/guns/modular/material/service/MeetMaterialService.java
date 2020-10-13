@@ -4,9 +4,11 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.modular.material.entity.MeetMaterial;
 import cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam;
 import cn.stylefeng.guns.modular.material.model.result.MeetMaterialResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,5 +67,7 @@ public interface MeetMaterialService extends IService<MeetMaterial> {
      * @Date 2020-07-22
      */
      LayuiPageInfo findPageBySpec(MeetMaterialParam param);
+
+     Page<Map<String, Object>> findPageWrap(MeetMaterialParam param);
 
 }

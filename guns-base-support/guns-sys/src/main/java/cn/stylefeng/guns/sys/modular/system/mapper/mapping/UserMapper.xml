@@ -334,6 +334,11 @@
             and name like CONCAT('%',#{name},'%')
         </if>
     </select>
+    <select id="getByCanDownloadFile" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user where 1 = 1 and can_download_word = 1 OR can_download_ppt = 1
+    </select>
 
     <select id="getById" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
         select

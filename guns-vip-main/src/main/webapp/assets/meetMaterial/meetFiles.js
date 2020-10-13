@@ -63,9 +63,9 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
     };
 
     /**
-    * 跳转到编辑页面
-    * @param data 点击按钮时候的行数据
-    */
+     * 跳转到编辑页面
+     * @param data 点击按钮时候的行数据
+     */
     MeetMaterial.jumpEditPage = function (data) {
         window.location.href = Feng.ctxPath + '/meetMaterial/edit?materialId=' + data.materialId
     };
@@ -100,33 +100,47 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
         Feng.confirm("是否删除?", operation);
     };
 
+    /**
+     * 下载单个文件
+     * @param data
+     */
     MeetMaterial.onDownLoadItem = function (data) {
-        console.log(data);
-        var matName = data.matName;
-        var matPath = data.matPath;
-        var form=$("<form>");    // 定义一个form表单
-        form.attr("style","display:none");
-        // form.attr("target","_blank");
-        form.attr("method","post");
-        form.attr("action",Feng.ctxPath + "/meetMaterial/downloadOne");    // 此处填写文件下载提交路径
-        var input1=$("<input>");
-        input1.attr("type","hidden");
-        input1.attr("name","matName");    // 后台接收参数名
-        input1.attr("value",matName);
-        var input2=$("<input>");
-        input2.attr("type","hidden");
-        input2.attr("name","matPath");    // 后台接收参数名
-        input2.attr("value",matPath);
-        form.append(input1);
-        form.append(input2);
-        $("body").append(form);    // 将表单放置在web中
-        form.submit();
+        console.log(data)
+        if (data.matPath == 1){
+            var form=$("<form>");    // 定义一个form表单
+            form.attr("style","display:none");
+            // form.attr("target","_blank");
+            form.attr("method","post");
+            form.attr("action",Feng.ctxPath + "/meet/exportWord?meetId=" + data.meetId);    // 此处填写文件下载提交路径
+            $("body").append(form);    // 将表单放置在web中
+            form.submit();
+        } else {
+            var matName = data.matName;
+            var matPath = data.matPath;
+            var form=$("<form>");    // 定义一个form表单
+            form.attr("style","display:none");
+            // form.attr("target","_blank");
+            form.attr("method","post");
+            form.attr("action",Feng.ctxPath + "/meetMaterial/downloadOne");    // 此处填写文件下载提交路径
+            var input1=$("<input>");
+            input1.attr("type","hidden");
+            input1.attr("name","matName");    // 后台接收参数名
+            input1.attr("value",matName);
+            var input2=$("<input>");
+            input2.attr("type","hidden");
+            input2.attr("name","matPath");    // 后台接收参数名
+            input2.attr("value",matPath);
+            form.append(input1);
+            form.append(input2);
+            $("body").append(form);    // 将表单放置在web中
+            form.submit();
+        }
     }
 
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + MeetMaterial.tableId,
-        url: Feng.ctxPath + '/meetMaterial/list',
+        url: Feng.ctxPath + '/meetMaterial/wrapList',
         page: true,
         height: "full-158",
         cellMinWidth: 100,

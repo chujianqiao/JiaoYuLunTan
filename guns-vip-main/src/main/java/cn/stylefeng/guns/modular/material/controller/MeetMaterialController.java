@@ -1,16 +1,24 @@
 package cn.stylefeng.guns.modular.material.controller;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
+import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.material.entity.MeetMaterial;
 import cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam;
 import cn.stylefeng.guns.modular.material.model.result.MeetMaterialResult;
 import cn.stylefeng.guns.modular.material.service.MeetMaterialService;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +39,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 会议材料表控制器
@@ -50,6 +59,12 @@ public class MeetMaterialController extends BaseController {
     private MeetMaterialService meetMaterialService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
+    private MeetService meetService;
+
+    @Autowired
     private FileInfoService fileInfoService;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -62,6 +77,16 @@ public class MeetMaterialController extends BaseController {
     @RequestMapping("")
     public String index() {
         return PREFIX + "/meetMaterial.html";
+    }
+
+    /**
+     * 跳转到主页面
+     * @author wucy
+     * @Date 2020-07-22
+     */
+    @RequestMapping("toFileDownload")
+    public String toFileDownload() {
+        return PREFIX + "/meetFiles.html";
     }
 
     /**
@@ -157,6 +182,51 @@ public class MeetMaterialController extends BaseController {
     }
 
     /**
+     * 个人中心下载列表
+     * @author CHU
+     * @Date 2020-07-22
+     */
+    @ResponseBody
+    @RequestMapping("/wrapList")
+    public Object wrapList(MeetMaterialParam meetMaterialParam) {
+        Page<Map<String, Object>> forum = this.meetMaterialService.findPageWrap(meetMaterialParam);
+
+        List<User> userList = this.userService.getByCanDownloadFile();
+        for (int i = 0;i < userList.size();i++){
+            if (userList.get(i).getCanDownloadPpt() == 1){
+                String pptName = userList.get(i).getPptName();
+                String pptPath = userList.get(i).getPptPath();
+                Map map = new HashMap();
+                map.put("matPath",pptPath);
+                map.put("matName",pptName);
+                if (pptName != null && pptName != "" && pptPath != null && pptPath != "" ){
+                    forum.getRecords().add(map);
+                }
+            }
+            if (userList.get(i).getCanDownloadWord() == 1){
+                String wordName = userList.get(i).getWordName();
+                String wordPath = userList.get(i).getWordPath();
+                Map map1 = new HashMap();
+                map1.put("matPath",wordPath);
+                map1.put("matName",wordName);
+                if (wordName != null && wordName != "" && wordPath != null && wordPath != "" ){
+                    forum.getRecords().add(map1);
+                }
+            }
+        }
+
+
+        Meet meet = meetService.getByStatus(1);
+        Map map2 = new HashMap();
+        map2.put("matPath","1");
+        map2.put("matName","会议手册.doc");
+        map2.put("meetId",meet.getMeetId());
+        forum.getRecords().add(map2);
+
+        return LayuiPageFactory.createPageInfo(forum);
+    }
+
+    /**
      * 上传文件
      * @author wucy
      * @Date 20209-07-23 10:48:29
@@ -187,12 +257,14 @@ public class MeetMaterialController extends BaseController {
      */
     @RequestMapping(path = "/downloadOne")
     public void download(HttpServletResponse httpServletResponse, MeetMaterialParam meetMaterialParam, HttpServletRequest request) {
-        long materialId = meetMaterialParam.getMaterialId();
-        MeetMaterial meetMaterial = this.meetMaterialService.getById(materialId);
+        //long materialId = meetMaterialParam.getMaterialId();
+        //MeetMaterial meetMaterial = this.meetMaterialService.getById(materialId);
         //文件完整路径
-        String filePath = meetMaterial.getMatPath();
+        //String filePath = meetMaterial.getMatPath();
+        String filePath = meetMaterialParam.getMatPath();
         //下载后看到的文件名
-        String fileName = meetMaterial.getMatName();
+        //String fileName = meetMaterial.getMatName();
+        String fileName = meetMaterialParam.getMatName();
         try {
             FileDownload.fileDownload(httpServletResponse, filePath, fileName);
         } catch (Exception e) {
