@@ -205,7 +205,13 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data
      */
     MeetMember.onPayItem = function (data) {
-        window.location.href = Feng.ctxPath + '/alipay/pay?memberId=' + data.memberId;
+        layer.open({
+            title: '扫码支付',
+            type: 2,
+            area: ['400px','450px'],
+            content: Feng.ctxPath + '/alipay/qrcode',
+            tableId: MeetMember.tableId
+        });
     };
 
     // 工具条点击事件

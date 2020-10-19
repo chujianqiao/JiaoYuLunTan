@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
+</head>
+<body id="body" style="">
+<img id="img" src="" style="margin: auto">
+</body>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script>
+    layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () {
+        let $ = layui.jquery;
+        let $ax = layui.ax;
+        var orderNum;
+        $(function () {
+            let imgAjax = new $ax(Feng.ctxPath + "/alipay/createOrder" );
+            let imgRes = imgAjax.start();
+            let photo = imgRes.data.imgBase64Str;
+            $("#img").attr('src', src='data:image/jpeg;base64,' + photo);
+            orderNum = imgRes.data.orderNum;
+            setInterval(searchOrder,3000);//轮询执行，3000ms一次
+        })
+
+        /**
+         * 查询订单状态
+         */
+        function searchOrder(){
+            debugger;
+            let param = orderNum;
+            let ordAjax = new $ax(Feng.ctxPath + "/alipay/searchOrder?orderNum=" + param );
+            let imgRes = ordAjax.start();
+            let tradeStatus = imgRes.data.tradeStatus;
+            if(tradeStatus != undefined && tradeStatus == 'success'){
+                Feng.success("支付成功！");
+                let index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                window.parent.location.reload();   //刷新父界面
+                parent.layer.close(index);    //关闭弹出层
+            }
+        }
+
+    });
+
+</script>
+</html>

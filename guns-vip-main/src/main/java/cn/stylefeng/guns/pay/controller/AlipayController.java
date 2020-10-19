@@ -4,22 +4,34 @@ import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
-import cn.stylefeng.guns.pay.AlipayConfig;
+import cn.stylefeng.guns.pay.config.AlipayConfig;
+import cn.stylefeng.guns.pay.config.AlipayConfigProperties;
 import cn.stylefeng.guns.pay.model.params.VipPayParam;
 import cn.stylefeng.guns.pay.model.result.VipPayResult;
 import cn.stylefeng.guns.pay.service.VipPayService;
+import cn.stylefeng.guns.sys.core.log.LogManager;
+import cn.stylefeng.guns.util.Base64Util;
+import cn.stylefeng.guns.util.QrCodeUtil;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
-import cn.stylefeng.roses.core.util.SpringContextHolder;
+import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradePrecreateRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
+import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.alipay.api.response.AlipayTradeQueryResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +48,26 @@ import java.util.*;
 @RequestMapping("/alipay")
 public class AlipayController extends BaseController {
 
+	private static Logger logger = LoggerFactory.getLogger(LogManager.class);
+
+	private String PREFIX = "/pay";
+
 	@Autowired
 	private MeetMemberService meetMemberService;
 
 	@Autowired
 	private VipPayService vipPayService;
+
+	@Autowired
+	private AlipayConfigProperties aliPayProperties;
+
+	@Value("${file.uploadFolder}")
+	private String uploadFolder;
+
+	@RequestMapping("/qrcode")
+	public String alipayQrcode() {
+		return PREFIX + "/alipayQrcode.html";
+	}
 
 	@RequestMapping(value = "/pay", produces = "text/html; charset=UTF-8")
 	@ResponseBody
@@ -58,15 +85,15 @@ public class AlipayController extends BaseController {
 		//商品描述，可空
 		String body = "描述";
 		//获得初始化的AlipayClient
-		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl,
-				AlipayConfig.app_id, AlipayConfig.merchant_private_key,
-				"json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+		AlipayClient alipayClient = new DefaultAlipayClient(aliPayProperties.gatewayUrl,
+				aliPayProperties.app_id, aliPayProperties.merchant_private_key,
+				"json", aliPayProperties.charset, aliPayProperties.alipay_public_key, aliPayProperties.sign_type);
 		//设置请求参数
 		AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
 		//设置同步回调通知
-		alipayRequest.setReturnUrl(AlipayConfig.return_url);
+		alipayRequest.setReturnUrl(aliPayProperties.return_url);
 		//设置异步回调通知
-		alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
+		alipayRequest.setNotifyUrl(aliPayProperties.notify_url);
 		//设置支付参数
 		alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
 				+ "\"total_amount\":\"" + total_amount + "\","
@@ -107,6 +134,98 @@ public class AlipayController extends BaseController {
 //		return ResponseData.success(result);
 	}
 
+	/**
+	 * 创建订单实现扫码支付
+	 * @return
+	 */
+	@RequestMapping("/createOrder")
+	@ResponseBody
+	public ResponseData createOrder() {
+		Map<String,String> map = new HashMap();
+		AlipayClient alipayClient = new DefaultAlipayClient(aliPayProperties.gatewayUrl,aliPayProperties.app_id,aliPayProperties.merchant_private_key,"json",aliPayProperties.charset,aliPayProperties.alipay_public_key,aliPayProperties.sign_type);
+		AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
+		String orderNum = getOrderNum();
+		//订单金额
+		String amout = "188.88";
+		request.setBizContent("{" +
+				"\"out_trade_no\":\""+ orderNum +"\"," +
+				"\"seller_id\":\"\"," +
+				"\"total_amount\":" + amout + "," +
+				"\"discountable_amount\":0.00," +
+				"\"subject\":\"论坛费用\"," +
+				"\"body\":\"论坛费用\"," +
+				"\"product_code\":\"FACE_TO_FACE_PAYMENT\"," +
+				"\"timeout_express\":\"90m\"," +
+				"\"qr_code_timeout_express\":\"90m\"" +
+				"  }");
+		AlipayTradePrecreateResponse response = null;
+		try {
+			response = alipayClient.execute(request);
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+		}
+
+		if(response.isSuccess()){
+			logger.info("调用支付宝当面付接口成功");
+			//二维码链接转图片，再转base64码显示到前台
+			//二维码链接
+			String qrCodeUrl = response.getQrCode();
+			//本地路径
+			String path = uploadFolder + "alipay";
+			//文件名称
+			String fileName = orderNum + ".jpg";
+			String imgPatah = QrCodeUtil.createQrCode(qrCodeUrl,path,fileName);
+			String imgBase64Str = Base64Util.convertFileToBase64(imgPatah);
+			map.put("imgPatah",imgPatah);
+			map.put("imgBase64Str",imgBase64Str);
+		} else {
+			logger.error("调用支付宝当面付接口失败");
+			String errMsg = response.getSubMsg();
+			map.put("errMsg",errMsg);
+		}
+		map.put("orderNum",orderNum);
+		return ResponseData.success(map);
+	}
+
+	/**
+	 * 查询订单状态
+	 * @return
+	 */
+	@RequestMapping("/searchOrder")
+	@ResponseBody
+	public ResponseData searchOrder(@RequestParam(required = false) String orderNum) {
+		logger.info("轮询支付宝订单");
+		Map<String,String> map = new HashMap();
+		AlipayClient alipayClient = new DefaultAlipayClient(aliPayProperties.gatewayUrl,aliPayProperties.app_id,aliPayProperties.merchant_private_key,"json",aliPayProperties.charset,aliPayProperties.alipay_public_key,aliPayProperties.sign_type);
+		AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+//		String out_trade_no = "20201019171248751117";
+		request.setBizContent("{" +
+				"\"out_trade_no\":\"" + orderNum + "\"," +
+				"\"trade_no\":\"\"" +
+				"  }");
+		AlipayTradeQueryResponse response = null;
+		try {
+			response = alipayClient.execute(request);
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+		}
+		if(response.isSuccess()){
+			logger.info("调用支付宝查询订单接口成功");
+			String tradeStatus = response.getTradeStatus();
+			String successStr = "TRADE_SUCCESS";
+			if(successStr.equals(tradeStatus)){
+				map.put("tradeStatus","success");
+			}else{
+				map.put("tradeStatus","no");
+			}
+		} else {
+			logger.info("调用支付宝查询订单接口失败");
+			String errMsg = response.getSubMsg();
+			map.put("errMsg",errMsg);
+		}
+		return ResponseData.success(map);
+	}
+
 //	@RequestMapping("/notify")
 	@GetMapping("/notify")
 	public String pay_notify(HttpServletRequest request) {
@@ -114,9 +233,7 @@ public class AlipayController extends BaseController {
 		return "异步通知";
 	}
 
-//	@GetMapping("/return")
 	@RequestMapping("/return")
-//	@ResponseBody
 	public String pay_return(HttpServletRequest request) throws UnsupportedEncodingException {
 		Map<String,String> params = new HashMap<String,String>();
 		Map<String,String[]> requestParams = request.getParameterMap();
@@ -141,12 +258,7 @@ public class AlipayController extends BaseController {
 
 		boolean signVerified = false; //调用SDK验证签名
 		try {
-			signVerified = AlipaySignature.rsaCheckV1(params,  AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type);
-//			signVerified = AlipaySignature.rsaCheckV2(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type);
-//			signVerified = AlipaySignature.rsaCheckV1(params,  AlipayConfig.alipay_public_key, AlipayConfig.charset);
-//			signVerified =AlipaySignature.rsaCheck(params, sign,  AlipayConfig.alipay_public_key, AlipayConfig.charset,  AlipayConfig.sign_type);
-//			signVerified = AlipaySignature.rsa256CheckContent(content, sign, AlipayConfig.alipay_public_key,AlipayConfig.charset);
-//			signVerified = true;
+			signVerified = AlipaySignature.rsaCheckV1(params,  aliPayProperties.alipay_public_key, aliPayProperties.charset, aliPayProperties.sign_type);
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 		}
@@ -181,11 +293,9 @@ public class AlipayController extends BaseController {
 			meetMemberService.update(meetMemberParam);
 
 			System.out.println("trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount);
-//			return "支付成功";
 			return "/meetMember/meetMember.html";
 		}else {
 			System.out.println("验签失败");
-//			return "支付失败";
 			return "/meetMember/meetMember.html";
 		}
 	}
