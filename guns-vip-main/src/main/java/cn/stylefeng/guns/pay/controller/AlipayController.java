@@ -68,7 +68,7 @@ public class AlipayController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/qrcode")
-	public String alipayQrcode() {
+	public String alipayQrcode(@RequestParam("memberId") String memberId) {
 		return PREFIX + "/alipayQrcode.html";
 	}
 
@@ -78,7 +78,7 @@ public class AlipayController extends BaseController {
 	 */
 	@RequestMapping("/createOrder")
 	@ResponseBody
-	public ResponseData createOrder() {
+	public ResponseData createOrder(@RequestParam("memberId") String memberId) {
 		Map<String,String> map = new HashMap();
 		AlipayClient alipayClient = new DefaultAlipayClient(aliPayProperties.gatewayUrl,aliPayProperties.app_id,aliPayProperties.merchant_private_key,"json",aliPayProperties.charset,aliPayProperties.alipay_public_key,aliPayProperties.sign_type);
 		AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
@@ -116,6 +116,24 @@ public class AlipayController extends BaseController {
 			String imgBase64Str = Base64Util.convertFileToBase64(imgPatah);
 			map.put("imgPatah",imgPatah);
 			map.put("imgBase64Str",imgBase64Str);
+			//存支付信息到缴费表
+			VipPayParam vipPayParam = new VipPayParam();
+			Long userId = LoginContextHolder.getContext().getUser().getId();
+			vipPayParam.setPayUser(userId);
+			vipPayParam.setOrderNum(orderNum);
+			vipPayParam.setMemberId(Long.parseLong(memberId));
+			vipPayParam.setPayType("alipay");
+			vipPayParam.setPayMoney(new BigDecimal(amout));
+			vipPayParam.setPayTime(null);
+			VipPayParam tempPayParam = new VipPayParam();
+			tempPayParam.setMemberId(Long.parseLong(memberId));
+			List<VipPayResult> list = this.vipPayService.customList(tempPayParam);
+			if(list.size() == 0){
+				this.vipPayService.add(vipPayParam);
+			}else {
+				vipPayParam.setPayId(list.get(0).getPayId());
+				this.vipPayService.update(vipPayParam);
+			}
 		} else {
 			logger.error("调用支付宝当面付接口失败");
 			String errMsg = response.getSubMsg();
@@ -136,7 +154,6 @@ public class AlipayController extends BaseController {
 		Map<String,String> map = new HashMap();
 		AlipayClient alipayClient = new DefaultAlipayClient(aliPayProperties.gatewayUrl,aliPayProperties.app_id,aliPayProperties.merchant_private_key,"json",aliPayProperties.charset,aliPayProperties.alipay_public_key,aliPayProperties.sign_type);
 		AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
-//		String out_trade_no = "20201019171248751117";
 		request.setBizContent("{" +
 				"\"out_trade_no\":\"" + orderNum + "\"," +
 				"\"trade_no\":\"\"" +
@@ -153,6 +170,19 @@ public class AlipayController extends BaseController {
 			String successStr = "TRADE_SUCCESS";
 			if(successStr.equals(tradeStatus)){
 				map.put("tradeStatus","success");
+				//更新缴费表、会议成员表
+				VipPayParam vipPayParam = new VipPayParam();
+				vipPayParam.setOrderNum(orderNum);
+				List<VipPayResult> list = this.vipPayService.customList(vipPayParam);
+				if(list.size() != 0){
+					vipPayParam.setPayId(list.get(0).getPayId());
+					vipPayParam.setPayTime(new Date());
+					MeetMemberParam meetMemberParam = new MeetMemberParam();
+					meetMemberParam.setMemberId(list.get(0).getMemberId());
+					meetMemberParam.setMeetStatus(4);
+					this.vipPayService.update(vipPayParam);
+					this.meetMemberService.update(meetMemberParam);
+				}
 			}else{
 				map.put("tradeStatus","no");
 			}
@@ -216,7 +246,6 @@ public class AlipayController extends BaseController {
 		try {
 			result = alipayClient.pageExecute(alipayRequest).getBody();
 		} catch (AlipayApiException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

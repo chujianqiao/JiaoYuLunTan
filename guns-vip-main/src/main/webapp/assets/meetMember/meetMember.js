@@ -52,7 +52,6 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     };
     
     // $(function () {
-    //     debugger;
     //     var payObj = document.getElementById("payBtn");
     //     if(payObj != null){
     //         payObj.href = "http://www.baidu.com";
@@ -205,11 +204,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data
      */
     MeetMember.onPayItem = function (data) {
+        let memberId = data.memberId;
         layer.open({
             title: '扫码支付',
             type: 2,
             area: ['400px','450px'],
-            content: Feng.ctxPath + '/alipay/qrcode',
+            content: Feng.ctxPath + '/alipay/qrcode?memberId=' + memberId,
             tableId: MeetMember.tableId
         });
     };

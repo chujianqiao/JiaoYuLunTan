@@ -22,7 +22,9 @@
         let $ax = layui.ax;
         var orderNum;
         $(function () {
-            let imgAjax = new $ax(Feng.ctxPath + "/alipay/createOrder" );
+            debugger
+            let memberId = Feng.getUrlParam("memberId");
+            let imgAjax = new $ax(Feng.ctxPath + "/alipay/createOrder?memberId=" + memberId);
             let imgRes = imgAjax.start();
             let photo = imgRes.data.imgBase64Str;
             $("#img").attr('src', src='data:image/jpeg;base64,' + photo);
@@ -34,16 +36,15 @@
          * 查询订单状态
          */
         function searchOrder(){
-            debugger;
             let param = orderNum;
-            let ordAjax = new $ax(Feng.ctxPath + "/alipay/searchOrder?orderNum=" + param );
+            let ordAjax = new $ax(Feng.ctxPath + "/alipay/searchOrder?orderNum=" + param);
             let imgRes = ordAjax.start();
             let tradeStatus = imgRes.data.tradeStatus;
             if(tradeStatus != undefined && tradeStatus == 'success'){
-                Feng.success("支付成功！");
                 let index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                 window.parent.location.reload();   //刷新父界面
                 parent.layer.close(index);    //关闭弹出层
+                Feng.success("支付成功！");
             }
         }
 
