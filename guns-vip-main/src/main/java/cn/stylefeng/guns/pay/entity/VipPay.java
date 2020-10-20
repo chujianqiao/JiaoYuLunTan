@@ -34,6 +34,12 @@ public class VipPay implements Serializable {
     private Long payUser;
 
     /**
+     * memberId
+     */
+    @TableField("member_id")
+    private Long memberId;
+
+    /**
      * 订单号
      */
     @TableField("order_num")
@@ -118,6 +124,14 @@ public class VipPay implements Serializable {
 
     public void setPayTime(Date payTime) {
         this.payTime = payTime;
+    }
+
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 
     @Override

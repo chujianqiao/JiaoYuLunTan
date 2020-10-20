@@ -31,6 +31,11 @@ public class VipPayParam implements Serializable, BaseValidatingParam {
     private Long payUser;
 
     /**
+     * memberId
+     */
+    private Long memberId;
+
+    /**
      * 订单号
      */
     private String orderNum;

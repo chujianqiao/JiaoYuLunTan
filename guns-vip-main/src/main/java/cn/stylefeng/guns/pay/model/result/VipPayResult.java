@@ -30,6 +30,11 @@ public class VipPayResult implements Serializable {
     private Long payUser;
 
     /**
+     * memberId
+     */
+    private Long memberId;
+
+    /**
      * 订单号
      */
     private String orderNum;

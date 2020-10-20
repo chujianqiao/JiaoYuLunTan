@@ -4,7 +4,6 @@ import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
-import cn.stylefeng.guns.pay.config.AlipayConfig;
 import cn.stylefeng.guns.pay.config.AlipayConfigProperties;
 import cn.stylefeng.guns.pay.model.params.VipPayParam;
 import cn.stylefeng.guns.pay.model.result.VipPayResult;
@@ -64,74 +63,13 @@ public class AlipayController extends BaseController {
 	@Value("${file.uploadFolder}")
 	private String uploadFolder;
 
+	/**
+	 *二维码页面
+	 * @return
+	 */
 	@RequestMapping("/qrcode")
 	public String alipayQrcode() {
 		return PREFIX + "/alipayQrcode.html";
-	}
-
-	@RequestMapping(value = "/pay", produces = "text/html; charset=UTF-8")
-	@ResponseBody
-	public String pay(Map<String,Object> map,HttpServletRequest request) throws Exception {
-		//会议ID
-		String memberIdStr = request.getParameter("memberId");
-//		request.setAttribute("memberId",memberIdStr);
-
-		//商户订单号，商户网站订单系统中唯一订单号，必填
-		String out_trade_no = getOrderNum();
-		//付款金额，必填
-		String total_amount = "188.00";
-		//订单名称，必填
-		String subject = "支付会议费用";
-		//商品描述，可空
-		String body = "描述";
-		//获得初始化的AlipayClient
-		AlipayClient alipayClient = new DefaultAlipayClient(aliPayProperties.gatewayUrl,
-				aliPayProperties.app_id, aliPayProperties.merchant_private_key,
-				"json", aliPayProperties.charset, aliPayProperties.alipay_public_key, aliPayProperties.sign_type);
-		//设置请求参数
-		AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
-		//设置同步回调通知
-		alipayRequest.setReturnUrl(aliPayProperties.return_url);
-		//设置异步回调通知
-		alipayRequest.setNotifyUrl(aliPayProperties.notify_url);
-		//设置支付参数
-		alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
-				+ "\"total_amount\":\"" + total_amount + "\","
-				+ "\"subject\":\"" + subject + "\","
-				+ "\"body\":\"" + body + "\","
-				+ "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}"
-
-		);
-		//请求
-		String result = null;
-		try {
-			result = alipayClient.pageExecute(alipayRequest).getBody();
-		} catch (AlipayApiException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		//支付详情
-		VipPayParam vipPayParam = new VipPayParam();
-		long payId = ToolUtil.getNum19();
-		vipPayParam.setPayId(payId);
-		vipPayParam.setOrderNum(out_trade_no);
-		vipPayParam.setPayMoney(new BigDecimal(total_amount));
-		vipPayParam.setPayType("alipay");
-		vipPayParam.setPayUser(LoginContextHolder.getContext().getUser().getId());
-		vipPayParam.setPayTime(new Date());
-
-		//更新会议注册信息
-		MeetMemberParam meetMemberParam = new MeetMemberParam();
-		meetMemberParam.setMemberId(Long.parseLong(memberIdStr));
-		meetMemberParam.setPayId(payId);
-
-		//更新表
-		vipPayService.add(vipPayParam);
-		meetMemberService.update(meetMemberParam);
-
-		return result;
-//		return ResponseData.success(result);
 	}
 
 	/**
@@ -226,6 +164,85 @@ public class AlipayController extends BaseController {
 		return ResponseData.success(map);
 	}
 
+	/**
+	 * 生成订单号
+	 * @return
+	 */
+	private static String getOrderNum(){
+		Date date = new Date();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
+		String dateStr = sdf.format(date);
+		//6位随机数
+		String randomStr = String.valueOf((int)((Math.random()*9+1)*100000));
+		String orderNum = dateStr + randomStr;
+		return orderNum;
+	}
+
+	@RequestMapping(value = "/pay", produces = "text/html; charset=UTF-8")
+	@ResponseBody
+	public String pay(Map<String,Object> map,HttpServletRequest request) throws Exception {
+		//会议ID
+		String memberIdStr = request.getParameter("memberId");
+//		request.setAttribute("memberId",memberIdStr);
+
+		//商户订单号，商户网站订单系统中唯一订单号，必填
+		String out_trade_no = getOrderNum();
+		//付款金额，必填
+		String total_amount = "188.00";
+		//订单名称，必填
+		String subject = "支付会议费用";
+		//商品描述，可空
+		String body = "描述";
+		//获得初始化的AlipayClient
+		AlipayClient alipayClient = new DefaultAlipayClient(aliPayProperties.gatewayUrl,
+				aliPayProperties.app_id, aliPayProperties.merchant_private_key,
+				"json", aliPayProperties.charset, aliPayProperties.alipay_public_key, aliPayProperties.sign_type);
+		//设置请求参数
+		AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
+		//设置同步回调通知
+		alipayRequest.setReturnUrl(aliPayProperties.return_url);
+		//设置异步回调通知
+		alipayRequest.setNotifyUrl(aliPayProperties.notify_url);
+		//设置支付参数
+		alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
+				+ "\"total_amount\":\"" + total_amount + "\","
+				+ "\"subject\":\"" + subject + "\","
+				+ "\"body\":\"" + body + "\","
+				+ "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}"
+
+		);
+		//请求
+		String result = null;
+		try {
+			result = alipayClient.pageExecute(alipayRequest).getBody();
+		} catch (AlipayApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		//支付详情
+		VipPayParam vipPayParam = new VipPayParam();
+		long payId = ToolUtil.getNum19();
+		vipPayParam.setPayId(payId);
+		vipPayParam.setOrderNum(out_trade_no);
+		vipPayParam.setPayMoney(new BigDecimal(total_amount));
+		vipPayParam.setPayType("alipay");
+		vipPayParam.setPayUser(LoginContextHolder.getContext().getUser().getId());
+		vipPayParam.setPayTime(new Date());
+
+		//更新会议注册信息
+		MeetMemberParam meetMemberParam = new MeetMemberParam();
+		meetMemberParam.setMemberId(Long.parseLong(memberIdStr));
+		meetMemberParam.setPayId(payId);
+
+		//更新表
+		vipPayService.add(vipPayParam);
+		meetMemberService.update(meetMemberParam);
+
+		return result;
+//		return ResponseData.success(result);
+	}
+
 //	@RequestMapping("/notify")
 	@GetMapping("/notify")
 	public String pay_notify(HttpServletRequest request) {
@@ -298,20 +315,6 @@ public class AlipayController extends BaseController {
 			System.out.println("验签失败");
 			return "/meetMember/meetMember.html";
 		}
-	}
-
-	/**
-	 * 生成订单号
-	 * @return
-	 */
-	private static String getOrderNum(){
-		Date date = new Date();
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
-		String dateStr = sdf.format(date);
-		//6位随机数
-		String randomStr = String.valueOf((int)((Math.random()*9+1)*100000));
-		String orderNum = dateStr + randomStr;
-		return orderNum;
 	}
 
 }
