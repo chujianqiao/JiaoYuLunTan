@@ -6,11 +6,18 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
+import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import javax.imageio.ImageIO;
@@ -420,5 +427,36 @@ public class CommonUtil {
             }
         }
         return image;
+    }
+
+    public static void push(String appid, String secret, String templateId, List<String> dataList, String userWechatId, String first, String remark){
+        //1，配置
+        WxMpInMemoryConfigStorage wxStorage = new WxMpInMemoryConfigStorage();
+        wxStorage.setAppId(appid);
+        wxStorage.setSecret(secret);
+        WxMpService wxMpService = new WxMpServiceImpl();
+        wxMpService.setWxMpConfigStorage(wxStorage);
+
+        //2,推送消息
+        WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
+                .toUser(userWechatId)//要推送的用户openid oe9p8wmSOnbvURekVJPo5Xg2ZEDI  oe9p8wrDJD5_Mm9l9Mv9BM9CuKqI
+                .templateId(templateId)//模版id .url("https://www.baidu.com/")//点击模版消息要访问的网址
+                .build();
+
+        templateMessage.addData(new WxMpTemplateData("first", first));
+        //3,如果是正式版发送模版消息，这里需要配置你的信息
+        for (int i = 0;i < dataList.size();i++){
+            templateMessage.addData(new WxMpTemplateData("keyword" + (i+1), dataList.get(i)));
+        }
+        templateMessage.addData(new WxMpTemplateData("remark", remark));
+
+        //templateMessage.addData(new WxMpTemplateData("keyword2", "2020-09-11", "FF00FF"));
+        //templateMessage.addData(new WxMpTemplateData("keyword3", "中国教育科学研究院", "FF00FF"));
+        try {
+            wxMpService.getTemplateMsgService().sendTemplateMsg(templateMessage);
+        } catch (Exception e) {
+            System.out.println("推送失败：" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

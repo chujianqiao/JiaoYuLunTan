@@ -2,12 +2,15 @@ package cn.stylefeng.guns.modular.weixin.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
+import cn.stylefeng.guns.base.auth.service.AuthService;
 import cn.stylefeng.guns.modular.weixin.cache.PoolCache;
 import cn.stylefeng.guns.modular.weixin.cache.ScanPool;
 import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
+import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import cn.stylefeng.roses.kernel.model.response.SuccessResponseData;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -31,10 +34,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/weiXin")
@@ -44,6 +44,9 @@ public class WeiXinController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthService authService;
 
     @Value("${weiXin.url}")
     private String systemUrl;
@@ -57,6 +60,12 @@ public class WeiXinController {
     @Value("${weiXin.secret}")
     private String secret;
 
+    @Value("${weiXinOpen.appid}")
+    private String appidOpen;
+
+    @Value("${weiXinOpen.secret}")
+    private String secretOpen;
+
     /**
      * @Description: 微信公众号登录授权
      * @auther: Sakura
@@ -65,18 +74,23 @@ public class WeiXinController {
      * @return: java.lang.String
      */
     @RequestMapping(value = "/login")
-    public void login(String uuid, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void login(String uuid, String userId, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // 回调地址，该域名需要公众号验证
-        String backUrl = systemUrl + "/weiXin/callBack?uuid="+uuid;
+        String backUrl = systemUrl + "/weiXin/callBack?uuid=" + uuid + "&userId=" + userId;
         // 向用户申请授权
         String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid
                 + "&redirect_uri=" + URLEncoder.encode(backUrl, "UTF-8")
                 + "&response_type=code"
                 + "&scope=snsapi_userinfo"
-                + "&state=STATE#wechat_redirect";
+                 + "&state=STATE#wechat_redirect";
 
         response.sendRedirect(url);
+    }
+
+    @RequestMapping(value = "/testBand")
+    public String testBand(String uuid, String userId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return PREFIX + "/weiXinLogin.html";
     }
 
     /**
@@ -87,7 +101,7 @@ public class WeiXinController {
      * @return: java.lang.String
      */
     @RequestMapping(value = "/callBack")
-    public String callBack(String uuid, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String callBack(String uuid, String userId, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 获取到授权标志code
         String code = request.getParameter("code");
         // 通过code换取access_token
@@ -122,52 +136,105 @@ public class WeiXinController {
                 + "openID-----" + userInfo.getString("openid") + "\n"
                 + "性别-----" + userInfo.getString("sex"));
 
-        LoginUser loginUser = LoginContextHolder.getContext().getUser();
-        UserDto user = new UserDto();
-        if (loginUser != null){
-            user.setUserId(loginUser.getId());
-            user.setWechatName(userInfo.getString("nickname"));
-            user.setWechatId(userInfo.getString("openid"));
-            this.userService.editUser(user);
-        }
+        User userExist = userService.getUserByUnionId(userInfo.getString("unionid"));
+
+        if (userExist == null){
+            User loginUser = userService.getById(userId);
+            UserDto user = new UserDto();
+            if (loginUser != null){
+                user.setUserId(loginUser.getUserId());
+                user.setWechatName(userInfo.getString("nickname"));
+                user.setWechatId(userInfo.getString("openid"));
+                user.setUnionId(userInfo.getString("unionid"));
+                this.userService.editUser(user);
+            }
 
 
-        ScanPool pool = PoolCache.cacheMap.get(uuid);
+            ScanPool pool = PoolCache.cacheMap.get(uuid);
 
-        if(pool == null){
+            if(pool == null){
+            }else {
+                pool.scanSuccess();
+            }
+            model.addAttribute("bandStatus","success");
         }else {
-            pool.scanSuccess();
+            model.addAttribute("bandStatus","exist");
         }
+
+
         //return "success";
         try {
             return PREFIX + "/weiXinLogin.html";
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("微信扫描登陆异常");
+            throw new RuntimeException("微信扫描异常");
         }
     }
 
     @RequestMapping("/qrcode")
-    public String qrcode(Model model){
-        model.addAttribute("url",CommonUtil.getTempQrcode());
-        return PREFIX + "/weiXinLogin.html";
+    @ResponseBody
+    public Map<String, Object> qrcode(Model model) throws UnsupportedEncodingException {
+        Map map = new HashMap();
+        String oauthUrl = "https://open.weixin.qq.com/connect/qrconnect?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+        String callBack = systemUrl + "/weiXin/openCallBack";
+        String redirect_uri = URLEncoder.encode(callBack, "utf-8");
+        oauthUrl = oauthUrl.replace("APPID",appidOpen).replace("REDIRECT_URI",redirect_uri).replace("SCOPE","snsapi_login");
+        model.addAttribute("name","liuzp");
+        model.addAttribute("oauthUrl",oauthUrl);
+        map.put("oauthUrl",oauthUrl);
+        return map;
     }
+
+
+    /**
+     * @Description: 授权的回调函数
+     * @auther: Sakura
+     * @date: 2019/3/8 9:47
+     * @param: [request, response]
+     * @return: java.lang.String
+     */
+    @RequestMapping(value = "/openCallBack")
+    public String openCallBack(String code,String state,Model model,HttpServletRequest request) throws Exception{
+        //1.通过code获取access_token
+        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
+        url = url.replace("APPID",appidOpen).replace("SECRET",secretOpen).replace("CODE",code);
+        JSONObject tokenInfoObject =  CommonUtil.httpsRequest(url,"GET",null);
+
+        log.info("tokenInfoObject:{}",tokenInfoObject);
+
+        //2.通过access_token和openid获取用户信息
+        String userInfoUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID";
+        userInfoUrl = userInfoUrl.replace("ACCESS_TOKEN",tokenInfoObject.getString("access_token")).replace("OPENID",tokenInfoObject.getString("openid"));
+        JSONObject userInfoStr =  CommonUtil.httpsRequest(userInfoUrl,"GET",null);
+        log.info("userInfoObject:{}",userInfoStr);
+
+        model.addAttribute("tokenInfoObject",tokenInfoObject);
+        model.addAttribute("userInfoObject",userInfoStr);
+
+        User user = userService.getUserByUnionId(userInfoStr.getString("unionid"));
+        //登录并创建token
+        String token = authService.login(user.getAccount(),request);
+        new SuccessResponseData(token);
+        return "redirect:http://9ac2070ab81c.ngrok.io";
+    }
+
 
     @RequestMapping("/getLinkImage")
     @ResponseBody
     public Map<String, Object> getLinkImage(){
         //  要生成二维码的链接
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        LoginUser user = LoginContextHolder.getContext().getUser();
         //将UUID放入缓存
         ScanPool pool = new ScanPool();
         PoolCache.cacheMap.put(uuid, pool);
-        String url = systemUrl + "/weiXin/login?uuid=" + uuid;
+        String url = systemUrl + "/weiXin/login?uuid=" + uuid + "&userId=" + user.getId();
         //	指定路径：D:\User\Desktop\testQrcode
         //String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
         String path = imagesFolder;
         System.out.println(path);
         //	指定二维码图片名字
-        LoginUser user = LoginContextHolder.getContext().getUser();
+
         //String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
         String fileName = user.getId() + "_" + uuid + ".jpg";
         CommonUtil.createQrCode(url, path, fileName);
@@ -252,6 +319,16 @@ public class WeiXinController {
     public String weChatBand(Model model){
 
         return PREFIX + "/weChatBand.html";
+    }
+
+    @RequestMapping("/weChatCancelBand")
+    @ResponseBody
+    public ResponseData weChatCancelBand(Model model){
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        if (loginUser != null){
+            this.userService.cancelBand(loginUser.getId());
+        }
+        return ResponseData.success();
     }
 
     @RequestMapping("/pool")

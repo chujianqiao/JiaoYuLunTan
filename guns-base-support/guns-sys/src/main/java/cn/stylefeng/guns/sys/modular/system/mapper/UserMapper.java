@@ -57,6 +57,8 @@ public interface UserMapper extends BaseMapper<User> {
      */
     int setRoles(@Param("userId") Long userId, @Param("roleIds") String roleIds);
 
+    int cancelBand(@Param("userId") Long userId);
+
     /**
      * 通过账号获取用户
      */
@@ -66,6 +68,7 @@ public interface UserMapper extends BaseMapper<User> {
      * 通过手机号获取用户
      */
     User getByPhone(@Param("phone") String phone);
+    User getUserByUnionId(@Param("unionId") String unionId);
 
     /**
      * 选择办理人

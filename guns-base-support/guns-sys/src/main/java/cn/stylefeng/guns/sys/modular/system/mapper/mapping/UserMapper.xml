@@ -65,11 +65,13 @@
         <result column="introduction" property="introduction" />
         <result column="wechat_name" property="wechatName" />
         <result column="wechat_id" property="wechatId" />
+        <result column="union_id" property="unionId" />
+        <result column="wechat_open_id" property="wechatOpenId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id AS "userId", avatar AS "avatar", account AS "account", password AS "password", salt AS "salt", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", vip AS "vip", work_unit AS "workUnit", title AS "title", post AS "post", education AS "education", direction AS "direction", can_download_word AS "canDownloadWord",can_download_ppt AS "canDownloadPpt", word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",introduction AS "introduction",wechat_name AS "wechatName",wechat_id AS "wechatId"
+        user_id AS "userId", avatar AS "avatar", account AS "account", password AS "password", salt AS "salt", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", vip AS "vip", work_unit AS "workUnit", title AS "title", post AS "post", education AS "education", direction AS "direction", can_download_word AS "canDownloadWord",can_download_ppt AS "canDownloadPpt", word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",introduction AS "introduction",wechat_name AS "wechatName",wechat_id AS "wechatId",union_id AS "unionId",wechat_open_id AS "wechatOpenId"
     </sql>
 
     <sql id="Base_Column_List_With_Pwd">
@@ -267,6 +269,14 @@
 		#{userId}
 	</update>
 
+    <update id="cancelBand">
+		update sys_user set wechat_name = ""
+		,wechat_id = ""
+		,union_id = ""
+		,wechat_open_id = ""
+		where user_id = #{userId}
+	</update>
+
     <select id="getByAccount" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
         select
         <include refid="Base_Column_List_With_Pwd"/>
@@ -277,6 +287,12 @@
         select
         <include refid="Base_Column_List_With_Pwd"/>
         from sys_user where phone = #{phone} and status != 'DELETED'
+    </select>
+
+    <select id="getUserByUnionId" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
+        select
+        <include refid="Base_Column_List_With_Pwd"/>
+        from sys_user where union_id = #{unionId} and status != 'DELETED'
     </select>
 
     <select id="listUserAndRoleExpectAdmin" resultType="map">

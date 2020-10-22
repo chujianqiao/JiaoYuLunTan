@@ -76,9 +76,10 @@
                                                 <label class="layui-form-label">${lang.get("FIELD_weChat","微信")}:</label>
                                                 <div class="layui-input-block">
                                                     <div class="layui-input-inline">
-                                                        <input type="wechatName" name="wechatName" class="layui-input layui-disabled" placeholder="当前未绑定微信账号" lay-verify="required" required disabled/>
+                                                        <input type="wechatName" id="wechatName" name="wechatName" class="layui-input layui-disabled" placeholder="当前未绑定微信账号" lay-verify="required" required disabled/>
                                                     </div>
-                                                    <a onclick="weChatBand()" href="#" style="line-height: 36px">绑定</a>
+                                                    <a id="weChatBand" onclick="weChatBand()" href="#" style="line-height: 36px;">绑定</a>
+                                                    <a id="weChatCancelBand" onclick="weChatCancelBand()" href="#" style="line-height: 36px;">解绑</a>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
@@ -388,5 +389,26 @@
             });
         });
     }
+
+    function weChatCancelBand(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/weiXin/weChatCancelBand" ,
+            success:function(response){
+                var data=response.data;
+                window.location.reload();
+            }
+        })
+    }
+    $(document).ready(function() {
+        if ("${wechatName }" != ""){
+            $("#weChatBand").attr("style","line-height: 36px;display: none");
+            $("#weChatCancelBand").attr("style","line-height: 36px;display: inline-block");
+        }else {
+            $("#weChatCancelBand").attr("style","line-height: 36px;display: none");
+            $("#weChatBand").attr("style","line-height: 36px;display: inline-block");
+        }
+    })
+
 </script>
 @}

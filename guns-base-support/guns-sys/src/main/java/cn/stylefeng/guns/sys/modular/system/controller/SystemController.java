@@ -221,6 +221,7 @@ public class SystemController extends BaseController {
         model.addAttribute("roleName", ConstantFactory.me().getRoleName(user.getRoleId()));
         model.addAttribute("deptName", ConstantFactory.me().getDeptName(user.getDeptId()));
         model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
+        model.addAttribute("wechatName", user.getWechatName());
         LogObjectHolder.me().set(user);
 
         String[] roles = user.getRoleId().split(",");

@@ -14,6 +14,7 @@ import cn.stylefeng.guns.meetRegister.wrapper.MeetMemberWrapper;
 import cn.stylefeng.guns.modular.forum.entity.Forum;
 import cn.stylefeng.guns.modular.forum.model.params.ForumParam;
 import cn.stylefeng.guns.modular.forum.service.ForumService;
+import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.guns.sys.core.util.DefaultImages;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
@@ -75,6 +76,12 @@ public class MeetMemberController extends BaseController {
 
     @Value("${file.uploadFolder}")
     private String uploadFolder;
+
+    @Value("${weiXin.appid}")
+    private String appid;
+
+    @Value("${weiXin.secret}")
+    private String secret;
 
     @Autowired
     private FileInfoService fileInfoService;
@@ -257,6 +264,24 @@ public class MeetMemberController extends BaseController {
         }
         //更新会议成员表
         this.meetMemberService.update(meetMemberParam);
+
+        String templateId = "2iJpJMGCXs4OQ5vy-H_5vFz_lELnAZNPe7bSfFLSvp4";
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        User user = userService.getById(loginUser.getId());
+        String userWechatId = user.getWechatId();
+        if (userWechatId != null && userWechatId != ""){
+            String first = "恭喜！论坛报名成功！";
+            String remark = "请准时参加论坛！";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String start = format.format(forum.getStartTime());
+            String end = format.format(forum.getEndTime());
+            List<String> dataList = new ArrayList<>();
+            dataList.add(forum.getForumName());
+            dataList.add(start + " ~ " + end);
+            dataList.add(forum.getLocation());
+            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+        }
+
         return ResponseData.success();
     }
 

@@ -219,10 +219,20 @@ public class User implements Serializable {
     private String wechatName;
 
     /**
-     * 微信openid
+     * 微信公众平台openid
      */
     @TableField("wechat_id")
     private String wechatId;
+    /**
+     * 微信唯一unionId
+     */
+    @TableField("union_id")
+    private String unionId;
+    /**
+     * 微信开放平台openid
+     */
+    @TableField("wechat_open_id")
+    private String wechatOpenId;
 
 
     public Long getUserId() {
@@ -497,6 +507,22 @@ public class User implements Serializable {
         this.wechatId = wechatId;
     }
 
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
+
+    public String getWechatOpenId() {
+        return wechatOpenId;
+    }
+
+    public void setWechatOpenId(String wechatOpenId) {
+        this.wechatOpenId = wechatOpenId;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -534,6 +560,8 @@ public class User implements Serializable {
         ", introduction=" + introduction +
         ", wechatName=" + wechatName +
         ", wechatId=" + wechatId +
+        ", unionId=" + unionId +
+        ", wechatOpenId=" + wechatOpenId +
         "}";
     }
 }

@@ -430,12 +430,12 @@
         myJs.render();
         if ("${roleNames! }" == "[超级管理员]"){
             $("#userDiv").append("<a href=\"/admin\" target=\"_blank\" style=\"color: white;margin-right: 10px\">后台管理</a>");
-            $("#userDiv").append("<a href=\"/#\" id='btnLogout' target=\"_blank\" style=\"color: white\">退出</a>");
+            $("#userDiv").append("<a href=\"/#\" id='btnLogout' style=\"color: white\">退出</a>");
         } else if ("${userName! }" == "" || "${userName! }" == null) {
             $("#userDiv").append("<a id='btnLogin' style=\"color: white;cursor:pointer \">登录</a>");
         } else {
             $("#userDiv").append("<a href=\"/mgr/toPersonCenter\" target=\"_blank\" style=\"color: white;margin-right: 10px\"><i class=\"layui-icon\">&#xe770;</i>${userName! }</a>");
-            $("#userDiv").append("<a href=\"/#\" id='btnLogout' target=\"_blank\" style=\"color: white\">退出</a>");
+            $("#userDiv").append("<a href=\"/#\" id='btnLogout' style=\"color: white\">退出</a>");
         }
     });
 

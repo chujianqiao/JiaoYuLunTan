@@ -103,9 +103,18 @@ public class UserDto {
      */
     private String wechatName;
     /**
-     * 微信openid
+     * 微信公众平台openid
      */
     private String wechatId;
+
+    /**
+     * 微信唯一unionId
+     */
+    private String unionId;
+    /**
+     * 微信开放平台openid
+     */
+    private String wechatOpenId;
 
     /*@NotBlank
     private String position;*/

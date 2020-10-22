@@ -207,6 +207,17 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     /**
+     * 取消微信绑定
+     *
+     * @author fengshuonan
+     * @Date 2018/12/24 22:45
+     */
+    public int cancelBand(Long userId) {
+        return this.baseMapper.cancelBand(userId);
+    }
+
+
+    /**
      * 通过账号获取用户
      *
      * @author fengshuonan
@@ -388,5 +399,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     public List<User> getByCanDownloadFile() {
         return this.baseMapper.getByCanDownloadFile();
+    }
+
+    public User getUserByUnionId(String unionId) {
+        return this.baseMapper.getUserByUnionId(unionId);
     }
 }

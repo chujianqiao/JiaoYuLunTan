@@ -58,7 +58,7 @@
 
         <br>
         <div class="layui-form-item">
-            <a class="layui-link">扫码登录</a>
+            <a class="layui-link" id="oauthUrl" href="#">扫码登录</a>
                 <i class="layui-icon layui-icon-login-wechat"
                    style="color: #4DAF29;font-size: 20px;"></i>
                 <a class="layui-link" target="_top" style="float: right" id="registePerson">立即注册</a>
@@ -267,6 +267,8 @@
         var notice = layui.notice;
         var admin = layui.admin;
 
+        oauthUrl();
+
         /* 图形验证码 */
         $('img.login-captcha').click(function () {
             this.src = this.src + '?t=' + (new Date).getTime();
@@ -377,6 +379,31 @@
         $('#registeUnit').click(function () {
             MgrUnit.openAddUser();
         });
+
+
+
+        function openOauthUrl(oauthUrl){
+            layer.open({
+                type: 2,
+                title: " ",
+                content: oauthUrl,
+                area: ['400px', '435px'],
+            });
+        }
+
+        function oauthUrl(){
+            $.ajax({
+                type:'post',
+                url:Feng.ctxPath + "/weiXin/qrcode" ,
+                success:function(data){
+                    console.log(data.oauthUrl);
+                    //$("#oauthUrl").attr("href",data.oauthUrl);
+                    $('#oauthUrl').click(function () {
+                        openOauthUrl(data.oauthUrl);
+                    });
+                }
+            })
+        }
 
     });
 
