@@ -269,10 +269,13 @@ public class HoldForumController extends BaseController {
 
         UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
         String fileId = uploadResult.getFileId();
+        String fileName = file.getOriginalFilename();
+        String fileType = fileName.substring(fileName.lastIndexOf("."));
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("fileId", fileId);
         map.put("path",uploadResult.getFileSavePath());
+        map.put("type",fileType);
 
         return ResponseData.success(0, "上传成功", map);
     }

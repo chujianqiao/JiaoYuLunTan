@@ -248,15 +248,25 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
-                $("#fileNameTip").val(file.name);
-                $("#fileNameTip").html(file.name);
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".pdf")){
+                    $("#fileNameTip").val(file.name);
+                    $("#fileNameTip").html(file.name);
+                }
+
             });
         }
         , done: function (res) {
-            $("#fileInputHidden").val(res.data.fileId);
-            $("#thesisPath").val(res.data.path);
-            $("#fileName").val($("#fileNameTip").val());
-            Feng.success(res.message);
+            var type = res.data.type;
+            if(type != ".pdf"){
+                Feng.error("上传失败，文件格式不匹配");
+            }else {
+                $("#fileInputHidden").val(res.data.fileId);
+                $("#thesisPath").val(res.data.path);
+                $("#fileName").val($("#fileNameTip").val());
+                Feng.success(res.message);
+            }
         }
         , error: function () {
             Feng.error("上传文件失败！");

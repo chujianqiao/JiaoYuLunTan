@@ -667,7 +667,7 @@ public class WeiXinController {
             }
 
         }else {
-
+            model.addAttribute("checkIn","error");
         }
 
         //return "success";
