@@ -94,4 +94,10 @@
         </if>
     </select>
 
+    <select id="getByUser" resultType="cn.stylefeng.guns.modular.checkIn.entity.CheckIn" parameterType="cn.stylefeng.guns.modular.checkIn.entity.CheckIn">
+        select
+        <include refid="Base_Column_List"/>
+        from check_in where user_id = #{userId}
+    </select>
+
 </mapper>

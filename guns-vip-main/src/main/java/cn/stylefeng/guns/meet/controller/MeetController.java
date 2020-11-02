@@ -8,6 +8,8 @@ import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.model.params.MeetParam;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meet.wrapper.MeetWrapper;
+import cn.stylefeng.guns.modular.seat.model.result.SeatDetailResult;
+import cn.stylefeng.guns.modular.seat.service.SeatDetailService;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.FileInfo;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
@@ -57,6 +59,9 @@ public class MeetController extends BaseController {
 
     @Autowired
     private MeetService meetService;
+
+    @Autowired
+    private SeatDetailService seatDetailService;
 
     @Autowired
     private FileInfoService fileInfoService;
@@ -197,7 +202,15 @@ public class MeetController extends BaseController {
     @ResponseBody
     public ResponseData detailPub(MeetParam meetParam) {
         Meet detail = this.meetService.getByStatus(1);
-        return ResponseData.success(detail);
+        Map map = new HashMap();
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        SeatDetailResult seatDetailResult = this.seatDetailService.getByUser(user.getId(),detail.getMeetId());
+
+        map.put("detail",detail);
+        if (seatDetailResult != null){
+            map.put("seat",seatDetailResult);
+        }
+        return ResponseData.success(map);
     }
 
     /**

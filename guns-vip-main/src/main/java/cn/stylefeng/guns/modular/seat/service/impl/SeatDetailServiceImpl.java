@@ -93,4 +93,9 @@ public class SeatDetailServiceImpl extends ServiceImpl<SeatDetailMapper, SeatDet
         return entity;
     }
 
+    @Override
+    public SeatDetailResult getByUser(Long userId, Long meetId){
+        return baseMapper.getByUser(userId, meetId);
+    }
+
 }

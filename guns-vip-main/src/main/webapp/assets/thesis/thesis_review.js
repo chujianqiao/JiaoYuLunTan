@@ -374,7 +374,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 渲染表格
     var tableResultEdu = table.render({
         elem: '#' + EducationResult.tableId,
-        url: Feng.ctxPath + '/educationResult/wrapList',
+        url: Feng.ctxPath + '/educationResult/wrapListReview',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
@@ -468,7 +468,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + GreatResult.tableId,
-        url: Feng.ctxPath + '/greatResult/wrapList',
+        url: Feng.ctxPath + '/greatResult/wrapListReview',
         page: true,
         height: "full-158",
         cellMinWidth: 100,

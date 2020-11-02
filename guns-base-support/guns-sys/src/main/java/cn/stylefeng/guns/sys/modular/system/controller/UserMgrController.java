@@ -18,6 +18,7 @@ package cn.stylefeng.guns.sys.modular.system.controller;
 import cn.hutool.core.bean.BeanUtil;
 import cn.stylefeng.guns.base.auth.annotion.Permission;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.service.AuthService;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
 import cn.stylefeng.guns.base.log.BussinessLog;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
@@ -80,6 +81,9 @@ public class UserMgrController extends BaseController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthService authService;
+
     /**
      * 跳转到查看管理员列表的页面
      *
@@ -106,6 +110,40 @@ public class UserMgrController extends BaseController {
         model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
         LogObjectHolder.me().set(user);
         return "/modular/frame/person_center.html";
+    }
+
+    @RequestMapping("/userPhoneLogin")
+    public String userPhoneLogin() {
+        return "/modular/frame/user_phone_login.html";
+    }
+
+    @RequestMapping("/phoneLogin")
+    @ResponseBody
+    public ResponseData phoneLogin(HttpServletRequest request,String phone, String smsCode) {
+        JSONObject json = (JSONObject)request.getSession().getAttribute("smsCode");
+        ResponseData responseData = new ResponseData();
+        if(json == null){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if(!json.getString("smsCode").equals(smsCode)){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if((System.currentTimeMillis() - json.getLong("createTime")) > 1000 * 60 * 5){
+            responseData.setMessage("overTime");
+            return responseData;
+        }
+        User user = userService.getByPhone(phone);
+        if (user != null){
+            //登录并创建token
+            String token = authService.login(user.getAccount(),request);
+            new SuccessResponseData(token);
+            responseData.setMessage("success");
+        }else {
+            responseData.setMessage("error");
+        }
+        return responseData;
     }
 
     /**

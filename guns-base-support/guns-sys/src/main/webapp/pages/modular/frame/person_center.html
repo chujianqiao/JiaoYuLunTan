@@ -86,6 +86,7 @@
                                 <h4 style="padding-top: 10px;">电话：${phone}</h4>
                                 <h4 id="meetName" style="padding-top: 10px;">会议：无</h4>
                                 <h4 id="forumName" style="padding-top: 10px;">论坛：无</h4>
+                                <h4 id="seat" style="padding-top: 10px;">座位：无</h4>
                             </div>
                         </div>
 
@@ -205,11 +206,17 @@
                                                     </a>
                                                 </li>
                                                 <li class="layui-col-xs2">
+                                                    <a href="javascript:fileDownload();">
+                                                        <i style="font-size: 60px" class="layui-icon layui-icon-download-circle"></i>
+                                                        <cite>材料下载</cite>
+                                                    </a>
+                                                </li>
+                                                <!--<li class="layui-col-xs2">
                                                     <a lay-href="component/progress/index.html">
                                                         <i style="font-size: 60px" class="layui-icon layui-icon-table"></i>
                                                         <cite>我的座位</cite>
                                                     </a>
-                                                </li>
+                                                </li>-->
 
                                             </ul>
                                            <!-- <ul class="layui-row layui-col-space10">
@@ -349,27 +356,24 @@
                         </div>-->
                     </div>
                 </div>
-                <div class="layui-col-md8">
+                <div class="layui-col-md6">
                     <div class="layui-card">
                         <div class="layui-tab layui-tab-brief layadmin-latestData">
-                            <ul class="layui-tab-title">
-                                <li class="layui-this">会议信息</li>
-                                <li>论坛信息</li>
-                            </ul>
+                            <div class="layui-card-header">会议信息</div>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-card-body layui-show" style="padding: 25px;height: 185px">
-                                    <div id="meetData1" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div>
-                                    <div id="meetData2" class="">主办单位：全国教育科学规划领导小组办公室、中国教育科学研究院</div>
-                                    <div id="meetData3" class="">召开日期：2020年11月25日~2020年11月26日</div>
-                                    <div id="meetData4" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
-                                    <div id="meetData5" class="">签到时间：24日下午报到，16日开会。</div>
+                                    <div id="meetData1" class=""></div>
+                                    <div id="meetData2" class=""></div>
+                                    <div id="meetData3" class=""></div>
+                                    <div id="meetData4" class=""></div>
+                                    <div id="meetData5" class=""></div>
                                 </div>
-                                <div id="forumData" class="layui-tab-item layui-card-body" style="padding: 25px;height: 185px">
+                                <!--<div id="forumData" class="layui-tab-item layui-card-body" style="padding: 25px;height: 185px">
                                     <div id="forumData1" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div>
                                     <div id="forumData2" class="">召开日期：2020年11月25日~2020年11月26日</div>
                                     <div id="forumData3" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
                                     <div id="forumData4" class="">签到时间：24日下午报到，16日开会。</div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
 
@@ -383,6 +387,23 @@
                             <div id="meetData5" class="">签到时间：24日下午报到，16日开会。</div>
                         </div>-->
                     </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-tab layui-tab-brief layadmin-latestData">
+                            <div class="layui-card-header">论坛信息</div>
+                            <div class="layui-tab-content">
+                                <div class="layui-card-body" style="padding: 25px;height: 185px">
+                                    <div id="forumData1" class=""></div>
+                                    <div id="forumData2" class=""></div>
+                                    <div id="forumData3" class=""></div>
+                                    <div id="forumData4" class=""></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md8">
                     <div class="layui-card" id="thesisDataDiv">
                         <div class="layui-card-header">我的论文</div>
                         <div class="layui-tab-content">
@@ -396,30 +417,8 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="layui-col-md4">
-                    <div class="layui-card">
-                        <div class="layui-card-header">会议材料</div>
-                        <div class="layui-card-body">
-                            <div class="layui-carousel layadmin-carousel layadmin-shortcut">
-                                <div carousel-item>
-                                    <ul class="layui-row layui-col-space10">
-                                        <li class="layui-col-xs12">
-                                            <a href="javascript:fileDownload();">
-                                                <i style="font-size: 60px" class="layui-icon layui-icon-download-circle"></i>
-                                                <cite>材料下载</cite>
-                                            </a>
-                                        </li>
-                                        <!--<li class="layui-col-xs6">
-                                            <a lay-href="home/homepage2.html">
-                                                <i style="font-size: 60px" class="layui-icon layui-icon-list"></i>
-                                                <cite>在线预览</cite>
-                                            </a>
-                                        </li>-->
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="layui-card" id="thesisDiv">
                         <div class="layui-card-header">论文评审状态</div>
                         <div class="layui-card-body">

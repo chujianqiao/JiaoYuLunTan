@@ -51,8 +51,14 @@ public class CheckInWrapper extends BaseControllerWrapper {
             roleName = roleName + role.getName() + ";";
         }
 
-        int registerStatus = (Integer) map.get("registerStatus");
-        int signStatus = (Integer) map.get("signStatus");
+        int registerStatus = 0;
+        int signStatus = 0;
+        if (map.get("registerStatus") != null && map.get("registerStatus") != ""){
+            registerStatus = (Integer) map.get("registerStatus");
+        }
+        if (map.get("signStatus") != null && map.get("signStatus") != ""){
+            signStatus = (Integer) map.get("signStatus");
+        }
         if (registerStatus == 0){
             map.put("registerStatus","未报到");
             map.put("registerTime","-");

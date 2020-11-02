@@ -103,4 +103,8 @@ public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> impl
         return entity;
     }
 
+    @Override
+    public CheckIn getByUser(Long userId){
+        return this.baseMapper.getByUser(userId);
+    }
 }

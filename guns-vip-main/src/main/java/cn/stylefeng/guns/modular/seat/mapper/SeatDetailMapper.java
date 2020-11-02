@@ -60,4 +60,6 @@ public interface SeatDetailMapper extends BaseMapper<SeatDetail> {
      * @return
      */
     int deleteData(@Param("paramCondition") SeatDetailParam paramCondition);
+
+    SeatDetailResult getByUser(@Param("userId")Long userId, @Param("meetId")Long meetId);
 }

@@ -16,9 +16,12 @@ import cn.stylefeng.guns.modular.greatResult.wrapper.GreatResultWrapper;
 import cn.stylefeng.guns.modular.greatReviewMiddle.model.params.GreatReviewMiddleParam;
 import cn.stylefeng.guns.modular.greatReviewMiddle.model.result.GreatReviewMiddleResult;
 import cn.stylefeng.guns.modular.greatReviewMiddle.service.GreatReviewMiddleService;
+import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
@@ -30,6 +33,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -43,6 +47,15 @@ import java.util.*;
 public class GreatResultController extends BaseController {
 
     private String PREFIX = "/greatResult";
+
+    @Autowired
+    private UserService userService;
+
+    @Value("${weiXin.appid}")
+    private String appid;
+
+    @Value("${weiXin.secret}")
+    private String secret;
 
     @Autowired
     private GreatResultService greatResultService;
@@ -252,6 +265,7 @@ public class GreatResultController extends BaseController {
     @ResponseBody
     public ResponseData reviewItem(GreatResultParam greatResultParam,GreatReviewMiddleParam middleParam) {
         Long resultId = greatResultParam.getResultId();
+        GreatResult greatResult = greatResultService.getById(resultId);
         middleParam.setResultId(resultId);
         LoginUser user = LoginContextHolder.getContext().getUser();
         Long userId = user.getId();
@@ -264,6 +278,30 @@ public class GreatResultController extends BaseController {
         middleParam.setReviewTime(new Date());
 
         this.greatReviewMiddleService.update(middleParam);
+
+        String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        User resultUser = userService.getById(greatResult.getApplyId());
+        String userWechatId = resultUser.getWechatId();
+        if (userWechatId != null && userWechatId != ""){
+            String first = "您的教改实验申报已审核";
+            String remark = "您可登录中国教育科学论坛平台进行查询。";
+            String reviewResult = "";
+            if (middleParam.getReviewResult() == 0){
+                reviewResult = "不推荐参会";
+            }
+            if (middleParam.getReviewResult() == 1){
+                reviewResult = "推荐参会";
+            }
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String time = format.format(middleParam.getReviewTime());
+            List<String> dataList = new ArrayList<>();
+            dataList.add("教改实验申报");
+            dataList.add(reviewResult);
+            dataList.add(time);
+            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+        }
+
 //        this.greatResultService.update(greatResultParam);
         return ResponseData.success();
     }
@@ -399,6 +437,34 @@ public class GreatResultController extends BaseController {
         Page<Map<String, Object>> theses = this.greatResultService.findPageWrap(educationResultParam,greatIdList,listStatus);
         Page wrapped = new GreatResultWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    /**
+     * 查询列表（拼接字段）
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @ResponseBody
+    @RequestMapping("/wrapListReview")
+    public Object wrapListReview(GreatResultParam educationResultParam) {
+        boolean isReview = ToolUtil.isReviewRole();
+        List<Long> greatIdList = new ArrayList<>();
+        String listStatus = "";
+        if(isReview){
+            greatIdList = getGreatIdList();
+            if(greatIdList.size() != 0){
+                listStatus = "有数据";
+            }
+        }
+
+        if (listStatus == "有数据"){
+            Page<Map<String, Object>> theses = this.greatResultService.findPageWrap(educationResultParam,greatIdList,listStatus);
+            Page wrapped = new GreatResultWrapper(theses).wrap();
+            return LayuiPageFactory.createPageInfo(wrapped);
+        }else {
+            Page wrapped = new Page();
+            return LayuiPageFactory.createPageInfo(wrapped);
+        }
     }
 
     /**

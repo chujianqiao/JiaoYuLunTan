@@ -17,9 +17,12 @@ import cn.stylefeng.guns.modular.educationReviewMiddle.entity.EducationReviewMid
 import cn.stylefeng.guns.modular.educationReviewMiddle.model.params.EducationReviewMiddleParam;
 import cn.stylefeng.guns.modular.educationReviewMiddle.model.result.EducationReviewMiddleResult;
 import cn.stylefeng.guns.modular.educationReviewMiddle.service.EducationReviewMiddleService;
+import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
@@ -32,6 +35,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -46,6 +50,15 @@ import java.util.*;
 public class EducationResultController extends BaseController {
 
     private String PREFIX = "/educationResult";
+
+    @Autowired
+    private UserService userService;
+
+    @Value("${weiXin.appid}")
+    private String appid;
+
+    @Value("${weiXin.secret}")
+    private String secret;
 
     @Autowired
     private EducationResultService educationResultService;
@@ -248,6 +261,7 @@ public class EducationResultController extends BaseController {
     @ResponseBody
     public ResponseData reviewItem(EducationResultParam educationResultParam,EducationReviewMiddleParam middleParam) {
         Long resultId = educationResultParam.getResultId();
+        EducationResult educationResult = educationResultService.getById(resultId);
         LoginUser user = LoginContextHolder.getContext().getUser();
         Long userId = user.getId();
         middleParam.setUserId(userId);
@@ -260,6 +274,30 @@ public class EducationResultController extends BaseController {
         middleParam.setMiddleId(middleId);
         middleParam.setReviewTime(new Date());
         this.educationReviewMiddleService.update(middleParam);
+
+        String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        User resultUser = userService.getById(educationResult.getApplyId());
+        String userWechatId = resultUser.getWechatId();
+        if (userWechatId != null && userWechatId != ""){
+            String first = "您的教改实验申报已审核";
+            String remark = "您可登录中国教育科学论坛平台进行查询。";
+            String reviewResult = "";
+            if (middleParam.getReviewResult() == 0){
+                reviewResult = "不推荐参会";
+            }
+            if (middleParam.getReviewResult() == 1){
+                reviewResult = "推荐参会";
+            }
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String time = format.format(middleParam.getReviewTime());
+            List<String> dataList = new ArrayList<>();
+            dataList.add("教改实验申报");
+            dataList.add(reviewResult);
+            dataList.add(time);
+            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+        }
+
 //        this.educationResultService.update(educationResultParam);
         return ResponseData.success();
     }
@@ -404,6 +442,34 @@ public class EducationResultController extends BaseController {
         Page<Map<String, Object>> theses = this.educationResultService.findPageWrap(educationResultParam,eduIdList,listStatus);
         Page wrapped = new EducationResultWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    /**
+     * 查询列表（拼接字段）
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @ResponseBody
+    @RequestMapping("/wrapListReview")
+    public Object wrapListReview(EducationResultParam educationResultParam) {
+        boolean isReview = ToolUtil.isReviewRole();
+        List<Long> eduIdList = new ArrayList<>();
+        String listStatus = "";
+        if(isReview){
+            eduIdList = getEduIdList();
+            if(eduIdList.size() != 0){
+                listStatus = "有数据";
+            }
+        }
+        if (listStatus == "有数据"){
+            Page<Map<String, Object>> theses = this.educationResultService.findPageWrap(educationResultParam,eduIdList,listStatus);
+            Page wrapped = new EducationResultWrapper(theses).wrap();
+            return LayuiPageFactory.createPageInfo(wrapped);
+        }else {
+            Page wrapped = new Page();
+            return LayuiPageFactory.createPageInfo(wrapped);
+        }
+
     }
 
     /**

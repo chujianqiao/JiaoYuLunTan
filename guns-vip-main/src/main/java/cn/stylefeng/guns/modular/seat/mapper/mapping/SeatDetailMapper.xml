@@ -111,4 +111,15 @@
         </if>
 	</delete>
 
+    <select id="getByUser" resultType="cn.stylefeng.guns.modular.seat.model.result.SeatDetailResult" parameterType="cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam">
+        select
+        <include refid="Base_Column_List"/>
+        from seat_detail where 1 = 1
+        <if test="userId != null and userId != ''">
+            and user_id = #{userId}
+        </if>
+        <if test="meetId != null and meetId != ''">
+            and meet_id = #{meetId}
+        </if>
+    </select>
 </mapper>

@@ -16,5 +16,19 @@
         alert("此微信已被绑定其它账号！");
     }
 
+    if ("${ifCheck! }" == "yes"){
+        alert("您已经完成报到，无法再次报到！")
+    } else if ("${ifSign! }" == "yes") {
+        alert("您已经完成签到，无法再次签到")
+    } else {
+        if ("${checkIn! }" == "checkSuccess"){
+            alert("报到成功！")
+        } else if ("${checkIn! }" == "signSuccess"){
+            alert("签到成功！")
+        } else {
+            alert("报到签到失败！")
+        }
+    }
+
 </script>
 </html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
+    <script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+    <script src="${ctxPath}/assets/common/module/QRCode.js"></script>
+</head>
+<body id="body">
+<div style="width: 200px;margin: auto">
+<img id="img1" style="width: 200px;height: 50px;">
+<br>
+<img id="qrcode" style="">
+<br>
+<img id="img2" style="width: 200px;height: 75px;">
+</div>
+</body><script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
+<script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
+<script src="${ctxPath}/assets/common/js/custom.js"></script>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script>
+    var memberId = Feng.getUrlParam("memberId");
+    var uuid;
+    $.ajax({
+        type: "post",
+        url: "${ctxPath}/weiXin/weiXinPay?memberId=" + memberId,
+        success: function (data) {
+            var photo = data.photo;
+            var uuid = data.uuid;
+            //$("#qrcode").attr("style","background-image: url('data:image/jpeg;base64," + photo + "');background-repeat: no-repeat;width: 200px;height: 200px;background-size: contain;");
+            $("#qrcode").attr("style","background-image: url('data:image/jpeg;base64," + photo + "');background-repeat: no-repeat;width: 200px;height: 200px;background-size: contain;");
+            $("#img1").attr("src","${ctxPath}/assets/common/images/weiXinPay1.png");
+            $("#img2").attr("src","${ctxPath}/assets/common/images/weiXinPay2.png");
+
+            //开始验证
+            keepPool(uuid);
+        }
+    });
+
+    function keepPool(uuid){
+        layui.use(['layer', 'element', 'admin', 'index', 'ax'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var admin = layui.admin;
+            var index = layui.index;
+            var $ax = layui.ax;
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            $.post("${ctxPath}/weiXin/pool", {
+                uuid: uuid,
+            }, function (data) {
+                if (data == 'success') {
+                    alert("支付成功");
+                    parent.location.reload();
+                    admin.closeThisDialog();
+                } else if (data == 'timeout') {
+                    alert("支付超时，请刷新重试");
+                } else {
+                    keepPool(uuid);
+                }
+            });
+        });
+    }
+
+</script>
+</html>

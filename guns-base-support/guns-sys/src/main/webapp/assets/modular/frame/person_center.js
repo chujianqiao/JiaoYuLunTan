@@ -26,14 +26,15 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             url: Feng.ctxPath + "/meet/detailPub",
             success: function (response) {
                 var data = response.data;
-                //console.log(data);
+                console.log(data);
 
-                $("#meetData1").html(data.meetName);
-                $("#meetData2").html("会议描述：" + data.meetDesc);
-                $("#meetData3").html("会议地点：" + data.place);
-                $("#meetData4").html("会议时间：" + data.beginTime + "-" + data.endTime);
-                $("#meetData5").html("报名时间：" + data.joinBegTime + "-" + data.joinEndTime);
-                $("#meetName").html("会议：" + data.meetName);
+                $("#meetData1").html(data.detail.meetName);
+                $("#meetData2").html("会议描述：" + data.detail.meetDesc);
+                $("#meetData3").html("会议地点：" + data.detail.place);
+                $("#meetData4").html("会议时间：" + data.detail.beginTime + "-" + data.detail.endTime);
+                $("#meetData5").html("报名时间：" + data.detail.joinBegTime + "-" + data.detail.joinEndTime);
+                $("#meetName").html("会议：" + data.detail.meetName);
+                $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
             }
         });
     }

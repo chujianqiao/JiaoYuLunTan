@@ -78,4 +78,6 @@ public interface SeatDetailService extends IService<SeatDetail> {
     @Transactional(rollbackFor = Exception.class)
     int deleteData(SeatDetailParam param);
 
+
+    SeatDetailResult getByUser(Long userId, Long meetId);
 }

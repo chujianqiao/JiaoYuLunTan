@@ -6,7 +6,14 @@
     <script src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
 </head>
 <body id="body" style="">
-<img id="img" src="" style="margin: auto">
+<div style="width: 200px;margin: auto">
+    <img id="img1" style="width: 200px;height: 70px;">
+    <br>
+    <img id="img" src="" style="width: 198px;height: 200px;border: 1px solid gray">
+    <br>
+    <img id="img2" style="width: 200px;height: 75px;">
+</div>
+
 </body>
 <script type="text/javascript">
     var Feng = {
@@ -28,6 +35,9 @@
             let imgRes = imgAjax.start();
             let photo = imgRes.data.imgBase64Str;
             $("#img").attr('src', src='data:image/jpeg;base64,' + photo);
+            $("#img1").attr("src","${ctxPath}/assets/common/images/alipay1.png");
+            $("#img2").attr("src","${ctxPath}/assets/common/images/alipay2.png");
+
             orderNum = imgRes.data.orderNum;
             setInterval(searchOrder,3000);//轮询执行，3000ms一次
         })

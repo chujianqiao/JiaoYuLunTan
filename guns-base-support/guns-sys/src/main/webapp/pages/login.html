@@ -61,7 +61,10 @@
             <a class="layui-link" id="oauthUrl" href="#">扫码登录</a>
                 <i class="layui-icon layui-icon-login-wechat"
                    style="color: #4DAF29;font-size: 20px;"></i>
-                <a class="layui-link" target="_top" style="float: right" id="registePerson">立即注册</a>
+            <br>
+            <a class="layui-link" target="_top" id="phoneLogin">手机验证码登录</a>
+            <a class="layui-link" target="_top" style="float: right" id="registePerson">立即注册</a>
+
         </div>
 
         <!--<div class="layui-form-item-registe-person">
@@ -360,6 +363,21 @@
                 content: Feng.ctxPath + '/mgr/user_registe',
             });
         };
+
+        MgrUser.openPhoneLogin = function () {
+
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            console.log(langs);
+            top.layer.open({
+                type: 2,
+                title: false,
+                area: ['400px', '300px'],
+                content: Feng.ctxPath + '/mgr/userPhoneLogin',
+            });
+        };
+
         MgrUnit.openAddUser = function () {
 
             //获取多语言
@@ -379,6 +397,10 @@
         $('#registeUnit').click(function () {
             MgrUnit.openAddUser();
         });
+        $('#phoneLogin').click(function () {
+            MgrUser.openPhoneLogin();
+        });
+
 
 
 
