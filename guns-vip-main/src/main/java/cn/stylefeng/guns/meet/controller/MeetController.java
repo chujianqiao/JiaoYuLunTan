@@ -8,12 +8,15 @@ import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.model.params.MeetParam;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meet.wrapper.MeetWrapper;
+import cn.stylefeng.guns.modular.seat.model.params.SeatParam;
 import cn.stylefeng.guns.modular.seat.model.result.SeatDetailResult;
 import cn.stylefeng.guns.modular.seat.service.SeatDetailService;
+import cn.stylefeng.guns.modular.seat.service.SeatService;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
 import cn.stylefeng.guns.sys.modular.system.entity.FileInfo;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.MSOfficeGeneratorUtils;
+import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.guns.util.WordUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
@@ -59,6 +62,9 @@ public class MeetController extends BaseController {
 
     @Autowired
     private MeetService meetService;
+
+    @Autowired
+    private SeatService seatService;
 
     @Autowired
     private SeatDetailService seatDetailService;
@@ -125,9 +131,19 @@ public class MeetController extends BaseController {
     @RequestMapping("/addItem")
     @ResponseBody
     public Object addItem(Meet meet) {
+        Long meetId = ToolUtil.getNum19();
         LoginUser user = LoginContextHolder.getContext().getUser();
         meet.setRegUser(user.getId());
         meet.setRegTime(new Date());
+        meet.setMeetId(meetId);
+        //同时新增seat表
+        SeatParam seatParam = new SeatParam();
+        seatParam.setMeetId(meetId);
+        seatParam.setMeetType(1L);
+        seatParam.setColNum(8);
+        seatParam.setRowNum(8);
+        seatParam.setSeatType("A");
+        this.seatService.add(seatParam);
         this.meetService.save(meet);
         return SUCCESS_TIP;
     }
