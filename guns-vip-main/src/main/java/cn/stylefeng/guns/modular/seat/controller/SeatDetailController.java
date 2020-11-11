@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -284,6 +285,24 @@ public class SeatDetailController extends BaseController {
         Page<Map<String, Object>> details = this.seatDetailService.findPageWrap(seatDetailParam);
         Page wrapped = new SeatDetailWrapper(details).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    /**
+     * 查询一条数据
+     * @author wucy
+     * @Date 2020-11-11
+     */
+    @ResponseBody
+    @RequestMapping("/ownSeat")
+    public ResponseData ownSeat(SeatDetailParam seatDetailParam) {
+        Page<Map<String, Object>> details = this.seatDetailService.findPageWrap(seatDetailParam);
+        Page wrapped = new SeatDetailWrapper(details).wrap();
+        List list = wrapped.getRecords();
+        Object obj = null;
+        if(list.size() != 0){
+            obj = list.get(0);
+        }
+        return ResponseData.success(obj);
     }
 
 }

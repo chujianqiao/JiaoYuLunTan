@@ -446,14 +446,18 @@
     @include("/common/person_footer.html"){}
 </div>
 </body>
-<script type="text/javascript">
-    var Feng = {
-        ctxPath: "${ctxPath}",
-        version: '${constants.getReleaseVersion()}'
-    };
-</script>
-<script src="${ctxPath}/assets/common/layuiadmin/layui/layui.js?t=1"></script>
+
+<!--<script src="${ctxPath}/assets/common/layuiadmin/layui/layui.js?t=1"></script>-->
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+
 <script src="${ctxPath}/assets/modular/frame/person_center.js"></script>
+<!--<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>-->
+<script type="text/javascript">
+var Feng = {
+    ctxPath: "${ctxPath}",
+    version: '${constants.getReleaseVersion()}'
+};
+</script>
 <script>
     layui.config({
         base: '${ctxPath}/assets/common/layuiadmin/' //静态资源所在路径

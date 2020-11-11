@@ -1,11 +1,13 @@
 package cn.stylefeng.guns.modular.seat.controller;
 
+import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.modular.seat.entity.Seat;
 import cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam;
 import cn.stylefeng.guns.modular.seat.service.SeatDetailService;
 import cn.stylefeng.guns.modular.seat.service.SeatService;
+import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +45,14 @@ public class MeetSeatController {
 	 * @Date 2020-09-01
 	 */
 	@RequestMapping("")
-	public String index() {
+	public String index(HttpServletRequest request) {
+		boolean isAdmin = ToolUtil.isAdminRole();
+		if(!isAdmin){
+			long userId = LoginContextHolder.getContext().getUser().getId();
+			request.setAttribute("loginUser",userId);
+		}else{
+			request.setAttribute("loginUser","admin");
+		}
 		return PREFIX + "/meetSeat.html";
 	}
 

@@ -15,6 +15,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
     thesisDetail();
     meetMemberDetail();
 
+
     if ($("#roleId").val().indexOf(4) > -1 || $("#roleId").val().indexOf(5) > -1 || $("#roleId").val().indexOf(1) > -1){
         $("#thesisDataDiv").attr("style","display:none");
         $("#thesisDiv").attr("style","display:none");
@@ -27,7 +28,6 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             success: function (response) {
                 var data = response.data;
                 console.log(data);
-
                 $("#meetData1").html(data.detail.meetName);
                 $("#meetData2").html("会议描述：" + data.detail.meetDesc);
                 $("#meetData3").html("会议地点：" + data.detail.place);
@@ -35,6 +35,9 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                 $("#meetData5").html("报名时间：" + data.detail.joinBegTime + "-" + data.detail.joinEndTime);
                 $("#meetName").html("" + data.detail.meetName);
                 $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
+                //绑定点击事件
+                let seatId = data.seatId;
+                ownSeat(seatId);
             }
         });
     }
@@ -121,6 +124,25 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             }
         })
     }
+
+    function ownSeat(seatId){
+        $("#seat").each(function(){
+            let seatText = document.getElementById("seat").innerText;
+            let index = seatText.indexOf('无');
+            if(index < 0){
+                $(this).click(function(){
+                    layer.open({
+                        title: '我的座位',
+                        type: 2,
+                        area: ['1200px','580px'],
+                        // resize:false,
+                        content: Feng.ctxPath + '/meetSeat?seatId='+ seatId
+                    });
+                });
+            }
+        })
+    }
+
 
 
 

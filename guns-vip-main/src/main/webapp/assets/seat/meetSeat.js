@@ -1,5 +1,6 @@
 layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], function () {
     var $ax = layui.ax;
+    var loginUser = $('#loginUser').val();
     //座次表基本情况
     var seatId = Feng.getUrlParam("seatId");
     var ajaxSeat = new $ax(Feng.ctxPath + "/seat/detail?seatId=" + Feng.getUrlParam("seatId"));
@@ -29,7 +30,6 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         one.setAttribute('id', 'platform_'+i);
         one.setAttribute('style','width:80px; height:50px; margin:10px; border:1px solid #000; float:left; margin:0 0 0 0;text-align:center');
         one.innerText = '主席台';
-
     }
 
     /**
@@ -60,14 +60,17 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                 }
             }
             one.innerText = ''+j;
-            one.onclick = function () {
-                let id=$(this).attr("id");
-                layer.open({
-                    title: '分配单个座位',
-                    type: 2,
-                    area: ['620px','450px'],
-                    content: Feng.ctxPath + '/meetSeat/changeOne?divId=' + id + '&meetId=' + meetId + '&seatId=' + seatId
-                });
+            if(loginUser == 'admin'){
+                //管理员，添加点击事件
+                one.onclick = function () {
+                    let id=$(this).attr("id");
+                    layer.open({
+                        title: '分配单个座位',
+                        type: 2,
+                        area: ['620px','450px'],
+                        content: Feng.ctxPath + '/meetSeat/changeOne?divId=' + id + '&meetId=' + meetId + '&seatId=' + seatId
+                    });
+                }
             }
         }
     }
@@ -75,94 +78,140 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     //座次列表信息
     var ajaxDetail = new $ax(Feng.ctxPath + "/seatDetail/wrapList?meetId=" + meetId);
     var seatsRes = ajaxDetail.start();
-    debugger;
     var seats = seatsRes.data;
     var length = seats.length;
-    for(let i=0;i<length;i++){
-        let oneSeat = seats[i];
-        let seatRow = oneSeat.seatRow;
-        let seatCol = oneSeat.seatCol;
-        let oneDivId = 'seat_'+ seatRow + '_' + seatCol;
-        let oneDiv = $("#"+oneDivId);
+    if(loginUser == 'admin'){
+        //管理员，展示所有座位
+        for(let i=0;i<length;i++){
+            let oneSeat = seats[i];
+            let seatRow = oneSeat.seatRow;
+            let seatCol = oneSeat.seatCol;
+            let oneDivId = 'seat_'+ seatRow + '_' + seatCol;
+            let oneDiv = $("#"+oneDivId);
 
-        let unitName = oneSeat.unitName;
-        if(unitName == '' || unitName == 'undefined' || unitName == undefined){
-            let userId = oneSeat.userId;
-            let ajaxUser = new $ax(Feng.ctxPath + "/mgr/getUserInfo?userId=" + userId);
-            let user = ajaxUser.start();
-            let userName = user.data.name;
-            oneDiv.css("background","#90EE90");
-            oneDiv.text(""+ seatCol + ':' + userName);
-        }else{
-            oneDiv.css("background","#90EE90");
-            oneDiv.text(""+ seatCol + ':' + unitName);
+            let unitName = oneSeat.unitName;
+            if(unitName == '' || unitName == 'undefined' || unitName == undefined){
+                let userName = oneSeat.userName;
+                oneDiv.css("background","#90EE90");
+                oneDiv.text(""+ seatCol + ':' + userName);
+            }else{
+                oneDiv.css("background","#90EE90");
+                oneDiv.text(""+ seatCol + ':' + unitName);
+            }
         }
-
+    }else{
+        let ajaxOwn = new $ax(Feng.ctxPath + "/seatDetail/ownSeat?meetId=" + meetId + '&userId=' + loginUser);
+        let ownSeat = ajaxOwn.start();
+        if(ownSeat != undefined && ownSeat != ''){
+            let seatRow = ownSeat.data.seatRow;
+            let seatCol = ownSeat.data.seatCol;
+            let oneDivId = 'seat_'+ seatRow + '_' + seatCol;
+            let oneDiv = $("#"+oneDivId);
+            oneDiv.css("background","#90EE90");
+            oneDiv.text(""+ seatCol + ':' + "我的座位");
+        }else{
+            Feng.info("抱歉，没有找到您的座位");
+        }
     }
 
-    (function() {
-        document.onmousedown = function () {
-            var selList = [];
-            // var fileNodes = document.getElementsByTagName("div");
-            selList = $('.orgSeat');
-            var isSelect = true;
-            // 获取事件触发后的event对象，做了一个兼容性处理
-            var evt = window.event || arguments[0];
-            // 存放鼠标点击初始位置
-            var startX = (evt.x || evt.clientX);
-            var startY = (evt.y || evt.clientY);
+    if(loginUser == 'admin'){
+        //管理员，开放多选功能
+        (function() {
+            document.onmousedown = function () {
+                var selList = [];
+                // var fileNodes = document.getElementsByTagName("div");
+                selList = $('.orgSeat');
+                var isSelect = true;
+                // 获取事件触发后的event对象，做了一个兼容性处理
+                var evt = window.event || arguments[0];
+                // 存放鼠标点击初始位置
+                var startX = (evt.x || evt.clientX);
+                var startY = (evt.y || evt.clientY);
 
-            // 创建一个框选元素
-            var selDiv = document.createElement("div");
-            // 给框选元素添加CSS样式，使用决定定位
-            selDiv.style.cssText = "position:absolute; width:0px; height:0px; font-size:0px; margin:0px; padding:0px; border:1px dashed #0099FF; z-index:1000; filter:alpha(opacity:60); opacity:0.6; display:none";
-            // 添加ID
-            selDiv.id = "selectDiv";
-            // appendChild()向节点添加最后一个子节点
-            document.body.appendChild(selDiv);
-            // 根据起始位置，添加定位
-            selDiv.style.left = startX + "px";
-            selDiv.style.top = startY + "px";
+                // 创建一个框选元素
+                var selDiv = document.createElement("div");
+                // 给框选元素添加CSS样式，使用决定定位
+                selDiv.style.cssText = "position:absolute; width:0px; height:0px; font-size:0px; margin:0px; padding:0px; border:1px dashed #0099FF; z-index:1000; filter:alpha(opacity:60); opacity:0.6; display:none";
+                // 添加ID
+                selDiv.id = "selectDiv";
+                // appendChild()向节点添加最后一个子节点
+                document.body.appendChild(selDiv);
+                // 根据起始位置，添加定位
+                selDiv.style.left = startX + "px";
+                selDiv.style.top = startY + "px";
 
-            // 根据坐标给选框修改样式
-            var _x = null;
-            var _y = null;
-            clearEventBubble(evt);
-            // 移动鼠标
-            document.onmousemove = function () {
-                evt = window.event || arguments[0];
-                if (isSelect) {
-                    if (selDiv.style.display == "none") {
-                        selDiv.style.display = "";
+                // 根据坐标给选框修改样式
+                var _x = null;
+                var _y = null;
+                clearEventBubble(evt);
+                // 移动鼠标
+                document.onmousemove = function () {
+                    evt = window.event || arguments[0];
+                    if (isSelect) {
+                        if (selDiv.style.display == "none") {
+                            selDiv.style.display = "";
+                        }
+                        // 获取当前鼠标位置
+                        _x = (evt.x || evt.clientX);
+                        _y = (evt.y || evt.clientY);
+                        selDiv.style.left = Math.min(_x, startX) + 'px';
+                        selDiv.style.top = Math.min(_y, startY) + 'px';
+                        selDiv.style.width = Math.abs(_x - startX) + 'px';  //Math.abs()返回数的绝对值
+                        selDiv.style.height = Math.abs(_y - startY) + 'px';
+
+                        // 获取参数
+                        var _l = selDiv.getBoundingClientRect().left;
+                        var _t = selDiv.getBoundingClientRect().top;
+                        var _w = selDiv.offsetWidth;
+                        var _h = selDiv.offsetHeight;
+                        for(let i = 0; i < selList.length; i++) {
+                            let sl = selList[i].offsetWidth + selList[i].getBoundingClientRect().left;
+                            let st = selList[i].offsetHeight + selList[i].getBoundingClientRect().top;
+                            let selectDom = selList[i];
+                            if (sl > _l && st > _t && selList[i].getBoundingClientRect().left < _l + _w && selList[i].getBoundingClientRect().top < _t + _h) {
+                                // 该DOM元素被选中，进行处理
+                                // indexOf()可返回某个指定的字符串值在字符串中首次出现的位置
+                                if(selList[i].className.indexOf(" selected") == -1){
+                                    selList[i].className = selList[i].className + " selected";
+                                }
+                                selectDom.setAttribute('style',redBorderStyle);
+                            }else{
+                                if (selList[i].className.indexOf(" selected")!= -1) {
+                                    selList[i].className = "orgSeat";
+                                }
+                                let text = selectDom.innerText;
+                                let numNum = text.indexOf(':');
+                                if(numNum == -1){
+                                    selectDom.setAttribute('style',orginStyle);
+                                }else{
+                                    selectDom.setAttribute('style',greenBackStyle);
+                                }
+
+                            }
+                        }
                     }
-                    // 获取当前鼠标位置
-                    _x = (evt.x || evt.clientX);
-                    _y = (evt.y || evt.clientY);
-                    selDiv.style.left = Math.min(_x, startX) + 'px';
-                    selDiv.style.top = Math.min(_y, startY) + 'px';
-                    selDiv.style.width = Math.abs(_x - startX) + 'px';  //Math.abs()返回数的绝对值
-                    selDiv.style.height = Math.abs(_y - startY) + 'px';
+                    clearEventBubble(evt);
+                }
 
-                    // 获取参数
-                    var _l = selDiv.getBoundingClientRect().left;
-                    var _t = selDiv.getBoundingClientRect().top;
-                    var _w = selDiv.offsetWidth;
-                    var _h = selDiv.offsetHeight;
-                    for(let i = 0; i < selList.length; i++) {
-                        let sl = selList[i].offsetWidth + selList[i].getBoundingClientRect().left;
-                        let st = selList[i].offsetHeight + selList[i].getBoundingClientRect().top;
-                        let selectDom = selList[i];
-                        if (sl > _l && st > _t && selList[i].getBoundingClientRect().left < _l + _w && selList[i].getBoundingClientRect().top < _t + _h) {
-                            // 该DOM元素被选中，进行处理
-                            // indexOf()可返回某个指定的字符串值在字符串中首次出现的位置
-                            if(selList[i].className.indexOf(" selected") == -1){
-                                selList[i].className = selList[i].className + " selected";
+                // 放开鼠标，选框消失
+                document.onmouseup = function() {
+                    isSelect = false;
+                    if (selDiv) {
+                        document.body.removeChild(selDiv);
+                    }
+                    selList = null, _x = null, _y = null, selDiv = null, startX = null, startY = null, evt = null;
+                    let selectList = $('.selected');
+                    if(selectList.length > 1){
+                        let ids = "";
+                        for (let k = 0; k < selectList.length; k++) {
+                            let selectDom = selectList[k];
+                            let domId = selectDom.id;
+                            if(k == selectList.length - 1){
+                                ids += domId;
+                            }else{
+                                ids += domId+',';
                             }
-                            selectDom.setAttribute('style',redBorderStyle);
-                        }else{
-                            if (selList[i].className.indexOf(" selected")!= -1) {
-                                selList[i].className = "orgSeat";
-                            }
+                            //重置样式
                             let text = selectDom.innerText;
                             let numNum = text.indexOf(':');
                             if(numNum == -1){
@@ -170,55 +219,23 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                             }else{
                                 selectDom.setAttribute('style',greenBackStyle);
                             }
-
+                            //使命完成，恢复到原始className
+                            selectDom.className = "orgSeat";
                         }
+                        layer.open({
+                            title: '批量分配',
+                            type: 2,
+                            area: ['620px','450px'],
+                            content: Feng.ctxPath + '/meetSeat/batch?divIds=' + ids + '&meetId=' + meetId + '&seatId=' + seatId
+                        });
                     }
+
                 }
-                clearEventBubble(evt);
             }
 
-            // 放开鼠标，选框消失
-            document.onmouseup = function() {
-                debugger;
-                isSelect = false;
-                if (selDiv) {
-                    document.body.removeChild(selDiv);
-                }
-                selList = null, _x = null, _y = null, selDiv = null, startX = null, startY = null, evt = null;
-                let selectList = $('.selected');
-                if(selectList.length > 1){
-                    let ids = "";
-                    for (let k = 0; k < selectList.length; k++) {
-                        let selectDom = selectList[k];
-                        let domId = selectDom.id;
-                        if(k == selectList.length - 1){
-                            ids += domId;
-                        }else{
-                            ids += domId+',';
-                        }
-                        //重置样式
-                        let text = selectDom.innerText;
-                        let numNum = text.indexOf(':');
-                        if(numNum == -1){
-                            selectDom.setAttribute('style',orginStyle);
-                        }else{
-                            selectDom.setAttribute('style',greenBackStyle);
-                        }
-                        //使命完成，恢复到原始className
-                        selectDom.className = "orgSeat";
-                    }
-                    layer.open({
-                        title: '批量分配',
-                        type: 2,
-                        area: ['620px','450px'],
-                        content: Feng.ctxPath + '/meetSeat/batch?divIds=' + ids + '&meetId=' + meetId + '&seatId=' + seatId
-                    });
-                }
+        })();
+    }
 
-            }
-        }
-
-    })();
 
     function clearEventBubble(evt) {
         // stopPropagation()不再派发事件。终止事件在传播过程的捕获、目标处理或起跑阶段进一步传播

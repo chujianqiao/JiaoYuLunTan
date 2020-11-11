@@ -10,6 +10,7 @@ import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meet.wrapper.MeetWrapper;
 import cn.stylefeng.guns.modular.seat.model.params.SeatParam;
 import cn.stylefeng.guns.modular.seat.model.result.SeatDetailResult;
+import cn.stylefeng.guns.modular.seat.model.result.SeatResult;
 import cn.stylefeng.guns.modular.seat.service.SeatDetailService;
 import cn.stylefeng.guns.modular.seat.service.SeatService;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
@@ -221,11 +222,19 @@ public class MeetController extends BaseController {
         Map map = new HashMap();
         LoginUser user = LoginContextHolder.getContext().getUser();
         SeatDetailResult seatDetailResult = this.seatDetailService.getByUser(user.getId(),detail.getMeetId());
-
         map.put("detail",detail);
         if (seatDetailResult != null){
             map.put("seat",seatDetailResult);
         }
+
+        SeatParam seatParam = new SeatParam();
+        seatParam.setMeetId(detail.getMeetId());
+        LayuiPageInfo results = this.seatService.findPageBySpec(seatParam);
+        List<SeatResult> list = results.getData();
+        SeatResult seatResult = list.get(0);
+        long seatId = seatResult.getSeatId();
+        map.put("seatId",seatId);
+
         return ResponseData.success(map);
     }
 
