@@ -33,7 +33,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                 $("#meetData3").html("会议地点：" + data.detail.place);
                 $("#meetData4").html("会议时间：" + data.detail.beginTime + "-" + data.detail.endTime);
                 $("#meetData5").html("报名时间：" + data.detail.joinBegTime + "-" + data.detail.joinEndTime);
-                $("#meetName").html("会议：" + data.detail.meetName);
+                $("#meetName").html("" + data.detail.meetName);
                 $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
             }
         });
@@ -61,21 +61,29 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             url: Feng.ctxPath + '/meetMember/wraplist',
             success: function (response) {
                 var data = response.data;
-                //console.log(data);
+
 
                 for (var i = 0;i < data.length;i++){
-
+                    console.log(data[i]);
                     if (data[i].meetStatus == 4){
                         $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')")
+                        $("#pay").attr("href","javascript:toPay('yes')")
                         forumSelectOption(data[i].ownForumid);
+                        break;
+                    }else if (data[i].meetStatus == 2){
+                        $("#forum").attr("href","javascript:forumAdd('toPay')")
+                        $("#pay").attr("href","javascript:toPay('" + data[i].memberId + "')")
                         break;
                     }else {
                         $("#forum").attr("href","javascript:forumAdd('')")
+                        $("#pay").attr("href","javascript:toPay('')")
                         $("#forumData1").html("无");
                         $("#forumData2").empty();
                         $("#forumData3").empty();
                         $("#forumData4").empty();
                     }
+
+
 
                 }
             }

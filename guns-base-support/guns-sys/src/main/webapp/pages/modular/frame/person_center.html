@@ -67,29 +67,30 @@
         <div class="layui-fluid">
             <div class="layui-row layui-col-space15">
                 <div class="layui-col-md5">
-                    <div class="layui-card" style="background-color:#ecffec;width: 448px;height: 286px;border-radius:10%">
+                    <div class="layui-card" style="background-image: url('${ctxPath}/assets/common/images/xiongpai.jpg');width: 448px;height: 286px;border-radius:2%">
                         <input value="${roleId! }" id="roleId" hidden>
-                        <div class="layui-card-body" style="width: 218px;height: 100px;float: left;margin-top: 20px;margin-left: 20px">
+                        <div class="layui-card-body" style="width: 100%;float: left;text-align: center;">
                             <div class="layui-text">
-                                <h4 style="padding-top: 10px;">姓名：${name}</h4>
-                                <h4 style="padding-top: 10px;">单位：${workUnit}</h4>
-                                <h4 style="padding-top: 10px;">职务：${post}</h4>
+                                <h4 id="meetName" style="padding-top: 20px;font-size: 20px;font-weight: bold;color: rgb(43,121,183)">无</h4>
+                            </div>
+                        </div>
+                        <div class="layui-card-body" style="width: 218px;height: 100px;float: left;margin-left: 40px">
+                            <div class="layui-text">
+                                <h4 style="padding-top: 5px;font-size: 18px;font-weight: bold;color: rgb(41,122,187)">${name}</h4>
+                                <h4 style="padding-top: 5px;">单位：${workUnit}</h4>
+                                <h4 style="padding-top: 5px;">职务：${post}</h4>
+                                <h4 style="padding-top: 5px;">电话：${phone}</h4>
+                                <h4 id="forumName" style="padding-top: 5px;">论坛：无</h4>
+                                <h4 id="seat" style="padding-top: 5px;">座位：无</h4>
                             </div>
 
                         </div>
-                        <div class="layui-card-body" style="width: 210px;height: 100px;float: left;margin-top: 20px;">
+                        <div class="layui-card-body" style="width: 110px;height: 100px;float: left;padding-top: 40px;">
                             <div class="user-info-head" id="imgHead">
                                 <img id="avatarPreview" style="border-radius: 50%;" src="${avatar}"/>
                             </div>
                         </div>
-                        <div class="layui-card-body" style="width: 458px;height: 166px;float: left;margin-left: 20px">
-                            <div class="layui-text">
-                                <h4 style="padding-top: 10px;">电话：${phone}</h4>
-                                <h4 id="meetName" style="padding-top: 10px;">会议：无</h4>
-                                <h4 id="forumName" style="padding-top: 10px;">论坛：无</h4>
-                                <h4 id="seat" style="padding-top: 10px;">座位：无</h4>
-                            </div>
-                        </div>
+
 
 
                         <!--<div class="layui-card-body" style="padding: 25px;display: block">
@@ -195,7 +196,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="layui-col-xs2">
-                                                    <a lay-href="component/layer/list.html">
+                                                    <a id="pay">
                                                         <i style="font-size: 60px" class="layui-icon layui-icon-notice"></i>
                                                         <cite>缴费提醒</cite>
                                                     </a>
@@ -463,12 +464,29 @@
     function forumAdd(memberId) {
         if (memberId == "" || memberId == null){
             layer.alert("还不满足条件进行论坛报名！");
+        } else if (memberId == "toPay"){
+            layer.alert("还不满足条件进行论坛报名！");
         } else {
             layer.open({
                 title: '选择论坛',
                 type: 2,
                 area: ['620px', '600px'],
                 content: Feng.ctxPath + '/meetMember/forum?memberId=' + memberId,
+            });
+        }
+    }
+
+    function toPay(memberId) {
+        if (memberId == "" || memberId == null){
+            layer.alert("还不满足条件进行缴费！");
+        } else if (memberId == "yes") {
+            layer.alert("已经完成缴费！");
+        } else {
+            layer.open({
+                title: '扫码支付',
+                type: 2,
+                area: ['460px','450px'],
+                content: Feng.ctxPath + '/alipay/qrcode?memberId=' + memberId,
             });
         }
     }
