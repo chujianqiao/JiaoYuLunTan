@@ -98,6 +98,7 @@ public class MeetSeatController {
 		Integer colNum = seat.getColNum();
 		Long meetId = seat.getMeetId();
 		Long meetType = seat.getMeetType();
+		String seatType = seat.getSeatType();
 		//先重置座次表
 		SeatDetailParam seatDetailParam = new SeatDetailParam();
 		seatDetailParam.setMeetId(meetId);
@@ -105,12 +106,13 @@ public class MeetSeatController {
 		this.seatDetailService.deleteData(seatDetailParam);
 
 		//开始分配
+		Integer[] colArr = getColArr(seatType,colNum);
 		List<Long> memberList = getMember(meetId,meetType);
 		Integer [][] seatArr = new Integer[rowNum][colNum];
 		int i = 0;
 		seatDetailParam.setCreatTime(new Date());
 		for (int j = 1; j <= seatArr.length; j++) {
-			for (int k = 1; k <= seatArr[0].length; k++) {
+			for (int k = 0; k < seatArr[0].length; k++) {
 				if(i >= memberList.size()) {
 					break;
 				}
@@ -118,7 +120,7 @@ public class MeetSeatController {
 				Long userId = memberList.get(i);
 				seatDetailParam.setUserId(userId);
 				seatDetailParam.setSeatRow(j);
-				seatDetailParam.setSeatCol(k);
+				seatDetailParam.setSeatCol(colArr[k]);
 				this.seatDetailService.add(seatDetailParam);
 				i ++;
 			}
@@ -148,6 +150,36 @@ public class MeetSeatController {
 	public ResponseData updateSeat(MeetMemberParam meetMemberParam){
 		this.meetMemberService.update(meetMemberParam);
 		return ResponseData.success();
+	}
+
+	/**
+	 * 获取“列”数组（根据奇偶）
+	 * @param seatType
+	 * @param colNum
+	 * @return
+	 */
+	private Integer[] getColArr(String seatType,Integer colNum){
+		Integer[] colArr = new Integer[colNum];
+		List<Integer> colList = new ArrayList<>();
+		List<Integer> evenList = new ArrayList<>();
+		List<Integer> oddList = new ArrayList<>();
+		if(("A").equals(seatType)){
+			for (int i = 1; i <= colNum; i++) {
+				colList.add(i);
+			}
+		}else if(("B").equals(seatType)){
+			for (int i = 1; i <= colNum; i++) {
+				if(i%2 ==0){
+					evenList.add(i);
+				}else{
+					oddList.add(i);
+				}
+			}
+			oddList.addAll(evenList);
+			colList.addAll(oddList);
+		}
+		colList.toArray(colArr);
+		return colArr;
 	}
 
 }

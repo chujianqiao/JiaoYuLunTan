@@ -119,11 +119,11 @@
     </select>
 
     <select id="sortMember" resultType="Long">
-        select DISTINCT user_id from meet_member where sort is not null  ORDER BY sort
+        select DISTINCT user_id from meet_member where sort is not null and meet_status=4 ORDER BY sort
     </select>
 
     <select id="generalMember" resultType="Long">
-        select DISTINCT user_id from meet_member where sort is null ORDER BY province,city
+        select DISTINCT user_id from meet_member where sort is null and meet_status=4  ORDER BY province,city
     </select>
 
 </mapper>

@@ -6,10 +6,11 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     var ajaxSeat = new $ax(Feng.ctxPath + "/seat/detail?seatId=" + Feng.getUrlParam("seatId"));
     var seatMessage = ajaxSeat.start();
     var seatDetail = seatMessage.data;
+    var seatType = seatDetail.seatType;
     var colNum = seatDetail.colNum;
     var rowNum = seatDetail.rowNum;
     var meetId = seatDetail.meetId;
-    var middleCol = Math.floor(colNum / 2);
+    var middleCol = Math.ceil(colNum / 2);
     var middleRow = Math.floor(rowNum / 2);
     //主席台列数
     var platCol = 7;
@@ -35,7 +36,27 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     /**
      * 普通座位
      */
-    for(let i = 1;i<=rowNum;i++){
+    //根据奇偶构建“列”数组
+    let colArr = new Array();
+    let evenArr = new Array();
+    let oddArr = new Array()
+    if(seatType == 'A'){//正常
+        for(let i = 1;i <= colNum;i++){
+            colArr.push(i);
+        }
+    }else if(seatType == 'B'){//奇偶
+        for(let i = 1;i <= colNum;i++){
+            if(i%2 == 0){
+                evenArr.push(i);
+            }else{
+                oddArr.push(i);
+            }
+        }
+        colArr = oddArr.concat(evenArr);
+    }
+
+    //开始给页面添加普通座位的div
+    for(let i = 1;i<=rowNum;i++){//行循环
         let first = document.createElement('div');
         document.getElementById('seat').appendChild(first);
         first.innerText = '第' + i + '排';
@@ -44,13 +65,13 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         }else {
             first.setAttribute('style','width:80px; height:50px; margin:10px;float:left;');
         }
-        for(let j = 1;j<=colNum;j++) {
+        for(let j = 0;j < colArr.length;j++) {//列循环
             let one = document.createElement('div');
             document.getElementById('seat').appendChild(one);
-            one.setAttribute('id', 'seat_'+i+'_'+j);
+            one.setAttribute('id', 'seat_' + i +'_' + colArr[j]);
             one.setAttribute('class', 'orgSeat');
             one.setAttribute('style',orginStyle);
-            if(j == middleCol){
+            if(j == middleCol - 1){
                 let street = document.createElement('div');
                 document.getElementById('seat').appendChild(street);
                 street.setAttribute('id', 'street_'+i);
@@ -59,7 +80,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                     street.innerText = '过道';
                 }
             }
-            one.innerText = ''+j;
+            one.innerText = '' + colArr[j];
             if(loginUser == 'admin'){
                 //管理员，添加点击事件
                 one.onclick = function () {
@@ -76,10 +97,10 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     }
 
     //座次列表信息
-    var ajaxDetail = new $ax(Feng.ctxPath + "/seatDetail/wrapList?meetId=" + meetId);
-    var seatsRes = ajaxDetail.start();
-    var seats = seatsRes.data;
-    var length = seats.length;
+    let ajaxDetail = new $ax(Feng.ctxPath + "/seatDetail/wrapList?meetId=" + meetId);
+    let seatsRes = ajaxDetail.start();
+    let seats = seatsRes.data;
+    let length = seats.length;
     if(loginUser == 'admin'){
         //管理员，展示所有座位
         for(let i=0;i<length;i++){
@@ -100,6 +121,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             }
         }
     }else{
+        //普通用户，只显示自己的座位
         let ajaxOwn = new $ax(Feng.ctxPath + "/seatDetail/ownSeat?meetId=" + meetId + '&userId=' + loginUser);
         let ownSeat = ajaxOwn.start();
         if(ownSeat != undefined && ownSeat != ''){
