@@ -1,0 +1,48 @@
+@layout("/common/_form.html",{js:["/assets/seat/plat_change.js"]}){
+
+<form class="layui-form" id="meetMemberForm" lay-filter="meetMemberForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input id="divId" name="divId" type="hidden" value="${divId}"/>
+                    <input id="meetId" name="meetId" type="hidden" value="${meetId}"/>
+                    <input id="seatId" name="seatId" type="hidden" value="${seatId}"/>
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">座位<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input id="seatStr" name="seatStr" disabled type="text" class="layui-input"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">类型<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<input type="radio" name="type" value="people" title="个人" checked/>-->
+                            <!--<input type="radio" name="type" value="unit" title="单位"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div id="changeUser" class="layui-inline layui-col-md12">-->
+                        <!--<label class="layui-form-label">参会人员<span style="color: red;">*</span></label>-->
+                        <!--<div class="layui-input-block">-->
+                            <!--<select id="userId" name="userId" lay-verify="" lay-search lay-verify="required" required></select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div id="writeUnit" class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">嘉宾姓名<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="unitName" name="unitName" placeholder="请输入嘉宾姓名" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmitSeat" lay-submit>&emsp;提交&emsp;</button>
+        <button class="layui-btn  layui-btn-danger" lay-filter="btnResetSeat" lay-submit>&emsp;重置&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

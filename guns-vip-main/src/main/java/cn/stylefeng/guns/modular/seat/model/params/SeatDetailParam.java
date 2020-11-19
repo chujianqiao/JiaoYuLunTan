@@ -60,6 +60,16 @@ public class SeatDetailParam implements Serializable, BaseValidatingParam {
      */
     private String unitName;
 
+    /**
+     * 是否0行
+     */
+    private String zeroRow;
+
+    /**
+     * 是否0列
+     */
+    private String zeroCol;
+
     @Override
     public String checkParam() {
         return null;

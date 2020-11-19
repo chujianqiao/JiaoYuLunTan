@@ -72,6 +72,21 @@ public class MeetSeatController {
 	}
 
 	/**
+	 * 分配主席台座位
+	 * @return
+	 */
+	@RequestMapping("changePlat")
+	public String changePlat(HttpServletRequest request){
+		String divId = request.getParameter("divId");
+		String meetId = request.getParameter("meetId");
+		String seatId = request.getParameter("seatId");
+		request.setAttribute("divId",divId);
+		request.setAttribute("meetId",meetId);
+		request.setAttribute("seatId",seatId);
+		return PREFIX + "/plat_change.html";
+	}
+
+	/**
 	 * 批量分配页面（选择单位）
 	 * @return
 	 */

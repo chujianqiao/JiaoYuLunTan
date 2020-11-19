@@ -67,19 +67,25 @@
         <include refid="Base_Column_List"/>
         from seat_detail where 1 = 1
             <if test="paramCondition.seatCol != null and paramCondition.seatCol != ''">
-                and seat_col like CONCAT('%',#{paramCondition.seatCol},'%')
+                and seat_col = #{paramCondition.seatCol}
             </if>
             <if test="paramCondition.seatRow != null and paramCondition.seatRow != ''">
-                and seat_row like CONCAT('%',#{paramCondition.seatRow},'%')
+                and seat_row = #{paramCondition.seatRow}
             </if>
             <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
-                and meet_id like CONCAT('%',#{paramCondition.meetId},'%')
+                and meet_id = #{paramCondition.meetId}
             </if>
             <if test="paramCondition.meetType != null and paramCondition.meetType != ''">
-                and meet_type like CONCAT('%',#{paramCondition.meetType},'%')
+                and meet_type = #{paramCondition.meetType}
             </if>
             <if test="paramCondition.userId != null and paramCondition.userId != ''">
-                and user_id like CONCAT('%',#{paramCondition.userId},'%')
+                and user_id = #{paramCondition.userId}
+            </if>
+            <if test="paramCondition.zeroRow == '第0行'">
+                and seat_row = 0
+            </if>
+            <if test="paramCondition.zeroCol == '第0列'">
+                and seat_col = 0
             </if>
     </select>
 

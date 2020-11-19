@@ -52,7 +52,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 分配座位
      */
     form.on('submit(btnSubmitSeat)', function (data) {
-        debugger;
         let type = data.field.type;
         let divId = $('#divId').val();
         let meetId = $('#meetId').val();
@@ -104,7 +103,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 重置座位
      */
     form.on('submit(btnResetSeat)', function (data) {
-        debugger;
         let divId = $('#divId').val();
         let seatEle = $("#" + divId,window.parent.document);
         let text = seatEle[0].innerText;

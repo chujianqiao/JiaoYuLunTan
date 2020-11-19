@@ -172,6 +172,51 @@ public class SeatDetailController extends BaseController {
     }
 
     /**
+     * 主席台
+     * @author wucy
+     * @Date 2020-09-11
+     */
+    @RequestMapping("/platItem")
+    @ResponseBody
+    public ResponseData platItem(SeatDetailParam seatDetailParam, HttpServletRequest request) {
+        SeatDetailParam tempParam = new SeatDetailParam();
+        String seatIdStr = request.getParameter("seatId");
+        Seat seat = this.seatService.getById(Long.parseLong(seatIdStr));
+        Long meetType = seat.getMeetType();
+        BeanUtils.copyProperties(seatDetailParam,tempParam);
+        if(meetType.equals(1L)){
+            tempParam.setMeetType(1L);
+            seatDetailParam.setMeetType(1L);
+        }else if(meetType.equals(2L)){
+            tempParam.setMeetType(2L);
+            seatDetailParam.setMeetType(2L);
+        }
+        tempParam.setUnitName(null);
+        int seatRow = seatDetailParam.getSeatRow();
+        int seatCol = seatDetailParam.getSeatCol();
+        if(0 == seatRow){
+            tempParam.setZeroRow("第0行");
+        }
+        if(0 == seatCol){
+            tempParam.setZeroCol("第0列");
+        }
+        //查询时使用tempParam作为条件
+        LayuiPageInfo results = this.seatDetailService.findPageBySpec(tempParam);
+        List<SeatDetailResult> list = results.getData();
+        seatDetailParam.setCreatTime(new Date());
+        if(list.size() == 0){
+            //新增
+            this.seatDetailService.add(seatDetailParam);
+        }else{
+            //更新
+            Long dataId = list.get(0).getSeatDetailId();
+            seatDetailParam.setSeatDetailId(dataId);
+            this.seatDetailService.update(seatDetailParam);
+        }
+        return ResponseData.success();
+    }
+
+    /**
      *  重置单个座位
      */
     @RequestMapping("/resetSeat")

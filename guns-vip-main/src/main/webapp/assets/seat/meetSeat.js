@@ -28,9 +28,21 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         let platform = $("#platform");
         platform.css("width",platCol * 80 + "px");
         document.getElementById('platform').appendChild(one);
-        one.setAttribute('id', 'platform_'+i);
+        one.setAttribute('id', 'seat_0_'+i);
         one.setAttribute('style','width:80px; height:50px; margin:10px; border:1px solid #000; float:left; margin:0 0 0 0;text-align:center');
         one.innerText = '主席台';
+        if(loginUser == 'admin'){
+            //管理员，添加点击事件
+            one.onclick = function () {
+                let id=$(this).attr("id");
+                layer.open({
+                    title: '设置主席台座位',
+                    type: 2,
+                    area: ['620px','250px'],
+                    content: Feng.ctxPath + '/meetSeat/changePlat?divId=' + id + '&meetId=' + meetId + '&seatId=' + seatId
+                });
+            }
+        }
     }
 
     /**
@@ -117,7 +129,11 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                 oneDiv.text(""+ seatCol + ':' + userName);
             }else{
                 oneDiv.css("background","#90EE90");
-                oneDiv.text(""+ seatCol + ':' + unitName);
+                if(seatRow == 0){
+                    oneDiv.text("" + unitName);
+                }else{
+                    oneDiv.text(""+ seatCol + ':' + unitName);
+                }
             }
         }
     }else{
@@ -257,7 +273,6 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
 
         })();
     }
-
 
     function clearEventBubble(evt) {
         // stopPropagation()不再派发事件。终止事件在传播过程的捕获、目标处理或起跑阶段进一步传播
