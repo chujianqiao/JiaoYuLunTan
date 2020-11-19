@@ -10,11 +10,12 @@
         <result column="col_num" property="colNum" />
         <result column="row_num" property="rowNum" />
         <result column="seat_type" property="seatType" />
+        <result column="plat_num" property="platNum" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        seat_id AS "seatId", meet_id AS "meetId", meet_type AS "meetType", col_num AS "colNum", row_num AS "rowNum", seat_type AS "seatType"
+        seat_id AS "seatId", meet_id AS "meetId", meet_type AS "meetType", col_num AS "colNum", row_num AS "rowNum", seat_type AS "seatType", plat_num AS "platNum"
     </sql>
 
 

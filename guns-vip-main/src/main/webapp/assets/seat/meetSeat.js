@@ -13,7 +13,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     var middleCol = Math.ceil(colNum / 2);
     var middleRow = Math.floor(rowNum / 2);
     //主席台列数
-    var platCol = 7;
+    var platCol = seatDetail.platNum;;
     //原始座位style
     var orginStyle = 'width:80px; height:50px; margin:10px; border:1px solid #000; float:left; margin:0 0 0 0';
     //红色边框style

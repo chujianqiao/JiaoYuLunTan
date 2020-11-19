@@ -50,6 +50,11 @@ public class SeatParam implements Serializable, BaseValidatingParam {
      */
     private String seatType;
 
+    /**
+     * 主席台列数
+     */
+    private String platNum;
+
     @Override
     public String checkParam() {
         return null;

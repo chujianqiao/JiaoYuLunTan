@@ -49,4 +49,9 @@ public class SeatResult implements Serializable {
      */
     private String seatType;
 
+    /**
+     * 主席台列数
+     */
+    private String platNum;
+
 }

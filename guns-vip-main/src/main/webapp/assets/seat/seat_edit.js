@@ -25,7 +25,22 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/seat/editItem", function (data) {
+        let checkRow = isInteger(data.field.rowNum);
+        let checkCol = isInteger(data.field.colNum);
+        let checkPlat = isInteger(data.field.platNum);
+        if(!checkRow){
+            Feng.error("行数必须为整数!");
+            return false;
+        }
+        if(!checkCol){
+            Feng.error("列数必须为整数！");
+            return false;
+        }
+        if(!checkPlat){
+            Feng.error("主席台列数必须为整数！");
+            return false;
+        }
+        let ajax = new $ax(Feng.ctxPath + "/seat/editItem", function (data) {
             Feng.success("更新成功！");
             window.location.href = Feng.ctxPath + '/seat'
         }, function (data) {
@@ -33,11 +48,14 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         });
         ajax.set(data.field);
         ajax.start();
-
         return false;
     });
 
     $('#cancel').click(function(){
         window.location.href = Feng.ctxPath + '/seat'
     });
+
+    function isInteger(obj) {
+        return obj%1 === 0
+    }
 });

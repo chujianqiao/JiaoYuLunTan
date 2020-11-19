@@ -55,6 +55,12 @@ public class Seat implements Serializable {
     @TableField("seat_type")
     private String seatType;
 
+    /**
+     * 主席台列数
+     */
+    @TableField("plat_num")
+    private String platNum;
+
 
     public Long getSeatId() {
         return seatId;
@@ -102,6 +108,14 @@ public class Seat implements Serializable {
 
     public void setSeatType(String seatType) {
         this.seatType = seatType;
+    }
+
+    public String getPlatNum() {
+        return platNum;
+    }
+
+    public void setPlatNum(String platNum) {
+        this.platNum = platNum;
     }
 
     @Override
