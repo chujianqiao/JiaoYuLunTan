@@ -84,11 +84,12 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             one.setAttribute('class', 'orgSeat');
             one.setAttribute('style',orginStyle);
             if(j == middleCol - 1){
+                //过道
                 let street = document.createElement('div');
                 document.getElementById('seat').appendChild(street);
                 street.setAttribute('id', 'street_'+i);
                 street.setAttribute('style','width:80px; height:50px; margin:10px; float:left; margin:0 0 0 0; text-align:center');
-                if(i == middleRow || i== (middleRow + 2)){
+                if(i % 3 == 0){
                     street.innerText = '过道';
                 }
             }
