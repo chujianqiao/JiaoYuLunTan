@@ -20,6 +20,7 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -75,7 +76,13 @@ public class HoldForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/add")
-    public String add() {
+    public String add(Model model) {
+        model.addAttribute("menuUrl","holdForum");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         LoginUser user = LoginContextHolder.getContext().getUser();
         List roles = user.getRoleList();
         long unit = 3;

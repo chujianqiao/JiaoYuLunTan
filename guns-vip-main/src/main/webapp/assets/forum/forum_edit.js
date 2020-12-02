@@ -112,6 +112,13 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var ajax = new $ax(Feng.ctxPath + "/forum/detail?forumId=" + Feng.getUrlParam("forumId"));
     var result = ajax.start();
     form.val('forumForm', result.data);
+    console.log(result.data);
+    $("#forumData1").html(result.data.forumName);
+    $("#forumData2").html("分论坛时间：" + result.data.startTime + "-" + result.data.endTime);
+    $("#forumData3").html("分论坛地点：" + result.data.location);
+    $("#forumData4").html(result.data.forumName);
+    $("#forumData5").html("分论坛时间：" + result.data.startTime + "-" + result.data.endTime);
+    $("#forumData6").html("分论坛地点：" + result.data.location);
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
@@ -129,5 +136,31 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     $('#cancel').click(function(){
         window.location.href = Feng.ctxPath + '/forum'
+    });
+
+
+    $('#getImage').click(function(data){
+        var forumId = Feng.getUrlParam("forumId");
+        if(forumId == null || forumId == "" || forumId == 'undefined'){
+            forumId = result.data.forumId;
+        }
+        $.ajax({
+            type: "post",
+            url: Feng.ctxPath + "/weiXin/getForumCheckImage?forumId=" + forumId,
+            success: function (data) {
+                var photo = data.checkName;
+                Feng.success("二维码生成成功！");
+                $("#checkImg").attr("style","height:300px;background-image: url('data:image/jpeg;base64," + photo + "');background-repeat:no-repeat;background-size: 100% 100%;");
+            }
+        });
+        $.ajax({
+            type: "post",
+            url: Feng.ctxPath + "/weiXin/getForumSignImage?forumId=" + forumId,
+            success: function (data) {
+                var photo = data.signName;
+                Feng.success("二维码生成成功！");
+                $("#signImg").attr("style","height:300px;background-image: url('data:image/jpeg;base64," + photo + "');background-repeat:no-repeat;background-size: 100% 100%;");
+            }
+        });
     });
 });

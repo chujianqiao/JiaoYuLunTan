@@ -9,39 +9,39 @@
                     <input name="payId" type="hidden"/>
 
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">缴费用户ID<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">缴费用户<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="payUser" name="payUser" placeholder="请输入缴费用户ID" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="userName" disabled name="userName" placeholder="请输入缴费用户ID" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">订单号<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="orderNum" name="orderNum" placeholder="请输入订单号" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="orderNum" disabled name="orderNum" placeholder="请输入订单号" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">缴费金额<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="payMoney" name="payMoney" placeholder="请输入缴费金额" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="payMoney" disabled name="payMoney" placeholder="请输入缴费金额" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">缴费方式;(alipay/wechat)<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">缴费方式<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="payType" name="payType" placeholder="请输入缴费方式;(alipay/wechat)" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="payTypeStr" disabled name="payTypeStr" placeholder="请输入缴费方式;(alipay/wechat)" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
+                    <!--<div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">平台交易单号<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="tranNum" name="tranNum" placeholder="请输入平台交易单号" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="tranNum" disabled name="tranNum" placeholder="请输入平台交易单号" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">缴费时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="payTime" name="payTime" placeholder="请输入缴费时间" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="time" disabled name="time" placeholder="请输入缴费时间" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                 </div>
@@ -49,8 +49,8 @@
         </div>
     </div>
     <div class="form-group-bottom text-center">
-        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
-        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+        <!--<button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>-->
+        <button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;返回&emsp;</button>
     </div>
 
 </form>

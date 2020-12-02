@@ -207,14 +207,17 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
         $city.empty();
 
         //设置对应省份的城市
-        for (var i = 0, len = proCity.length; i < len; i++) {
-            modelVal = proCity[i];
-            option = "<option value='" + modelVal + "'>" + modelVal + "</option>";
+        if (proCity != undefined) {
+            for (var i = 0, len = proCity.length; i < len; i++) {
+                modelVal = proCity[i];
+                option = "<option value='" + modelVal + "'>" + modelVal + "</option>";
 
-            //添加
-            $city.append(option);
+                //添加
+                $city.append(option);
+            }
+            form.render('select');
         }
-        form.render('select');
+
 
     }
 

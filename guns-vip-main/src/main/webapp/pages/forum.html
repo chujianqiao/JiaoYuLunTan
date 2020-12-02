@@ -18,6 +18,17 @@
 	<link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>
 
 </head>
+<style>
+	.forumCharter{
+		font-size: 14px;
+		color: rgb(0,87,203);
+		cursor: pointer;
+	}
+	.layui-form-item .layui-form-checkbox[lay-skin=primary] {
+		margin-top: 0px;
+		margin-right: -20px;
+	}
+</style>
 <body>
 	<div class="page">
 
@@ -45,7 +56,7 @@
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">自设论坛名称 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="forumName" placeholder="请输入自设论坛名称" class="layui-input" type="text" lay-verify="required" required/>
+													<input name="forumName" placeholder="请输入自设论坛名称" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<!--<div class="layui-inline layui-col-md12">
@@ -66,7 +77,7 @@
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">自设论坛计划规模 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="forumSize" type="text" placeholder="请输入自设论坛计划规模（不超过100人）" class="layui-input" lay-verify="required" required/>
+													<input name="forumSize" type="text" placeholder="请输入自设论坛计划规模（不超过100人）" class="layui-input" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
@@ -98,43 +109,43 @@
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">课题名称 ：</label>
 												<div class="layui-input-block">
-													<input name="subjectName" type="text" placeholder="请输入课题名称" class="layui-input" />
+													<input name="subjectName" type="text" placeholder="请输入课题名称" class="layui-input" autocomplete="off" />
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">课题级别 ：</label>
 												<div class="layui-input-block">
-													<input name="subjectLev" type="text" placeholder="请输入课题级别" class="layui-input" />
+													<input name="subjectLev" type="text" placeholder="请输入课题级别" class="layui-input" autocomplete="off" />
 												</div>
 											</div>
 											<div id="managerDiv" class="layui-inline layui-col-md12">
 												<label class="layui-form-label">姓名 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="manager" placeholder="请输入姓名" class="layui-input" type="text" lay-verify="required" required/>
+													<input name="manager" placeholder="请输入姓名" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">单位名称 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="unitName" type="text" placeholder="请输入单位名称" class="layui-input" lay-verify="required" required/>
+													<input name="unitName" type="text" placeholder="请输入单位名称" class="layui-input" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">联系电话 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="manaPhone" placeholder="请输入联系电话" class="layui-input" type="text" lay-verify="required|phone" required/>
+													<input name="manaPhone" placeholder="请输入联系电话" class="layui-input" type="text" lay-verify="required|phone" required autocomplete="off"/>
 												</div>
 											</div>
 											<div id="manaEmailDiv" class="layui-inline layui-col-md12">
 												<label class="layui-form-label">邮箱 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="manaEmail" placeholder="请输入邮箱" class="layui-input" type="text" lay-verify="required|email" required/>
+													<input name="manaEmail" placeholder="请输入邮箱" class="layui-input" type="text" lay-verify="required|email" required autocomplete="off"/>
 												</div>
 											</div>
 											<div id="postDiv" class="layui-inline layui-col-md12">
 												<label class="layui-form-label">职称/职务 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="post" type="text" placeholder="请输入职称/职务" class="layui-input" lay-verify="required" required/>
+													<input name="post" type="text" placeholder="请输入职称/职务" class="layui-input" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<!--<div class="layui-inline layui-col-md12">
@@ -150,7 +161,8 @@
 												</div>
 											</div>-->
 											<div class="btns sb-btns fontSize16">
-												<input type="checkbox" name="ifAgreeOwn" id="ifAgreeOwn" title="阅读并同意遵守《论坛章程》" lay-skin="primary">
+												<input type="checkbox" name="ifAgreeOwn" id="ifAgreeOwn" title="阅读并同意遵守" lay-skin="primary">
+												<span class="forumCharter" id="forumCharter" onclick="forumCharter()">《论坛章程》</span>
 												<br><br>
 												<div class="btn submit" lay-filter="ownSubmit" lay-submit>提交</div>
 												<!--<div class="btn cancel" id="btnCancel">取消</div>-->
@@ -290,7 +302,7 @@
 					<div class="fr">
 						<p>中国教育科学研究院</p>
 						<p>地址：北京市海淀区北三环中路46号 100088</p>
-						<p>邮编：100871</p>
+						<p>邮编：100088</p>
 					</div>
 				</div>
 				<div class="inlineBlock d2 clearfix">
@@ -310,7 +322,7 @@
 				</div>
 				<div class="inlineBlock d4">
 					<p>中国教育科学论坛 版权所有</p>
-					<p>Copyroght  2002-2020</p>
+					<p>Copyright  2002-2020</p>
 					<p>京公网安备   110402430096</p>
 				</div>
 			</div>
@@ -354,6 +366,10 @@
 				}
 			});
 		});
+
+		function forumCharter() {
+			window.open(Feng.ctxPath + '/system/forumCharter');
+		}
 	</script>
 </body>
 </html>

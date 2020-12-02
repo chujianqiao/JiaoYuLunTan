@@ -63,5 +63,9 @@ public class CheckInResult implements Serializable {
      * 论坛ID
      */
     private Long forumId;
+    /**
+     * 会议ID
+     */
+    private Long meetId;
 
 }

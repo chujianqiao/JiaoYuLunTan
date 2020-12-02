@@ -1,15 +1,19 @@
+<script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
 <div class="pc">
     <header>
         <div class="head mCenter widthC pr">
             <img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
             <div class="language-select pa">
-                <img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
+                <!--<img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
                 <div class="language-select-box pr">
                     <div class="language fontSize16">
                         <a href="#">中文</a>
                         <a href="#" class="hover">英文</a>
                     </div>
                     <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn pa" id="langSelect" />
+                </div>-->
+                <div id="userDiv" class="fontSize16" style="float:left;display: block;margin-right: 10px">
+                    <a href="#" onclick="logout()" style="color: white">退出</a>
                 </div>
             </div>
         </div>
@@ -19,7 +23,7 @@
             <a href="/" class="fontSize18 item" target="_blank">首页</a>
         </div>
         <div class="inlineBlock">
-            <a href="${ctxPath}/meetMember/add" class="fontSize18 item" target="_blank">会议注册</a>
+            <a href="${ctxPath}/meetMember/add" id="meetMember" class="fontSize18 item" target="_blank">会议注册</a>
             <!--<a class="fontSize18 item" target="_blank">关于论坛</a>
             <div class="childNav pa fontSize16 hide">
                 <div class="childNav-items inlineBlock">
@@ -32,7 +36,7 @@
             </div>-->
         </div>
         <div class="inlineBlock">
-            <a href="${ctxPath}/greatResult/add" class="fontSize18 item" target="_blank">优秀成果会展申请</a>
+            <a href="${ctxPath}/greatResult/add" id="greatResult" class="fontSize18 item" target="_blank">优秀成果会展申请</a>
             <!--<a class="fontSize18 item" target="_blank">论坛活动</a>
             <div class="childNav pa fontSize16 hide">
                 <div class="childNav-items inlineBlock">
@@ -42,7 +46,7 @@
             </div>-->
         </div>
         <div>
-            <a href="${ctxPath}/collectTopic/add" class="fontSize18 item" target="_blank">主题征集</a>
+            <a href="${ctxPath}/collectTopic/add" id="collectTopic" class="fontSize18 item" target="_blank">主题征集</a>
             <!--<a class="fontSize18 item" target="_blank">论坛之声</a>
             <div class="childNav pa fontSize16 hide">
                 <div class="childNav-items inlineBlock">
@@ -54,7 +58,7 @@
             </div>-->
         </div>
         <div>
-            <a href="${ctxPath}/holdForum/add" class="fontSize18 item" target="_blank">论坛申报</a>
+            <a href="${ctxPath}/holdForum/add" id="holdForum" class="fontSize18 item" target="_blank">论坛申报</a>
             <!--<a class="fontSize18 item" target="_blank">论坛成果</a>
             <div class="childNav pa fontSize16 hide">
                 <div class="childNav-items inlineBlock">
@@ -67,7 +71,7 @@
             </div>-->
         </div>
         <div>
-            <a href="${ctxPath}/socialForum/add" class="fontSize18 item" target="_blank">赞助意向</a>
+            <a href="${ctxPath}/socialForum/add" id="socialForum" class="fontSize18 item" target="_blank">赞助意向</a>
             <!--<a class="fontSize18 item" target="_blank">国内外会议信息</a>
             <div class="childNav pa fontSize16 hide">
                 <div class="childNav-items inlineBlock">
@@ -84,14 +88,14 @@
 <div class="mobile" style="overflow:hidden;width:100%;">
     <header class="pr">
         <div class="language-select pa">
-            <div class="language-select-icon inlineBlock"><img src="${ctxPath}/assets/common/images/icon1_03.png" width="100%" /></div>
+            <!--<div class="language-select-icon inlineBlock"><img src="${ctxPath}/assets/common/images/icon1_03.png" width="100%" /></div>
             <div class="language-select-box inlineBlock">
                 <div class="language fontSize24 inlineBlock">
                     <a href="#">中文</a>
                     <a href="#" class="hover">英文</a>
                 </div>
                 <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn" id="langSelect_mobile" />
-            </div>
+            </div>-->
         </div>
     </header>
     <!--<nav class="mobile_nav pr">
@@ -195,3 +199,28 @@
     </nav>-->
 
 </div>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script>
+    $("#" + "${menuUrl }").attr("style","color:#196bc6;background:#c5def6;")
+
+    function logout() {
+        $.ajax({
+            url: Feng.ctxPath + "/logout",
+            success: function(){
+                window.location.href = Feng.ctxPath + "/index";
+            }
+        });
+        /*var ajax = new $ax(Feng.ctxPath + "/logout", function (data) {
+            Feng.success("退出成功!");
+            window.location.href = Feng.ctxPath + "/index";
+        }, function (data) {
+            layer.msg("退出失败！" + data.responseJSON.message, {icon: 5, anim: 6});
+        });
+        ajax.start();*/
+    }
+</script>

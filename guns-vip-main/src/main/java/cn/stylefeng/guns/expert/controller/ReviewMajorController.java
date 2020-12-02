@@ -333,10 +333,11 @@ public class ReviewMajorController extends BaseController {
                 }
             }
         }*/
-        detail.setBelongDomain(thesisDomainResult.getDomainName());
+        //detail.setBelongDomain(thesisDomainResult.getDomainName());
 
         //类转Map
         Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
+        map.put("domainName",thesisDomainResult.getDomainName());
         //个人信息
         Long userId = detail.getReviewId();
         User user = this.userService.getById(userId);
@@ -552,7 +553,7 @@ public class ReviewMajorController extends BaseController {
         long uid = ToolUtil.getNum19();
         user.setUserId(uid);
         user.setAccount(user.getPhone());
-        user.setPassword("11111111");
+        user.setPassword("Nies2020");
 
 
         if (joinType != null){

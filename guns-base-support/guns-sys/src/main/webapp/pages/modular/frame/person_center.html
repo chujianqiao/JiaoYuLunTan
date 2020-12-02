@@ -81,7 +81,7 @@
                                 <h4 style="padding-top: 5px;">职务：${post}</h4>
                                 <h4 style="padding-top: 5px;">电话：${phone}</h4>
                                 <h4 id="forumName" style="padding-top: 5px;">论坛：无</h4>
-                                <h4 id="seat" style="padding-top: 5px;">座位：无</h4>
+                                <h4 id="seat" style="padding-top: 5px;cursor: pointer">座位：无</h4>
                             </div>
 
                         </div>
@@ -190,9 +190,9 @@
                                                     </a>
                                                 </li>
                                                 <li class="layui-col-xs2">
-                                                    <a lay-href="home/homepage2.html">
-                                                        <i style="font-size: 60px" class="layui-icon layui-icon-dialogue"></i>
-                                                        <cite>消息提醒</cite>
+                                                    <a href="${ctxPath}/meet/meetFile" target="_blank">
+                                                        <i style="font-size: 60px" class="layui-icon layui-icon-file"></i>
+                                                        <cite>会议手册</cite>
                                                     </a>
                                                 </li>
                                                 <li class="layui-col-xs2">
@@ -512,5 +512,6 @@ var Feng = {
             content: Feng.ctxPath + '/meetMaterial/toFileDownload' ,
         });
     }
+
 </script>
 </html>

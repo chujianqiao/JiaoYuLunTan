@@ -11,6 +11,7 @@ layui.use(['layer', 'form', 'admin', 'ax'], function () {
     // 监听提交
     form.on('submit(submit-psw)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/mgr/changePwd", function (data) {
+            sentWeiXinMessage("");
             Feng.success("修改成功!");
             admin.closeThisDialog();
         }, function (data) {
@@ -25,11 +26,21 @@ layui.use(['layer', 'form', 'admin', 'ax'], function () {
 
     // 添加表单验证方法
     form.verify({
-        psw: [/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{8}$/, '密码必须由8位大小写字母加数字组合！'],
+        psw: [/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{8,14}$/, '密码必须由8~14位大小写字母加数字组合！'],
         repsw: function (t) {
             if (t !== $('#form-psw input[name=newPassword]').val()) {
                 return '两次密码输入不一致';
             }
         }
     });
+
+    function sentWeiXinMessage(message) {
+        var ajax = new $ax(Feng.ctxPath + "/weiXin/sentWeiXinMessage", function (data) {
+        }, function (data) {
+        });
+        ajax.set("message",message);
+        ajax.start();
+
+        return false;
+    }
 });

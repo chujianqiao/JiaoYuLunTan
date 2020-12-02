@@ -25,6 +25,17 @@
     }
 </style>-->
 </head>
+<style>
+    .forumCharter{
+        font-size: 14px;
+        color: rgb(0,87,203);
+        cursor: pointer;
+    }
+    .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+        margin-top: 0px;
+        margin-right: -20px;
+    }
+</style>
 <body>
 <div class="page">
 
@@ -48,37 +59,37 @@
                                         <div class="layui-inline layui-col-md12">
                                             <label class="layui-form-label">企业/单位名称 ：<span style="color: red;">*</span></label>
                                             <div class="layui-input-block">
-                                                <input name="unitName" placeholder="请输入申报企业/单位名称" class="layui-input" type="text" lay-verify="required" required/>
+                                                <input name="unitName" placeholder="请输入申报企业/单位名称" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
                                             </div>
                                         </div>
                                         <div class="layui-inline layui-col-md12">
                                             <label class="layui-form-label">负责人 ：<span style="color: red;">*</span></label>
                                             <div class="layui-input-block">
-                                                <input name="manager" placeholder="请输入负责人" class="layui-input" type="text" lay-verify="required" required/>
+                                                <input name="manager" placeholder="请输入负责人" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
                                             </div>
                                         </div>
                                         <div class="layui-inline layui-col-md12">
                                             <label class="layui-form-label">负责人电话 ：<span style="color: red;">*</span></label>
                                             <div class="layui-input-block">
-                                                <input name="manaPhone" type="text" placeholder="请输入负责人电话" class="layui-input" lay-verify="required|phone" required/>
+                                                <input name="manaPhone" type="text" placeholder="请输入负责人电话" class="layui-input" lay-verify="required|phone" required autocomplete="off"/>
                                             </div>
                                         </div>
                                         <div class="layui-inline layui-col-md12">
                                             <label class="layui-form-label">负责人邮箱 ：<span style="color: red;">*</span></label>
                                             <div class="layui-input-block">
-                                                <input name="manaEmail" type="text" placeholder="请输入负责人邮箱" class="layui-input" lay-verify="required|email" required/>
+                                                <input name="manaEmail" type="text" placeholder="请输入负责人邮箱" class="layui-input" lay-verify="required|email" required autocomplete="off"/>
                                             </div>
                                         </div>
                                         <div class="layui-inline layui-col-md12">
                                             <label class="layui-form-label">统一社会信用代码 ：<span style="color: red;">*</span></label>
                                             <div class="layui-input-block">
-                                                <input name="creditCode" placeholder="请输入统一社会信用代码" class="layui-input" type="text" lay-verify="required" required/>
+                                                <input name="creditCode" placeholder="请输入统一社会信用代码" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
                                             </div>
                                         </div>
                                         <div class="layui-inline layui-col-md12">
                                             <label class="layui-form-label">备注 ：<span style="color: red;">*</span></label>
                                             <div class="layui-input-block">
-                                                <textarea name="remarks" type="text" placeholder="请输入备注" class="layui-input" lay-verify="required" required></textarea>
+                                                <textarea name="remarks" type="text" placeholder="请输入备注" class="layui-input" lay-verify="required" required autocomplete="off"></textarea>
                                             </div>
                                         </div>
                                         <div class="layui-inline layui-col-md12">
@@ -98,7 +109,8 @@
                                             </div>
                                         </div>
                                         <div class="btns sb-btns fontSize16">
-                                            <input type="checkbox" name="ifAgreeSocial" id="ifAgreeSocial" title="阅读并同意遵守《论坛章程》" lay-skin="primary">
+                                            <input type="checkbox" name="ifAgreeSocial" id="ifAgreeSocial" title="阅读并同意遵守" lay-skin="primary">
+                                            <span class="forumCharter" id="forumCharter" onclick="forumCharter()">《论坛章程》</span>
                                             <br><br>
                                             <div class="btn submit" lay-filter="socialSubmit" lay-submit>提交</div>
                                             <!--<div class="btn cancel" id="btnCancel">取消</div>-->
@@ -161,7 +173,7 @@
                 <div class="fr">
                     <p>中国教育科学研究院</p>
                     <p>地址：北京市海淀区北三环中路46号 100088</p>
-                    <p>邮编：100871</p>
+                    <p>邮编：100088</p>
                 </div>
             </div>
             <div class="inlineBlock d2 clearfix">
@@ -181,7 +193,7 @@
             </div>
             <div class="inlineBlock d4">
                 <p>中国教育科学论坛 版权所有</p>
-                <p>Copyroght  2002-2020</p>
+                <p>Copyright  2002-2020</p>
                 <p>京公网安备   110402430096</p>
             </div>
         </div>
@@ -266,7 +278,9 @@
         });
     })
 
-
+    function forumCharter() {
+        window.open(Feng.ctxPath + '/system/forumCharter');
+    }
 
 </script>
 </body>

@@ -6,14 +6,22 @@ import cn.stylefeng.guns.pay.entity.VipPay;
 import cn.stylefeng.guns.pay.model.params.VipPayParam;
 import cn.stylefeng.guns.pay.service.VipPayService;
 import cn.stylefeng.guns.pay.wrapper.VipPayWrapper;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
+import cn.stylefeng.guns.util.TransTypeUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,6 +39,9 @@ public class VipPayController extends BaseController {
 
     @Autowired
     private VipPayService vipPayService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 跳转到主页面
@@ -108,7 +119,14 @@ public class VipPayController extends BaseController {
     @ResponseBody
     public ResponseData detail(VipPayParam vipPayParam) {
         VipPay detail = this.vipPayService.getById(vipPayParam.getPayId());
-        return ResponseData.success(detail);
+        String userName = userService.getById(detail.getPayUser()).getName();
+        String payTypeStr = TransTypeUtil.getPayType().get(detail.getPayType()).toString();
+        Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
+        map.put("userName",userName);
+        map.put("payTypeStr",payTypeStr);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        map.put("time",sdf.format(detail.getPayTime()));
+        return ResponseData.success(map);
     }
 
     /**
@@ -129,8 +147,19 @@ public class VipPayController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/wrapList")
-    public Object wrapList(VipPayParam vipPayParam){
-        Page<Map<String, Object>> pays = this.vipPayService.findPageWrap(vipPayParam);
+    public Object wrapList(VipPayParam vipPayParam,String userName){
+        List<User> userList = new ArrayList<>();
+        userList = userService.listByRole("", userName);
+        List<Long> userIds = new ArrayList<>();
+        if (userList.size() > 0){
+            for (int i = 0;i < userList.size();i++){
+                userIds.add(userList.get(i).getUserId());
+            }
+        }else {
+            Page wrapped = new Page();
+            return LayuiPageFactory.createPageInfo(wrapped);
+        }
+        Page<Map<String, Object>> pays = this.vipPayService.findPageWrap(vipPayParam,userIds);
         Page wrapped = new VipPayWrapper(pays).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }

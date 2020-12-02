@@ -31,11 +31,11 @@
         @}
         <div class="layui-form-item layui-input-icon-group">
             <i class="layui-icon layui-icon-username"></i>
-            <input class="layui-input" id="username" name="username" placeholder="请输入登录账号" value="admin" autocomplete="off" lay-verType="tips" lay-verify="required" required/>
+            <input class="layui-input" id="username" name="username" placeholder="请输入登录账号" autocomplete="off" lay-verType="tips" lay-verify="required" required/>
         </div>
         <div class="layui-form-item layui-input-icon-group">
             <i class="layui-icon layui-icon-password"></i>
-            <input class="layui-input" id="password" name="password" placeholder="请输入登录密码" value="111111" type="password" lay-verType="tips" lay-verify="required" required/>
+            <input class="layui-input" id="password" name="password" placeholder="请输入登录密码" type="password" lay-verType="tips" lay-verify="required" required/>
         </div>
         @if(constants.getKaptchaOpen()){
         <div class="layui-form-item layui-input-icon-group login-captcha-group">
@@ -115,7 +115,7 @@
 
     .login-wrapper > .layui-form {
         /*height: 360px;*/
-        padding: 25px 30px;
+        padding: 16px 30px;
         background-color: #fff;
         box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.19);
         box-sizing: border-box;
@@ -359,7 +359,7 @@
             top.layer.open({
                 type: 2,
                 title: false,
-                area: ['400px', '500px'],
+                area: ['400px', '450px'],
                 content: Feng.ctxPath + '/mgr/user_registe',
             });
         };

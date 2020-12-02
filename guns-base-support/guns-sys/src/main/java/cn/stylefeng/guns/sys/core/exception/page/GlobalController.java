@@ -47,6 +47,7 @@ public class GlobalController {
     @RequestMapping(path = "/sessionError")
     public String errorPageInfo(Model model) {
         //model.addAttribute("tips", "登陆超时，请您重新登陆！");
+        model.addAttribute("ifVideo","no");
         model.addAttribute("tips", "请登陆！");
         //return "/login.html";
         return "/webIndex.html";

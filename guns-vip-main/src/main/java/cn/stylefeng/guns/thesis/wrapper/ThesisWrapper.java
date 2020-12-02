@@ -181,14 +181,17 @@ public class ThesisWrapper extends BaseControllerWrapper {
 		List<ThesisReviewMiddleResult> midListAgain = midResAgain.getData();
 		if(midListAgain.size() != 0){
 			ThesisReviewMiddleResult middleResult = midListAgain.get(0);
-			Date date = middleResult.getReviewTime();
-			if(date != null && date.getTime() != 0){
-				map.put("secondStatus","已评审");
-				Integer secondScore = middleResult.getScore();
-				map.put("secondScore",secondScore);
-			}else {
-				map.put("secondStatus","未评审");
+			if (middleResult != null){
+				Date date = middleResult.getReviewTime();
+				if(date != null && date.getTime() != 0 && middleResult.getScore() != null){
+					map.put("secondStatus","已评审");
+					Integer secondScore = middleResult.getScore();
+					map.put("secondScore",secondScore);
+				}else {
+					map.put("secondStatus","未评审");
+				}
 			}
+
 		}
 
 		//复评分数

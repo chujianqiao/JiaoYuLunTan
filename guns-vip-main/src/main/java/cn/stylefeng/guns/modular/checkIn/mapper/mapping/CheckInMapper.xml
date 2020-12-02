@@ -13,11 +13,12 @@
         <result column="sign_place" property="signPlace" />
         <result column="meet_or_forum" property="meetOrForum" />
         <result column="forum_id" property="forumId" />
+        <result column="meet_id" property="meetId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        check_id AS "checkId", user_id AS "userId", register_status AS "registerStatus", register_time AS "registerTime", sign_status AS "signStatus", sign_time AS "signTime", sign_place AS "signPlace", meet_or_forum AS "meetOrForum", forum_id AS "forumId"
+        check_id AS "checkId", user_id AS "userId", register_status AS "registerStatus", register_time AS "registerTime", sign_status AS "signStatus", sign_time AS "signTime", sign_place AS "signPlace", meet_or_forum AS "meetOrForum", forum_id AS "forumId", meet_id AS "meetId"
     </sql>
 
 
@@ -98,6 +99,12 @@
         select
         <include refid="Base_Column_List"/>
         from check_in where user_id = #{userId}
+        <if test="meetId != null and meetId != ''">
+            and meet_id = #{meetId}
+        </if>
+        <if test="forumId != null and forumId != ''">
+            and forum_id = #{forumId}
+        </if>
     </select>
 
 </mapper>

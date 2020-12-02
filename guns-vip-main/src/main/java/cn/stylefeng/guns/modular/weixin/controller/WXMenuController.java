@@ -69,19 +69,21 @@ public class WXMenuController {
 
         CommonButton btn15 = new CommonButton();
         btn15.setName("问题答疑");
-        btn15.setType("view");
-        //btn11.setKey("15");
-        btn15.setUrl("http://www.baidu.com");
+        btn15.setType("click");
+        btn15.setKey("15");
+        //btn15.setUrl("http://fagexz.natappfree.cc/answer/getAnswerData");
 
         CommonButton btn21 = new CommonButton();
         btn21.setName("优秀论著推送");
-        btn21.setType("click");
-        btn21.setKey("21");
+        btn21.setType("view");
+        //btn21.setKey("21");
+        btn21.setUrl("http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/yxlwj/");
 
         CommonButton btn22 = new CommonButton();
         btn22.setName("教改实验成果展示");
-        btn22.setType("click");
-        btn22.setKey("22");
+        btn22.setType("view");
+        //btn22.setKey("22");
+        btn22.setUrl("http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/jgsy/");
 
         CommonButton btn31 = new CommonButton();
         btn31.setName("我的信息");

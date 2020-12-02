@@ -15,29 +15,97 @@
     <!--<link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>-->
     <script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
     <script src="${ctxPath}/assets/common/js/custom.js"></script>
+
 </head>
 <header>
     <div class="head mCenter widthC pr">
         <img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
         <div class="language-select pa">
-            <img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
+            <!--<img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
             <div class="language-select-box pr">
                 <div class="language fontSize16">
                     <a href="#">中文</a>
                     <a href="#" class="hover">英文</a>
                 </div>
                 <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn pa" id="langSelect" />
+            </div>-->
+            <div id="userDiv" class="fontSize16" style="float:left;display: block;margin-right: 10px">
+                <a href="#" onclick="logout()" style="color: white">退出</a>
             </div>
         </div>
     </div>
 </header>
 <nav class="widthC mCenter pr">
     <div class="inlineBlock"><a href="${ctxPath}/index" class="fontSize18 item" target="_blank">首页</a></div>
-    <div class="inlineBlock"><a href="${ctxPath}/mgr/toPersonCenter" class="fontSize18 item" target="_blank">个人中心</a></div>
-    <div class="inlineBlock"><a href="${ctxPath}/meetMember" class="fontSize18 item" target="_blank">会议注册</a></div>
-    <div class="inlineBlock"><a href="${ctxPath}/thesis" class="fontSize18 item" target="_blank">专家评审</a></div>
-    <div><a href="${ctxPath}/greatResult" class="fontSize18 item" target="_blank">成果会展申请</a></div>
-    <div><a href="${ctxPath}/collectTopic" class="fontSize18 item" target="_blank">主题征集</a></div>
-    <div><a href="${ctxPath}/ownForum" class="fontSize18 item" target="_blank">论坛申报</a></div>
-    <div><a href="${ctxPath}/socialForum" class="fontSize18 item" target="_blank">赞助意向</a></div>
+    <div class="inlineBlock"><a href="${ctxPath}/mgr/toPersonCenter" id="toPersonCenter" class="fontSize18 item" target="_blank">个人中心</a></div>
+    <div class="inlineBlock"><a href="${ctxPath}/meetMember" id="meetMember" class="fontSize18 item" target="_blank">会议注册</a></div>
+    <div class="inlineBlock" id="thesisNavDiv"><a href="${ctxPath}/thesis" id="thesis" class="fontSize18 item" target="_blank">专家评审</a></div>
+    <div><a href="${ctxPath}/greatResult" id="greatResult" class="fontSize18 item" target="_blank">成果会展申请</a></div>
+    <div><a href="${ctxPath}/collectTopic" id="collectTopic" class="fontSize18 item" target="_blank">主题征集</a></div>
+    <div><a href="${ctxPath}/ownForum" id="ownForum" class="fontSize18 item" target="_blank">论坛申报</a></div>
+    <div><a href="${ctxPath}/socialForum" id="socialForum" class="fontSize18 item" target="_blank">赞助意向</a></div>
 </nav>
+<div class="pc">
+    <div class="widthC mCenter func-container mb40 pr" style="padding-top: 10px;height: 140px;margin-bottom: 10px;margin-top: -7px">
+        <div class="func-items mCenter swiper-container" id="funcSwiper">
+            <div class="swiper-wrapper">
+                <div class="func-item swiper-slide">
+                    <a href="http://cesf.nies.net.cn/meetMember/add" target="_blank" class="func-item-icon mb10"  target="_blank"><img src="${ctxPath}/assets/common/images/forum_icon_06.png" /></a>
+                    <a href="http://cesf.nies.net.cn/meetMember/add" target="_blank" class="func-item-title fontSize16"  target="_blank">会议注册</a>
+                </div>
+                <div class="func-item swiper-slide">
+                    <a href="http://cesf.nies.net.cn/thesis/" target="_blank" class="func-item-icon mb10"   target="_blank"><img src="${ctxPath}/assets/common/images/forum_icon_04.png" /></a>
+                    <a href="http://cesf.nies.net.cn/thesis/" target="_blank" class="func-item-title fontSize16"  target="_blank">专家评审</a>
+                </div>
+                <div class="func-item swiper-slide">
+                    <a href="http://cesf.nies.net.cn/greatResult/add" target="_blank" class="func-item-icon mb10"  target="_blank"><img src="${ctxPath}/assets/common/images/forum_icon_08.png" /></a>
+                    <a href="http://cesf.nies.net.cn/greatResult/add" target="_blank" class="func-item-title fontSize16"  target="_blank">优秀成果会展申请</a>
+                </div>
+                <div class="func-item swiper-slide">
+                    <a href="http://cesf.nies.net.cn/collectTopic/add" target="_blank" class="func-item-icon mb10"  target="_blank"><img src="${ctxPath}/assets/common/images/forum_icon_12.png" /></a>
+                    <a href="http://cesf.nies.net.cn/collectTopic/add" target="_blank" class="func-item-title fontSize16"  target="_blank">主题征集</a>
+                </div>
+                <div class="func-item swiper-slide">
+                    <a href="http://cesf.nies.net.cn/holdForum/add" target="_blank" target="_blank" class="func-item-icon mb10"><img src="${ctxPath}/assets/common/images/forum_icon_01.png" /></a>
+                    <a href="http://cesf.nies.net.cn/holdForum/add" target="_blank" target="_blank" class="func-item-title fontSize16">论坛申报</a>
+                </div>
+                <div class="func-item swiper-slide">
+                    <a href="http://cesf.nies.net.cn/socialForum/add" target="_blank" class="func-item-icon mb10"  target="_blank"><img src="${ctxPath}/assets/common/images/forum_icon_14.png" /></a>
+                    <a href="http://cesf.nies.net.cn/socialForum/add" target="_blank" class="func-item-title fontSize16"  target="_blank">赞助意向</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script>
+    //if ("${menuUrl }" != null && "${menuUrl }" != ""){
+    $("#" + "${menuUrl }").attr("style","color:#196bc6;background:#c5def6;")
+    //}
+
+    if ("${isReview }" == "no") {
+        $("#thesisNavDiv").attr("style","display:none");
+    } else {
+        $("#thesisNavDiv").attr("style","display:inline-block");
+    }
+    function logout() {
+        $.ajax({
+            url: Feng.ctxPath + "/logout",
+            success: function(){
+                window.location.href = Feng.ctxPath + "/index";
+            }
+        });
+        /*var ajax = new $ax(Feng.ctxPath + "/logout", function (data) {
+            Feng.success("退出成功!");
+            window.location.href = Feng.ctxPath + "/index";
+        }, function (data) {
+            layer.msg("退出失败！" + data.responseJSON.message, {icon: 5, anim: 6});
+        });
+        ajax.start();*/
+    }
+</script>

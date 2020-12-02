@@ -6,14 +6,20 @@
     <script src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
 </head>
 <body id="body" style="">
-<div style="width: 200px;margin: auto">
+<div style="width: 200px;float: left;margin-left: 10px">
     <img id="img1" style="width: 200px;height: 70px;">
     <br>
-    <img id="img" src="" style="width: 198px;height: 200px;border: 1px solid gray">
+    <img id="img" src="" style="width: 198px;height: 198px;border: 1px solid rgb(192,192,192)">
     <br>
     <img id="img2" style="width: 200px;height: 75px;">
 </div>
-
+<div style="width: 200px;float: left;margin-left: 10px">
+    <img id="weiXinImg1" style="width: 200px;height: 70px;">
+    <br>
+    <img id="weiXinQrcode" style="width: 198px;height: 200px;border: 1px solid gray">
+    <br>
+    <img id="weiXinImg2" style="width: 200px;height: 75px;">
+</div>
 </body>
 <script type="text/javascript">
     var Feng = {
@@ -35,7 +41,7 @@
             let imgRes = imgAjax.start();
             let photo = imgRes.data.imgBase64Str;
             $("#img").attr('src', src='data:image/jpeg;base64,' + photo);
-            $("#img1").attr("src","${ctxPath}/assets/common/images/alipay1.png");
+            $("#img1").attr("src","${ctxPath}/assets/common/images/alipay3.png");
             $("#img2").attr("src","${ctxPath}/assets/common/images/alipay2.png");
 
             orderNum = imgRes.data.orderNum;
@@ -59,6 +65,50 @@
         }
 
     });
+
+    var memberId = Feng.getUrlParam("memberId");
+    var uuid;
+    $.ajax({
+        type: "post",
+        url: "${ctxPath}/weiXin/weiXinPay?memberId=" + memberId,
+        success: function (data) {
+            var photo = data.photo;
+            var uuid = data.uuid;
+            //$("#qrcode").attr("style","background-image: url('data:image/jpeg;base64," + photo + "');background-repeat: no-repeat;width: 200px;height: 200px;background-size: contain;");
+            $("#weiXinQrcode").attr("style","background-image: url('data:image/jpeg;base64," + photo + "');background-repeat: no-repeat;width: 200px;height: 200px;background-size: contain;");
+            $("#weiXinImg1").attr("src","${ctxPath}/assets/common/images/weiXinPay3.png");
+            $("#weiXinImg2").attr("src","${ctxPath}/assets/common/images/weiXinPay2.png");
+
+            //开始验证
+            keepPool(uuid);
+        }
+    });
+
+    function keepPool(uuid){
+        layui.use(['layer', 'element', 'admin', 'index', 'ax'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var admin = layui.admin;
+            var index = layui.index;
+            var $ax = layui.ax;
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            $.post("${ctxPath}/weiXin/pool", {
+                uuid: uuid,
+            }, function (data) {
+                if (data == 'success') {
+                    //alert("支付成功");
+                    parent.location.reload();
+                    admin.closeThisDialog();
+                } else if (data == 'timeout') {
+                    alert("支付超时，请刷新重试");
+                } else {
+                    keepPool(uuid);
+                }
+            });
+        });
+    }
 
 </script>
 </html>

@@ -1,0 +1,84 @@
+@layout("/common/_form.html",{js:["/assets/bill/bill_add.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+
+<form class="layui-form" id="billForm" lay-filter="billForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="billId" type="hidden"/>
+                    <input id="meetMemberId" name="meetMemberId" type="hidden"/>
+                    <!--<div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">申请人ID<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="userId" name="userId" placeholder="请输入申请人ID" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">会议ID<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="meetId" name="meetId" placeholder="请输入会议ID" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">企业名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="enterprise" name="enterprise" placeholder="请输入企业名称" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">纳税人识别号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="taxpayerNumber" name="taxpayerNumber" placeholder="请输入纳税人识别号" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">凭证上传 ：<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
+                            <input id="credentialsPath" name="credentialsPath" type="hidden" class="layui-input"/>
+                            <input id="credentialsName" name="credentialsName" type="hidden" class="layui-input"/>
+
+                            <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
+                            <input name="credentialsName" id="fileNameTip" placeholder="请上传凭证" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;width: 67%;float: left;" lay-verify="required" required/>
+                            <div style="float: left;">
+                                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="fileBtn"><i class="layui-icon"></i>选择文件</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">凭证名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="credentialsName" name="credentialsName" placeholder="请输入凭证名称" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">凭证路径<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="credentialsPath" name="credentialsPath" placeholder="请输入凭证路径" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">饮食禁忌<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="food" name="food" placeholder="请输入饮食禁忌" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">酒店预订<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="hotel" name="hotel" placeholder="请输入酒店预订" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

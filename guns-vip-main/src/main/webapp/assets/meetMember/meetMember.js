@@ -41,11 +41,13 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                     } else if (data.meetStatusStr == "已取消") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                     } else if (data.meetStatusStr == "评审通过") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >支付宝缴费</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >缴费</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
                     } else if (data.meetStatusStr == "已缴费") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='ticket'>申请开票</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a>";
                     } else if (data.meetStatusStr == "未通过") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
+                    } else if (data.meetStatusStr == "已申请开票") {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>修改开票信息</a>";
                     }
                 }}
         ]];
@@ -116,6 +118,29 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             type: 2,
             area: ['620px','600px'],
             content: Feng.ctxPath + '/meetMember/forum?memberId=' + data.memberId,
+            tableId: MeetMember.tableId
+        });
+    };
+
+    /**
+     * 申请开票
+     * @param data
+     */
+    MeetMember.onAddBill = function (data) {
+        layer.open({
+            title: '申请开票',
+            type: 2,
+            area: ['620px','600px'],
+            content: Feng.ctxPath + '/bill/add?memberId=' + data.memberId,
+            tableId: MeetMember.tableId
+        });
+    };
+    MeetMember.onEditBill = function (data) {
+        layer.open({
+            title: '修改开票信息',
+            type: 2,
+            area: ['620px','600px'],
+            content: Feng.ctxPath + '/bill/edit?meetMemberId=' + data.memberId,
             tableId: MeetMember.tableId
         });
     };
@@ -208,12 +233,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         layer.open({
             title: '扫码支付',
             type: 2,
-            area: ['400px','450px'],
+            area: ['460px','450px'],
             content: Feng.ctxPath + '/alipay/qrcode?memberId=' + memberId,
             tableId: MeetMember.tableId
         });
     };
-    MeetMember.onWeiXinPayItem = function (data) {
+    /*MeetMember.onWeiXinPayItem = function (data) {
         let memberId = data.memberId;
         layer.open({
             title: '扫码支付',
@@ -222,7 +247,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             content: Feng.ctxPath + '/weiXin/toWeiXinPay?memberId=' + memberId,
             tableId: MeetMember.tableId
         });
-    };
+    };*/
 
     // 工具条点击事件
     table.on('tool(' + MeetMember.tableId + ')', function (obj) {
@@ -241,9 +266,13 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             MeetMember.onForumItem(data);
         } else if (layEvent === 'pay') {
             MeetMember.onPayItem(data);
-        } else if (layEvent === 'weiXinPay') {
+        } else if (layEvent === 'addBill') {
+            MeetMember.onAddBill(data);
+        } else if (layEvent === 'editBill') {
+            MeetMember.onEditBill(data);
+        } /*else if (layEvent === 'weiXinPay') {
             MeetMember.onWeiXinPayItem(data);
-        }
+        }*/
 
     });
 });

@@ -94,6 +94,7 @@ public class TransTypeUtil {
 		meetStatus.put(3,"已取消");
 		meetStatus.put(4,"已缴费");
 		meetStatus.put(5,"未通过");
+		meetStatus.put(6,"已申请开票");
 		return meetStatus;
 	}
 

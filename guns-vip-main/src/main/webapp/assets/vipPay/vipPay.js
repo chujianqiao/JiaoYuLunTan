@@ -19,12 +19,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'payId', hide: true, title: '缴费记录ID'},
-            {field: 'payUser', sort: true, title: '缴费用户ID'},
+            {field: 'payUserName', sort: true, title: '缴费用户'},
             {field: 'orderNum', sort: true, title: '订单号'},
-            {field: 'payMoney', sort: true, title: '缴费金额'},
+            {field: 'payMoney', sort: true, title: '缴费金额（元）'},
             // {field: 'payType', sort: true, title: '缴费方式'},
             {field: 'payTypeStr', sort: true, title: '缴费方式'},
-            {field: 'tranNum', sort: true, title: '平台交易单号'},
+            //{field: 'tranNum', sort: true, title: '平台交易单号'},
             {field: 'payTime', sort: true, title: '缴费时间'},
             {align: 'center', toolbar: '#tableBar', title: '操作'}
         ]];
@@ -36,7 +36,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     VipPay.search = function () {
         var queryData = {};
 
-
+        queryData['userName'] = $('#userName').val();
+        $('#userNameExp').val($('#userName').val());
         table.reload(VipPay.tableId, {
             where: queryData, page: {curr: 1}
         });
@@ -59,11 +60,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
       * @param data 点击按钮时候的行数据
       */
       VipPay.openEditDlg = function (data) {
-          func.open({
+          /*func.open({
               title: '修改会员缴费表',
               content: Feng.ctxPath + '/vipPay/edit?payId=' + data.payId,
               tableId: VipPay.tableId
-          });
+          });*/
+          window.location.href = Feng.ctxPath + '/vipPay/edit?payId=' + data.payId;
       };
 
 
@@ -78,6 +80,50 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
     };
+
+    /**
+     * 导出excel按钮
+     */
+    VipPay.exportExcelAll = function () {
+        //使用ajax请求获取所有数据
+        $.ajax({
+            url: Feng.ctxPath + '/vipPay/wrapList',
+            type: 'post',
+            data: {
+                "userName":$('#userNameExp').val(),
+            },
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                //使用table.exportFile()导出数据
+                //console.log(res.data);
+                table.exportFile('exportTable', res.data, 'xlsx');
+            }
+        });
+    };
+    table.render({
+        elem: '#tableExpAll',
+        id: 'exportTable',
+        title: '缴费管理全部数据',
+        cols: [[ //表头
+            {
+                field: 'payUserName',
+                title: '缴费用户',
+            }, {
+                field: 'orderNum',
+                title: '订单号',
+            }, {
+                field: 'payMoney',
+                title: '缴费金额（元）',
+            }, {
+                field: 'payTypeStr',
+                title: '缴费方式',
+            }, {
+                field: 'payTime',
+                title: '缴费时间',
+            }
+        ]]
+    });
 
     /**
      * 点击删除
@@ -123,6 +169,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 导出excel
     $('#btnExp').click(function () {
         VipPay.exportExcel();
+    });
+    // 导出excel
+    $('#btnExpAll').click(function () {
+        VipPay.exportExcelAll();
     });
 
     // 工具条点击事件

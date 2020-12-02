@@ -64,6 +64,10 @@ public class CheckInParam implements Serializable, BaseValidatingParam {
      * 论坛ID
      */
     private Long forumId;
+    /**
+     * 会议ID
+     */
+    private Long meetId;
 
     @Override
     public String checkParam() {

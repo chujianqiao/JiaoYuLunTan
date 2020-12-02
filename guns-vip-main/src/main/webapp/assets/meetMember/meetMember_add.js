@@ -226,18 +226,27 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
         debugger;
-        var ajax = new $ax(Feng.ctxPath + "/thesis/addItem", function (data) {
-            Feng.success("添加成功！");
-            window.location.href = Feng.ctxPath + '/meetMember';
-            //传给上个页面，刷新table用
-            // admin.putTempData('formOk', true);
-            //关掉对话框
-            // admin.closeThisDialog();
-        }, function (data) {
-            Feng.error("添加失败！" + data.responseJSON.message)
-        });
-        ajax.set(data.field);
-        ajax.start();
+        var flag = 0;
+        $("input:checkbox[name = ifAgreeMeet]:checked").each(function(i){
+            flag = 1;
+        })
+        if (flag == 1){
+            var ajax = new $ax(Feng.ctxPath + "/thesis/addItem", function (data) {
+                Feng.success("添加成功！");
+                window.location.href = Feng.ctxPath + '/meetMember';
+                //传给上个页面，刷新table用
+                // admin.putTempData('formOk', true);
+                //关掉对话框
+                // admin.closeThisDialog();
+            }, function (data) {
+                Feng.error("添加失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.start();
+        } else {
+            Feng.error("请先阅读并同意《论坛章程》！");
+        }
+
         return false;
     });
 

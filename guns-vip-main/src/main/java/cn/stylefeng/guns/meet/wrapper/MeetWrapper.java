@@ -30,7 +30,12 @@ public class MeetWrapper extends BaseControllerWrapper {
 		long regId = Long.parseLong(map.get("regUser").toString());
 		//注册人名称
 		String regName = ConstantFactory.me().getUserNameById(regId);
-
+		int meetStatus = Integer.parseInt(map.get("meetStatus").toString());
+		if (meetStatus == 0){
+			map.put("pubStatus","未发布");
+		}else {
+			map.put("pubStatus","已发布");
+		}
 		map.put("regName",regName);
 	}
 }

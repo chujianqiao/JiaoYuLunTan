@@ -4,11 +4,17 @@ import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
+import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
 import cn.stylefeng.guns.pay.config.AlipayConfigProperties;
 import cn.stylefeng.guns.pay.model.params.VipPayParam;
 import cn.stylefeng.guns.pay.model.result.VipPayResult;
 import cn.stylefeng.guns.pay.service.VipPayService;
 import cn.stylefeng.guns.sys.core.log.LogManager;
+import cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam;
+import cn.stylefeng.guns.sys.modular.consts.model.result.SysConfigResult;
+import cn.stylefeng.guns.sys.modular.consts.service.SysConfigService;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.util.Base64Util;
 import cn.stylefeng.guns.util.QrCodeUtil;
 import cn.stylefeng.guns.util.ToolUtil;
@@ -51,6 +57,13 @@ public class AlipayController extends BaseController {
 
 	private String PREFIX = "/pay";
 
+	@Value("${weiXin.appid}")
+	private String appid;
+
+	@Value("${weiXin.secret}")
+	private String secret;
+
+
 	@Autowired
 	private MeetMemberService meetMemberService;
 
@@ -60,8 +73,14 @@ public class AlipayController extends BaseController {
 	@Autowired
 	private AlipayConfigProperties aliPayProperties;
 
+	@Autowired
+	private SysConfigService sysConfigService;
+
 	@Value("${file.uploadFolder}")
 	private String uploadFolder;
+
+	@Autowired
+	private UserService userService;
 
 	/**
 	 *二维码页面
@@ -84,7 +103,10 @@ public class AlipayController extends BaseController {
 		AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
 		String orderNum = getOrderNum();
 		//订单金额
-		String amout = "188.88";
+		SysConfigParam param = new SysConfigParam();
+		param.setCode("MONEY");
+		SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
+		String amout = sysConfigResult.getValue();
 		request.setBizContent("{" +
 				"\"out_trade_no\":\""+ orderNum +"\"," +
 				"\"seller_id\":\"\"," +
@@ -182,6 +204,21 @@ public class AlipayController extends BaseController {
 					meetMemberParam.setMeetStatus(4);
 					this.vipPayService.update(vipPayParam);
 					this.meetMemberService.update(meetMemberParam);
+
+					String templateId = "qsZGWqq2s575lbnSPYkmr4IkliPWh1yHJFXZwAdvDaY";
+					User resultUser = userService.getById(list.get(0).getPayUser());
+					String userWechatId = resultUser.getWechatId();
+					if (userWechatId != null && userWechatId != ""){
+						String first = "会议缴费成功";
+						String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+						String time = format.format(new Date());
+						List<String> dataList = new ArrayList<>();
+						dataList.add(resultUser.getName());
+						dataList.add(list.get(0).getPayMoney() + "");
+						dataList.add(time);
+						CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+					}
 				}
 			}else{
 				map.put("tradeStatus","no");
@@ -218,7 +255,10 @@ public class AlipayController extends BaseController {
 		//商户订单号，商户网站订单系统中唯一订单号，必填
 		String out_trade_no = getOrderNum();
 		//付款金额，必填
-		String total_amount = "188.00";
+		SysConfigParam param = new SysConfigParam();
+		param.setCode("MONEY");
+		SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
+		String total_amount = sysConfigResult.getValue();
 		//订单名称，必填
 		String subject = "支付会议费用";
 		//商品描述，可空

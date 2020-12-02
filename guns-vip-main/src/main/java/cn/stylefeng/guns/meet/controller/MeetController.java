@@ -29,6 +29,7 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -107,7 +108,26 @@ public class MeetController extends BaseController {
         request.setAttribute("meetIdParam","");
         return PREFIX + "/meet_edit.html";
     }
-
+    /**
+     * 会议手册页面
+     * @author wucy
+     * @Date 2020-08-05
+     */
+    @RequestMapping("/meetFile")
+    public String meetFile(Model model, HttpServletRequest request) {
+        MeetParam meetParam = new MeetParam();
+        meetParam.setMeetStatus(1);
+        Page<Map<String, Object>> meets = this.meetService.findPageWrap(meetParam);
+        List<Map<String, Object>> list = meets.getRecords();
+        model.addAttribute("content", list.get(0).get("content"));
+        model.addAttribute("menuUrl", "toPersonCenter");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
+        return PREFIX + "/meet_file.html";
+    }
     /**
      * 会议基本信息页面
      * @author wucy

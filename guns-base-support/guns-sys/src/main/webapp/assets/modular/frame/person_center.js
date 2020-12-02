@@ -16,7 +16,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
     meetMemberDetail();
 
 
-    if ($("#roleId").val().indexOf(4) > -1 || $("#roleId").val().indexOf(5) > -1 || $("#roleId").val().indexOf(1) > -1){
+    if ($("#roleId").val().indexOf("4") > -1 || $("#roleId").val().indexOf("5") > -1 || $("#roleId").val().indexOf("1") > -1){
         $("#thesisDataDiv").attr("style","display:none");
         $("#thesisDiv").attr("style","display:none");
     }

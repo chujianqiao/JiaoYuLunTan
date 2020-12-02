@@ -167,6 +167,11 @@ public class SystemController extends BaseController {
         return "/modular/frame/password.html";
     }
 
+    @RequestMapping("/user_chPhone")
+    public String chPhone() {
+        return "/modular/frame/user_chPhone.html";
+    }
+
     /**
      * 个人消息列表
      *
@@ -223,6 +228,13 @@ public class SystemController extends BaseController {
         model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
         model.addAttribute("wechatName", user.getWechatName());
         LogObjectHolder.me().set(user);
+
+        model.addAttribute("menuUrl", "toPersonCenter");
+        if (user.getRoleId().indexOf("4") > -1){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
 
         String[] roles = user.getRoleId().split(",");
         for (String role : roles){
@@ -378,6 +390,11 @@ public class SystemController extends BaseController {
             e.printStackTrace();
         }
 
+    }
+
+    @RequestMapping("/forumCharter")
+    public String forumCharter() {
+        return "/forumCharter.html";
     }
 
 }

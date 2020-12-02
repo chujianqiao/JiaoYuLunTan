@@ -18,6 +18,7 @@ package cn.stylefeng.guns.sys.modular.system.controller;
 import cn.hutool.core.bean.BeanUtil;
 import cn.stylefeng.guns.base.auth.annotion.Permission;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.auth.service.AuthService;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
 import cn.stylefeng.guns.base.log.BussinessLog;
@@ -108,6 +109,12 @@ public class UserMgrController extends BaseController {
 
         model.addAllAttributes(BeanUtil.beanToMap(user));
         model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
+        model.addAttribute("menuUrl", "toPersonCenter");
+        if (user.getRoleId().indexOf("4") > -1){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         LogObjectHolder.me().set(user);
         return "/modular/frame/person_center.html";
     }
@@ -204,6 +211,20 @@ public class UserMgrController extends BaseController {
     }
     @RequestMapping("/toForgetPwdOne")
     public String toForgetPwdOne(ModelMap map, String account) {
+        User user = this.userService.getByAccount(account);
+        User userPhone = this.userService.getByPhone(account);
+        if (user != null){
+            map.addAttribute("account", account);
+            map.addAttribute("phone", user.getPhone());
+        }else if (userPhone != null){
+            map.addAttribute("account", userPhone.getAccount());
+            map.addAttribute("phone", userPhone.getPhone());
+        }
+        return PREFIX + "phonePwd.html";
+
+    }
+    @RequestMapping("/toNewPwd")
+    public String toNewPwd(ModelMap map, String account) {
         map.addAttribute("account", account);
         return PREFIX + "newPwd.html";
     }
@@ -211,16 +232,12 @@ public class UserMgrController extends BaseController {
     public String toForgetPwdTwo() {
         return PREFIX + "finishPwd.html";
     }
-    @RequestMapping("/forgetPwdOne")
+    @RequestMapping("/phonePwd")
     @ResponseBody
-    public ResponseData forgetPwdOne(HttpServletRequest request, String account, String phone, String smsCode) {
+    public ResponseData phonePwd(HttpServletRequest request, String account, String phone, String smsCode) {
         JSONObject json = (JSONObject)request.getSession().getAttribute("smsCode");
         ResponseData responseData = new ResponseData();
         User user = this.userService.getByAccount(account);
-        if (user == null){
-            responseData.setMessage("userError");
-            return responseData;
-        }
         if (json == null){
             responseData.setMessage("codeError");
             return responseData;
@@ -244,6 +261,20 @@ public class UserMgrController extends BaseController {
         responseData.setMessage(account);
         return responseData;
     }
+    @RequestMapping("/forgetPwdOne")
+    @ResponseBody
+    public ResponseData forgetPwdOne(HttpServletRequest request, String account, String phone, String smsCode) {
+        JSONObject json = (JSONObject)request.getSession().getAttribute("smsCode");
+        ResponseData responseData = new ResponseData();
+        User user = this.userService.getByAccount(account);
+        User userPhone = this.userService.getByPhone(account);
+        if (user == null && userPhone == null){
+            responseData.setMessage("userError");
+            return responseData;
+        }
+        responseData.setMessage(account);
+        return responseData;
+    }
     @RequestMapping("/forgetPwdTwo")
     @ResponseBody
     public ResponseData forgetPwdTwo(String password, String account) {
@@ -256,7 +287,7 @@ public class UserMgrController extends BaseController {
         user.setSalt(SaltUtil.getRandomSalt());
         user.setPassword(SaltUtil.md5Encrypt(password, user.getSalt()));
         if (this.userService.updateById(user)){
-            responseData.setMessage("success");
+            responseData.setMessage(account);
             return responseData;
         }else {
             responseData.setMessage("error");
@@ -328,7 +359,41 @@ public class UserMgrController extends BaseController {
         this.userService.changePwd(oldPassword, newPassword);
         return SUCCESS_TIP;
     }
-
+    @RequestMapping("/changePhone")
+    @ResponseBody
+    public ResponseData changePhone(HttpServletRequest request, String phone, String smsCode) {
+        JSONObject json = (JSONObject)request.getSession().getAttribute("smsCode");
+        ResponseData responseData = new ResponseData();
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        User user = userService.getById(loginUser.getId());
+        User userPhone = userService.getByPhone(phone);
+        UserDto userDto = new UserDto();
+        if (json == null){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if (!json.getString("phone").equals(phone)){
+            responseData.setMessage("phoneError");
+            return responseData;
+        }
+        if (userPhone != null){
+            responseData.setMessage("userError");
+            return responseData;
+        }
+        if (!json.getString("smsCode").equals(smsCode)){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if ((System.currentTimeMillis() - json.getLong("createTime")) > 1000 * 60 * 5){
+            responseData.setMessage("overTime");
+            return responseData;
+        }
+        userDto.setUserId(user.getUserId());
+        userDto.setPhone(phone);
+        userService.editUser(userDto);
+        responseData.setMessage("success");
+        return responseData;
+    }
     /**
      * 查询管理员列表
      *
@@ -407,6 +472,24 @@ public class UserMgrController extends BaseController {
             return responseData;
         }
         this.userService.addUser(user);
+        return SUCCESS_TIP;
+    }
+
+    @RequestMapping("/addCheck")
+    @ResponseBody
+    public ResponseData addCheck(@Valid UserDto user, HttpServletRequest request) {
+        ResponseData responseData = new ResponseData();
+        // 判断账号是否重复
+        User theUser = userService.getByAccount(user.getAccount());
+        if (theUser != null) {
+            responseData.setMessage("existAccount");
+            return responseData;
+        }
+        User pUser = userService.getByPhone(user.getPhone());
+        if (pUser != null) {
+            responseData.setMessage("existPhone");
+            return responseData;
+        }
         return SUCCESS_TIP;
     }
 

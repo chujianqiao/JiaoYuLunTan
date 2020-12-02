@@ -1,11 +1,19 @@
 package cn.stylefeng.guns.modular.weixin.service;
 
+import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.modular.answer.model.params.AnswerParam;
+import cn.stylefeng.guns.modular.answer.model.result.AnswerResult;
+import cn.stylefeng.guns.modular.answer.service.AnswerService;
 import cn.stylefeng.guns.modular.weixin.message.resp.TextMessage;
 import cn.stylefeng.guns.modular.weixin.util.MessageUtil;
+import cn.stylefeng.roses.core.util.SpringContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.reactive.context.StandardReactiveWebEnvironment;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,6 +24,10 @@ import java.util.Map;
  * 发布版本：V1.0  </br>
  */
 public class CoreService {
+
+    @Autowired
+    private static AnswerService answerService = SpringContextHolder.getBean(AnswerService.class);;
+
     /**
      * 处理微信发来的请求
      * @param request
@@ -44,11 +56,37 @@ public class CoreService {
             textMessage.setCreateTime(new Date().getTime());
             textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 
+            AnswerParam answerParam = new AnswerParam();
+            LayuiPageInfo answerRes = answerService.findPageBySpec(answerParam);
+            List<AnswerResult> answerList = answerRes.getData();
+
             // 文本消息
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
-                respContent = "您发送的是文本消息！";
+                respContent = "";
+                String inputText = requestMap.get("Content");
+                for (int i = 0;i < answerList.size();i++){
+                    if (inputText.equals((i + 1) + "")){
+                        respContent += "问题：" + answerList.get(i).getAnswerKey() + "\n";
+                        respContent += "答案：" + answerList.get(i).getAnswerValue() + "\n";
+                    }/*else if (inputText.equals(answerList.get(i).getAnswerKey())){
+                    respContent = answerList.get(i).getAnswerValue();
+                }*/else if (answerList.get(i).getAnswerKey().indexOf(inputText) > -1){
+                        respContent += "问题：" + answerList.get(i).getAnswerKey() + "\n";
+                        respContent += "答案：" + answerList.get(i).getAnswerValue() + "\n";
+                    }
+
+                }
+                if (respContent != ""){
+                    respContent = respContent.substring(0,respContent.lastIndexOf("\n"));
+                }else {
+                    respContent = "问题答疑：\n";
+                    for (int i = 0;i < answerList.size();i++){
+                        respContent += (i + 1) + "、" + answerList.get(i).getAnswerKey() + "\n";
+                    }
+                    respContent += "请输入问题编号或者名称进行答疑。";
+                }
             }
-            // 图片消息
+           /* // 图片消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
                 respContent = "您发送的是图片消息！";
             }
@@ -71,7 +109,7 @@ public class CoreService {
             // 链接消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
                 respContent = "您发送的是链接消息！";
-            }
+            }*/
             // 事件推送
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
                 // 事件类型
@@ -95,13 +133,21 @@ public class CoreService {
                         respContent = "扫描永久二维码！";
                     }
                 }
-                // 上报地理位置
+                /*// 上报地理位置
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_LOCATION)) {
                     // TODO 处理上报地理位置事件
-                }
+                }*/
                 // 自定义菜单
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
                     // TODO 处理菜单点击事件
+                    if (eventKey.equals("15")){
+                        respContent = "问题答疑：\n";
+                        for (int i = 0;i < answerList.size();i++){
+                            respContent += (i + 1) + "、" + answerList.get(i).getAnswerKey() + "\n";
+                        }
+                        respContent += "请输入问题编号或者名称进行答疑。";
+
+                    }
                 }
             }
             // 设置文本消息的内容

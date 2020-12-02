@@ -1,0 +1,36 @@
+@layout("/common/_container.html",{title:"个人中心",css:["/assets/modular/frame/user_info.css"]}){
+<head>
+    <title>会议手册</title>
+</head>
+<div class="page">
+    <!-- 头部 -->
+    @include("/common/person_header.html"){}
+    <!-- 正文开始 -->
+    <div class="func-column-container widthC mCenter mb40">
+        <div class="layui-fluid">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space15">
+                        <div id="meetFile">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 尾部 -->
+    @include("/common/person_footer.html"){}
+</div>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script>
+    $("#meetFile").html('${(content) }');
+</script>
+@}

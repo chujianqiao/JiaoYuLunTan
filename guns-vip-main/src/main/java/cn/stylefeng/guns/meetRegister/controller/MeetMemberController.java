@@ -4,6 +4,7 @@ import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.model.params.MeetParam;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.entity.MeetMember;
@@ -92,8 +93,14 @@ public class MeetMemberController extends BaseController {
      * @Date 2020-05-20
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
         boolean isAdmin = ToolUtil.isAdminRole();
+        model.addAttribute("menuUrl","meetMember");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         if(isAdmin){
             return PREFIX + "/meetMember_admin.html";
         }else{
@@ -110,7 +117,12 @@ public class MeetMemberController extends BaseController {
     public String add(HttpServletRequest request, Model model) {
         //头像
         model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
-
+        model.addAttribute("menuUrl","meetMember");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
         User user = userService.getById(loginUser.getId());
         String userTitle = user.getTitle();
@@ -128,7 +140,13 @@ public class MeetMemberController extends BaseController {
      * @Date 2020-05-20
      */
     @RequestMapping("/edit")
-    public String edit() {
+    public String edit(Model model) {
+        model.addAttribute("menuUrl", "meetMember");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         return PREFIX + "/meetMember_edit.html";
     }
 
@@ -138,8 +156,14 @@ public class MeetMemberController extends BaseController {
      * @Date 2020-05-20
      */
     @RequestMapping("/disable")
-    public String disable(MeetMemberParam meetMemberParam) {
+    public String disable(MeetMemberParam meetMemberParam, Model model) {
         boolean isAdmin = ToolUtil.isAdminRole();
+        model.addAttribute("menuUrl", "meetMember");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         if(isAdmin){
             return PREFIX + "/meetMember_edit_admin.html";
         } else {

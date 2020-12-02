@@ -104,7 +104,7 @@ public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> impl
     }
 
     @Override
-    public CheckIn getByUser(Long userId){
-        return this.baseMapper.getByUser(userId);
+    public List<CheckIn> getByUser(Long userId,Long meetId,Long forumId){
+        return this.baseMapper.getByUser(userId,meetId,forumId);
     }
 }

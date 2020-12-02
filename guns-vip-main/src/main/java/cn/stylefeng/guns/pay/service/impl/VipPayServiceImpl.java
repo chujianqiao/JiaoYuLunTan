@@ -70,9 +70,9 @@ public class VipPayServiceImpl extends ServiceImpl<VipPayMapper, VipPay> impleme
     }
 
     @Override
-    public Page<Map<String, Object>> findPageWrap(VipPayParam param) {
+    public Page<Map<String, Object>> findPageWrap(VipPayParam param, List<Long> userIds) {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.customPageMapList(page,param);
+        return this.baseMapper.customPageMapList(page,param,userIds);
     }
 
     private Serializable getKey(VipPayParam param){

@@ -26,6 +26,7 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
     var table = layui.table;
     var func = layui.func;
     var upload = layui.upload;
+    var nowTime = new Date().valueOf();
 
     getCheckImage();
     getSignImage();
@@ -146,29 +147,59 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
     }
 
     //执行一个laydate实例
-    laydate.render({
+    var beginTime = laydate.render({
         elem: '#beginTime' //指定元素
         ,type: 'datetime'
         ,format: 'yyyy-MM-dd HH:mm:ss'
         ,trigger: 'click'
+        ,min:nowTime,
+        done:function(value,date){
+            endMax = endTime.config.max;
+            endTime.config.min = date;
+            endTime.config.min.month = date.month -1;
+        }
     });
-    laydate.render({
+    var endTime = laydate.render({
         elem: '#endTime'
         ,type: 'datetime'
         ,format: 'yyyy-MM-dd HH:mm:ss'
         ,trigger: 'click'
+        ,min : nowTime,
+        done:function(value,date){
+            if($.trim(value) == ''){
+                var curDate = new Date();
+                date = {'date': curDate.getDate(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
+            }
+            beginTime.config.max = date;
+            beginTime.config.max.month = date.month -1;
+        }
     });
-    laydate.render({
+    var joinBegTime = laydate.render({
         elem: '#joinBegTime'
         ,type: 'datetime'
         ,format: 'yyyy-MM-dd HH:mm:ss'
         ,trigger: 'click'
+        ,min:nowTime,
+        done:function(value,date){
+            endMax = joinEndTime.config.max;
+            joinEndTime.config.min = date;
+            joinEndTime.config.min.month = date.month -1;
+        }
     });
-    laydate.render({
+    var joinEndTime = laydate.render({
         elem: '#joinEndTime'
         ,type: 'datetime'
         ,format: 'yyyy-MM-dd HH:mm:ss'
         ,trigger: 'click'
+        ,min : nowTime,
+        done:function(value,date){
+            if($.trim(value) == ''){
+                var curDate = new Date();
+                date = {'date': curDate.getDate(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
+            }
+            joinBegTime.config.max = date;
+            joinBegTime.config.max.month = date.month -1;
+        }
     });
 
 

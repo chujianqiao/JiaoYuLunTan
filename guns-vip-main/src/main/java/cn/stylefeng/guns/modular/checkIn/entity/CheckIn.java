@@ -74,6 +74,12 @@ public class CheckIn implements Serializable {
     @TableField("forum_id")
     private Long forumId;
 
+    /**
+     * 会议ID
+     */
+    @TableField("meet_id")
+    private Long meetId;
+
 
     public Long getCheckId() {
         return checkId;
@@ -146,6 +152,13 @@ public class CheckIn implements Serializable {
     public void setForumId(Long forumId) {
         this.forumId = forumId;
     }
+    public Long getMeetId() {
+        return meetId;
+    }
+
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
+    }
 
     @Override
     public String toString() {
@@ -159,6 +172,7 @@ public class CheckIn implements Serializable {
         ", signPlace=" + signPlace +
         ", meetOrForum=" + meetOrForum +
         ", forumId=" + forumId +
+        ", meetId=" + meetId +
         "}";
     }
 }

@@ -51,6 +51,6 @@ public interface VipPayMapper extends BaseMapper<VipPay> {
      * @author wucy
      * @Date 2020-07-15
      */
-    Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") VipPayParam paramCondition);
+    Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") VipPayParam paramCondition, @Param("userIds") List<Long> userIds);
 
 }

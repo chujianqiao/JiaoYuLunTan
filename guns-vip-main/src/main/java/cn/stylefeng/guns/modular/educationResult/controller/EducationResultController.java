@@ -32,6 +32,7 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -130,9 +131,15 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/detailAdmin")
-    public String detailAdmin(Integer applyType) {
+    public String detailAdmin(Integer applyType, Model model) {
         boolean isAdmin = ToolUtil.isAdminRole();
         boolean isReview = ToolUtil.isReviewRole();
+        model.addAttribute("menuUrl", "greatResult");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         if (isAdmin){
             //if (applyType == 1){
                 return PREFIX + "/educationResult_detail.html";
@@ -167,8 +174,14 @@ public class EducationResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/reviewPage")
-    public String reviewPage(@RequestParam Long resultId) {
+    public String reviewPage(@RequestParam Long resultId, Model model) {
         boolean isReivew = ToolUtil.isReviewRole();
+        model.addAttribute("menuUrl", "thesis");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         if(isReivew){
             return PREFIX + "/educationResult_edit_review.html";
         } else {
@@ -281,7 +294,7 @@ public class EducationResultController extends BaseController {
         String userWechatId = resultUser.getWechatId();
         if (userWechatId != null && userWechatId != ""){
             String first = "您的教改实验申报已审核";
-            String remark = "您可登录中国教育科学论坛平台进行查询。";
+            String remark = "您可登录中国教育科学论坛平台查看详细信息。";
             String reviewResult = "";
             if (middleParam.getReviewResult() == 0){
                 reviewResult = "不推荐参会";

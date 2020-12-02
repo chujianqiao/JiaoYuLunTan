@@ -82,6 +82,6 @@ public interface VipPayService extends IService<VipPay> {
      * 查询数据（用于拼接字段）
      * @return
      */
-    Page<Map<String, Object>> findPageWrap(VipPayParam vipPayParam);
+    Page<Map<String, Object>> findPageWrap(VipPayParam vipPayParam, List<Long> userIds);
 
 }

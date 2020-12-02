@@ -21,7 +21,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
     // 添加表单验证方法
     form.verify({
-        psw: [/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{8}$/, '密码必须由8位大小写字母加数字组合！'],
+        psw: [/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{8,14}$/, '密码必须由8~14位大小写字母加数字组合！'],
         repsw: function (value) {
             if (value !== $('#userForm input[name=password]').val()) {
                 return '两次密码输入不一致';
@@ -87,8 +87,8 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
     form.on('submit(btnSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/mgr/forgetPwdOne", function (data) {
             if (data.message == 'userError') {
-                Feng.error("此账号尚未注册！");
-            }else if (data.message == 'codeError') {
+                Feng.error("此账号不存在，请重新输入！");
+            }/*else if (data.message == 'codeError') {
                 Feng.error("验证码错误！");
             }else if (data.message == 'phoneError') {
                 Feng.error("手机号错误！");
@@ -96,8 +96,8 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
                 Feng.error("此账号未绑定该手机号！");
             }else if (data.message == 'overTime') {
                 Feng.error("验证码已过期！");
-            }else {
-                Feng.success("验证成功！");
+            }*/else {
+                /*Feng.success("验证成功！");*/
                 window.location.href = Feng.ctxPath + "/mgr/toForgetPwdOne?account=" + data.message
             }
         }, function (data) {

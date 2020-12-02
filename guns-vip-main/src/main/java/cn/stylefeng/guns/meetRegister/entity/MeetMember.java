@@ -117,6 +117,12 @@ public class MeetMember implements Serializable {
     @TableField("sort")
     private Double sort;
 
+    /**
+     * 会议ID
+     */
+    @TableField("meet_id")
+    private Long meetId;
+
     public MeetMember() {
     }
 
@@ -248,7 +254,13 @@ public class MeetMember implements Serializable {
     public void setSort(Double sort) {
         this.sort = sort;
     }
+    public Long getMeetId() {
+        return meetId;
+    }
 
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
+    }
     @Override
     public String toString() {
         return "MeetMember{" +
@@ -263,6 +275,7 @@ public class MeetMember implements Serializable {
         ", wordName=" + wordName +
         ", pptPath=" + pptPath +
         ", pptName=" + pptName +
+        ", meetId=" + meetId +
         "}";
     }
 }

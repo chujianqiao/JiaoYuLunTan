@@ -18,6 +18,7 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,7 +55,13 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-18
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("menuUrl","ownForum");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         if (ToolUtil.isAdminRole()){
             return PREFIX + "/ownForum.html";
         }else {
@@ -102,7 +109,13 @@ public class OwnForumController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/detailAdmin")
-    public String detailAdmin(Integer applyType) {
+    public String detailAdmin(Integer applyType, Model model) {
+        model.addAttribute("menuUrl", "ownForum");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         if (LoginContextHolder.getContext().isAdmin()) {
             //if (applyType == 1) {
                 return PREFIX + "/ownForum_detail.html";

@@ -9,9 +9,13 @@ import cn.stylefeng.guns.core.constant.dictmap.MeetMemberDict;
 import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
+import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
@@ -35,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -59,6 +64,12 @@ public class ThesisController extends BaseController {
 
     private String PREFIX = "/thesis";
 
+    @Value("${weiXin.appid}")
+    private String appid;
+
+    @Value("${weiXin.secret}")
+    private String secret;
+
     @Autowired
     private ThesisService thesisService;
 
@@ -80,6 +91,9 @@ public class ThesisController extends BaseController {
     @Autowired
     private ThesisReviewMiddleService thesisReviewMiddleService;
 
+    @Autowired
+    private MeetService meetService;
+
     @Value("${file.uploadFolder}")
     private String uploadFolder;
 
@@ -89,15 +103,17 @@ public class ThesisController extends BaseController {
      * @Date 2020-05-21
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
         boolean isReview = ToolUtil.isReviewRole();
         boolean isAdmin = ToolUtil.isAdminRole();
+        model.addAttribute("menuUrl","thesis");
+        model.addAttribute("isReview", "yes");
         if(isAdmin){
             return PREFIX + "/thesis_disable.html";
         } else if(isReview){
             return PREFIX + "/thesis_review.html";
         } else{
-            return PREFIX + "/thesis.html";
+            return "没有权限";
         }
     }
 
@@ -142,7 +158,13 @@ public class ThesisController extends BaseController {
      * @Date 2020-05-21
      */
     @RequestMapping("/firstDetail")
-    public String firstDetail() {
+    public String firstDetail(Model model) {
+        model.addAttribute("menuUrl", "thesis");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         return PREFIX + "/thesis_disable_firstDetail.html";
     }
 
@@ -152,7 +174,13 @@ public class ThesisController extends BaseController {
      * @Date 2020-05-21
      */
     @RequestMapping("/secondDetail")
-    public String secondDetail() {
+    public String secondDetail(Model model) {
+        model.addAttribute("menuUrl", "thesis");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         return PREFIX + "/thesis_disable_secondDetail.html";
     }
 
@@ -192,7 +220,13 @@ public class ThesisController extends BaseController {
      * @Date 2020-05-21
      */
     @RequestMapping("/review")
-    public String review() {
+    public String review(Model model) {
+        model.addAttribute("menuUrl", "thesis");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         return PREFIX + "/thesis_review_edit.html";
     }
 
@@ -202,7 +236,13 @@ public class ThesisController extends BaseController {
      * @Date 2020-08-13
      */
     @RequestMapping("/reviewAgain")
-    public String reviewAgain() {
+    public String reviewAgain(Model model) {
+        model.addAttribute("menuUrl", "thesis");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         return PREFIX + "/thesis_review_editAgain.html";
     }
 
@@ -236,6 +276,8 @@ public class ThesisController extends BaseController {
         //状态
         meetMemberParam.setMeetStatus(1);
 
+        Meet meet = meetService.getByStatus(1);
+        meetMemberParam.setMeetId(meet.getMeetId());
         //同时更新用户表、论文表、会议成员表
         this.userService.editUser(user);
         this.thesisService.add(thesisParam);
@@ -385,6 +427,29 @@ public class ThesisController extends BaseController {
         this.thesisService.update(thesisParam);
         this.meetMemberService.update(meetMemberParam);
         this.thesisReviewMiddleService.update(middleParam);
+
+        String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+        User resultUser = userService.getById(meetMemberResult.getUserId());
+        String userWechatId = resultUser.getWechatId();
+        if (userWechatId != null && userWechatId != ""){
+            String first = "您的论文已初评完毕";
+            String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+            String reviewResult = "";
+            if (reviewNum == 0){
+                reviewResult = "不同意参会";
+            }
+            if (reviewNum == 1){
+                reviewResult = "同意参会;" + thesisParam.getStatus();
+            }
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String time = format.format(middleParam.getReviewTime());
+            List<String> dataList = new ArrayList<>();
+            dataList.add("论文");
+            dataList.add(reviewResult);
+            dataList.add(time);
+            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+        }
+
         return ResponseData.success();
     }
 
@@ -439,6 +504,30 @@ public class ThesisController extends BaseController {
         thesisParam.setReviewTime(reviewDate);
         this.thesisReviewMiddleService.update(middleParam);
         this.thesisService.update(thesisParam);
+
+
+        String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+        User resultUser = userService.getById(middleParam.getUserId());
+        String userWechatId = resultUser.getWechatId();
+        if (userWechatId != null && userWechatId != ""){
+            String first = "您的论文被复评";
+            String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+            String reviewResult = "";
+            if (thesisParam.getGreat() == 0){
+                reviewResult = "论文不推荐优秀";
+            }
+            if (thesisParam.getGreat() == 1){
+                reviewResult = "论文推荐优秀";
+            }
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String time = format.format(middleParam.getReviewTime());
+            List<String> dataList = new ArrayList<>();
+            dataList.add("论文");
+            dataList.add(reviewResult);
+            dataList.add(time);
+            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+        }
+
         return ResponseData.success();
     }
 

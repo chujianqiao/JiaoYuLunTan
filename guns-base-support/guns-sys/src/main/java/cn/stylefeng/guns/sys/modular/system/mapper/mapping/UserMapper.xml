@@ -71,7 +71,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id AS "userId", avatar AS "avatar", account AS "account", password AS "password", salt AS "salt", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", vip AS "vip", work_unit AS "workUnit", title AS "title", post AS "post", education AS "education", direction AS "direction", can_download_word AS "canDownloadWord",can_download_ppt AS "canDownloadPpt", word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",introduction AS "introduction",wechat_name AS "wechatName",wechat_id AS "wechatId",union_id AS "unionId",wechat_open_id AS "wechatOpenId"
+        user_id AS "userId", avatar AS "avatar", account AS "account", password AS "password", salt AS "salt", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", vip AS "vip", work_unit AS "workUnit", title AS "title", post AS "post", education AS "education", direction AS "direction", wrong_times AS "wrongTimes" , can_download_word AS "canDownloadWord",can_download_ppt AS "canDownloadPpt", word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",introduction AS "introduction",wechat_name AS "wechatName",wechat_id AS "wechatId",union_id AS "unionId",wechat_open_id AS "wechatOpenId"
     </sql>
 
     <sql id="Base_Column_List_With_Pwd">
@@ -279,19 +279,19 @@
 
     <select id="getByAccount" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
         select
-        <include refid="Base_Column_List_With_Pwd"/>
+        <include refid="Base_Column_List"/>
         from sys_user where account = #{account} and status != 'DELETED'
     </select>
 
     <select id="getByPhone" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
         select
-        <include refid="Base_Column_List_With_Pwd"/>
+        <include refid="Base_Column_List"/>
         from sys_user where phone = #{phone} and status != 'DELETED'
     </select>
 
     <select id="getUserByUnionId" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
         select
-        <include refid="Base_Column_List_With_Pwd"/>
+        <include refid="Base_Column_List"/>
         from sys_user where union_id = #{unionId} and status != 'DELETED'
     </select>
 
@@ -358,7 +358,7 @@
 
     <select id="getById" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
         select
-        <include refid="Base_Column_List_With_Pwd"/>
+        <include refid="Base_Column_List"/>
         from sys_user where user_id = #{userId} and status != 'DELETED'
     </select>
 

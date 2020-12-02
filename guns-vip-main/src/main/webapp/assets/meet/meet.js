@@ -27,9 +27,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'beginTime', sort: true, title: '开始时间'},
             {field: 'endTime', sort: true, title: '结束时间'},
             // {field: 'regUser', sort: true, title: '注册人'},
-            {field: 'regName', sort: true, title: '注册人'},
+            //{field: 'regName', sort: true, title: '注册人'},
             {field: 'regTime', sort: true, title: '注册时间'},
-            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth:230}
+            {field: 'pubStatus', sort: true, title: '发布状态'},
+            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth:250}
         ]];
     };
 

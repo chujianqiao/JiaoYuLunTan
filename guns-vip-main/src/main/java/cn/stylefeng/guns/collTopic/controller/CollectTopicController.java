@@ -18,6 +18,7 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -46,7 +47,13 @@ public class CollectTopicController extends BaseController {
      * @Date 2020-05-18
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("menuUrl","collectTopic");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         boolean isAdmin = ToolUtil.isAdminRole();
         if(isAdmin){
             return PREFIX + "/collectTopic.html";
@@ -62,7 +69,13 @@ public class CollectTopicController extends BaseController {
      * @Date 2020-05-18
      */
     @RequestMapping("/add")
-    public String add() {
+    public String add(Model model) {
+        model.addAttribute("menuUrl","collectTopic");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         return "/collect.html";
     }
 
@@ -72,7 +85,13 @@ public class CollectTopicController extends BaseController {
      * @Date 2020-05-18
      */
     @RequestMapping("/edit")
-    public String edit() {
+    public String edit(Model model) {
+        model.addAttribute("menuUrl","collectTopic");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         if (LoginContextHolder.getContext().isAdmin()) {
             return PREFIX + "/collectTopic_edit.html";
         }else {

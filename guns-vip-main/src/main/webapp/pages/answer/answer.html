@@ -1,0 +1,44 @@
+@layout("/common/_container.html",{js:["/assets/answer/answer.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">自动回复表管理</span>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-form toolbar">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <input id="answerKey" class="layui-input" type="text" placeholder="问题"/>
+                                <input id="answerKeyExp" style="display: none" class="layui-input" type="text"/>
+                            </div>
+                            <div class="layui-inline">
+                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                                <button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                <button id="btnExpAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>全部导出</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="layui-table" id="answerTable" lay-filter="answerTable"></table>
+                    <div style="display: none">
+                        <table style="display: none" id="tableExpAll"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>
+
+<script type="text/html" id="statusTpl">
+    <input type="checkbox" lay-filter="status" value="{{d.answerId}}" lay-skin="switch" lay-text="${lang.get("BTN_ACTIVE","启用")}|${lang.get("BTN_DISABLE","禁用")}" {{d.status=='ENABLE'?'checked':''}} />
+</script>
+@}

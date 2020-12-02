@@ -30,6 +30,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,7 +79,13 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("menuUrl","greatResult");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         if (ToolUtil.isAdminRole()){
             return PREFIX + "/greatResult.html";
         }else {
@@ -92,7 +99,13 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-19
      */
     @RequestMapping("/add")
-    public String add() {
+    public String add(Model model) {
+        model.addAttribute("menuUrl","greatResult");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         LoginUser user = LoginContextHolder.getContext().getUser();
         List roles = user.getRoleList();
         long unit = 3;
@@ -123,7 +136,13 @@ public class GreatResultController extends BaseController {
      * @Date 2020-05-13
      */
     @RequestMapping("/detailAdmin")
-    public String detailAdmin(Integer applyType) {
+    public String detailAdmin(Integer applyType, Model model) {
+        model.addAttribute("menuUrl", "greatResult");
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
         if (LoginContextHolder.getContext().isAdmin()) {
             //if (applyType == 1) {
                 return PREFIX + "/greatResult_detail.html";
@@ -172,11 +191,14 @@ public class GreatResultController extends BaseController {
      * @Date 2020-08-27
      */
     @RequestMapping("/reviewPage")
-    public String reviewPage(Integer applyType,@RequestParam Long resultId) {
+    public String reviewPage(Integer applyType,@RequestParam Long resultId,Model model) {
+        model.addAttribute("menuUrl", "thesis");
         boolean isReview = ToolUtil.isReviewRole();
         if(isReview){
+            model.addAttribute("isReview", "yes");
             return PREFIX + "/greatResult_edit_review.html";
         } else {
+            model.addAttribute("isReview", "no");
             return "无权限查看";
         }
     }
@@ -285,7 +307,7 @@ public class GreatResultController extends BaseController {
         String userWechatId = resultUser.getWechatId();
         if (userWechatId != null && userWechatId != ""){
             String first = "您的教改实验申报已审核";
-            String remark = "您可登录中国教育科学论坛平台进行查询。";
+            String remark = "您可登录中国教育科学论坛平台查看详细信息。";
             String reviewResult = "";
             if (middleParam.getReviewResult() == 0){
                 reviewResult = "不推荐参会";

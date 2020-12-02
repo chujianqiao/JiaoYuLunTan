@@ -9,11 +9,11 @@
 </head>
 <body id="body">
 <div style="width: 200px;margin: auto">
-<img id="img1" style="width: 200px;height: 50px;">
-<br>
-<img id="qrcode" style="">
-<br>
-<img id="img2" style="width: 200px;height: 75px;">
+    <img id="weiXinImg1" style="width: 200px;height: 50px;">
+    <br>
+    <img id="weiXinQrcode" style="">
+    <br>
+    <img id="weiXinImg2" style="width: 200px;height: 75px;">
 </div>
 </body><script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
 <script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
@@ -36,9 +36,9 @@
             var photo = data.photo;
             var uuid = data.uuid;
             //$("#qrcode").attr("style","background-image: url('data:image/jpeg;base64," + photo + "');background-repeat: no-repeat;width: 200px;height: 200px;background-size: contain;");
-            $("#qrcode").attr("style","background-image: url('data:image/jpeg;base64," + photo + "');background-repeat: no-repeat;width: 200px;height: 200px;background-size: contain;");
-            $("#img1").attr("src","${ctxPath}/assets/common/images/weiXinPay1.png");
-            $("#img2").attr("src","${ctxPath}/assets/common/images/weiXinPay2.png");
+            $("#weiXinQrcode").attr("style","background-image: url('data:image/jpeg;base64," + photo + "');background-repeat: no-repeat;width: 200px;height: 200px;background-size: contain;");
+            $("#weiXinImg1").attr("src","${ctxPath}/assets/common/images/weiXinPay1.png");
+            $("#weiXinImg2").attr("src","${ctxPath}/assets/common/images/weiXinPay2.png");
 
             //开始验证
             keepPool(uuid);

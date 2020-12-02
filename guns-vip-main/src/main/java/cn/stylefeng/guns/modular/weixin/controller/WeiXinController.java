@@ -15,6 +15,9 @@ import cn.stylefeng.guns.modular.weixin.pay.WXPayUtil;
 import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
 import cn.stylefeng.guns.pay.model.params.VipPayParam;
 import cn.stylefeng.guns.pay.service.VipPayService;
+import cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam;
+import cn.stylefeng.guns.sys.modular.consts.model.result.SysConfigResult;
+import cn.stylefeng.guns.sys.modular.consts.service.SysConfigService;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
@@ -72,6 +75,9 @@ public class WeiXinController {
 
     @Autowired
     private VipPayService vipPayService;
+
+    @Autowired
+    private SysConfigService sysConfigService;
 
     @Value("${weiXin.url}")
     private String systemUrl;
@@ -136,7 +142,11 @@ public class WeiXinController {
         // 商户订单号
         map.put("out_trade_no", out_trade_no);
         // 标价金额
-        map.put("total_fee","1");
+        SysConfigParam param = new SysConfigParam();
+        param.setCode("MONEY");
+        SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
+        int money = Integer.parseInt(sysConfigResult.getValue()) * 100;
+        map.put("total_fee",money + "");
         // 终端IP
         map.put("spbill_create_ip","127.0.0.1");
         // 通知地址(回调地址)
@@ -281,6 +291,21 @@ public class WeiXinController {
                         //更新表
                         vipPayService.add(vipPayParam);
                         meetMemberService.update(meetMemberParam);
+
+                        String templateId = "qsZGWqq2s575lbnSPYkmr4IkliPWh1yHJFXZwAdvDaY";
+                        User resultUser = userService.getById(Long.parseLong(userId));
+                        String userWechatId = resultUser.getWechatId();
+                        if (userWechatId != null && userWechatId != ""){
+                            String first = "会议缴费成功";
+                            String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            String time = format.format(new Date());
+                            List<String> dataList = new ArrayList<>();
+                            dataList.add(resultUser.getName());
+                            dataList.add(wxtotal_fee + "");
+                            dataList.add(time);
+                            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+                        }
 
                         ScanPool pool = PoolCache.cacheMap.get(uuid);
 
@@ -625,8 +650,9 @@ public class WeiXinController {
             checkInParam.setUserId(userExist.getUserId());
             if (meetId != null && meetId != ""){
                 checkInParam.setMeetOrForum(0);
+                checkInParam.setMeetId(Long.parseLong(meetId));
             }
-            CheckIn checkIn = checkInService.getByUser(userExist.getUserId());
+            List<CheckIn> checkInList = checkInService.getByUser(userExist.getUserId(),Long.parseLong(meetId),null);
             if (type.equals("check")){
                 checkInParam.setRegisterStatus(1);
                 checkInParam.setRegisterTime(new Date());
@@ -635,7 +661,8 @@ public class WeiXinController {
                 checkInParam.setSignTime(new Date());
                 checkInParam.setSignPlace("");
             }
-            if (checkIn != null){
+            if (checkInList.size()>0){
+                CheckIn checkIn = checkInList.get(0);
                 if (type.equals("check")){
                     if (checkIn.getRegisterStatus() != null && checkIn.getRegisterStatus() == 1){
                         model.addAttribute("ifCheck","yes");
@@ -647,12 +674,21 @@ public class WeiXinController {
                         checkInService.update(checkInParam);
                     }
                 } else if (type.equals("sign")){
-                    if (checkIn.getSignStatus() != null && checkIn.getSignStatus() == 1){
+                    /*if (checkIn.getSignStatus() != null && checkIn.getSignStatus() == 1){
                         model.addAttribute("ifSign","yes");
                     }else {
                         if (checkIn.getRegisterTime() != null){
                             checkInParam.setRegisterTime(checkIn.getRegisterTime());
                         }
+                        checkInParam.setCheckId(checkIn.getCheckId());
+                        checkInService.update(checkInParam);
+                    }*/
+                    if (checkIn.getSignStatus() != null && checkIn.getSignStatus() == 1){
+                        checkInParam.setRegisterStatus(checkIn.getRegisterStatus());
+                        checkInParam.setRegisterTime(checkIn.getRegisterTime());
+                        checkInService.add(checkInParam);
+                    }else {
+                        checkInParam.setRegisterTime(checkIn.getRegisterTime());
                         checkInParam.setCheckId(checkIn.getCheckId());
                         checkInService.update(checkInParam);
                     }
@@ -679,7 +715,188 @@ public class WeiXinController {
         }
     }
 
+    @RequestMapping("/getForumCheckImage")
+    @ResponseBody
+    public Map<String, Object> getForumCheckImage(String forumId){
+        String url = systemUrl + "/weiXin/toForumCheckSign?type=check&forumId=" + forumId;
+        //	指定路径：D:\User\Desktop\testQrcode
+        //String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
+        String path = imagesFolder;
+        System.out.println(path);
+        //	指定二维码图片名字
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        //String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+        String fileName = forumId + "_forumCheck.jpg";
+        CommonUtil.createQrCode(url, path, fileName);
 
+        InputStream in = null;
+        byte[] data = null;
+        // 读取图片字节数组
+        try {
+            in = new FileInputStream(path + "\\" + fileName);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("checkName",Base64.encodeBase64String(data));
+        return map;
+    }
+    @RequestMapping("/getForumSignImage")
+    @ResponseBody
+    public Map<String, Object> getForumSignImage(String forumId){
+        String url = systemUrl + "/weiXin/toForumCheckSign?type=sign&forumId=" + forumId;
+        //	指定路径：D:\User\Desktop\testQrcode
+        //String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
+        String path = imagesFolder;
+        System.out.println(path);
+        //	指定二维码图片名字
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        //String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+        String fileName = forumId + "_forumSign.jpg";
+        CommonUtil.createQrCode(url, path, fileName);
+
+        InputStream in = null;
+        byte[] data = null;
+        // 读取图片字节数组
+        try {
+            in = new FileInputStream(path + "\\" + fileName);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("signName",Base64.encodeBase64String(data));
+        return map;
+    }
+
+    @RequestMapping(value = "/toForumCheckSign")
+    public void toForumCheckSign(String forumId, String type, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // 回调地址，该域名需要公众号验证
+        String backUrl = systemUrl + "/weiXin/forumCheckSign?type="+ type + "&forumId=" + forumId;
+        // 向用户申请授权
+        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid
+                + "&redirect_uri=" + URLEncoder.encode(backUrl, "UTF-8")
+                + "&response_type=code"
+                + "&scope=snsapi_userinfo"
+                + "&state=STATE#wechat_redirect";
+
+        response.sendRedirect(url);
+    }
+
+    @RequestMapping("/forumCheckSign")
+    public String forumCheckSign(Model model, String type, String forumId, HttpServletRequest request){
+        // 获取到授权标志code
+        String code = request.getParameter("code");
+        // 通过code换取access_token
+        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid
+                + "&secret=" + secret
+                + "&code=" + code
+                + "&grant_type=authorization_code";
+        JSONObject jsonObject = CommonUtil.httpsRequest(url,"GET",null);
+        String openid = jsonObject.getString("openid");
+        String access_token = jsonObject.getString("access_token");
+        String refresh_token = jsonObject.getString("refresh_token");
+        // 校验access_token是否失效
+        String checkoutUrl = "https://api.weixin.qq.com/sns/auth?access_token=" + access_token + "&openid=" + openid;
+        JSONObject checkoutInfo = CommonUtil.httpsRequest(checkoutUrl,"GET",null);
+        System.out.println("校验信息-----" + checkoutInfo.toString());
+        if (!"0".equals(checkoutInfo.getString("errcode"))) {
+            // 刷新access_token
+            String refreshTokenUrl = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=" + openid + "&grant_type=refresh_token&refresh_token=" + refresh_token;
+
+            JSONObject refreshInfo = CommonUtil.httpsRequest(checkoutUrl,"GET",null);
+            System.out.println(refreshInfo.toString());
+            access_token = refreshInfo.getString("access_token");
+        }
+        // 使用access_token拉取用户信息
+        String infoUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=" + access_token
+                + "&openid=" + openid
+                + "&lang=zh_CN";
+        JSONObject userInfo = CommonUtil.httpsRequest(infoUrl,"GET",null);
+        System.out.println("用户数据-----" + userInfo.toString() + "\n"
+                + "名字-----" + userInfo.getString("nickname") + "\n"
+                + "头像-----" + userInfo.getString("headimgurl") + "\n"
+                + "openID-----" + userInfo.getString("openid") + "\n"
+                + "性别-----" + userInfo.getString("sex"));
+
+        User userExist = userService.getUserByUnionId(userInfo.getString("unionid"));
+
+        if (userExist != null){
+            CheckInParam checkInParam = new CheckInParam();
+            checkInParam.setUserId(userExist.getUserId());
+            if (forumId != null && forumId != ""){
+                checkInParam.setMeetOrForum(1);
+                checkInParam.setForumId(Long.parseLong(forumId));
+            }
+            List<CheckIn> checkInList = checkInService.getByUser(userExist.getUserId(),null,Long.parseLong(forumId));
+            if (type.equals("check")){
+                checkInParam.setRegisterStatus(1);
+                checkInParam.setRegisterTime(new Date());
+            } else if (type.equals("sign")){
+                checkInParam.setSignStatus(1);
+                checkInParam.setSignTime(new Date());
+                checkInParam.setSignPlace("");
+            }
+            if (checkInList.size()>0){
+                CheckIn checkIn = checkInList.get(0);
+                if (type.equals("check")){
+                    if (checkIn.getRegisterStatus() != null && checkIn.getRegisterStatus() == 1){
+                        model.addAttribute("ifCheck","yes");
+                    }else {
+                        if (checkIn.getSignTime() != null){
+                            checkInParam.setSignTime(checkIn.getSignTime());
+                        }
+                        checkInParam.setCheckId(checkIn.getCheckId());
+                        checkInService.update(checkInParam);
+                    }
+                } else if (type.equals("sign")){
+                    /*if (checkIn.getSignStatus() != null && checkIn.getSignStatus() == 1){
+                        model.addAttribute("ifSign","yes");
+                    }else {
+                        if (checkIn.getRegisterTime() != null){
+                            checkInParam.setRegisterTime(checkIn.getRegisterTime());
+                        }
+                        checkInParam.setCheckId(checkIn.getCheckId());
+                        checkInService.update(checkInParam);
+                    }*/
+                    if (checkIn.getSignStatus() != null && checkIn.getSignStatus() == 1){
+                        checkInParam.setRegisterStatus(checkIn.getRegisterStatus());
+                        checkInParam.setRegisterTime(checkIn.getRegisterTime());
+                        checkInService.add(checkInParam);
+                    }else {
+                        checkInParam.setRegisterTime(checkIn.getRegisterTime());
+                        checkInParam.setCheckId(checkIn.getCheckId());
+                        checkInService.update(checkInParam);
+                    }
+
+                }
+            }else {
+                checkInService.add(checkInParam);
+            }
+            if (type.equals("check")){
+                model.addAttribute("checkIn","checkSuccess");
+            }else if (type.equals("sign")){
+                model.addAttribute("checkIn","signSuccess");
+            }
+
+        }else {
+            model.addAttribute("checkIn","error");
+        }
+
+        //return "success";
+        try {
+            return PREFIX + "/weiXinLogin.html";
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("微信扫描异常");
+        }
+    }
 
 
 
@@ -777,4 +994,27 @@ public class WeiXinController {
         return "JZg3veGUNvbnoZz2";
     }
 
+
+    @RequestMapping("/sentWeiXinMessage")
+    public void sentWeiXinMessage(String message){
+        String templateId = "U-i755ySZnj1Iyyrpe_jlZyic7rBeFMmkwVbX5xKcc8";
+        User user = new User();
+        if (!message.equals("") && message != null){
+            user = userService.getByAccount(message);
+        }else {
+            LoginUser loginUser = LoginContextHolder.getContext().getUser();
+            user = userService.getById(loginUser.getId());
+        }
+        String userWechatId = user.getWechatId();
+        if (userWechatId != null && userWechatId != ""){
+            String first = "您的密码已经修改成功";
+            String remark = "如非本人操作，请尽快联系管理员。";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String time = format.format(new Date());
+            List<String> dataList = new ArrayList<>();
+            dataList.add(user.getAccount());
+            dataList.add(time);
+            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+        }
+    }
 }

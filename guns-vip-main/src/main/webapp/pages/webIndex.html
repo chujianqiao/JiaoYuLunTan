@@ -37,29 +37,29 @@
 </style>
 <div class="pc">
 
-    <!--<div class="poster-container" style="position:relative">
+    <div class="poster-container" id="video" style="position:relative;display: none">
         <video src="${ctxPath}/assets/common/images/posterNew.mp4" autoplay="autoplay" width="100%" height="100%" muted class='myvideo'></video>
-    </div>-->
+    </div>
     <div class="page">
         <header>
             <div class="head mCenter widthC pr">
                 <img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
                 <div class="language-select pa">
-                    <img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
+                    <!--<img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
                     <div class="language-select-box pr">
                         <div class="language fontSize16 inlineBlock">
                             <a href="#">中文</a>
                             <a href="#" class="hover">英文</a>
                         </div>
                         <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn" id="langSelect" />
-                    </div>
+                    </div>-->
                     <div id="userDiv" class="fontSize16" style="float:left;display: block;margin-right: 10px">
                         <!--<a href="/system/person_info" target="_blank" style="color: white">个人中心</a>-->
                     </div>
                 </div>
             </div>
         </header>
-        <iframe src="http://cesf.nies.net.cn:8080/pub/lt_new_6/" height="1322" width="100%"></iframe>
+        <iframe src="http://cesf.nies.net.cn:8080/pub/lt_new_6/" height="1237" width="100%"></iframe>
 
         <div hidden class="widthC mCenter clearfix mb40">
             <div class="fl">
@@ -80,17 +80,17 @@
 <div class="mobile" style="overflow:hidden;width:100%;">
     <header class="pr">
         <div class="language-select pa">
-            <div class="language-select-icon inlineBlock"><img src="${ctxPath}/assets/common/images/icon1_03.png" width="100%" /></div>
+            <!--<div class="language-select-icon inlineBlock"><img src="${ctxPath}/assets/common/images/icon1_03.png" width="100%" /></div>
             <div class="language-select-box inlineBlock">
                 <div class="language fontSize24 inlineBlock">
                     <a href="#">中文</a>
                     <a href="#" class="hover">英文</a>
                 </div>
                 <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn" id="langSelect_mobile" />
-            </div>
+            </div>-->
         </div>
     </header>
-    <iframe src="http://cesf.nies.net.cn:8080/pub/lt_new_6/" height="1322" width="100%"></iframe>
+    <iframe src="http://cesf.nies.net.cn:8080/pub/lt_new_6/" height="1237" width="100%"></iframe>
     <!--<nav class="mobile_nav pr">
         <div class="swiper-container mobile_swiper1" id="mobileSwiper1">
             <div class="swiper-wrapper pr fontSize32">
@@ -410,7 +410,7 @@
         </div>
         <div class="mobile-footer-bottom fontSize22">
             <p>中国教育科学论坛 版权所有</p>
-            <p>Copyroght&nbsp;&nbsp;2002-2020</p>
+            <p>Copyright&nbsp;&nbsp;2002-2020</p>
             <p>京公网安备&nbsp;&nbsp;&nbsp;110402430096</p>
         </div>
     </footer>-->
@@ -437,6 +437,9 @@
         } else {
             $("#userDiv").append("<a href=\"/mgr/toPersonCenter\" target=\"_blank\" style=\"color: white;margin-right: 10px\"><i class=\"layui-icon\">&#xe770;</i>${userName! }</a>");
             $("#userDiv").append("<a href=\"/#\" id='btnLogout' style=\"color: white\">退出</a>");
+        }
+        if ("${ifVideo }" == "yes"){
+            $("#video").attr("style","position:relative;display: block");
         }
     });
 

@@ -166,9 +166,9 @@ public class ThesisReviewMiddleController extends BaseController {
             User user = userService.getById(userId);
 
             if (theses.get(i).getScore() == null){
-                userNameFirst = userNameFirst + user.getName() + "(未评审)" + ";";
+                userNameFirst = userNameFirst + "专家" + (i+1) + "(未评审)" + ";";
             }else {
-                userNameFirst = userNameFirst + user.getName() + "(" + theses.get(i).getScore() + ")" + ";";
+                userNameFirst = userNameFirst + "专家" + (i+1) + "(" + theses.get(i).getScore() + ")" + ";";
             }
         }
         if (theses.size() == 0){
@@ -185,9 +185,9 @@ public class ThesisReviewMiddleController extends BaseController {
             User user = userService.getById(userId);
 
             if (thesesSecond.get(i).getScore() == null){
-                userNameSecond = userNameSecond + user.getName() + "(未评审)" + ";";
+                userNameSecond = userNameSecond + "专家" + (i+1) + "(未评审)" + ";";
             }else {
-                userNameSecond = userNameSecond + user.getName() + "(" + thesesSecond.get(i).getScore() + ")" + ";";
+                userNameSecond = userNameSecond + "专家" + (i+1) + "(" + thesesSecond.get(i).getScore() + ")" + ";";
             }
         }
         if (thesesSecond.size() == 0){

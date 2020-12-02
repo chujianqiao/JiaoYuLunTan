@@ -25,44 +25,57 @@
     .layui-input-block{
         margin-left: 95px;
     }
+    /* 错误提示信息样式 */
+    .error{
+        color:#F00;
+        font-size: 12px;
+    }
+    /* 成功提示信息样式 */
+    .success{
+        color: rgb(39,186,125);
+        font-size: 12px;
+    }
 </style>
 <form class="layui-form" id="userForm" lay-filter="userForm">
-    <div class="login-wrapper" style="max-width: 500px">
-        <div class="layui-form" style="height: 500px">
+    <div class="login-wrapper" style="max-width: 450px">
+        <div class="layui-form" style="height: 450px">
             <h2>用户注册</h2>
 
             <input name="userId" type="hidden"/>
             <input name="roleId" value="2" type="hidden"/>
             <div class="layui-form-item layui-input-icon-group">
-                <label class="layui-form-label">${lang.get("FIELD_ACCOUNT","基本信息")}<span style="color: red;">*</span></label>
-                <div class="layui-input-block">
-                    <input name="account" placeholder="请输入账号" type="text" class="layui-input" lay-verify="required" required/>
+                <label class="layui-form-label">${lang.get("FIELD_ACCOUNT","账号")}<span style="color: red;">*</span></label>
+                <div class="layui-input-block" style="margin-bottom: -16px">
+                    <input name="account" id="account" placeholder="请输入账号" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+                    <span id="accountSpan"></span>
                 </div>
             </div>
             <div class="layui-form-item layui-input-icon-group">
                 <label class="layui-form-label">${lang.get("FIELD_PASSWORD","密码")}<span style="color: red;">*</span></label>
-                <div class="layui-input-block">
-                    <input name="password" placeholder="请输入密码" type="password" class="layui-input" lay-verify="required|psw" autocomplete="new-password" required/>
+                <div class="layui-input-block" style="margin-bottom: -16px">
+                    <input name="password" id="password" placeholder="请输入密码" type="password" class="layui-input" lay-verify="required|psw" autocomplete="new-password" required/>
+                    <span id="passwordSpan"></span>
                 </div>
             </div>
-            <div class="layui-form-item layui-input-icon-group">
+            <!--<div class="layui-form-item layui-input-icon-group">
                 <label class="layui-form-label">${lang.get("FIELD_REPEAT_PASSWORD","重复密码")}<span style="color: red;">*</span></label>
-                <div class="layui-input-block">
-                    <input name="rePassword" placeholder="请输入重复密码" type="password" class="layui-input" autocomplete="new-password" lay-verify="required|repsw" required/>
+                <div class="layui-input-block" style="margin-bottom: -16px">
+                    <input name="rePassword" id="rePassword" placeholder="请输入重复密码" type="password" class="layui-input" autocomplete="new-password" lay-verify="required|repsw" required/>
                 </div>
-            </div>
+            </div>-->
 
             <div class="layui-form-item layui-input-icon-group">
                 <label class="layui-form-label">${lang.get("FIELD_PHONE","电话")}<span style="color: red;">*</span></label>
-                <div class="layui-input-block">
-                    <input name="phone" placeholder="请输入电话" type="text" class="layui-input" lay-verify="required|phone" required/>
+                <div class="layui-input-block" style="margin-bottom: -16px">
+                    <input name="phone" id="phone" placeholder="请输入电话" type="text" class="layui-input" lay-verify="required|phone" required autocomplete="off"/>
+                    <span id="phoneSpan"></span>
                 </div>
             </div>
             <div class="layui-form-item layui-input-icon-group">
                 <label class="layui-form-label">验证码<span style="color: red;">*</span></label>
                 <div class="layui-input-block">
                     <div style="float: left;width: 135px;">
-                        <input id="smsCode" name="smsCode" placeholder="请输入短信验证码" type="text" class="layui-input" lay-verify="required" required/>
+                        <input id="smsCode" name="smsCode" placeholder="请输入短信验证码" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
                     </div>
                     <div style="float: left;">
                         <button type="button" class="layui-btn layui-btn-sm" style="height:38px;" id="sentSmsCode">获取短信验证码</button>
@@ -76,7 +89,7 @@
             <!--        </div>-->
 
             <div class="layui-form-item">
-                <button class="layui-btn layui-btn-submit layui-btn-fluid" lay-filter="btnSubmit" lay-submit>注册</button>
+                <button id="registerSub" disabled="disabled" class="layui-btn layui-btn-submit layui-bg-gray layui-btn-fluid" lay-filter="btnSubmit" lay-submit>注册</button>
                 <div class="layui-form-item pull-right">
                     已有帐号？<a id="btnLogin" style="cursor: pointer" class="layui-link">登录</a>
                 </div>

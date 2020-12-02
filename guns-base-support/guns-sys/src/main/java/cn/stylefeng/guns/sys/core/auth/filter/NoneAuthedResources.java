@@ -35,6 +35,7 @@ public class NoneAuthedResources {
 
             //注册
             "/mgr/add",
+            "/mgr/addCheck",
             "/mgr/user_registe",
             "/mgr/user_registeUnit",
             "/check/checkSMS",
@@ -44,6 +45,8 @@ public class NoneAuthedResources {
             "/mgr/toForgetPwdTwo",
             "/mgr/forgetPwdOne",
             "/mgr/forgetPwdTwo",
+            "/mgr/toNewPwd",
+            "/mgr/phonePwd",
             "/mgr/registerSuccess",
             "/mgr/userPhoneLogin",
             "/mgr/phoneLogin",

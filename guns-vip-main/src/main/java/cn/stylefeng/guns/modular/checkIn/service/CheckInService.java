@@ -88,5 +88,5 @@ public interface CheckInService extends IService<CheckIn> {
     Page<Map<String, Object>> findPageWrapForum(CheckInParam param);
     Page<Map<String, Object>> findPageWrapForum(CheckInParam param, List<Long> userIds);
 
-    CheckIn getByUser(Long userId);
+    List<CheckIn> getByUser(Long userId,Long meetId,Long forumId);
 }

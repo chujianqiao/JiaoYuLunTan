@@ -87,6 +87,7 @@ public class LoginController extends BaseController {
             //用户信息为空，提示账号没分配角色登录不进去
             if (userIndexInfo == null) {
                 model.addAttribute("tips", "该用户没有角色，无法登陆");
+                model.addAttribute("ifVideo","no");
                 return "/webIndex.html";
             } else {
                 model.addAllAttributes(userIndexInfo);
@@ -156,13 +157,14 @@ public class LoginController extends BaseController {
                         DefaultAvatar.setLoginUrl("");
                     }
                 }
-
+                model.addAttribute("ifVideo","no");
                 //model.addAttribute("loginUrl", loginUrl);
                 return loginUrl;
             }
 
         } else {
             //model.addAttribute("tips", "请登陆！");
+            model.addAttribute("ifVideo","yes");
             return "/webIndex.html";
         }
     }
@@ -195,12 +197,14 @@ public class LoginController extends BaseController {
                 if (roles.contains(1l)){
                     return "/index.html";
                 }else {
+                    model.addAttribute("ifVideo","no");
                     return "/webIndex.html";
                 }
 
             }
 
         } else {
+            model.addAttribute("ifVideo","no");
             return "/webIndex.html";
         }
     }
@@ -215,6 +219,7 @@ public class LoginController extends BaseController {
     public String login(Model model) {
         if (LoginContextHolder.getContext().hasLogin()) {
             model.addAttribute("loginUrl","/webIndex.html");
+            model.addAttribute("ifVideo","no");
             return "/webIndex.html";
         } else {
             return "/login.html";
@@ -349,7 +354,7 @@ public class LoginController extends BaseController {
                 model.addAttribute("roleNames",user.getRoleNames());
             }
         }
-
+        model.addAttribute("ifVideo","no");
         return "/webIndex.html";
     }
 
@@ -360,12 +365,13 @@ public class LoginController extends BaseController {
      * @Date 2018/12/23 5:42 PM
      */
     @RequestMapping(value = "/chatLogout")
-    public String chatLogout() {
+    public String chatLogout(Model model) {
         authService.logout();
         ResponseData data = new SuccessResponseData();
         if (data.getMessage().equals("请求成功")) {
             return "/logout.html";
         }
+        model.addAttribute("ifVideo","no");
         return "/webIndex.html";
     }
 }

@@ -20,24 +20,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var admin = layui.admin;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/vipPay/detail?payId=" + Feng.getUrlParam("payId"));
     var result = ajax.start();
@@ -60,4 +42,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         return false;
     });
 
+    $('#cancel').click(function(){
+        window.location.href = Feng.ctxPath + '/vipPay'
+    });
 });

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.bill.mapper.BillMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.bill.entity.Bill">
+        <id column="bill_id" property="billId" />
+        <result column="user_id" property="userId" />
+        <result column="meet_member_id" property="meetMemberId" />
+        <result column="enterprise" property="enterprise" />
+        <result column="taxpayer_number" property="taxpayerNumber" />
+        <result column="credentials_name" property="credentialsName" />
+        <result column="credentials_path" property="credentialsPath" />
+        <result column="food" property="food" />
+        <result column="hotel" property="hotel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        bill_id AS "billId", user_id AS "userId", meet_member_id AS "meetMemberId", enterprise AS "enterprise", taxpayer_number AS "taxpayerNumber", credentials_name AS "credentialsName", credentials_path AS "credentialsPath", food AS "food", hotel AS "hotel"
+    </sql>
+
+
+    <select id="customList" resultType="cn.stylefeng.guns.modular.bill.model.result.BillResult" parameterType="cn.stylefeng.guns.modular.bill.model.params.BillParam">
+        select
+        <include refid="Base_Column_List"/>
+        from bill where 1 = 1
+    </select>
+
+    <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.bill.model.params.BillParam">
+        select
+        <include refid="Base_Column_List"/>
+        from bill where 1 = 1
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.modular.bill.model.result.BillResult" parameterType="cn.stylefeng.guns.modular.bill.model.params.BillParam">
+        select
+        <include refid="Base_Column_List"/>
+        from bill where 1 = 1
+    </select>
+
+    <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.bill.model.params.BillParam">
+        select
+        <include refid="Base_Column_List"/>
+        from bill where 1 = 1
+    </select>
+
+    <select id="findByUserAndMeetMember" resultType="cn.stylefeng.guns.modular.bill.entity.Bill" parameterType="cn.stylefeng.guns.modular.bill.entity.Bill">
+        select
+        <include refid="Base_Column_List"/>
+        from bill where 1 = 1 and user_id = #{userId} and meet_member_id = #{meetMemberId}
+    </select>
+
+    <select id="customPageMap" resultType="map" parameterType="cn.stylefeng.guns.modular.bill.model.params.BillParam">
+        select
+        <include refid="Base_Column_List"/>
+        from bill where 1 = 1
+        <if test="userIds != null   ">
+            and user_id in
+            <foreach collection="userIds" index="index" item="i" open="("
+                     separator="," close=")">
+                #{i}
+            </foreach>
+        </if>
+    </select>
+</mapper>

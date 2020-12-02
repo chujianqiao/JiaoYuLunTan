@@ -1,59 +1,106 @@
-@layout("/common/_form.html",{js:["/assets/forum/forum_edit.js"]}){
+@layout("/common/_form.html",{js:["/assets/forum/forum_edit.js","/assets/modular/frame/user_info.js"]}){
 
 <form class="layui-form" id="forumForm" lay-filter="forumForm">
     <div class="layui-fluid" style="padding-bottom: 75px;">
         <div class="layui-card">
             <div class="layui-card-header">基本信息</div>
             <div class="layui-card-body">
-                <div class="layui-form-item layui-row">
-                    <input name="forumId" type="hidden"/>
+                <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">基本信息</li>
+                        <li>报到二维码</li>
+                        <li>签到二维码</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item layui-row">
+                                    <input name="forumId" type="hidden"/>
 
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">论坛名称<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="forumName" name="forumName" placeholder="请输入论坛名称" type="text" class="layui-input" lay-verify="required" required/>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">论坛名称<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input id="forumName" name="forumName" placeholder="请输入论坛名称" type="text" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">参会人数限制<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input id="setNum" name="setNum" placeholder="请输入参会人数限制" type="text" class="layui-input" lay-verify="required|number" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_TIME","论坛报名时间")}<span style="color: red;">*</span></label>
+                                        <div class="layui-input-inline" style="margin-left: 10px">
+                                            <input id="registerStartTime" name="registerStartTime" placeholder="请选择论坛报名开始时间" type="text" class="layui-input date-icon" autocomplete="off" lay-verify="required" required/>
+                                        </div>
+                                        <label style="float: left;padding: 9px 15px;">至</label>
+                                        <div class="layui-input-inline">
+                                            <input id="registerEndTime" name="registerEndTime" placeholder="请选择论坛报名结束时间" type="text" class="layui-input date-icon" autocomplete="off" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_TIME","论坛参会时间")}<span style="color: red;">*</span></label>
+                                        <div class="layui-input-inline" style="margin-left: 10px">
+                                            <input id="startTime" name="startTime" placeholder="请选择论坛开始时间" type="text" class="layui-input date-icon" autocomplete="off" lay-verify="required" required/>
+                                        </div>
+                                        <label style="float: left;padding: 9px 15px;">至</label>
+                                        <div class="layui-input-inline">
+                                            <input id="endTime" name="endTime" placeholder="请选择论坛结束时间" type="text" class="layui-input date-icon" autocomplete="off" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">论坛地点<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input id="location" name="location" placeholder="请输入论坛地点" type="text" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-bottom text-center">
+                                <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+                                <button type="button" class="layui-btn layui-btn-normal" id="getImage">生成二维码</button>
+                                <button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;取消&emsp;</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">参会人数限制<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="setNum" name="setNum" placeholder="请输入参会人数限制" type="text" class="layui-input" lay-verify="required|number" required/>
+                        <div class="layui-tab-item">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item">
+                                    <div style="height: 300px;font-size: 20px;margin-left: 60px" class="layui-col-md7">
+                                        <br><br><h1 style="text-align: center;">分论坛报到</h1>
+                                        <br><br><div id="forumData1" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div><br>
+                                        <div id="forumData2" class="">会议日期：2020年11月25日~2020年11月26日</div><br>
+                                        <div id="forumData3" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
+                                    </div>
+                                    <div style="height: 300px;width: 300px" class="layui-col-md5">
+                                        <div id="checkImg" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">${lang.get("FIELD_TIME","论坛报名时间")}<span style="color: red;">*</span></label>
-                        <div class="layui-input-inline" style="margin-left: 10px">
-                            <input id="registerStartTime" name="registerStartTime" placeholder="请选择论坛报名开始时间" type="text" class="layui-input date-icon" autocomplete="off" lay-verify="required" required/>
-                        </div>
-                        <label style="float: left;padding: 9px 15px;">至</label>
-                        <div class="layui-input-inline">
-                            <input id="registerEndTime" name="registerEndTime" placeholder="请选择论坛报名结束时间" type="text" class="layui-input date-icon" autocomplete="off" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">${lang.get("FIELD_TIME","论坛参会时间")}<span style="color: red;">*</span></label>
-                        <div class="layui-input-inline" style="margin-left: 10px">
-                            <input id="startTime" name="startTime" placeholder="请选择论坛开始时间" type="text" class="layui-input date-icon" autocomplete="off" lay-verify="required" required/>
-                        </div>
-                        <label style="float: left;padding: 9px 15px;">至</label>
-                        <div class="layui-input-inline">
-                            <input id="endTime" name="endTime" placeholder="请选择论坛结束时间" type="text" class="layui-input date-icon" autocomplete="off" lay-verify="required" required/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">论坛地点<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="location" name="location" placeholder="请输入论坛地点" type="text" class="layui-input" lay-verify="required" required/>
+                        <div class="layui-tab-item">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item">
+                                    <div style="height: 300px;font-size: 20px;margin-left: 60px" class="layui-col-md7">
+                                        <br><br><h1 style="text-align: center;">分论坛签到</h1>
+                                        <br><br><div id="forumData4" class="">2020年全国教育科研工作会议暨中国教育科学论坛</div><br>
+                                        <div id="forumData5" class="">会议日期：2020年11月25日~2020年11月26日</div><br>
+                                        <div id="forumData6" class="">会议地点：北京会议中心（北京市朝阳区来广营西路88号）</div>
+                                    </div>
+                                    <div style="height: 300px;width: 300px" class="layui-col-md5">
+                                        <div id="signImg" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group-bottom text-center">
-        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
-        <button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;取消&emsp;</button>
-    </div>
+
 
 </form>
 

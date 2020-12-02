@@ -141,7 +141,10 @@
                                             <div class="layui-form-item">
                                                 <label class="layui-form-label">${lang.get("FIELD_PHONE","电话")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
-                                                    <input type="text" name="phone" class="layui-input" lay-verify="required|phone" required/>
+                                                    <input type="text" name="phone" class="layui-input layui-disabled" lay-verify="required|phone" required/>
+                                                </div>
+                                                <div class="layui-input-block">
+                                                    <a onclick="setPhone()" href="#" style="line-height: 36px">修改绑定手机?</a>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
@@ -347,12 +350,32 @@
             //获取多语言
             var langs = layui.data('system').lang;
 
-            admin.open({
+            layer.open({
                 id: 'pswForm',
                 type: 2,
                 title: langs.MENU_CHANGE_PASSWORD,
-                shade: 0,
+                area:["300px","350px"],
                 content: '${ctxPath}/system/user_chpwd'
+            });
+        });
+    }
+
+    function setPhone(){
+        layui.use(['layer', 'element', 'admin', 'index', 'ax'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var admin = layui.admin;
+            var index = layui.index;
+            var $ax = layui.ax;
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            layer.open({
+                id: 'pswForm',
+                type: 2,
+                title: "修改绑定手机",
+                area:["440px","500px"],
+                content: '${ctxPath}/system/user_chPhone'
             });
         });
     }
@@ -379,12 +402,11 @@
             //获取多语言
             var langs = layui.data('system').lang;
 
-            admin.open({
+            layer.open({
                 id: 'pswForm',
                 type: 2,
                 area:["400px","450px"],
                 title: "微信绑定",
-                shade: 0,
                 content: '${ctxPath}/weiXin/weChatBand'
             });
         });
