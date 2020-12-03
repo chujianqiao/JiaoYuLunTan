@@ -371,27 +371,6 @@ public class ThesisController extends BaseController {
         }
         thesisParam.setReviewUser(reviewUser);
         thesisParam.setReviewBatch(2);
-//        String greatUsers = thesisParam.getGreatId();
-//        if(greatUsers == null){
-//            greatUsers = "";
-//        }
-        //推优逻辑
-//        Integer greatNum = thesisParam.getGreatNum();
-//        Integer isGreat = thesisParam.getIsgreat();
-//        if(isGreat != null && isGreat == 1 && (greatUsers.indexOf(userIdStr) == -1)){
-//            int len = greatUsers.length();
-//            if(len != 0){
-//                greatUsers += "," + userIdStr;
-//            }else {
-//                greatUsers = userIdStr;
-//            }
-//            greatNum +=1;
-//        }
-//        if(greatNum >= 2){
-//            thesisParam.setGreat(1);
-//        }
-//        thesisParam.setGreatId(greatUsers);
-//        thesisParam.setGreatNum(greatNum);
 
         //同时修改会议状态
         long thesisId = thesisParam.getThesisId();
@@ -424,9 +403,25 @@ public class ThesisController extends BaseController {
         middleParam.setReviewTime(reviewDate);
         thesisParam.setReviewTime(reviewDate);
 
+        //同时修改专家表
+        ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
+        long reviewId = Long.parseLong(userIdStr);
+        ReviewMajor reviewMajor = this.reviewMajorService.getById(reviewId);
+        if(reviewMajor != null){
+            Integer reviewCount = reviewMajor.getReviewCount();
+            if (reviewCount == null){
+                reviewCount = 0;
+            }else {
+                reviewCount += 1;
+            }
+            reviewMajorParam.setReviewCount(reviewCount);
+        }
+        reviewMajorParam.setReviewId(reviewId);
+
         this.thesisService.update(thesisParam);
         this.meetMemberService.update(meetMemberParam);
         this.thesisReviewMiddleService.update(middleParam);
+        this.reviewMajorService.update(reviewMajorParam);
 
         String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
         User resultUser = userService.getById(meetMemberResult.getUserId());
