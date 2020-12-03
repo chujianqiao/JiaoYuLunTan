@@ -1,7 +1,5 @@
 package cn.stylefeng.guns.modular.material.controller;
 
-import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
-import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.meet.entity.Meet;
@@ -234,6 +232,9 @@ public class MeetMaterialController extends BaseController {
     @RequestMapping(method = RequestMethod.POST, path = "/upload")
     @ResponseBody
     public ResponseData upload(@RequestPart("file") MultipartFile file) {
+        //检查是否有重复文件
+        String orginName = file.getOriginalFilename();
+        checkRepeatFile(orginName);
         String path = uploadFolder + "material" + File.separator ;
         UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
         String fileId = uploadResult.getFileId();
@@ -335,6 +336,22 @@ public class MeetMaterialController extends BaseController {
         for (int i = 0; i < fileList.size(); i++) {
             File tempFile = fileList.get(i);
             tempFile.delete();
+        }
+    }
+
+    /**
+     * 检查重复文件
+     * 如果有同名文件，删除掉
+     */
+    private void checkRepeatFile(String orginName){
+        MeetMaterialParam meetMaterialParam = new MeetMaterialParam();
+        meetMaterialParam.setMatName(orginName);
+        List<MeetMaterialResult> list = this.meetMaterialService.findListBySpec(meetMaterialParam);
+        if(list.size() != 0){
+            MeetMaterialResult meetMaterialResult = list.get(0);
+            long materialId = meetMaterialResult.getMaterialId();
+            meetMaterialParam.setMaterialId(materialId);
+            delete(meetMaterialParam);
         }
     }
 

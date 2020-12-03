@@ -54,7 +54,7 @@ public class MeetMaterialServiceImpl extends ServiceImpl<MeetMaterialMapper, Mee
 
     @Override
     public List<MeetMaterialResult> findListBySpec(MeetMaterialParam param){
-        return null;
+        return this.baseMapper.customList(param);
     }
 
     @Override

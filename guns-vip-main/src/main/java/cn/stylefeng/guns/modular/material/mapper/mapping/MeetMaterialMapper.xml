@@ -19,6 +19,9 @@
         select
         <include refid="Base_Column_List"/>
         from meet_material where 1 = 1
+        <if test="paramCondition.matName != null and paramCondition.matName != ''">
+            and mat_name = #{paramCondition.matName}
+        </if>
     </select>
 
     <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam">
