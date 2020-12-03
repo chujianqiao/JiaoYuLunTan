@@ -410,7 +410,7 @@ public class ThesisController extends BaseController {
         if(reviewMajor != null){
             Integer reviewCount = reviewMajor.getReviewCount();
             if (reviewCount == null){
-                reviewCount = 0;
+                reviewCount = 1;
             }else {
                 reviewCount += 1;
             }
@@ -472,6 +472,21 @@ public class ThesisController extends BaseController {
         //同时修改会议状态
         long thesisId = thesisParam.getThesisId();
 
+		//同时修改专家表
+		ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
+		long reviewId = Long.parseLong(userIdStr);
+		ReviewMajor reviewMajor = this.reviewMajorService.getById(reviewId);
+		if(reviewMajor != null){
+			Integer reviewCount = reviewMajor.getReviewCount();
+			if (reviewCount == null){
+				reviewCount = 1;
+			}else {
+				reviewCount += 1;
+			}
+			reviewMajorParam.setReviewCount(reviewCount);
+		}
+		reviewMajorParam.setReviewId(reviewId);
+
         //同时修改中间表，查询条件：论文ID、专家ID、评审顺序（1）
         ThesisReviewMiddleParam middleParam = new ThesisReviewMiddleParam();
         middleParam.setThesisId(thesisId);
@@ -499,7 +514,7 @@ public class ThesisController extends BaseController {
         thesisParam.setReviewTime(reviewDate);
         this.thesisReviewMiddleService.update(middleParam);
         this.thesisService.update(thesisParam);
-
+		this.reviewMajorService.update(reviewMajorParam);
 
         String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
         User resultUser = userService.getById(middleParam.getUserId());
