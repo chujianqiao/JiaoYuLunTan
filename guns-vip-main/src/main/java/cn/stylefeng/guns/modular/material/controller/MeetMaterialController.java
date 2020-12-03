@@ -233,8 +233,8 @@ public class MeetMaterialController extends BaseController {
     @ResponseBody
     public ResponseData upload(@RequestPart("file") MultipartFile file) {
         //检查是否有重复文件
-        String orginName = file.getOriginalFilename();
-        checkRepeatFile(orginName);
+        String originName = file.getOriginalFilename();
+        checkRepeatFile(originName);
         String path = uploadFolder + "material" + File.separator ;
         UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
         String fileId = uploadResult.getFileId();
@@ -343,9 +343,9 @@ public class MeetMaterialController extends BaseController {
      * 检查重复文件
      * 如果有同名文件，删除掉
      */
-    private void checkRepeatFile(String orginName){
+    private void checkRepeatFile(String originName){
         MeetMaterialParam meetMaterialParam = new MeetMaterialParam();
-        meetMaterialParam.setMatName(orginName);
+        meetMaterialParam.setMatName(originName);
         List<MeetMaterialResult> list = this.meetMaterialService.findListBySpec(meetMaterialParam);
         if(list.size() != 0){
             MeetMaterialResult meetMaterialResult = list.get(0);
