@@ -10,21 +10,23 @@ import cn.stylefeng.guns.modular.seat.model.result.SeatDetailResult;
 import cn.stylefeng.guns.modular.seat.service.SeatDetailService;
 import cn.stylefeng.guns.modular.seat.service.SeatService;
 import cn.stylefeng.guns.modular.seat.wrapper.SeatDetailWrapper;
+import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.models.auth.In;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -38,11 +40,20 @@ public class SeatDetailController extends BaseController {
 
     private String PREFIX = "/seatDetail";
 
+    @Value("${weiXin.appid}")
+    private String appid;
+
+    @Value("${weiXin.secret}")
+    private String secret;
+
     @Autowired
     private SeatDetailService seatDetailService;
 
     @Autowired
     private MeetService meetService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private SeatService seatService;
@@ -168,6 +179,24 @@ public class SeatDetailController extends BaseController {
                 this.seatDetailService.add(seatDetailParam);
             }
         }
+
+
+        String templateId = "dTxk2FjY3SZmx-X5AR1sJ4Aw9-Me4bhMSa6zU4Yq_Ac";
+        User resultUser = userService.getById(seatDetailParam.getUserId());
+        String userWechatId = resultUser.getWechatId();
+        if (userWechatId != null && userWechatId != ""){
+            String first = "您好，您的座位已被变更。";
+            String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String time = format.format(new Date());
+            List<String> dataList = new ArrayList<>();
+            dataList.add(meetService.getById(seatDetailParam.getMeetId()).getMeetName());
+            dataList.add(seatDetailParam.getSeatRow() + "排" + seatDetailParam.getSeatCol() + "号");
+            dataList.add("排座成功");
+            dataList.add(time);
+            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+        }
+
         return ResponseData.success();
     }
 
@@ -231,6 +260,23 @@ public class SeatDetailController extends BaseController {
         SeatDetailResult seatDetailResult = list.get(0);
         Long seatDetailId = seatDetailResult.getSeatDetailId();
         this.seatDetailService.removeById(seatDetailId);
+
+        String templateId = "dTxk2FjY3SZmx-X5AR1sJ4Aw9-Me4bhMSa6zU4Yq_Ac";
+        User resultUser = userService.getById(seatDetailResult.getUserId());
+        String userWechatId = resultUser.getWechatId();
+        if (userWechatId != null && userWechatId != ""){
+            String first = "您好，您的座位已被变更。";
+            String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String time = format.format(new Date());
+            List<String> dataList = new ArrayList<>();
+            dataList.add(meetService.getById(seatDetailResult.getMeetId()).getMeetName());
+            dataList.add(seatDetailResult.getSeatRow() + "排" + seatDetailResult.getSeatCol() + "号");
+            dataList.add("取消成功");
+            dataList.add(time);
+            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+        }
+
         return ResponseData.success();
     }
 

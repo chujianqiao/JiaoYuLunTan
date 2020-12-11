@@ -1,21 +1,27 @@
 package cn.stylefeng.guns.modular.seat.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.modular.seat.entity.Seat;
 import cn.stylefeng.guns.modular.seat.model.params.SeatDetailParam;
 import cn.stylefeng.guns.modular.seat.service.SeatDetailService;
 import cn.stylefeng.guns.modular.seat.service.SeatService;
+import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,11 +36,23 @@ public class MeetSeatController {
 
 	private static final String PREFIX = "/seat";
 
+	@Value("${weiXin.appid}")
+	private String appid;
+
+	@Value("${weiXin.secret}")
+	private String secret;
+
 	@Autowired
 	private MeetMemberService meetMemberService;
 
 	@Autowired
 	private SeatService seatService;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private MeetService meetService;
 
 	@Autowired
 	private SeatDetailService seatDetailService;
@@ -126,6 +144,8 @@ public class MeetSeatController {
 		Integer [][] seatArr = new Integer[rowNum][colNum];
 		int i = 0;
 		seatDetailParam.setCreatTime(new Date());
+
+		String templateId = "dTxk2FjY3SZmx-X5AR1sJ4Aw9-Me4bhMSa6zU4Yq_Ac";
 		for (int j = 1; j <= seatArr.length; j++) {
 			for (int k = 0; k < seatArr[0].length; k++) {
 				if(i >= memberList.size()) {
@@ -138,6 +158,22 @@ public class MeetSeatController {
 				seatDetailParam.setSeatCol(colArr[k]);
 				this.seatDetailService.add(seatDetailParam);
 				i ++;
+
+				User resultUser = userService.getById(userId);
+				String userWechatId = resultUser.getWechatId();
+				if (userWechatId != null && userWechatId != ""){
+					String first = "您好，您的座位已被变更。";
+					String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					String time = format.format(new Date());
+					List<String> dataList = new ArrayList<>();
+					dataList.add(meetService.getById(seatDetailParam.getMeetId()).getMeetName());
+					dataList.add(j + "排" + colArr[k] + "号");
+					dataList.add("排座成功");
+					dataList.add(time);
+					CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+				}
+
 			}
 		}
 		return ResponseData.success();
