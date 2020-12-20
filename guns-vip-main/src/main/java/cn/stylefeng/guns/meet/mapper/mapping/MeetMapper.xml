@@ -14,11 +14,15 @@
         <result column="end_time" property="endTime" />
         <result column="reg_user" property="regUser" />
         <result column="reg_time" property="regTime" />
+        <result column="fee" property="fee" />
+        <result column="meet_size" property="size" />
+        <result column="real_peo_num" property="realPeoNum" />
+        <result column="real_the_num" property="realTheNum" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        meet_id AS "meetId", meet_name AS "meetName", meet_desc AS "meetDesc", place AS "place", people_num AS "peopleNum", thesis_num AS "thesisNum", begin_time AS "beginTime", end_time AS "endTime", reg_user AS "regUser", reg_time AS "regTime",meet_status AS "meetStatus",content AS "content",join_begtime AS "joinBegTime",join_endtime AS "joinEndTime"
+        meet_id AS "meetId", meet_name AS "meetName", meet_desc AS "meetDesc", place AS "place", people_num AS "peopleNum", thesis_num AS "thesisNum", begin_time AS "beginTime", end_time AS "endTime", reg_user AS "regUser", reg_time AS "regTime",meet_status AS "meetStatus",content AS "content",join_begtime AS "joinBegTime",join_endtime AS "joinEndTime",fee AS "fee",meet_size AS "size",real_peo_num AS realPeoNum,real_the_num AS realTheNum
     </sql>
 
 

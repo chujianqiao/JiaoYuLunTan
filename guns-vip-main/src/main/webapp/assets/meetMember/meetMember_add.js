@@ -24,6 +24,20 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     var func = layui.func;
     var layer = layui.layer;
 
+    //获取详情信息，填充表单
+    let userId = $("#userId").val()
+    var ajax = new $ax(Feng.ctxPath + "/mgr/getUserInfo?userId=" + userId);
+    var result = ajax.start();
+    form.val('meetRegForm', result.data);
+    //判断大小会
+    let ajaxPubMeet = new $ax(Feng.ctxPath + "/meet/detailPub");
+    let pubMeet = ajaxPubMeet.start().data.detail;
+    var size = pubMeet.size;
+    if(size == 'small' || size == "small"){
+        //小会，移除所有论文的元素
+        $(".thesisItem").remove();
+    }
+
     //定义数组，存储省份信息
     var province = ["北京", "上海", "天津", "重庆", "浙江", "江苏", "广东", "福建", "湖南", "湖北", "辽宁",
         "吉林", "黑龙江", "河北", "河南", "山东", "陕西", "甘肃", "新疆", "青海", "山西", "四川",
@@ -225,7 +239,6 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        debugger;
         var flag = 0;
         $("input:checkbox[name = ifAgreeMeet]:checked").each(function(i){
             flag = 1;
@@ -234,10 +247,6 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             var ajax = new $ax(Feng.ctxPath + "/thesis/addItem", function (data) {
                 Feng.success("添加成功！");
                 window.location.href = Feng.ctxPath + '/meetMember';
-                //传给上个页面，刷新table用
-                // admin.putTempData('formOk', true);
-                //关掉对话框
-                // admin.closeThisDialog();
             }, function (data) {
                 Feng.error("添加失败！" + data.responseJSON.message)
             });

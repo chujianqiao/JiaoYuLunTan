@@ -200,10 +200,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 加载页面时执行
      */
     $(function(){
-        var ajax = new $ax(Feng.ctxPath + "/meetMember/adminDetail?memberId=" + Feng.getUrlParam("memberId"));
-        var result = ajax.start();
-        var ownForumid = result.data.ownForumid;
-        forumSelectOption(ownForumid);
+        let ajax = new $ax(Feng.ctxPath + "/meetMember/adminDetail?memberId=" + Feng.getUrlParam("memberId"));
+        let result = ajax.start();
+        //判断大小会
+        let meetStatus = result.data.meetStatus;
+        if(meetStatus == 7){
+            //小会，移除所有大会的元素
+            $(".bigMeetItem").remove();
+        }else{
+            let ownForumid = result.data.ownForumid;
+            forumSelectOption(ownForumid);
+        }
         layui.use('form', function () {
             form = layui.form;
             //设置省份数据

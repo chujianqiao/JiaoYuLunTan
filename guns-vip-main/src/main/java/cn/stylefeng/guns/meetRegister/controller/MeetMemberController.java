@@ -125,6 +125,8 @@ public class MeetMemberController extends BaseController {
         }
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
         User user = userService.getById(loginUser.getId());
+        //用户ID
+        model.addAttribute("userId",user.getUserId());
         String userTitle = user.getTitle();
         if(userTitle != null && userTitle != ""){
             request.setAttribute("userTitle",userTitle);

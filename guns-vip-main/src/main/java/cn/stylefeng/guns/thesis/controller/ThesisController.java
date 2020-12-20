@@ -10,11 +10,14 @@ import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
 import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.model.params.MeetParam;
+import cn.stylefeng.guns.meet.model.result.MeetResult;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
+import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
@@ -32,6 +35,7 @@ import cn.stylefeng.guns.thesisReviewMiddle.service.ThesisReviewMiddleService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.guns.util.TransTypeUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -255,6 +259,11 @@ public class ThesisController extends BaseController {
     @ResponseBody
     @BussinessLog(value = "注册会议", key = "thesisTitle", dict = MeetMemberDict.class)
     public ResponseData addItem(ThesisParam thesisParam, MeetMemberParam meetMemberParam, @Valid UserDto user) {
+        Meet pubMeet = this.meetService.getByStatus(1);
+        //检查报名人数
+        checkMeetNum(pubMeet);
+        //大小会
+        String meetSize = pubMeet.getSize();
         //用户ID
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
         Long userId = loginUser.getId();
@@ -280,7 +289,14 @@ public class ThesisController extends BaseController {
         meetMemberParam.setMeetId(meet.getMeetId());
         //同时更新用户表、论文表、会议成员表
         this.userService.editUser(user);
-        this.thesisService.add(thesisParam);
+        if("big".equals(meetSize)){
+            //大会添加论文，小会不添加
+            this.thesisService.add(thesisParam);
+            meetMemberParam.setThesisId(null);
+        }else if("small".equals(meetSize)){
+            //小会直接提交通过
+            meetMemberParam.setMeetStatus(6);
+        }
         this.meetMemberService.add(meetMemberParam);
 
         return ResponseData.success();
@@ -359,6 +375,8 @@ public class ThesisController extends BaseController {
     @RequestMapping("/reviewItem")
     @ResponseBody
     public ResponseData reviewItem(ThesisParam thesisParam) {
+        //检查参会人数
+        checkMeetRealNum();
         LoginUser user = LoginContextHolder.getContext().getUser();
         String userIdStr = user.getId().toString();
 
@@ -976,6 +994,50 @@ public class ThesisController extends BaseController {
         return ResponseData.success(map);
 
 
+    }
+
+    /**
+     * 检查报名人数
+     * 人数未满，会议投稿人数+1
+     */
+    private void checkMeetNum(Meet pubMeet){
+        Long meetId = pubMeet.getMeetId();
+        //投稿限制人数
+        Integer thesisNum = pubMeet.getThesisNum();
+        //当前投稿人数
+        Integer realTheNum = pubMeet.getRealTheNum();
+        if(thesisNum.equals(realTheNum)){
+            //报名人数已满
+            throw new ServiceException(BizExceptionEnum.FORUM_NUM_OVER);
+        }else{
+            MeetParam meetParam = new MeetParam();
+            realTheNum +=1;
+            meetParam.setMeetId(meetId);
+            meetParam.setRealTheNum(realTheNum);
+            this.meetService.update(meetParam);
+        }
+    }
+
+    /**
+     * 检查参会人数
+     */
+    private void checkMeetRealNum() {
+        Meet pubMeet = this.meetService.getByStatus(1);
+        Long meetId = pubMeet.getMeetId();
+        //参会限制人数
+        Integer peoNum = pubMeet.getPeopleNum();
+        //当前参会人数
+        Integer realPeoNum = pubMeet.getRealPeoNum();
+        if(peoNum.equals(realPeoNum)){
+            //参会人数已满
+            throw new ServiceException(BizExceptionEnum.REAL_NUM_OVER);
+        }else{
+            MeetParam meetParam = new MeetParam();
+            realPeoNum +=1;
+            meetParam.setMeetId(meetId);
+            meetParam.setRealPeoNum(realPeoNum);
+            this.meetService.update(meetParam);
+        }
     }
 }
 

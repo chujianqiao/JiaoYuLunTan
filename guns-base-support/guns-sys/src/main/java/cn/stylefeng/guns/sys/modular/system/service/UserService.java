@@ -286,6 +286,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @Date 2018/12/24 22:44
      */
     public void assertAuth(Long userId) {
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        if(loginUser.getId().equals(userId)){
+            //查询自己，可以返回
+            return;
+        }
         if (LoginContextHolder.getContext().isAdmin()) {
             return;
         }

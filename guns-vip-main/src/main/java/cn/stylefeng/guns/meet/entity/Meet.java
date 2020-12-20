@@ -2,6 +2,8 @@ package cn.stylefeng.guns.meet.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -23,7 +25,7 @@ public class Meet implements Serializable {
     /**
      * 会议ID
      */
-      @TableId(value = "meet_id", type = IdType.ID_WORKER)
+    @TableId(value = "meet_id", type = IdType.ID_WORKER)
     private Long meetId;
 
     /**
@@ -104,6 +106,30 @@ public class Meet implements Serializable {
      */
     @TableField("content")
     private String content;
+
+    /**
+     * 报名费
+     */
+    @TableField("fee")
+    private BigDecimal fee;
+
+    /**
+     * 大小会（大会-big,小会-small）
+     */
+    @TableField("meet_size")
+    private String size;
+
+    /**
+     * 实际参会人数
+     */
+    @TableField("real_peo_num")
+    private Integer realPeoNum;
+
+    /**
+     * 实际投稿人数
+     */
+    @TableField("real_the_num")
+    private Integer realTheNum;
 
 
     public Long getMeetId() {
@@ -216,6 +242,38 @@ public class Meet implements Serializable {
 
     public void setJoinEndTime(Date joinEndTime) {
         this.joinEndTime = joinEndTime;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public BigDecimal getFee() {
+        return fee;
+    }
+
+    public void setFee(BigDecimal fee) {
+        this.fee = fee;
+    }
+
+    public Integer getRealPeoNum() {
+        return realPeoNum;
+    }
+
+    public void setRealPeoNum(Integer realPeoNum) {
+        this.realPeoNum = realPeoNum;
+    }
+
+    public Integer getRealTheNum() {
+        return realTheNum;
+    }
+
+    public void setRealTheNum(Integer realTheNum) {
+        this.realTheNum = realTheNum;
     }
 
     @Override

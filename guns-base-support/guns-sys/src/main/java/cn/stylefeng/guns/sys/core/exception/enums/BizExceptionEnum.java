@@ -96,6 +96,7 @@ public enum BizExceptionEnum implements AbstractBaseExceptionEnum {
      */
     AUTH_REQUEST_ERROR(400, "账号密码错误"),
     FORUM_NUM_OVER(3366, "报名人数已满"),
+    REAL_NUM_OVER(3399, "参会人数已满"),
 
     /**
      * ueditor相关异常

@@ -1,21 +1,3 @@
-// /**
-//  * 详情对话框
-//  */
-// var MeetInfoDlg = {
-//     data: {
-//         meetId: "",
-//         meetName: "",
-//         meetDesc: "",
-//         place: "",
-//         peopleNum: "",
-//         thesisNum: "",
-//         beginTime: "",
-//         endTime: "",
-//         regUser: "",
-//         regTime: ""
-//     }
-// };
-
 layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], function () {
     var $ = layui.jquery;
     var $ax = layui.ax;
@@ -47,10 +29,20 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], func
         }
     };
 
-    //获取详情信息，填充表单
-    // var ajax = new $ax(Feng.ctxPath + "/meet/detail?meetId=" + Feng.getUrlParam("meetId"));
-    // var result = ajax.start();
-    // form.val('meetForm', result.data);
+    //先隐藏会议金额，选择“大会”后放开
+    $("#meetFee").hide();
+    form.on('select(size)', function(data){
+        let size = data.value;
+        if(size == 'big' || size == "big"){
+            $("#meetFee").show();
+        }else if (size == 'small' || size == "small"){
+            $("#meetFee").hide();
+            //小会默认金额0
+            $("#fee").val(0);
+        }else{
+            $("#meetFee").hide();
+        }
+    })
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {

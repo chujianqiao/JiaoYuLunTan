@@ -48,6 +48,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                         } else {
                             return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a>";
                         }
+                    } else if (data.meetStatusStr == "已提交") {
+                        return "";
                     } else if (data.meetStatusStr == "未通过") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                     } else if (data.meetStatusStr == "已申请开票") {

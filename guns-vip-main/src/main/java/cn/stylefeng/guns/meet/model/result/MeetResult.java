@@ -86,8 +86,28 @@ public class MeetResult implements Serializable {
     private Integer meetStatus;
 
     /**
+     * 报名费
+     */
+    private BigDecimal fee;
+
+    /**
+     * 大小会（大会-big,小会-small）
+     */
+    private String size;
+
+    /**
      * 富文本编辑器的内容
      */
     private String content;
+
+    /**
+     * 实际参会人数
+     */
+    private Integer realPeoNum;
+
+    /**
+     * 实际投稿人数
+     */
+    private Integer realTheNum;
 
 }

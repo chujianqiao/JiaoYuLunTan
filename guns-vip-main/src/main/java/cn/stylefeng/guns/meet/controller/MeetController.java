@@ -158,6 +158,8 @@ public class MeetController extends BaseController {
         meet.setRegTime(new Date());
         meet.setMeetStatus(0);
         meet.setMeetId(meetId);
+        meet.setRealPeoNum(0);
+        meet.setRealTheNum(0);
         //同时新增seat表
         SeatParam seatParam = new SeatParam();
         seatParam.setMeetId(meetId);

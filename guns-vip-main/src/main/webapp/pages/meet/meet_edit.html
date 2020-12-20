@@ -17,6 +17,24 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-inline">
+                            <label class="layui-form-label">会议类型<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <select id="size" name="size" lay-filter="size" lay-verify="required">
+                                    <option value=""></option>
+                                    <option value="big">大会</option>
+                                    <option value="small">小会</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline" id="meetFee">
+                            <label class="layui-form-label">会议金额<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="fee" name="fee" placeholder="请输入会议金额" type="text" class="layui-input" lay-verify="required" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
                             <label class="layui-form-label">参会人数<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
                                 <input id="peopleNum" name="peopleNum" placeholder="请输参会人数" type="text" class="layui-input" lay-verify="required" required/>

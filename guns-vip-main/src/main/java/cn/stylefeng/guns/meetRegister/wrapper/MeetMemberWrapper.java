@@ -64,15 +64,18 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		String direct = user.getDirection();
 
 		//论文
-		long thesisId = Long.parseLong(map.get("thesisId").toString());
-		Thesis thesis = thesisMapper.selectById(thesisId);
-		String thesisName = "";
-		if (thesis != null){
-			thesisName = thesis.getThesisTitle();
-		}else {
-			thesisName = "无";
+		Object thesisIdObj = map.get("thesisId");
+		if(thesisIdObj != null){
+			long thesisId = Long.parseLong(thesisIdObj.toString());
+			Thesis thesis = thesisMapper.selectById(thesisId);
+			String thesisName = "";
+			if (thesis != null){
+				thesisName = thesis.getThesisTitle();
+			}else {
+				thesisName = "无";
+			}
+			map.put("thesisName",thesisName);
 		}
-
 
 		//论坛
 		String forumName = "";
@@ -122,7 +125,6 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		map.put("unitName",unitName);
 		map.put("userPost",userPost);
 		map.put("direct",direct);
-		map.put("thesisName",thesisName);
 		map.put("forumName",forumName);
 //		map.put("speak",speak);
 
