@@ -47,6 +47,7 @@ public interface ThesisDomainMapper extends BaseMapper<ThesisDomain> {
      * @Date 2020-07-07
      */
     Page<ThesisDomainResult> customPageList(@Param("page") Page page, @Param("paramCondition") ThesisDomainParam paramCondition);
+    Page<ThesisDomainResult> customPageListById(@Param("page") Page page, @Param("domainIds") List<String> domainIds);
 
     /**
      * 获取分页map列表

@@ -70,6 +70,7 @@ public interface ThesisDomainService extends IService<ThesisDomain> {
      * @Date 2020-07-07
      */
      LayuiPageInfo findPageBySpec(ThesisDomainParam param);
+     LayuiPageInfo findPageById(List<String> domainIds);
 
     /**
      * 拼接数据

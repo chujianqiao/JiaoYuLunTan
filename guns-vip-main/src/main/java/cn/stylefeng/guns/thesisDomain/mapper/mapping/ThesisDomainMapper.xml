@@ -48,6 +48,20 @@
 		order by sort ASC
     </select>
 
+	<select id="customPageListById" resultType="cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult" parameterType="cn.stylefeng.guns.thesisDomain.model.params.ThesisDomainParam">
+		select
+		<include refid="Base_Column_List"/>
+		from thesis_domain where 1 = 1
+		<if test="domainIds != null">
+			and domain_id in
+			<foreach collection="domainIds" index="index" item="i" open="("
+					 separator="," close=")">
+				#{i}
+			</foreach>
+		</if>
+		order by sort ASC
+	</select>
+
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.thesisDomain.model.params.ThesisDomainParam">
         select
         <include refid="Base_Column_List"/>

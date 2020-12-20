@@ -105,4 +105,9 @@ public class ThesisServiceImpl extends ServiceImpl<ThesisMapper, Thesis> impleme
         return entity;
     }
 
+    @Override
+    public List<String> findExistList(){
+        return this.baseMapper.findExistList();
+    }
+
 }

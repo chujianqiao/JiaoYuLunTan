@@ -34,6 +34,12 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         var result = ajax.start();
         var ownForumid = result.data.ownForumid;
 
+        if (ownForumid != null && ownForumid != ""){
+            $("#editDiv").attr("style","display:none");
+            $("#ownForumid").attr("disabled","disabled");
+        } else {
+            $("#detailDiv").attr("style","display:none");
+        }
         //构建论坛候选值
         forumSelectOption(ownForumid);
 
@@ -78,18 +84,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
                 return false;
             }
         }
-        let ajax = new $ax(Feng.ctxPath + "/meetMember/editForum", function (data) {
-            // 传给上个页面，刷新table用
-            parent.location.reload();
-            admin.putTempData('formOk', true);
-            // 关掉对话框
-            admin.closeThisDialog();
-            Feng.success("选择论坛成功！");
-        }, function (data) {
-            Feng.error("选择论坛失败！" + data.responseJSON.message)
-        });
-        ajax.set(data.field);
-        ajax.start();
+        layer.confirm("论坛选择完后不可修改，确定提交？",{title:"提示"},function (index) {
+            let ajax = new $ax(Feng.ctxPath + "/meetMember/editForum", function (data) {
+                // 传给上个页面，刷新table用
+                parent.location.reload();
+                admin.putTempData('formOk', true);
+                // 关掉对话框
+                admin.closeThisDialog();
+                Feng.success("选择论坛成功！");
+            }, function (data) {
+                Feng.error("选择论坛失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.start();
+        })
+
         return false;
     });
 

@@ -64,8 +64,9 @@ public class WXMenuController {
 
         CommonButton btn14 = new CommonButton();
         btn14.setName("会议日程");
-        btn14.setType("click");
-        btn14.setKey("14");
+        btn14.setType("view");
+        /*btn14.setKey("14");*/
+        btn14.setUrl("http://cesf.nies.net.cn/meet/meetFile");
 
         CommonButton btn15 = new CommonButton();
         btn15.setName("问题答疑");

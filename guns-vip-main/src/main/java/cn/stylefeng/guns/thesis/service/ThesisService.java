@@ -77,5 +77,5 @@ public interface ThesisService extends IService<Thesis> {
      */
     Page<Map<String, Object>> findReview(List<Long> list,ThesisParam thesisParam);
 
-
+    List<String> findExistList();
 }

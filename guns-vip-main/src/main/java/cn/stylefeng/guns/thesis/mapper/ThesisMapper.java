@@ -56,4 +56,5 @@ public interface ThesisMapper extends BaseMapper<Thesis> {
      */
     Page<Map<String, Object>> customReview(@Param("page") Page page,@Param("list") List<Long> list,@Param("paramCondition") ThesisParam paramCondition);
 
+    List<String> findExistList();
 }

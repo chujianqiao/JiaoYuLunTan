@@ -156,7 +156,7 @@ public class SeatController extends BaseController {
             String templateId = "dTxk2FjY3SZmx-X5AR1sJ4Aw9-Me4bhMSa6zU4Yq_Ac";
             User resultUser = userService.getById(seatDetailResult.getUserId());
             String userWechatId = resultUser.getWechatId();
-            if (userWechatId != null && userWechatId != ""){
+            /*if (userWechatId != null && userWechatId != ""){
                 String first = "您好，您的座位已被变更。";
                 String remark = "您可登录中国教育科学论坛平台查看详细信息。";
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -167,7 +167,7 @@ public class SeatController extends BaseController {
                 dataList.add("取消成功");
                 dataList.add(time);
                 CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
-            }
+            }*/
 
             return ResponseData.success();
         }else {

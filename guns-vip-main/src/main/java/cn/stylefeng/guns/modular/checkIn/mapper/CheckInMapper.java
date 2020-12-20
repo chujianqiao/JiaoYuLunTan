@@ -71,6 +71,6 @@ public interface CheckInMapper extends BaseMapper<CheckIn> {
     Page<Map<String, Object>> customPageMapListForum(@Param("page") Page page, @Param("paramCondition") CheckInParam paramCondition);
     Page<Map<String, Object>> customPageMapListForumByRole(@Param("page") Page page, @Param("paramCondition") CheckInParam paramCondition, @Param("userIds") List<Long> userIds);
 
-    List<CheckIn> getByUser(Long userId,Long meetId,Long forumId);
+    List<CheckIn> getByUser(@Param("userId") Long userId,@Param("meetId") Long meetId,@Param("forumId") Long forumId);
 
 }

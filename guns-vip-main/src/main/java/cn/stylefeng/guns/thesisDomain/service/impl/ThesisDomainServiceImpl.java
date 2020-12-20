@@ -90,6 +90,12 @@ public class ThesisDomainServiceImpl extends ServiceImpl<ThesisDomainMapper, The
         IPage page = this.baseMapper.customPageList(pageContext, param);
         return LayuiPageFactory.createPageInfo(page);
     }
+    @Override
+    public LayuiPageInfo findPageById(List<String> domainIds){
+        Page pageContext = getPageContext();
+        IPage page = this.baseMapper.customPageListById(pageContext, domainIds);
+        return LayuiPageFactory.createPageInfo(page);
+    }
 
     @Override
     public Page<Map<String, Object>> findPageWrap(ThesisDomainParam param) {

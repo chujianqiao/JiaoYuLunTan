@@ -68,8 +68,12 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
 
                 for (var i = 0;i < data.length;i++){
                     console.log(data[i]);
-                    if (data[i].meetStatus == 4){
-                        $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')")
+                    if (data[i].meetStatus == 4 || data[i].meetStatus == 6){
+                        if (data[i].ownForumid != null && data[i].ownFourmid != ""){
+                            $("#forum").attr("href","javascript:forumAdd('exist')")
+                        } else {
+                            $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')")
+                        }
                         $("#pay").attr("href","javascript:toPay('yes')")
                         forumSelectOption(data[i].ownForumid);
                         break;

@@ -100,6 +100,12 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 			map.put("meetStatusStr",meetStatusStr);
 		}
 
+		Object forumObj = map.get("ownForumid");
+		if (forumObj != null){
+			map.put("ownForumid",forumObj);
+		}
+
+
 		//是否上传材料
 		String wordName = user.getWordName();
 		String pptName = user.getPptName();

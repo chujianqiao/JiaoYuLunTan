@@ -13,11 +13,12 @@
         <result column="credentials_path" property="credentialsPath" />
         <result column="food" property="food" />
         <result column="hotel" property="hotel" />
+        <result column="create_time" property="createTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        bill_id AS "billId", user_id AS "userId", meet_member_id AS "meetMemberId", enterprise AS "enterprise", taxpayer_number AS "taxpayerNumber", credentials_name AS "credentialsName", credentials_path AS "credentialsPath", food AS "food", hotel AS "hotel"
+        bill_id AS "billId", user_id AS "userId", meet_member_id AS "meetMemberId", enterprise AS "enterprise", taxpayer_number AS "taxpayerNumber", credentials_name AS "credentialsName", credentials_path AS "credentialsPath", food AS "food", hotel AS "hotel", create_time AS "createTime"
     </sql>
 
 

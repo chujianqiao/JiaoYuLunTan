@@ -145,7 +145,7 @@ public class WeiXinController {
         SysConfigParam param = new SysConfigParam();
         param.setCode("MONEY");
         SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
-        int money = Integer.parseInt(sysConfigResult.getValue()) * 100;
+        int money = (int) (Float.parseFloat(sysConfigResult.getValue()) * 100);
         map.put("total_fee",money + "");
         // 终端IP
         map.put("spbill_create_ip","127.0.0.1");

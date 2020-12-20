@@ -16,6 +16,7 @@ import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.factory.LayuiTreeFactory;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.sys.modular.system.warpper.DeptTreeWrapper;
+import cn.stylefeng.guns.thesis.service.ThesisService;
 import cn.stylefeng.guns.thesisDomain.entity.ThesisDomain;
 import cn.stylefeng.guns.thesisDomain.model.ThesisDomainDto;
 import cn.stylefeng.guns.thesisDomain.model.params.ThesisDomainParam;
@@ -61,6 +62,9 @@ public class ThesisDomainController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ThesisService thesisService;
 
     /**
      * 跳转到主页面
@@ -190,6 +194,20 @@ public class ThesisDomainController extends BaseController {
     @RequestMapping("/list")
     public LayuiPageInfo list(ThesisDomainParam thesisDomainParam) {
         return this.thesisDomainService.findPageBySpec(thesisDomainParam);
+    }
+
+    /**
+     * 查询列表
+     *
+     * @author CHU
+     * @Date 2020-07-07
+     */
+    @ResponseBody
+    @RequestMapping("/existList")
+    public LayuiPageInfo existList(ThesisDomainParam thesisDomainParam) {
+        List<String> list = this.thesisService.findExistList();
+
+        return this.thesisDomainService.findPageById(list);
     }
 
     /**

@@ -26,18 +26,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/bill/addItem", function (data) {
-            Feng.success("申请成功！");
-            //传给上个页面，刷新table用
-            admin.putTempData('formOk', true);
-            //关掉对话框
-            parent.location.reload();
-            admin.closeThisDialog();
-        }, function (data) {
-            Feng.error("申请失败！" + data.responseJSON.message)
+        layer.confirm("信息提交后不可修改，会务方不提供发票重开，确定提交？",{title:"提示"},function (index) {
+            var ajax = new $ax(Feng.ctxPath + "/bill/addItem", function (data) {
+                Feng.success("申请成功！");
+                //传给上个页面，刷新table用
+                admin.putTempData('formOk', true);
+                //关掉对话框
+                parent.location.reload();
+                admin.closeThisDialog();
+            }, function (data) {
+                Feng.error("申请失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.start();
         });
-        ajax.set(data.field);
-        ajax.start();
+
 
         return false;
     });

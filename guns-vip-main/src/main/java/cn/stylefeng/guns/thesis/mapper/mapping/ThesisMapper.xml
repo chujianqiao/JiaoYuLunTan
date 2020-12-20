@@ -126,5 +126,9 @@
             and thesis_title like CONCAT('%',#{paramCondition.thesisTitle},'%')
         </if>
     </select>
-
+    <select id="findExistList" resultType="string" parameterType="cn.stylefeng.guns.thesis.model.params.ThesisParam">
+        select
+        belong_domain
+        from thesis group by belong_domain
+    </select>
 </mapper>

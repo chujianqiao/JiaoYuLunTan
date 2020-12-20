@@ -524,7 +524,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     function domainSelectOption(){
         $.ajax({
             type:'post',
-            url:Feng.ctxPath + "/thesisDomain/list" ,
+            url:Feng.ctxPath + "/thesisDomain/existList" ,
             success:function(response){
                 var data=response.data;
                 var domains = [];

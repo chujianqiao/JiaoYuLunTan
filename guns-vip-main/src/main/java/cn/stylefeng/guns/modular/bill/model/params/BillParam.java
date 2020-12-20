@@ -65,6 +65,8 @@ public class BillParam implements Serializable, BaseValidatingParam {
      */
     private String hotel;
 
+    private Data createTime;
+
     @Override
     public String checkParam() {
         return null;

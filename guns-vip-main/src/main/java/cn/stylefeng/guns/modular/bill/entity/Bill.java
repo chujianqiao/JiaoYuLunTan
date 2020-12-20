@@ -1,10 +1,9 @@
 package cn.stylefeng.guns.modular.bill.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -72,6 +71,12 @@ public class Bill implements Serializable {
      */
     @TableField("hotel")
     private String hotel;
+
+    /**
+     * 创建时间
+     */
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
 
 
     public Long getBillId() {
@@ -146,6 +151,14 @@ public class Bill implements Serializable {
         this.hotel = hotel;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         return "Bill{" +
@@ -158,6 +171,7 @@ public class Bill implements Serializable {
         ", credentialsPath=" + credentialsPath +
         ", food=" + food +
         ", hotel=" + hotel +
+        ", createTime=" + createTime +
         "}";
     }
 }

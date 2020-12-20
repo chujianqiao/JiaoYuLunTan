@@ -270,7 +270,11 @@ public class SystemController extends BaseController {
             throw new RequestEmptyException("请求数据不完整！");
         }
 
-        return "/common/tree_dlg.html";
+        if (treeUrl.equals("/thesisDomain/tree")){
+            return "/common/thesisDomainTree_dlg.html";
+        }else {
+            return "/common/tree_dlg.html";
+        }
     }
 
     /**

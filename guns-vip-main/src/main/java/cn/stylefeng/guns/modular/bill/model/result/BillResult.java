@@ -64,4 +64,5 @@ public class BillResult implements Serializable {
      */
     private String hotel;
 
+    private Data createTime;
 }

@@ -43,11 +43,20 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                     } else if (data.meetStatusStr == "评审通过") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >缴费</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
                     } else if (data.meetStatusStr == "已缴费") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a>";
+                        if (data.ownForumid != "" && data.ownForumid != null){
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a>";
+                        } else {
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a>";
+                        }
                     } else if (data.meetStatusStr == "未通过") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                     } else if (data.meetStatusStr == "已申请开票") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>修改开票信息</a>";
+                        if (data.ownForumid != "" && data.ownForumid != null){
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a>";
+                        } else {
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a>";
+                        }
+
                     }
                 }}
         ]];
@@ -137,7 +146,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     };
     MeetMember.onEditBill = function (data) {
         layer.open({
-            title: '修改开票信息',
+            title: '查看开票信息',
             type: 2,
             area: ['620px','600px'],
             content: Feng.ctxPath + '/bill/edit?meetMemberId=' + data.memberId,

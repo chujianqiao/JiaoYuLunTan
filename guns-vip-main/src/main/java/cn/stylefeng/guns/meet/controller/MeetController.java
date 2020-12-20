@@ -156,6 +156,7 @@ public class MeetController extends BaseController {
         LoginUser user = LoginContextHolder.getContext().getUser();
         meet.setRegUser(user.getId());
         meet.setRegTime(new Date());
+        meet.setMeetStatus(0);
         meet.setMeetId(meetId);
         //同时新增seat表
         SeatParam seatParam = new SeatParam();

@@ -109,7 +109,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
         layer.open({
             type: 2,
-            title: '父级领域',
+            title: '论文领域',
             area: ['300px', '400px'],
             //content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
