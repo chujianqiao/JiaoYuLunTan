@@ -180,13 +180,23 @@ public class MeetSeatController {
 		return ResponseData.success();
 	}
 
+	@RequestMapping("seatMember")
+	@ResponseBody
+	public List<User> seatMember(Long meetId,Long type){
+		List<User> userList = new ArrayList<>();
+		List<Long> memberIds = getMember(meetId,type);
+		for(Long userId:memberIds){
+			User user = this.userService.getById(userId);
+			userList.add(user);
+		}
+		return userList;
+	}
+
 	/**
 	 * 获取成员并排序
 	 * 有排序权重字段的在前，其余按照省份分类
 	 * @return
 	 */
-	@RequestMapping("seatMember")
-	@ResponseBody
 	public List<Long> getMember(Long meetId,Long type){
 		List<Long> resList = new ArrayList<>();
 		List<Long> sortMember = this.meetMemberService.sortMember(meetId);

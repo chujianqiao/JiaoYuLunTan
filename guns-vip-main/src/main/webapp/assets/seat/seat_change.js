@@ -154,10 +154,10 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
                 for (i = 0 ;i < members.length ;i++){
                     var member = data[i];
                     if(false){
-                        options += '<option value="'+ member.userId+ '" selected="selected">'+ member.memberName +'</option>';
+                        options += '<option value="'+ member.userId+ '" selected="selected">'+ member.name +'</option>';
                     }
                     else{
-                        options += '<option value="'+ member.userId+ '" >'+ member.memberName +'</option>';
+                        options += '<option value="'+ member.userId+ '" >'+ member.name +'</option>';
                     }
                 }
                 $('#userId').empty();
