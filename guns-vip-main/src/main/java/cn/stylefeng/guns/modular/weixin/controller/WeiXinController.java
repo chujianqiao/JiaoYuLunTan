@@ -4,6 +4,8 @@ import cn.hutool.http.HttpUtil;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.auth.service.AuthService;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.modular.checkIn.entity.CheckIn;
@@ -69,6 +71,9 @@ public class WeiXinController {
 
     @Autowired
     private MeetMemberService meetMemberService;
+
+    @Autowired
+    private MeetService meetService;
 
     @Autowired
     private CheckInService checkInService;
@@ -144,8 +149,10 @@ public class WeiXinController {
         // 标价金额
         SysConfigParam param = new SysConfigParam();
         param.setCode("MONEY");
-        SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
-        int money = (int) (Float.parseFloat(sysConfigResult.getValue()) * 100);
+        //SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
+        Meet meet = meetService.getByStatus(1);
+        BigDecimal bignum = new BigDecimal("100");
+        int money = (meet.getFee().multiply(bignum)).intValue();
         map.put("total_fee",money + "");
         // 终端IP
         map.put("spbill_create_ip","127.0.0.1");

@@ -76,7 +76,7 @@
                                                 <label class="layui-form-label">${lang.get("FIELD_weChat","微信")}:</label>
                                                 <div class="layui-input-block">
                                                     <div class="layui-input-inline">
-                                                        <input type="wechatName" id="wechatName" name="wechatName" class="layui-input layui-disabled" placeholder="当前未绑定微信账号" lay-verify="required" required disabled/>
+                                                        <input type="wechatName" id="wechatName" name="wechatName" class="layui-input layui-disabled" placeholder="当前未绑定微信账号" disabled/>
                                                     </div>
                                                     <a id="weChatBand" onclick="weChatBand()" href="#" style="line-height: 36px;">绑定</a>
                                                     <a id="weChatCancelBand" onclick="weChatCancelBand()" href="#" style="line-height: 36px;">解绑</a>
@@ -405,7 +405,7 @@
             layer.open({
                 id: 'pswForm',
                 type: 2,
-                area:["400px","450px"],
+                area:["300px","350px"],
                 title: "微信绑定",
                 content: '${ctxPath}/weiXin/weChatBand'
             });

@@ -93,12 +93,18 @@ public class LoginController extends BaseController {
                 model.addAllAttributes(userIndexInfo);
                 String url = DefaultAvatar.getLoginUrl();
                 LoginUser user = LoginContextHolder.getContext().getUser();
+                User user1 = userService.getById(user.getId());
                 List roles = user.getRoleList();
                 long unit = 3;
                 if (user.getName() != "" && user.getName() != null){
                     model.addAttribute("userName", user.getName());
                 }else {
                     model.addAttribute("userName", user.getAccount());
+                }
+                if (user1.getWechatId() != null && !user1.getWechatId().equals("")){
+                    model.addAttribute("wechatSign", "yes");
+                }else {
+                    model.addAttribute("wechatSign", "no");
                 }
                 model.addAttribute("roleNames", user.getRoleNames());
                 //String loginUrl = "redirect:http://cesf.nies.net.cn/pub/lt_new_6/";

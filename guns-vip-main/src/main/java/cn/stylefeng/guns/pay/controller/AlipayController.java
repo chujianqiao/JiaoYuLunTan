@@ -1,6 +1,8 @@
 package cn.stylefeng.guns.pay.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
@@ -68,6 +70,9 @@ public class AlipayController extends BaseController {
 	private MeetMemberService meetMemberService;
 
 	@Autowired
+	private MeetService meetService;
+
+	@Autowired
 	private VipPayService vipPayService;
 
 	@Autowired
@@ -105,8 +110,9 @@ public class AlipayController extends BaseController {
 		//订单金额
 		SysConfigParam param = new SysConfigParam();
 		param.setCode("MONEY");
-		SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
-		String amout = sysConfigResult.getValue();
+		//SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
+		Meet meet = meetService.getByStatus(1);
+		String amout = meet.getFee().toString();
 		request.setBizContent("{" +
 				"\"out_trade_no\":\""+ orderNum +"\"," +
 				"\"seller_id\":\"\"," +
@@ -257,8 +263,9 @@ public class AlipayController extends BaseController {
 		//付款金额，必填
 		SysConfigParam param = new SysConfigParam();
 		param.setCode("MONEY");
-		SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
-		String total_amount = sysConfigResult.getValue();
+		//SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
+		Meet meet = meetService.getByStatus(1);
+		String total_amount = meet.getFee().toString();
 		//订单名称，必填
 		String subject = "支付会议费用";
 		//商品描述，可空

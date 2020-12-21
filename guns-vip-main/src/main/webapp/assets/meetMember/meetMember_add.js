@@ -245,10 +245,10 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         })
         if (flag == 1){
             var ajax = new $ax(Feng.ctxPath + "/thesis/addItem", function (data) {
-                Feng.success("添加成功！");
+                Feng.success("提交成功！");
                 window.location.href = Feng.ctxPath + '/meetMember';
             }, function (data) {
-                Feng.error("添加失败！" + data.responseJSON.message)
+                Feng.error("提交失败！" + data.responseJSON.message)
             });
             ajax.set(data.field);
             ajax.start();
