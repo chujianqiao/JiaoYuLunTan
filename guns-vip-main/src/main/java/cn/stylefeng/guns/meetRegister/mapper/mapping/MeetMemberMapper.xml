@@ -100,6 +100,9 @@
             <if test="paramCondition.userId != null and paramCondition.userId != ''">
                 and user_id=#{paramCondition.userId}
             </if>
+            <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+                and meet_id=#{paramCondition.meetId}
+            </if>
             <if test="listStatus != null and listStatus != ''">
                 and user_id in
                 <foreach collection="list" index="index" item="i" open="("
