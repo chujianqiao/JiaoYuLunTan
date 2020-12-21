@@ -11,7 +11,6 @@ import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
 import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.model.params.MeetParam;
-import cn.stylefeng.guns.meet.model.result.MeetResult;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
@@ -375,8 +374,11 @@ public class ThesisController extends BaseController {
     @RequestMapping("/reviewItem")
     @ResponseBody
     public ResponseData reviewItem(ThesisParam thesisParam) {
-        //检查参会人数
-        checkMeetRealNum();
+        int reviewNum = thesisParam.getReviewResult();
+        //通过，检查参会人数；拒绝则不检查
+        if(reviewNum == 1){
+            checkMeetRealNum();
+        }
         LoginUser user = LoginContextHolder.getContext().getUser();
         String userIdStr = user.getId().toString();
 
@@ -398,7 +400,6 @@ public class ThesisController extends BaseController {
         MeetMemberResult meetMemberResult = members.get(0);
         long memberId = meetMemberResult.getMemberId();
         meetMemberParam.setMemberId(memberId);
-        int reviewNum = thesisParam.getReviewResult();
         if(reviewNum == 0){
             meetMemberParam.setMeetStatus(5);
             //未通过，评审字典内容为空
