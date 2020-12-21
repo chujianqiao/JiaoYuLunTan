@@ -120,11 +120,15 @@
     </select>
 
     <select id="sortMember" resultType="Long">
-        select DISTINCT user_id from meet_member where sort is not null and meet_status=4 ORDER BY sort
+        select DISTINCT user_id from meet_member where sort is not null
+        and meet_id = #{meetId}
+        and (meet_status=4 OR meet_status=6 OR meet_status=7) ORDER BY sort
     </select>
 
     <select id="generalMember" resultType="Long">
-        select DISTINCT user_id from meet_member where sort is null and (meet_status=4 OR meet_status=6 OR meet_status=7)  ORDER BY province,city
+        select DISTINCT user_id from meet_member where sort is null
+        and meet_id = #{meetId}
+        and (meet_status=4 OR meet_status=6 OR meet_status=7)  ORDER BY province,city
     </select>
 
 </mapper>

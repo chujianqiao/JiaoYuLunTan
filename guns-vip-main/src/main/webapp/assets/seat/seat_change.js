@@ -30,7 +30,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         var seatStr = '第' + seatRow + '排，' + '第' + seatCol + '列';
         $("#seatStr").val(seatStr);
         //构建参会人员候选值
-        userSelectOption();
+        let meetId = $('#meetId').val();
+        userSelectOption(meetId);
         $("#writeUnit").hide();
     })
 
@@ -136,15 +137,16 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     /**
      * 构建用户下拉框候选值
      */
-    function userSelectOption(){
+    function userSelectOption(meetId){
         $.ajax({
             type:'post',
-            url:Feng.ctxPath + "/meetMember/wraplist" ,
+            url:Feng.ctxPath + "/meetSeat/seatMember?meetId=" + meetId ,
             success:function(response){
+                debugger;
                 var divId = $('#divId').val();
                 var seatDiv = $('#' + divId);
 
-                var data=response.data;
+                var data = response;
                 var members = [];
                 members = data;
                 var options;

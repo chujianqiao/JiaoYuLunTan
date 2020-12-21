@@ -91,11 +91,11 @@ public interface MeetMemberService extends IService<MeetMember> {
     /**
      * 有排序字段的数据
      */
-    List<Long> sortMember();
+    List<Long> sortMember(Long meetId);
 
     /**
      * 没有排序字段的数据
      * @return
      */
-    List<Long> generalMember();
+    List<Long> generalMember(Long meetId);
 }

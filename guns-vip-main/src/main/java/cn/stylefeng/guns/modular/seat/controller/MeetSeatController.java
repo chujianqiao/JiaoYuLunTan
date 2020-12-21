@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.modular.seat.controller;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
+import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
@@ -184,10 +185,12 @@ public class MeetSeatController {
 	 * 有排序权重字段的在前，其余按照省份分类
 	 * @return
 	 */
-	private List<Long> getMember(Long meetId,Long type){
+	@RequestMapping("seatMember")
+	@ResponseBody
+	public List<Long> getMember(Long meetId,Long type){
 		List<Long> resList = new ArrayList<>();
-		List<Long> sortMember = this.meetMemberService.sortMember();
-		List<Long> generalMember = this.meetMemberService.generalMember();
+		List<Long> sortMember = this.meetMemberService.sortMember(meetId);
+		List<Long> generalMember = this.meetMemberService.generalMember(meetId);
 		resList.addAll(sortMember);
 		resList.addAll(generalMember);
 		return resList;

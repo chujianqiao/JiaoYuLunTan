@@ -106,13 +106,13 @@ public class MeetMemberServiceImpl extends ServiceImpl<MeetMemberMapper, MeetMem
     }
 
     @Override
-    public List<Long> sortMember() {
-        return baseMapper.sortMember();
+    public List<Long> sortMember(Long meetId) {
+        return baseMapper.sortMember(meetId);
     }
 
     @Override
-    public List<Long> generalMember() {
-        return baseMapper.generalMember();
+    public List<Long> generalMember(Long meetId) {
+        return baseMapper.generalMember(meetId);
     }
 
 }

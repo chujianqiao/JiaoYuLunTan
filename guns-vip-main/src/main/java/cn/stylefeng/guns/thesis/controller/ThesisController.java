@@ -292,10 +292,10 @@ public class ThesisController extends BaseController {
         if("big".equals(meetSize)){
             //大会添加论文，小会不添加
             this.thesisService.add(thesisParam);
-            meetMemberParam.setThesisId(null);
         }else if("small".equals(meetSize)){
             //小会直接提交通过
-            meetMemberParam.setMeetStatus(6);
+            meetMemberParam.setMeetStatus(7);
+            meetMemberParam.setThesisId(null);
         }
         this.meetMemberService.add(meetMemberParam);
 

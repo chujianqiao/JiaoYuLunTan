@@ -96,7 +96,7 @@ public class TransTypeUtil {
 		meetStatus.put(5,"未通过");
 		meetStatus.put(6,"已申请开票");
 		//小会
-		meetStatus.put(7,"已提交");
+		meetStatus.put(7,"已通过");
 		return meetStatus;
 	}
 
