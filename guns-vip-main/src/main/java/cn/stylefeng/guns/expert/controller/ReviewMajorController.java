@@ -178,6 +178,7 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     @BussinessLog(value = "编辑申请", key = "direct", dict = ReviewMajorDict.class)
     public ResponseData editItem(ReviewMajorParam reviewMajorParam) {
+        reviewMajorParam.setCheckStatus("ENABLE");
         this.reviewMajorService.update(reviewMajorParam);
         return ResponseData.success();
     }

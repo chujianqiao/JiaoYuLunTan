@@ -21,7 +21,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'memberId', hide: true, title: '主键'},
             // {field: 'userId', sort: true, title: '参会人员ID'},
             // {field: 'thesisId', sort: true, title: '参会论文ID'},
-
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'memberName', sort: true, title: '参会人姓名'},
             {field: 'unitName', sort: true, title: '所在单位'},
             {field: 'userPost', sort: true, title: '职务/职称'},

@@ -744,8 +744,8 @@ public class ThesisController extends BaseController {
             String reviewSort = request.getParameter("reviewSort");
             middleParam.setReviewSort(Integer.parseInt(reviewSort));
 
-            LayuiPageInfo midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
-            List<ThesisReviewMiddleResult> mids = midRes.getData();
+            List<ThesisReviewMiddleResult> mids = this.thesisReviewMiddleService.findListBySpec(middleParam);
+            //List<ThesisReviewMiddleResult> mids = midRes.getData();
             for (int i = 0; i < mids.size(); i++) {
                 ThesisReviewMiddleResult middleResult = mids.get(i);
                 thesisId = middleResult.getThesisId();

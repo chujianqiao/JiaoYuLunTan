@@ -66,6 +66,7 @@ public interface MeetMemberService extends IService<MeetMember> {
     List<MeetMemberResult> findListBySpec();
 
     List<MeetMemberResult> findListByUserId(Long userId);
+    List<MeetMemberResult> customListIfExist(Long meetId, Long userId);
 
     /**
      * 查询分页数据，Specification模式

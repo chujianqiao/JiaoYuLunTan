@@ -87,13 +87,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         layer.confirm("论坛选择完后不可修改，确定提交？",{title:"提示"},function (index) {
             let ajax = new $ax(Feng.ctxPath + "/meetMember/editForum", function (data) {
                 // 传给上个页面，刷新table用
-                parent.location.reload();
-                admin.putTempData('formOk', true);
-                // 关掉对话框
-                admin.closeThisDialog();
-                Feng.success("选择论坛成功！");
+                if (data.message == "full"){
+                    Feng.error("论坛人数已满，请选择其它论坛。")
+                } else {
+                    parent.location.reload();
+                    admin.putTempData('formOk', true);
+                    // 关掉对话框
+                    admin.closeThisDialog();
+                    Feng.success("选择论坛成功！");
+                }
             }, function (data) {
-                Feng.error("选择论坛失败！" + data.responseJSON.message)
+                Feng.error("选择论坛失败！")
             });
             ajax.set(data.field);
             ajax.start();

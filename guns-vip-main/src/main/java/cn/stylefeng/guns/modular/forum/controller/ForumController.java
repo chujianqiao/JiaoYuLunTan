@@ -2,6 +2,8 @@ package cn.stylefeng.guns.modular.forum.controller;
 
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.forum.entity.Forum;
 import cn.stylefeng.guns.modular.forum.model.params.ForumParam;
 import cn.stylefeng.guns.modular.forum.service.ForumService;
@@ -32,6 +34,8 @@ public class ForumController extends BaseController {
 
     @Autowired
     private ForumService forumService;
+    @Autowired
+    private MeetService meetService;
 
     /**
      * 跳转到主页面
@@ -77,6 +81,8 @@ public class ForumController extends BaseController {
     public ResponseData addItem(ForumParam forumParam) {
         forumParam.setExistNum(0);
         forumParam.setStatus(0);
+        Meet meet = meetService.getByStatus(1);
+        forumParam.setMeetId(meet.getMeetId());
         this.forumService.add(forumParam);
         return ResponseData.success();
     }
@@ -140,6 +146,12 @@ public class ForumController extends BaseController {
     @ResponseBody
     @RequestMapping("/wrapList")
     public Object wrapList(ForumParam forumParam) {
+        if (forumParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            forumParam.setMeetId(meet.getMeetId());
+        } else if (forumParam.getMeetId() == 0) {
+            forumParam.setMeetId(null);
+        }
         Page<Map<String, Object>> forum = this.forumService.findPageWrap(forumParam);
         Page wrapped = new ForumWrapper(forum).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);

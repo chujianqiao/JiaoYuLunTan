@@ -70,6 +70,11 @@ public class ForumParam implements Serializable, BaseValidatingParam {
      */
     private String location;
 
+    /**
+     * 会议ID
+     */
+    private Long meetId;
+
     @Override
     public String checkParam() {
         return null;

@@ -14,11 +14,12 @@
         <result column="start_time" property="startTime" />
         <result column="end_time" property="endTime" />
         <result column="location" property="location" />
+        <result column="meet_id" property="meetId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        forum_id AS "forumId", forum_name AS "forumName", set_num AS "setNum", exist_num AS "existNum", status AS "status", register_start_time AS "registerStartTime", register_end_time AS "registerEndTime", start_time AS "startTime", end_time AS "endTime", location AS "location"
+        forum_id AS "forumId", forum_name AS "forumName", set_num AS "setNum", exist_num AS "existNum", status AS "status", register_start_time AS "registerStartTime", register_end_time AS "registerEndTime", start_time AS "startTime", end_time AS "endTime", location AS "location", meet_id AS "meetId"
     </sql>
 
 
@@ -46,6 +47,9 @@
         from forum where 1 = 1
         <if test="paramCondition.forumName != null and paramCondition.forumName != ''">
             and forum_name like CONCAT('%',#{paramCondition.forumName},'%')
+        </if>
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
         </if>
     </select>
 

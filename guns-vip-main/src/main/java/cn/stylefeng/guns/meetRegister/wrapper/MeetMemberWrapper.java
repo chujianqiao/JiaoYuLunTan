@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.meetRegister.wrapper;
 
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.mapper.MeetMapper;
 import cn.stylefeng.guns.modular.forum.entity.Forum;
 import cn.stylefeng.guns.modular.forum.mapper.ForumMapper;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
@@ -30,6 +32,7 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 //	private OwnForumMapper ownForumMapper = SpringContextHolder.getBean(OwnForumMapper.class);
 
 	private ForumMapper forumMapper = SpringContextHolder.getBean(ForumMapper.class);
+	private MeetMapper meetMapper = SpringContextHolder.getBean(MeetMapper.class);
 
 	@Autowired
 	private OwnForumService ownForumService;
@@ -106,6 +109,12 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		Object forumObj = map.get("ownForumid");
 		if (forumObj != null){
 			map.put("ownForumid",forumObj);
+		}
+
+		Object meetId = map.get("meetId");
+		if (meetId != null){
+			Meet meet = meetMapper.selectById(Long.parseLong(meetId.toString()));
+			map.put("meetName",meet.getMeetName());
 		}
 
 

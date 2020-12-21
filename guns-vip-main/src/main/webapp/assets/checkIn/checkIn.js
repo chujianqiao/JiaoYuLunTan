@@ -15,8 +15,9 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             signStatus: "",
         }
     };
-
+    meetSelectOption();
     roleSelectOption();
+
 
     /**
      * 初始化表格的列
@@ -44,6 +45,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         var queryData = {};
         queryData['signStatus'] = $("#signStatus").val();
         queryData['roleId'] = $("#roleId").val();
+        queryData['meetId'] = $("#meetId").val();
         queryData['name'] = $("#name").val();
         $("#nameExp").val($("#name").val());
         table.reload(CheckIn.tableId, {
@@ -56,6 +58,9 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         CheckIn.search();
     });
     form.on('select(roleId)', function(data){
+        CheckIn.search();
+    });
+    form.on('select(meetId)', function(data){
         CheckIn.search();
     });
 
@@ -231,6 +236,33 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
                 $('#roleIdForum').empty();
                 $('#roleIdForum').append("<option value=''>请选择角色</option>");
                 $('#roleIdForum').append(options);
+                form.render('select');
+            }
+        })
+    }
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
                 form.render('select');
             }
         })

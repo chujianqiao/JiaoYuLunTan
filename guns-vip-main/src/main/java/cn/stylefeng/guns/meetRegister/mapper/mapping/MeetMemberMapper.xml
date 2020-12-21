@@ -121,6 +121,14 @@
         <include refid="Base_Column_List"/>
         from meet_member where 1 = 1 and user_id = #{userId}
     </select>
+    <select id="customListIfExist" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
+        select
+        <include refid="Base_Column_List"/>
+        from meet_member where 1 = 1
+        and meet_id = #{meetId}
+        and user_id = #{userId}
+        and meet_status != 5
+    </select>
 
     <select id="sortMember" resultType="Long">
         select DISTINCT user_id from meet_member where sort is not null

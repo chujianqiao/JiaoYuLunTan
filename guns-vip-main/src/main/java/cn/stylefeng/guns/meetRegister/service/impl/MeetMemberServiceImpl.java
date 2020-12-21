@@ -68,6 +68,10 @@ public class MeetMemberServiceImpl extends ServiceImpl<MeetMemberMapper, MeetMem
     public List<MeetMemberResult> findListByUserId(Long userId){
         return this.baseMapper.customListByUserId(userId);
     }
+    @Override
+    public List<MeetMemberResult> customListIfExist(Long meetId, Long userId){
+        return this.baseMapper.customListIfExist(meetId, userId);
+    }
 
     @Override
     public LayuiPageInfo findPageBySpec(MeetMemberParam param){

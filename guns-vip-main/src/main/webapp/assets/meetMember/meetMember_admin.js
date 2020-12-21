@@ -41,6 +41,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var queryData = {};
         queryData['userName'] = $('#userName').val();
         queryData['ownForumid'] = $('#forumOption').val();
+        queryData['meetId'] = $('#meetId').val();
         $('#userNameExp').val($('#userName').val());
         table.reload(MeetMember.tableId, {
             where: queryData, page: {curr: 1}
@@ -50,6 +51,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     //选择论坛时立刻刷新
     form.on('select(forumOption)', function(data){
         MeetMember.search();
+    });
+    //选择论坛时立刻刷新
+    form.on('select(meetId)', function(data){
+        MeetMember.search();
+        forumSelectOption();
     });
 
     /**
@@ -236,6 +242,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var queryData = {};
         queryData['userName'] = $('#userNameJB').val();
         queryData['ownForumid'] = $('#forumOptionJB').val();
+        queryData['meetId'] = $('#meetIdJB').val();
         $('#userNameJBExp').val($('#userNameJB').val());
         table.reload(MeetMemberJB.tableId, {
             where: queryData, page: {curr: 1}
@@ -245,6 +252,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     //选择论坛时立刻刷新
     form.on('select(forumOptionJB)', function(data){
         MeetMemberJB.search();
+    });
+    //选择论坛时立刻刷新
+    form.on('select(meetIdJB)', function(data){
+        MeetMemberJB.search();
+        forumJBSelectOption();
+
     });
 
     /**
@@ -389,16 +402,22 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
     $(function () {
         forumSelectOption();
+        forumJBSelectOption();
+        meetSelectOption();
     })
 
     /**
      * 构建论坛下拉框
      */
     function forumSelectOption(){
+        var meetId = "";
+        if ($("#meetId").val() != null){
+            meetId = $("#meetId").val();
+        }
         $.ajax({
             type:'post',
             // url:Feng.ctxPath + "/thesisDomain/list" ,
-            url:Feng.ctxPath + "/forum/wrapList" ,
+            url:Feng.ctxPath + "/forum/wrapList?meetId=" + meetId,
             success:function(response){
                 var data=response.data;
                 var forums = [];
@@ -414,9 +433,66 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
                 $('#forumOption').empty();
                 $('#forumOption').append("<option value=''>请选择论坛</option>");
                 $('#forumOption').append(options);
+                form.render('select');
+            }
+        })
+    }
+    /**
+     * 构建论坛下拉框
+     */
+    function forumJBSelectOption(){
+        var meetId = "";
+        if ($("#meetId").val() != null){
+            meetId = $("#meetId").val();
+        }
+        $.ajax({
+            type:'post',
+            // url:Feng.ctxPath + "/thesisDomain/list" ,
+            url:Feng.ctxPath + "/forum/wrapList?meetId=" + meetId,
+            success:function(response){
+                var data=response.data;
+                var forums = [];
+                forums = data;
+                var options;
+                for (i = 0 ;i < forums.length ;i++){
+                    var forum = data[i];
+                    if(forum.status == "未发布"){
+                        continue;
+                    }
+                    options += '<option value="'+ forum.forumId+ '" >'+ forum.forumName +'</option>';
+                }
                 $('#forumOptionJB').empty();
                 $('#forumOptionJB').append("<option value=''>请选择论坛</option>");
                 $('#forumOptionJB').append(options);
+                form.render('select');
+            }
+        })
+    }
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                $('#meetIdJB').empty();
+                $('#meetIdJB').append("<option value='0'>请选择会议</option>");
+                $('#meetIdJB').append(options);
                 form.render('select');
             }
         })

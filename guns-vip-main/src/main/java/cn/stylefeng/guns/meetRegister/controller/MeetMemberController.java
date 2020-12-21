@@ -125,6 +125,13 @@ public class MeetMemberController extends BaseController {
         }
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
         User user = userService.getById(loginUser.getId());
+        Meet meet = meetService.getByStatus(1);
+
+        List<MeetMemberResult> list = meetMemberService.customListIfExist(meet.getMeetId(),user.getUserId());
+        if (list.size() > 0){
+            model.addAttribute("isExist", "yes");
+        }
+
         //用户ID
         model.addAttribute("userId",user.getUserId());
         String userTitle = user.getTitle();
@@ -266,7 +273,9 @@ public class MeetMemberController extends BaseController {
         Integer setNum = forum.getSetNum();
         if(existNum + 1 > setNum){
             //人数已满，抛出异常
-            throw new ServiceException(BizExceptionEnum.FORUM_NUM_OVER);
+            ResponseData responseData = new ResponseData();
+            responseData.setMessage("full");
+            return responseData;
         }else{
             existNum++;
             ForumParam forumParam = new ForumParam();
@@ -587,6 +596,14 @@ public class MeetMemberController extends BaseController {
         }else{
             return LayuiPageFactory.createPageInfo(new Page());
         }
+
+        if (meetMemberParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            meetMemberParam.setMeetId(meet.getMeetId());
+        } else if (meetMemberParam.getMeetId() == 0) {
+            meetMemberParam.setMeetId(null);
+        }
+
         Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIdList,listStatus);
         Page wrapped = new MeetMemberWrapper(members).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
@@ -606,6 +623,12 @@ public class MeetMemberController extends BaseController {
             listStatus = "有条件";
         }else{
             return LayuiPageFactory.createPageInfo(new Page());
+        }
+        if (meetMemberParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            meetMemberParam.setMeetId(meet.getMeetId());
+        } else if (meetMemberParam.getMeetId() == 0) {
+            meetMemberParam.setMeetId(null);
         }
 
         Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIdList,listStatus);

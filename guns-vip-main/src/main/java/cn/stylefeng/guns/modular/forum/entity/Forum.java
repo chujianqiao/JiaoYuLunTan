@@ -80,6 +80,12 @@ public class Forum implements Serializable {
     @TableField("location")
     private String location;
 
+    /**
+     * 会议ID
+     */
+    @TableId(value = "meet_id")
+    private Long meetId;
+
 
     public Long getForumId() {
         return forumId;
@@ -161,6 +167,14 @@ public class Forum implements Serializable {
         this.location = location;
     }
 
+    public Long getMeetId() {
+        return meetId;
+    }
+
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
+    }
+
     @Override
     public String toString() {
         return "Forum{" +
@@ -174,6 +188,7 @@ public class Forum implements Serializable {
         ", startTime=" + startTime +
         ", endTime=" + endTime +
         ", location=" + location +
+        ", meetId=" + meetId +
         "}";
     }
 }

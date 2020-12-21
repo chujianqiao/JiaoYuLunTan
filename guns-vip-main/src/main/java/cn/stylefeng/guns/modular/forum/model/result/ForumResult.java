@@ -69,4 +69,6 @@ public class ForumResult implements Serializable {
      */
     private String location;
 
+    private Long meetId;
+
 }

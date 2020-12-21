@@ -38,6 +38,7 @@ public interface MeetMemberMapper extends BaseMapper<MeetMember> {
     List<MeetMemberResult> customListAll();
 
     List<MeetMemberResult> customListByUserId(@Param("userId") Long userId);
+    List<MeetMemberResult> customListIfExist(@Param("meetId") Long meetId, @Param("userId") Long userId);
 
 
     /**

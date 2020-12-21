@@ -4,6 +4,8 @@ import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.checkIn.entity.CheckIn;
 import cn.stylefeng.guns.modular.checkIn.model.params.CheckInParam;
 import cn.stylefeng.guns.modular.checkIn.service.CheckInService;
@@ -52,6 +54,9 @@ public class CheckInController extends BaseController {
 
     @Autowired
     private CheckInService checkInService;
+
+    @Autowired
+    private MeetService meetService;
 
     @Autowired
     private UserService userService;
@@ -195,6 +200,13 @@ public class CheckInController extends BaseController {
         }else {
             Page wrapped = new Page();
             return LayuiPageFactory.createPageInfo(wrapped);
+        }
+
+        if (checkInParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            checkInParam.setMeetId(meet.getMeetId());
+        } else if (checkInParam.getMeetId() == 0) {
+            checkInParam.setMeetId(null);
         }
 
         Page<Map<String, Object>> checkIn = this.checkInService.findPageWrap(checkInParam, userIds);
