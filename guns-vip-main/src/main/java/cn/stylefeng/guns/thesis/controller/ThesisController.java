@@ -446,7 +446,7 @@ public class ThesisController extends BaseController {
         User resultUser = userService.getById(meetMemberResult.getUserId());
         String userWechatId = resultUser.getWechatId();
         if (userWechatId != null && userWechatId != ""){
-            String first = "您的论文已初评完毕";
+            String first = "您的论文已初评完毕，请尽快前往平台完成缴费。";
             String remark = "您可登录中国教育科学论坛平台查看详细信息。";
             String reviewResult = "";
             if (reviewNum == 0){
@@ -730,7 +730,7 @@ public class ThesisController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/reviewList")
-    public Object reviewList(ThesisParam thesisParam,HttpServletRequest request) {
+    public Object reviewList(ThesisParam thesisParam,String reviewStatus,HttpServletRequest request) {
         boolean isReview = ToolUtil.isReviewRole();
         List<Long> thesisIdList = new ArrayList<>();
         if (isReview){
@@ -744,6 +744,13 @@ public class ThesisController extends BaseController {
             String reviewSort = request.getParameter("reviewSort");
             middleParam.setReviewSort(Integer.parseInt(reviewSort));
 
+            if (reviewStatus != null){
+                if (reviewStatus.equals("0")){
+                    middleParam.setGreat(1);
+                }else if (reviewStatus.equals("1")){
+                    middleParam.setGreat(2);
+                }
+            }
             List<ThesisReviewMiddleResult> mids = this.thesisReviewMiddleService.findListBySpec(middleParam);
             //List<ThesisReviewMiddleResult> mids = midRes.getData();
             for (int i = 0; i < mids.size(); i++) {
@@ -886,9 +893,13 @@ public class ThesisController extends BaseController {
     public ResponseData detailPub() {
         LoginUser user = LoginContextHolder.getContext().getUser();
         Long userId = user.getId();
-        List<MeetMemberResult> list = this.meetMemberService.findListByUserId(userId);
+        Meet meet = meetService.getByStatus(1);
+        MeetMemberParam meetMemberParam = new MeetMemberParam();
+        meetMemberParam.setUserId(userId);
+        meetMemberParam.setMeetId(meet.getMeetId());
+        List<MeetMemberResult> list = this.meetMemberService.customList(meetMemberParam);
         Long thesisId = null;
-        if (list != null){
+        if (list.size() > 0){
             if (list.size() == 1){
                 thesisId = list.get(0).getThesisId();
             }else {
@@ -898,6 +909,8 @@ public class ThesisController extends BaseController {
                     }
                 }
             }
+        }else {
+            return ResponseData.success("empty");
         }
 
         Thesis detail = this.thesisService.getById(thesisId);

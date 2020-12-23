@@ -37,21 +37,24 @@
         select
         <include refid="Base_Column_List"/>
         from meet_member where 1 = 1
-            <if test="paramCondition.userId != null and paramCondition.userId != ''">
-                and user_id like CONCAT('%',#{paramCondition.userId},'%')
-            </if>
-            <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
-                and thesis_id like CONCAT('%',#{paramCondition.thesisId},'%')
-            </if>
-            <if test="paramCondition.ownForumid != null and paramCondition.ownForumid != ''">
-                and own_forumid like CONCAT('%',#{paramCondition.ownForumid},'%')
-            </if>
-            <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
-                and thesis_id = #{paramCondition.thesisId}
-            </if>
-            <if test="paramCondition.payId != null and paramCondition.payId != ''">
-                and pay_id = #{paramCondition.payId}
-            </if>
+        <if test="paramCondition.userId != null and paramCondition.userId != ''">
+            and user_id like CONCAT('%',#{paramCondition.userId},'%')
+        </if>
+        <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
+            and thesis_id like CONCAT('%',#{paramCondition.thesisId},'%')
+        </if>
+        <if test="paramCondition.ownForumid != null and paramCondition.ownForumid != ''">
+            and own_forumid like CONCAT('%',#{paramCondition.ownForumid},'%')
+        </if>
+        <if test="paramCondition.thesisId != null and paramCondition.thesisId != ''">
+            and thesis_id = #{paramCondition.thesisId}
+        </if>
+        <if test="paramCondition.payId != null and paramCondition.payId != ''">
+            and pay_id = #{paramCondition.payId}
+        </if>
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
     </select>
 
     <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">

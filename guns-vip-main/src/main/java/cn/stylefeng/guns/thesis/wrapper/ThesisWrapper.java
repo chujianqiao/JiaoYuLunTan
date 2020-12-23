@@ -159,10 +159,10 @@ public class ThesisWrapper extends BaseControllerWrapper {
 		middleParam.setThesisId(thesisId);
 		middleParam.setUserId(user.getId());
 		middleParam.setReviewSort(1);
-		LayuiPageInfo midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
-		List<ThesisReviewMiddleResult> midList = midRes.getData();
-		if(midList.size() != 0){
-			ThesisReviewMiddleResult middleResult = midList.get(0);
+		List<ThesisReviewMiddleResult> midRes = this.thesisReviewMiddleService.findListBySpec(middleParam);
+		//List<ThesisReviewMiddleResult> midList = midRes.getData();
+		if(midRes.size() != 0){
+			ThesisReviewMiddleResult middleResult = midRes.get(0);
 			Integer firstScore = middleResult.getScore();
 			if(firstScore != null){
 				map.put("firstScore",firstScore);
@@ -177,10 +177,10 @@ public class ThesisWrapper extends BaseControllerWrapper {
 
 		//复评状态
 		middleParam.setReviewSort(2);
-		LayuiPageInfo midResAgain = this.thesisReviewMiddleService.findPageBySpec(middleParam);
-		List<ThesisReviewMiddleResult> midListAgain = midResAgain.getData();
-		if(midListAgain.size() != 0){
-			ThesisReviewMiddleResult middleResult = midListAgain.get(0);
+		List<ThesisReviewMiddleResult> midResAgain = this.thesisReviewMiddleService.findListBySpec(middleParam);
+		//List<ThesisReviewMiddleResult> midListAgain = midResAgain.getData();
+		if(midResAgain.size() != 0){
+			ThesisReviewMiddleResult middleResult = midResAgain.get(0);
 			if (middleResult != null){
 				Date date = middleResult.getReviewTime();
 				if(date != null && date.getTime() != 0 && middleResult.getScore() != null){
@@ -198,12 +198,12 @@ public class ThesisWrapper extends BaseControllerWrapper {
 		middleParam = new ThesisReviewMiddleParam();
 		middleParam.setThesisId(thesisId);
 		middleParam.setReviewSort(2);
-		midRes = this.thesisReviewMiddleService.findPageBySpec(middleParam);
-		midList = midRes.getData();
-		if(midList.size() > 0){
+		midRes = this.thesisReviewMiddleService.findListBySpec(middleParam);
+		//midList = midRes.getData();
+		if(midRes.size() > 0){
 			StringBuilder scoreStr = new StringBuilder();
-			for (int i = 0; i < midList.size(); i++) {
-				ThesisReviewMiddleResult middleResult = midList.get(i);
+			for (int i = 0; i < midRes.size(); i++) {
+				ThesisReviewMiddleResult middleResult = midRes.get(i);
 				Integer score = middleResult.getScore();
 				if(score != null){
 					scoreStr.append(score + "; ");
