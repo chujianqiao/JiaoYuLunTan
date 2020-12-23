@@ -337,7 +337,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
                     if(data.reviewStatus == "未评审"){
                         return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"reviewEdu\">评审</a>";
                     }else{
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>";
+                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"eduDetail\">查看详情</a>";
                     }
                 }}
         ]];
@@ -394,7 +394,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
     table.on('tool(' + EducationResult.tableId + ')', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
-        if (layEvent === 'detail') {
+        if (layEvent === 'eduDetail') {
             EducationResult.openDetail(data);
         } else if (layEvent === 'reviewEdu'){
             EducationResult.reviewEduPage(data);
@@ -458,7 +458,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     GreatResult.openDetail = function (data) {
-        window.location.href = Feng.ctxPath + '/greatResult/reviewDetail?resultId=' + data.resultId;
+        window.location.href = Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId;
     };
 
     /**

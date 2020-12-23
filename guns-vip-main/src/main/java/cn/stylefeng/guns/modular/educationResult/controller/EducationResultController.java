@@ -137,7 +137,7 @@ public class EducationResultController extends BaseController {
         boolean isAdmin = ToolUtil.isAdminRole();
         boolean isReview = ToolUtil.isReviewRole();
         model.addAttribute("menuUrl", "greatResult");
-        if (ToolUtil.isReviewRole()){
+        if (isReview){
             model.addAttribute("isReview", "yes");
         }else {
             model.addAttribute("isReview", "no");
@@ -148,6 +148,8 @@ public class EducationResultController extends BaseController {
             //}else {
             //    return PREFIX + "/educationResult_detailUnit.html";
             //}
+        }else if(isReview){
+            return PREFIX + "/educationResult_detail_review.html";
         }else {
             return PREFIX + "/educationResult_detail_person.html";
         }

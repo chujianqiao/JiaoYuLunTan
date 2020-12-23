@@ -148,12 +148,14 @@ public class GreatResultController extends BaseController {
         }else {
             model.addAttribute("isReview", "no");
         }
-        if (LoginContextHolder.getContext().isAdmin()) {
+        if (ToolUtil.isAdminRole()) {
             //if (applyType == 1) {
                 return PREFIX + "/greatResult_detail.html";
             //} else {
             //    return PREFIX + "/greatResult_detailUnit.html";
             //}
+        }else if(ToolUtil.isReviewRole()){
+            return PREFIX + "/greatResult_detail_review.html";
         }else {
             return PREFIX + "/greatResult_detail_person.html";
         }
