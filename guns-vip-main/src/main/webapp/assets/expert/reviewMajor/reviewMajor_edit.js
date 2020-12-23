@@ -241,7 +241,10 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     //获取详情信息，填充表单
     var ajax = new $ax(Feng.ctxPath + "/reviewMajor/detail?reviewId=" + Feng.getUrlParam("reviewId"));
     var result = ajax.start();
-    $('#pName').val(result.data.domainName);
+    let domainName = result.data.domainName;
+    if(domainName != undefined && domainName != 'undefined' && domainName != ''){
+        $('#pName').val(result.data.domainName);
+    }
 
     //转换状态值
     var checkStatus = result.data.checkStatus;

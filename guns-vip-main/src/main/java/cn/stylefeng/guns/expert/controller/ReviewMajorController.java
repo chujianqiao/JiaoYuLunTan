@@ -155,17 +155,21 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/addItem")
     @ResponseBody
-    @BussinessLog(value = "提交申请", key = "direct", dict = ReviewMajorDict.class)
+//    @BussinessLog(value = "提交申请", key = "direct", dict = ReviewMajorDict.class)
     public ResponseData addItem(ReviewMajorParam reviewMajorParam) {
-        LoginUser user = LoginContextHolder.getContext().getUser();
-        reviewMajorParam.setReviewId(user.getId());
-        reviewMajorParam.setApplyTime(new Date());
-        reviewMajorParam.setApplyFrom("非邀请");
-        reviewMajorParam.setCheckStatus(ManagerStatus.OK.getCode());
-        reviewMajorParam.setThesisCount(0);
-        reviewMajorParam.setReviewCount(0);
-        reviewMajorParam.setRefuseCount(0);
-        this.reviewMajorService.add(reviewMajorParam);
+        Long reviewId = reviewMajorParam.getReviewId();
+        ReviewMajor reviewMajor = this.reviewMajorService.getById(reviewId);
+        if(reviewMajor == null){
+//            LoginUser user = LoginContextHolder.getContext().getUser();
+            reviewMajorParam.setReviewId(reviewId);
+            reviewMajorParam.setApplyTime(new Date());
+            reviewMajorParam.setApplyFrom("非邀请");
+            reviewMajorParam.setCheckStatus(ManagerStatus.OK.getCode());
+            reviewMajorParam.setThesisCount(0);
+            reviewMajorParam.setReviewCount(0);
+            reviewMajorParam.setRefuseCount(0);
+            this.reviewMajorService.add(reviewMajorParam);
+        }
         return ResponseData.success();
     }
 
@@ -284,7 +288,7 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    @BussinessLog(value = "删除申请", key = "reviewId", dict = ReviewMajorDict.class)
+    @BussinessLog(value = "删除", key = "reviewId", dict = ReviewMajorDict.class)
     public ResponseData delete(ReviewMajorParam reviewMajorParam) {
         this.reviewMajorService.delete(reviewMajorParam);
         return ResponseData.success();
@@ -312,33 +316,16 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     public ResponseData detail(ReviewMajorParam reviewMajorParam) {
         ReviewMajor detail = this.reviewMajorService.getById(reviewMajorParam.getReviewId());
-
-        Long domainObj = Long.parseLong(detail.getBelongDomain());
-        String belongDomainStr = "";
-        ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
-        /*if (domainObj.equals("") || domainObj == null){
-            belongDomainStr = "";
-        }else {
-            String[] domainList = domainObj.split(",");
-            for (int i = 0;i < domainList.length;i++){
-                Long pid = Long.parseLong(domainList[i]);
-                if (pid == null) {
-                    belongDomainStr = belongDomainStr + "";
-                } else if (pid == 0L) {
-                    belongDomainStr = belongDomainStr + "顶级;";
-                } else {
-                    ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(pid);
-                    if (cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult) && cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult.getDomainName())) {
-                        belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + ";";
-                    }
-                }
-            }
-        }*/
-        //detail.setBelongDomain(thesisDomainResult.getDomainName());
-
         //类转Map
         Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
-        map.put("domainName",thesisDomainResult.getDomainName());
+        String belongDomain = detail.getBelongDomain();
+        if(belongDomain != null){
+            Long domainObj = Long.parseLong(detail.getBelongDomain());
+            ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
+            map.put("domainName",thesisDomainResult.getDomainName());
+        }else{
+            map.put("domainName","");
+        }
         //个人信息
         Long userId = detail.getReviewId();
         User user = this.userService.getById(userId);
@@ -364,7 +351,25 @@ public class ReviewMajorController extends BaseController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = formatter.format(date);
         map.put("applyTime",dateString);
-
+        /*if (domainObj.equals("") || domainObj == null){
+            belongDomainStr = "";
+        }else {
+            String[] domainList = domainObj.split(",");
+            for (int i = 0;i < domainList.length;i++){
+                Long pid = Long.parseLong(domainList[i]);
+                if (pid == null) {
+                    belongDomainStr = belongDomainStr + "";
+                } else if (pid == 0L) {
+                    belongDomainStr = belongDomainStr + "顶级;";
+                } else {
+                    ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(pid);
+                    if (cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult) && cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult.getDomainName())) {
+                        belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + ";";
+                    }
+                }
+            }
+        }*/
+        //detail.setBelongDomain(thesisDomainResult.getDomainName());
         return ResponseData.success(map);
     }
 

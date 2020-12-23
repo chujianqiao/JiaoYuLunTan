@@ -52,7 +52,16 @@
 
         $("#saveButton").bind("click", function () {
             var ids = Feng.zTreeCheckedNodes("zTree");
+            let idArr = ids.split(",");
             var ajax = new $ax(Feng.ctxPath + "/mgr/setRole", function (data) {
+                //添加专家前回进行校验，存在则不添加
+                if(idArr.indexOf("4") != -1){
+                    //角色包含专家，添加
+                    addReviewMajor();
+                }else{
+                    //不包含专家，删除
+                    deleteReviewMajor();
+                }
                 Feng.success("分配角色成功!");
                 parent.layer.close(ZTreeDlg.index);
             }, function (data) {
@@ -62,6 +71,26 @@
             ajax.set("userId", "${userId}");
             ajax.start();
         });
+
+        /**
+         * 添加专家
+         */
+        function addReviewMajor() {
+            let majorAjax = new $ax(Feng.ctxPath + "/reviewMajor/addItem", function (data) {
+            })
+            majorAjax.set("reviewId", "${userId}");
+            majorAjax.start();
+        }
+
+        /**
+         * 删除专家
+         */
+        function deleteReviewMajor() {
+            let majorAjax = new $ax(Feng.ctxPath + "/reviewMajor/delete", function (data) {
+            })
+            majorAjax.set("reviewId", "${userId}");
+            majorAjax.start();
+        }
 
         var setting = {
             check: {

@@ -61,6 +61,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.File;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -634,6 +635,10 @@ public class UserMgrController extends BaseController {
         }
         this.userService.assertAuth(userId);
         this.userService.setRoles(userId, roleIds);
+        String[] roleArr = roleIds.split(",");
+        if(Arrays.asList(roleArr).contains("4")){
+
+        }
         return SUCCESS_TIP;
     }
 
