@@ -253,6 +253,9 @@ public class MeetMaterialController extends BaseController {
         meetMaterialParam.setMaterialId(ToolUtil.getNum19());
         meetMaterialParam.setMatName(uploadResult.getOriginalFilename());
         meetMaterialParam.setMatPath(uploadResult.getFileSavePath());
+
+        Meet pubMeet = this.meetService.getByStatus(1);
+        meetMaterialParam.setMeetId(pubMeet.getMeetId());
         this.meetMaterialService.add(meetMaterialParam);
         //上传完成后添加压缩文件
         toZipAll();
