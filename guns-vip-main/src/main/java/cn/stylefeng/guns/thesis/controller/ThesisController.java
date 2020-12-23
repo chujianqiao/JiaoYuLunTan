@@ -109,6 +109,8 @@ public class ThesisController extends BaseController {
     public String index(Model model) {
         boolean isReview = ToolUtil.isReviewRole();
         boolean isAdmin = ToolUtil.isAdminRole();
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","thesis");
         model.addAttribute("isReview", "yes");
         if(isAdmin){
@@ -162,6 +164,8 @@ public class ThesisController extends BaseController {
      */
     @RequestMapping("/firstDetail")
     public String firstDetail(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "thesis");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -178,6 +182,8 @@ public class ThesisController extends BaseController {
      */
     @RequestMapping("/secondDetail")
     public String secondDetail(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "thesis");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -224,6 +230,8 @@ public class ThesisController extends BaseController {
      */
     @RequestMapping("/review")
     public String review(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "thesis");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -240,6 +248,8 @@ public class ThesisController extends BaseController {
      */
     @RequestMapping("/reviewAgain")
     public String reviewAgain(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "thesis");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");

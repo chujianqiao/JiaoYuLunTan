@@ -77,13 +77,14 @@ public class HoldForumController extends BaseController {
      */
     @RequestMapping("/add")
     public String add(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","holdForum");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
         }else {
             model.addAttribute("isReview", "no");
         }
-        LoginUser user = LoginContextHolder.getContext().getUser();
         List roles = user.getRoleList();
         long unit = 3;
         if (roles.contains(unit)){

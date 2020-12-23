@@ -80,6 +80,8 @@ public class GreatResultController extends BaseController {
      */
     @RequestMapping("")
     public String index(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","greatResult");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -100,13 +102,14 @@ public class GreatResultController extends BaseController {
      */
     @RequestMapping("/add")
     public String add(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","greatResult");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
         }else {
             model.addAttribute("isReview", "no");
         }
-        LoginUser user = LoginContextHolder.getContext().getUser();
         List roles = user.getRoleList();
         long unit = 3;
         if (roles.contains(unit)){
@@ -137,6 +140,8 @@ public class GreatResultController extends BaseController {
      */
     @RequestMapping("/detailAdmin")
     public String detailAdmin(Integer applyType, Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "greatResult");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -192,6 +197,8 @@ public class GreatResultController extends BaseController {
      */
     @RequestMapping("/reviewPage")
     public String reviewPage(Integer applyType,@RequestParam Long resultId,Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "thesis");
         boolean isReview = ToolUtil.isReviewRole();
         if(isReview){

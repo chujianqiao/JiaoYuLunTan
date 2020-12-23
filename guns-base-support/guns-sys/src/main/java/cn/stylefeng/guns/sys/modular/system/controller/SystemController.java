@@ -229,6 +229,7 @@ public class SystemController extends BaseController {
         model.addAttribute("wechatName", user.getWechatName());
         LogObjectHolder.me().set(user);
 
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "toPersonCenter");
         if (user.getRoleId().indexOf("4") > -1){
             model.addAttribute("isReview", "yes");

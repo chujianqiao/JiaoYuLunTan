@@ -132,6 +132,8 @@ public class EducationResultController extends BaseController {
      */
     @RequestMapping("/detailAdmin")
     public String detailAdmin(Integer applyType, Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         boolean isAdmin = ToolUtil.isAdminRole();
         boolean isReview = ToolUtil.isReviewRole();
         model.addAttribute("menuUrl", "greatResult");
@@ -175,6 +177,8 @@ public class EducationResultController extends BaseController {
      */
     @RequestMapping("/reviewPage")
     public String reviewPage(@RequestParam Long resultId, Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         boolean isReivew = ToolUtil.isReviewRole();
         model.addAttribute("menuUrl", "thesis");
         if (ToolUtil.isReviewRole()){
