@@ -1,10 +1,11 @@
-layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
+layui.use(['table', 'admin', 'ax', 'func','upload','form'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
     var upload = layui.upload;
+    var form = layui.form;
 
     /**
      * 会议材料表管理
@@ -12,6 +13,8 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
     var MeetMaterial = {
         tableId: "meetMaterialTable"
     };
+
+    meetSelectOption();
 
     /**
      * 初始化表格的列
@@ -50,10 +53,15 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
      */
     MeetMaterial.search = function () {
         var queryData = {};
+        queryData['meetId'] = $('#meetId').val();
         table.reload(MeetMaterial.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
+
+    form.on('select(meetId)', function(data){
+        MeetMaterial.search();
+    });
 
     /**
      * 跳转到添加页面
@@ -172,4 +180,31 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
             MeetMaterial.onDownLoadItem(data);
         }
     });
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                form.render();
+            }
+        })
+    }
 });

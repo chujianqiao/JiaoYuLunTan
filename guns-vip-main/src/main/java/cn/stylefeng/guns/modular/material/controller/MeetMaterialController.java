@@ -176,6 +176,13 @@ public class MeetMaterialController extends BaseController {
     @ResponseBody
     @RequestMapping("/list")
     public LayuiPageInfo list(MeetMaterialParam meetMaterialParam) {
+        Long meetId = meetMaterialParam.getMeetId();
+        if (meetId == null){
+            Meet meet = meetService.getByStatus(1);
+            meetMaterialParam.setMeetId(meet.getMeetId());
+        } else if (meetId == 0) {
+            meetMaterialParam.setMeetId(null);
+        }
         return this.meetMaterialService.findPageBySpec(meetMaterialParam);
     }
 
@@ -187,6 +194,8 @@ public class MeetMaterialController extends BaseController {
     @ResponseBody
     @RequestMapping("/wrapList")
     public Object wrapList(MeetMaterialParam meetMaterialParam) {
+        Meet meet = meetService.getByStatus(1);
+        meetMaterialParam.setMeetId(meet.getMeetId());
         Page<Map<String, Object>> forum = this.meetMaterialService.findPageWrap(meetMaterialParam);
 
         List<User> userList = this.userService.getByCanDownloadFile();
@@ -213,8 +222,6 @@ public class MeetMaterialController extends BaseController {
             }
         }
 
-
-        Meet meet = meetService.getByStatus(1);
         Map map2 = new HashMap();
         map2.put("matPath","1");
         map2.put("matName","会议手册.doc");

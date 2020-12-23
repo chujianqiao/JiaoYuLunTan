@@ -7,11 +7,12 @@
         <id column="material_id" property="materialId" />
         <result column="mat_path" property="matPath" />
         <result column="mat_name" property="matName" />
+        <result column="meet_id" property="meetId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        material_id AS "materialId", mat_path AS "matPath", mat_name AS "matName"
+        material_id AS "materialId", mat_path AS "matPath", mat_name AS "matName",meet_id AS "meetId"
     </sql>
 
 
@@ -34,12 +35,18 @@
         select
         <include refid="Base_Column_List"/>
         from meet_material where 1 = 1
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
     </select>
 
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam">
         select
         <include refid="Base_Column_List"/>
         from meet_material where 1 = 1
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
     </select>
 
 </mapper>

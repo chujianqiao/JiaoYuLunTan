@@ -34,4 +34,9 @@ public class MeetMaterialResult implements Serializable {
      */
     private String matName;
 
+    /**
+     * 对应的会议ID
+     */
+    private Long meetId;
+
 }

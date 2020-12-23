@@ -37,6 +37,12 @@ public class MeetMaterial implements Serializable {
     @TableField("mat_name")
     private String matName;
 
+    /**
+     * 对应的会议ID
+     */
+    @TableField("meet_id")
+    private Long meetId;
+
 
     public Long getMaterialId() {
         return materialId;
@@ -60,6 +66,14 @@ public class MeetMaterial implements Serializable {
 
     public void setMatName(String matName) {
         this.matName = matName;
+    }
+
+    public Long getMeetId() {
+        return meetId;
+    }
+
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
     }
 
     @Override

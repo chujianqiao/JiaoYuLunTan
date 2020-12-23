@@ -35,6 +35,11 @@ public class MeetMaterialParam implements Serializable, BaseValidatingParam {
      */
     private String matName;
 
+    /**
+     * 对应的会议ID
+     */
+    private Long meetId;
+
     @Override
     public String checkParam() {
         return null;
