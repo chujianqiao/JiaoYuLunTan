@@ -344,7 +344,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
     $("#password").blur(function() {
         layer.close(passwordtips);
         var pass = this.value.trim();
-        var passTest = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{8,14}$/;
+        var passTest = /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\W_]+$)(?![a-z0-9]+$)(?![a-z\\W_]+$)(?![0-9\\W_]+$)[a-zA-Z0-9\\W_]{8,14}$/;
         if (passTest.test(pass)) {
             // 设置成功信息
             var span = this.nextElementSibling;

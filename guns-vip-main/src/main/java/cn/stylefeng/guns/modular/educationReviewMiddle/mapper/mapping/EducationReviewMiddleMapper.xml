@@ -41,6 +41,12 @@
         select
         <include refid="Base_Column_List"/>
         from education_review_middle where 1 = 1
+        <if test="paramCondition.resultId != null and paramCondition.resultId != ''">
+            and result_id = #{paramCondition.resultId}
+        </if>
+        <if test="paramCondition.userId != null and paramCondition.userId != ''">
+            and user_id = #{paramCondition.userId}
+        </if>
     </select>
 
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.educationReviewMiddle.model.params.EducationReviewMiddleParam">

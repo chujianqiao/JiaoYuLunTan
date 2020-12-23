@@ -39,7 +39,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
             // {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180}
 
             {align: 'center', minWidth: 180, title: '操作', templet: function(data){
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' id='delete'>删除</a>";
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a>";
 
                 }}
 

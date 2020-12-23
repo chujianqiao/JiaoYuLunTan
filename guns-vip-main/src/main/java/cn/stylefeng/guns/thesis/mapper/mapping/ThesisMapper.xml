@@ -75,6 +75,12 @@
         <if test="paramCondition.belongDomain != null and paramCondition.belongDomain != ''">
             and belong_domain like CONCAT('%',#{paramCondition.belongDomain},'%')
         </if>
+        <if test="paramCondition.reviewResult == 0">
+            and review_result is null
+        </if>
+        <if test="paramCondition.reviewResult == 1">
+            and review_result is not null
+        </if>
     </select>
 
     <select id="customPageMapListFirst" resultType="map" parameterType="cn.stylefeng.guns.thesis.model.params.ThesisParam">
