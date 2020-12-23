@@ -95,6 +95,8 @@ public class MeetMemberController extends BaseController {
     @RequestMapping("")
     public String index(Model model) {
         boolean isAdmin = ToolUtil.isAdminRole();
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","meetMember");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -126,7 +128,7 @@ public class MeetMemberController extends BaseController {
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
         User user = userService.getById(loginUser.getId());
         Meet meet = meetService.getByStatus(1);
-
+        model.addAttribute("userName", user.getName());
         List<MeetMemberResult> list = meetMemberService.customListIfExist(meet.getMeetId(),user.getUserId());
         if (list.size() > 0){
             model.addAttribute("isExist", "yes");
@@ -150,6 +152,8 @@ public class MeetMemberController extends BaseController {
      */
     @RequestMapping("/edit")
     public String edit(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "meetMember");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -166,6 +170,8 @@ public class MeetMemberController extends BaseController {
      */
     @RequestMapping("/disable")
     public String disable(MeetMemberParam meetMemberParam, Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         boolean isAdmin = ToolUtil.isAdminRole();
         model.addAttribute("menuUrl", "meetMember");
         if (ToolUtil.isReviewRole()){

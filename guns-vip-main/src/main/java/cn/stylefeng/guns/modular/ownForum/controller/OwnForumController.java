@@ -56,6 +56,8 @@ public class OwnForumController extends BaseController {
      */
     @RequestMapping("")
     public String index(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","ownForum");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -110,6 +112,8 @@ public class OwnForumController extends BaseController {
      */
     @RequestMapping("/detailAdmin")
     public String detailAdmin(Integer applyType, Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "ownForum");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");

@@ -104,12 +104,13 @@ public class UserMgrController extends BaseController {
      * @Date 2020/09/02
      */
     @RequestMapping("toPersonCenter")
-    public String toPersonCenter(Model model) {
+    public String toPersonCenter(Model model,HttpServletRequest request) {
         Long userId = LoginContextHolder.getContext().getUserId();
         User user = this.userService.getById(userId);
 
         model.addAllAttributes(BeanUtil.beanToMap(user));
         model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
+        model.addAttribute("userName",user.getName());
         model.addAttribute("menuUrl", "toPersonCenter");
         if (user.getRoleId().indexOf("4") > -1){
             model.addAttribute("isReview", "yes");

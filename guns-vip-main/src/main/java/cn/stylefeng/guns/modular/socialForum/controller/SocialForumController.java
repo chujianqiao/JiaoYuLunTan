@@ -56,6 +56,8 @@ public class SocialForumController extends BaseController {
      */
     @RequestMapping("")
     public String index(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","socialForum");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -77,6 +79,8 @@ public class SocialForumController extends BaseController {
      */
     @RequestMapping("/add")
     public String add(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","socailForum");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");

@@ -48,6 +48,8 @@ public class CollectTopicController extends BaseController {
      */
     @RequestMapping("")
     public String index(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","collectTopic");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -70,6 +72,8 @@ public class CollectTopicController extends BaseController {
      */
     @RequestMapping("/add")
     public String add(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","collectTopic");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
@@ -86,6 +90,8 @@ public class CollectTopicController extends BaseController {
      */
     @RequestMapping("/edit")
     public String edit(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","collectTopic");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");

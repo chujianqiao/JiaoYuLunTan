@@ -120,6 +120,8 @@ public class MeetController extends BaseController {
         Page<Map<String, Object>> meets = this.meetService.findPageWrap(meetParam);
         List<Map<String, Object>> list = meets.getRecords();
         model.addAttribute("content", list.get(0).get("content"));
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "toPersonCenter");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");

@@ -435,7 +435,7 @@
         } else if ("${userName! }" == "" || "${userName! }" == null) {
             $("#userDiv").append("<a id='btnLogin' style=\"color: white;cursor:pointer \">登录</a>");
         } else {
-            $("#userDiv").append("<a href=\"/mgr/toPersonCenter\" target=\"_blank\" style=\"color: white;margin-right: 10px\"><i class=\"layui-icon\">&#xe770;</i>${userName! }</a>");
+            $("#userDiv").append("<a href=\"/mgr/toPersonCenter\" target=\"_blank\" style=\"color: white;margin-right: 10px;text-decoration:underline;\"><i class=\"layui-icon\">&#xe770;</i>${userName! }</a>");
             $("#userDiv").append("<a href=\"/#\" id='btnLogout' style=\"color: white\">退出</a>");
         }
         if ("${ifVideo }" == "yes"){
@@ -475,7 +475,7 @@
             layer.open({
                 type: 2,
                 title: false,
-                area: ['400px', '435px'],
+                area: ['400px', '415px'],
                 content: '/login',
             });
             layer.msg(errorMsg, {icon: 5, anim: 6});
@@ -488,7 +488,7 @@
             layer.open({
                 type: 2,
                 title: false,
-                area: ['400px', '435px'],
+                area: ['400px', '415px'],
                 content: '/login',
                 success: function(layero, index){
 

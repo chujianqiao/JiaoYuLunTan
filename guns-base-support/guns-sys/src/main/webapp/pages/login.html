@@ -52,16 +52,16 @@
         <div class="layui-form-item">
             <button class="layui-btn layui-btn-submit layui-btn-fluid" id="submit">登录</button>
         </div>
-        <div class="layui-form-item" style="margin-top: -20px;margin-bottom: 10px">
-            <a class="layui-link" onclick="forgetPwd()">忘记密码？</a>
+        <div class="layui-form-item" style="margin-top: -10px;margin-bottom: 0px">
+            <a class="layui-link" id="oauthUrl" href="#">扫码登录</a>
+            <i class="layui-icon layui-icon-login-wechat"
+               style="color: #4DAF29;font-size: 20px;"></i>
+            <a class="layui-link" style="float: right;text-decoration:underline;" onclick="forgetPwd()">忘记密码？</a>
         </div>
 
         <br>
         <div class="layui-form-item">
-            <a class="layui-link" id="oauthUrl" href="#">扫码登录</a>
-                <i class="layui-icon layui-icon-login-wechat"
-                   style="color: #4DAF29;font-size: 20px;"></i>
-            <br>
+
             <a class="layui-link" target="_top" id="phoneLogin">手机验证码登录</a>
             <a class="layui-link" target="_top" style="float: right" id="registePerson">立即注册</a>
 
