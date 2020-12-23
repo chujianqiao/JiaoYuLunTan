@@ -53,8 +53,11 @@
         select
         <include refid="Base_Column_List"/>
         from check_in where 1 = 1 and meet_or_forum = 0
-        <if test="paramCondition.signStatus != null and paramCondition.signStatus != ''">
-            and sign_status = #{paramCondition.signStatus}
+        <if test="paramCondition.signStatus == 0">
+            and (sign_status = 0 or sign_status is null)
+        </if>
+        <if test="paramCondition.signStatus == 1">
+            and sign_status = 1
         </if>
         <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
             and meet_id = #{paramCondition.meetId}
@@ -83,8 +86,11 @@
         select
         <include refid="Base_Column_List"/>
         from check_in where 1 = 1 and meet_or_forum = 1
-        <if test="paramCondition.signStatus != null and paramCondition.signStatus != ''">
-            and sign_status = #{paramCondition.signStatus}
+        <if test="paramCondition.signStatus == 0">
+            and (sign_status = 0 or sign_status is null)
+        </if>
+        <if test="paramCondition.signStatus == 1">
+            and sign_status = 1
         </if>
         <if test="paramCondition.forumId != null and paramCondition.forumId != ''">
             and forum_id = #{paramCondition.forumId}

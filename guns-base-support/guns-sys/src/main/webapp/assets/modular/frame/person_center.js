@@ -48,12 +48,16 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             url: Feng.ctxPath + "/thesis/detailPub",
             success: function (response) {
                 var data = response.data;
-                //console.log(data);
-                $("#thesisData1").html(data.thesisTitle);
-                $("#thesisData2").html(data.engTitle);
-                $("#thesisData3").html("作者：" + data.thesisUser);
-                $("#thesisData4").html("摘要：" + data.cnAbstract);
-                $("#thesisResult").attr("href","javascript:thesisResult('" + data.thesisId + "')")
+                if (data != "empty"){
+                    $("#thesisData1").html(data.thesisTitle);
+                    $("#thesisData2").html(data.engTitle);
+                    $("#thesisData3").html("作者：" + data.thesisUser);
+                    $("#thesisData4").html("摘要：" + data.cnAbstract);
+                    $("#thesisResult").attr("href","javascript:thesisResult('" + data.thesisId + "')")
+                }else {
+                    $("#thesisData1").html("无");
+                }
+
             }
         });
     }

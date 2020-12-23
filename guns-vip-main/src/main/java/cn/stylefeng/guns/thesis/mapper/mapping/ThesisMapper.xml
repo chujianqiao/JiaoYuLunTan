@@ -125,6 +125,7 @@
         <if test="paramCondition.thesisTitle != null and paramCondition.thesisTitle != ''">
             and thesis_title like CONCAT('%',#{paramCondition.thesisTitle},'%')
         </if>
+        order by apply_time desc
     </select>
     <select id="findExistList" resultType="string" parameterType="cn.stylefeng.guns.thesis.model.params.ThesisParam">
         select

@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 论文表管理
@@ -45,12 +46,15 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var queryData = {};
 
         queryData['thesisTitle'] = $('#thesisTitle').val();
+        queryData['reviewStatus'] = $('#reviewStatus').val();
 
         table.reload(Thesis.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(reviewStatus)', function(data){
+        Thesis.search();
+    });
     /**
      * 跳转到添加页面
      */

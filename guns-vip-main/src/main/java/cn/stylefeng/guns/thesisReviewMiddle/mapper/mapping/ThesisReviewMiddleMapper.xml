@@ -32,6 +32,13 @@
         <if test="paramCondition.reviewSort != null and paramCondition.reviewSort != ''">
             and review_sort = #{paramCondition.reviewSort}
         </if>
+        <if test="paramCondition.great == 1">
+            and review_time is null
+        </if>
+        <if test="paramCondition.great == 2">
+            and review_time is not null
+        </if>
+        ORDER BY middle_id desc
     </select>
 
     <select id="customMapList" resultType="map" parameterType="cn.stylefeng.guns.thesisReviewMiddle.model.params.ThesisReviewMiddleParam">
