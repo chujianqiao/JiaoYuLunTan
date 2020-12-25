@@ -34,7 +34,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             /*
             {field: 'alreadyMeet', sort: true, title: '已资助的会议'},*/
             {field: 'supPlate', sort: true, title: '赞助环节'},
-            {field: 'supMoney', sort: true, title: '资助金额'},
+            //{field: 'supMoney', sort: true, title: '资助金额'},
             //{field: 'contractPath', sort: true, title: '合同条件附件路径'},
             /*{field: 'applyStatus', sort: true, title: '申报状态', templet: function(data){
                     if (data.applyStatus == 1) return '申请中';
@@ -172,10 +172,10 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             }, {
                 field: 'supPlate',
                 title: '赞助环节',
-            }, {
+            }/*, {
                 field: 'supMoney',
                 title: '资助金额',
-            }
+            }*/
         ]]
     });
 

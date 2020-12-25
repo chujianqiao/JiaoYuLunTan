@@ -23,6 +23,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var upload = layui.upload;
 
     $("#meetMemberId").val(Feng.getUrlParam("memberId"));
+    $("#meetId").val(Feng.getUrlParam("meetId"));
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {

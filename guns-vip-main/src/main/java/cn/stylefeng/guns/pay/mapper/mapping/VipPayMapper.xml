@@ -12,11 +12,12 @@
         <result column="tran_num" property="tranNum" />
         <result column="pay_time" property="payTime" />
         <result column="member_id" property="memberId" />
+        <result column="meet_id" property="meetId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        pay_id AS "payId", pay_user AS "payUser", order_num AS "orderNum", pay_money AS "payMoney", pay_type AS "payType", tran_num AS "tranNum", pay_time AS "payTime",member_id AS "memberId"
+        pay_id AS "payId", pay_user AS "payUser", order_num AS "orderNum", pay_money AS "payMoney", pay_type AS "payType", tran_num AS "tranNum", pay_time AS "payTime",member_id AS "memberId",meet_id AS "meetId"
     </sql>
 
 
@@ -45,6 +46,9 @@
         select
         <include refid="Base_Column_List"/>
         from vip_pay where 1 = 1
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
         <if test="userIds != null   ">
             and pay_user in
             <foreach collection="userIds" index="index" item="i" open="("

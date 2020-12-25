@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -251,6 +252,12 @@ public class MeetController extends BaseController {
         if (seatDetailResult != null){
             map.put("seat",seatDetailResult);
         }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        map.put("beginTime",sdf.format(detail.getBeginTime()));
+        map.put("endTime",sdf.format(detail.getEndTime()));
+        map.put("joinBegTime",sdf.format(detail.getJoinBegTime()));
+        map.put("joinEndTime",sdf.format(detail.getJoinEndTime()));
 
         SeatParam seatParam = new SeatParam();
         seatParam.setMeetId(detail.getMeetId());

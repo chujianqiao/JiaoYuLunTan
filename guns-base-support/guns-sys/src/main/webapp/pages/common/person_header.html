@@ -54,7 +54,7 @@
                     <a href="${ctxPath}/meetMember/add" target="_blank" class="func-item-icon mb10"  target="_blank"><img src="${ctxPath}/assets/common/images/forum_icon_06.png" /></a>
                     <a href="${ctxPath}/meetMember/add" target="_blank" class="func-item-title fontSize16"  target="_blank">会议注册</a>
                 </div>
-                <div class="func-item swiper-slide">
+                <div class="func-item swiper-slide" id="thesisSlide">
                     <a href="${ctxPath}/thesis/" target="_blank" class="func-item-icon mb10"   target="_blank"><img src="${ctxPath}/assets/common/images/forum_icon_04.png" /></a>
                     <a href="${ctxPath}/thesis/" target="_blank" class="func-item-title fontSize16"  target="_blank">专家评审</a>
                 </div>
@@ -91,8 +91,10 @@
 
     if ("${isReview }" == "no") {
         $("#thesisNavDiv").attr("style","display:none");
+        $("#thesisSlide").attr("style","display:none");
     } else {
         $("#thesisNavDiv").attr("style","display:inline-block");
+        $("#thesisSlide").attr("style","display:inline-block");
     }
     function logout() {
         $.ajax({

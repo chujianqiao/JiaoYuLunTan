@@ -64,6 +64,12 @@ public class BillParam implements Serializable, BaseValidatingParam {
      * 酒店预订
      */
     private String hotel;
+    private String contact;
+    private String billPhone;
+    private String billEmail;
+    private String address;
+    private String billRemark;
+    private Long meetId;
 
     private Data createTime;
 

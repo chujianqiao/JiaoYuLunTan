@@ -14,11 +14,16 @@
         <result column="food" property="food" />
         <result column="hotel" property="hotel" />
         <result column="create_time" property="createTime" />
+        <result column="remark" property="remark" />
+        <result column="bill_phone" property="billPhone" />
+        <result column="bill_email" property="billEmail" />
+        <result column="address" property="address" />
+        <result column="bill_remark" property="billRemark" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        bill_id AS "billId", user_id AS "userId", meet_member_id AS "meetMemberId", enterprise AS "enterprise", taxpayer_number AS "taxpayerNumber", credentials_name AS "credentialsName", credentials_path AS "credentialsPath", food AS "food", hotel AS "hotel", create_time AS "createTime"
+        bill_id AS "billId", user_id AS "userId", meet_member_id AS "meetMemberId", enterprise AS "enterprise", taxpayer_number AS "taxpayerNumber", credentials_name AS "credentialsName", credentials_path AS "credentialsPath", food AS "food", hotel AS "hotel", create_time AS "createTime", contact AS "contact", bill_phone AS "billPhone", bill_email AS "billEmail", bill_remark AS "billRemark", address AS "address", meet_id AS "meetId"
     </sql>
 
 
@@ -56,6 +61,9 @@
         select
         <include refid="Base_Column_List"/>
         from bill where 1 = 1
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
         <if test="userIds != null   ">
             and user_id in
             <foreach collection="userIds" index="index" item="i" open="("

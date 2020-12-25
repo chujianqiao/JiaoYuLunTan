@@ -59,4 +59,6 @@ public class VipPayResult implements Serializable {
      */
     private Date payTime;
 
+    private Long meetId;
+
 }

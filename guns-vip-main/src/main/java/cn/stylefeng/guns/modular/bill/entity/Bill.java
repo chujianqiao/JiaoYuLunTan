@@ -31,7 +31,7 @@ public class Bill implements Serializable {
     private Long userId;
 
     /**
-     * 会议ID
+     * 会议成员ID
      */
     @TableField("meet_member_id")
     private Long meetMemberId;
@@ -73,10 +73,45 @@ public class Bill implements Serializable {
     private String hotel;
 
     /**
+     * 联系人
+     */
+    @TableField("contact")
+    private String contact;
+
+    /**
+     * 联系电话
+     */
+    @TableField("bill_phone")
+    private String billPhone;
+
+    /**
+     * 接收邮箱
+     */
+    @TableField("bill_email")
+    private String billEmail;
+
+    /**
+     * 接收地址
+     */
+    @TableField("address")
+    private String address;
+
+    /**
+     * 备注
+     */
+    @TableField("bill_remark")
+    private String billRemark;
+
+    /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
+    /**
+     * 会议ID
+     */
+    @TableField("meet_id")
+    private Long meetId;
 
 
     public Long getBillId() {
@@ -151,6 +186,46 @@ public class Bill implements Serializable {
         this.hotel = hotel;
     }
 
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getBillPhone() {
+        return billPhone;
+    }
+
+    public void setBillPhone(String billPhone) {
+        this.billPhone = billPhone;
+    }
+
+    public String getBillEmail() {
+        return billEmail;
+    }
+
+    public void setBillEmail(String billEmail) {
+        this.billEmail = billEmail;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getBillRemark() {
+        return billRemark;
+    }
+
+    public void setBillRemark(String billRemark) {
+        this.billRemark = billRemark;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -158,6 +233,15 @@ public class Bill implements Serializable {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    public Long getMeetId() {
+        return meetId;
+    }
+
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
+    }
+
 
     @Override
     public String toString() {
@@ -171,6 +255,12 @@ public class Bill implements Serializable {
         ", credentialsPath=" + credentialsPath +
         ", food=" + food +
         ", hotel=" + hotel +
+        ", contact=" + contact +
+        ", billPhone=" + billPhone +
+        ", billEmail=" + billEmail +
+        ", address=" + address +
+        ", billRemark=" + billRemark +
+        ", meetId=" + meetId +
         ", createTime=" + createTime +
         "}";
     }

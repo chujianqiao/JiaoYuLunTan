@@ -28,11 +28,11 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             success: function (response) {
                 var data = response.data;
                 console.log(data);
-                $("#meetData1").html(data.detail.meetName);
+                $("#meetData1").html("<h2 style='font-weight: bold;'>" + data.detail.meetName + "</h2>");
                 $("#meetData2").html("会议描述：" + data.detail.meetDesc);
                 $("#meetData3").html("会议地点：" + data.detail.place);
-                $("#meetData4").html("会议时间：" + data.detail.beginTime + "-" + data.detail.endTime);
-                $("#meetData5").html("报名时间：" + data.detail.joinBegTime + "-" + data.detail.joinEndTime);
+                $("#meetData4").html("会议时间：" + data.beginTime + " 至 " + data.endTime);
+                $("#meetData5").html("报名时间：" + data.joinBegTime + " 至 " + data.joinEndTime);
                 $("#meetName").html("" + data.detail.meetName);
                 $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
                 //绑定点击事件
@@ -49,7 +49,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             success: function (response) {
                 var data = response.data;
                 if (data != "empty"){
-                    $("#thesisData1").html(data.thesisTitle);
+                    $("#thesisData1").html("<h2 style='font-weight: bold;'>" + data.thesisTitle + "</h2>");
                     $("#thesisData2").html(data.engTitle);
                     $("#thesisData3").html("作者：" + data.thesisUser);
                     $("#thesisData4").html("摘要：" + data.cnAbstract);
@@ -77,6 +77,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                             $("#forum").attr("href","javascript:forumAdd('exist')")
                         } else {
                             $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')")
+                            $("#iconEdit").attr("style","font-size: 60px");
                         }
                         $("#pay").attr("href","javascript:toPay('yes')")
                         forumSelectOption(data[i].ownForumid);
@@ -84,6 +85,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                     }else if (data[i].meetStatus == 2){
                         $("#forum").attr("href","javascript:forumAdd('toPay')")
                         $("#pay").attr("href","javascript:toPay('" + data[i].memberId + "')")
+                        $("#iconNotice").attr("style","font-size: 60px");
                         break;
                     }else {
                         $("#forum").attr("href","javascript:forumAdd('')")
@@ -116,10 +118,10 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                         continue;
                     }
                     if(ownForumid == forum.forumId){
-                        $("#forumData1").html(forum.forumName);
+                        $("#forumData1").html("<h2 style='font-weight: bold;'>" + forum.forumName + "</h2>");
                         $("#forumData2").html("论坛地点：" + forum.location);
-                        $("#forumData3").html("论坛时间：" + forum.startTime + "-" + forum.endTime);
-                        $("#forumData4").html("报名时间：" + forum.registerStartTime + "-" + forum.registerEndTime);
+                        $("#forumData3").html("论坛时间：" + forum.startTime + " 至 " + forum.endTime);
+                        $("#forumData4").html("报名时间：" + forum.registerStartTime + " 至 " + forum.registerEndTime);
                         $("#forumName").html("论坛：" + forum.forumName);
                         break;
                     }else{

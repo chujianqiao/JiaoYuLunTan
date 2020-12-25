@@ -99,6 +99,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             type: 'post',
             data: {
                 "userName":$('#userNameExp').val(),
+                "meetId":$('#meetId').val(),
                 "ownForumid":$('#forumOption').val()
             },
             async: false,
@@ -148,8 +149,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     MeetMember.onDeleteItem = function (data) {
+        var thesisId = "";
+        if (data.thesisId != undefined) {
+            thesisId = data.thesisId;
+        }
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/meetMember/delete?thesisId="+data.thesisId, function (data) {
+            var ajax = new $ax(Feng.ctxPath + "/meetMember/delete?thesisId="+thesisId, function (data) {
                 Feng.success("删除成功!");
                 table.reload(MeetMember.tableId);
             }, function (data) {
@@ -301,6 +306,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             type: 'post',
             data: {
                 "userName":$('#userNameJBExp').val(),
+                "meetId":$('#meetIdJB').val(),
                 "ownForumid":$('#forumOptionJB').val()
             },
             async: false,

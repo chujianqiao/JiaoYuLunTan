@@ -34,7 +34,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             {field: 'status', sort: true, title: '评审状态'},
             {field: 'reviewTime', sort: true, title: '评审时间'},
             {align: 'center', title: '操作',minWidth:220,templet: function(data){
-                if (status == "未评审"){
+                if (data.status == "未评审"){
                     return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">查看详情</a>\n" +
                         "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
                         "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
@@ -151,6 +151,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             type: 'post',
             data: {
                 "thesisTitle":$('#thesisTitleExp').val(),
+                "reviewResult":$('#reviewResult').val(),
                 "belongDomain":$('#belongDomain').val()
             },
             async: false,

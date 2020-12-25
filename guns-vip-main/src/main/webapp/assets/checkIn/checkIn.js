@@ -112,6 +112,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             data: {
                 "name":$('#nameExp').val(),
                 "signStatus":$("#signStatus").val(),
+                "meetId":$("#meetId").val(),
                 "roleId":$("#roleId").val()
             },
             async: false,

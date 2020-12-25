@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 会员缴费表管理
@@ -11,6 +12,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     var VipPay = {
         tableId: "vipPayTable"
     };
+
+    meetSelectOption();
 
     /**
      * 初始化表格的列
@@ -38,10 +41,15 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
         queryData['userName'] = $('#userName').val();
         $('#userNameExp').val($('#userName').val());
+        queryData['meetId'] = $("#meetId").val();
         table.reload(VipPay.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
+
+    form.on('select(meetId)', function(data){
+        VipPay.search();
+    });
 
     /**
      * 弹出添加对话框
@@ -91,6 +99,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             type: 'post',
             data: {
                 "userName":$('#userNameExp').val(),
+                "meetId":$('#meetId').val(),
             },
             async: false,
             dataType: 'json',
@@ -186,4 +195,31 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             VipPay.onDeleteItem(data);
         }
     });
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                form.render('select');
+            }
+        })
+    }
 });

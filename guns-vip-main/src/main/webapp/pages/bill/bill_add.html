@@ -8,6 +8,7 @@
                 <div class="layui-form-item layui-row">
                     <input name="billId" type="hidden"/>
                     <input id="meetMemberId" name="meetMemberId" type="hidden"/>
+                    <input id="meetId" name="meetId" type="hidden"/>
                     <!--<div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">申请人ID<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
@@ -33,7 +34,7 @@
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">缴费凭证上传 ：<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">缴费凭证上传<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
                             <input id="credentialsPath" name="credentialsPath" type="hidden" class="layui-input"/>
@@ -44,6 +45,36 @@
                             <div style="float: left;">
                                 <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="fileBtn"><i class="layui-icon"></i>选择文件</button>
                             </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">联系人<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="contact" name="contact" placeholder="请输入联系人" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">联系电话<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="billPhone" name="billPhone" placeholder="请输入联系电话" type="text" class="layui-input" lay-verify="required|phone" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">发票接收邮箱<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="billEmail" name="billEmail" placeholder="请输入发票接收邮箱" type="text" class="layui-input" lay-verify="required|email" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">发票接收地址<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="address" name="address" placeholder="请输入发票接收地址" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <input id="billRemark" name="billRemark" placeholder="请输入备注" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <!--<div class="layui-inline layui-col-md12">

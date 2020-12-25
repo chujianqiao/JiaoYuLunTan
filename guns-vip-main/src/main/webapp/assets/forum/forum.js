@@ -89,7 +89,8 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             url: Feng.ctxPath + '/forum/wrapList',
             type: 'post',
             data: {
-                "forumName":$('#forumNameExp').val()
+                "forumName":$('#forumNameExp').val(),
+                "meetId":$('#meetId').val(),
             },
             async: false,
             dataType: 'json',

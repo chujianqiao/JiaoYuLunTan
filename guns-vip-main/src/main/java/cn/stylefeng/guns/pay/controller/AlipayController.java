@@ -3,6 +3,7 @@ package cn.stylefeng.guns.pay.controller;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.service.MeetService;
+import cn.stylefeng.guns.meetRegister.entity.MeetMember;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
@@ -155,6 +156,8 @@ public class AlipayController extends BaseController {
 			vipPayParam.setPayTime(null);
 			VipPayParam tempPayParam = new VipPayParam();
 			tempPayParam.setMemberId(Long.parseLong(memberId));
+			MeetMember meetMember = meetMemberService.getById(memberId);
+			vipPayParam.setMeetId(meetMember.getMeetId());
 			List<VipPayResult> list = this.vipPayService.customList(tempPayParam);
 			if(list.size() == 0){
 				this.vipPayService.add(vipPayParam);

@@ -60,6 +60,8 @@ public class VipPayParam implements Serializable, BaseValidatingParam {
      */
     private Date payTime;
 
+    private Long meetId;
+
     @Override
     public String checkParam() {
         return null;

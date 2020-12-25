@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 会议注册成员表管理
@@ -11,6 +12,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     var MeetMember = {
         tableId: "meetMemberTable"
     };
+
+    meetSelectOption();
 
     /**
      * 初始化表格的列
@@ -76,11 +79,17 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      */
     MeetMember.search = function () {
         var queryData = {};
-        queryData['userName'] = $('#userName').val();
+        //queryData['userName'] = $('#userName').val();
+        queryData['meetId'] = $('#meetId').val();
         table.reload(MeetMember.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
+
+    //选择论坛时立刻刷新
+    form.on('select(meetId)', function(data){
+        MeetMember.search();
+    });
 
     /**
      * 弹出添加对话框
@@ -142,7 +151,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             title: '申请开票',
             type: 2,
             area: ['620px','600px'],
-            content: Feng.ctxPath + '/bill/add?memberId=' + data.memberId,
+            content: Feng.ctxPath + '/bill/add?memberId=' + data.memberId + "&meetId=" + data.meetId,
             tableId: MeetMember.tableId
         });
     };
@@ -286,4 +295,35 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         }*/
 
     });
+
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                $('#meetIdJB').empty();
+                $('#meetIdJB').append("<option value='0'>请选择会议</option>");
+                $('#meetIdJB').append(options);
+                form.render('select');
+            }
+        })
+    }
 });

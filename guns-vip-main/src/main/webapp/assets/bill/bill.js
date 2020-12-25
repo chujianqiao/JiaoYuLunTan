@@ -13,6 +13,8 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         tableId: "billTable"
     };
 
+    meetSelectOption();
+
     /**
      * 初始化表格的列
      */
@@ -24,6 +26,11 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             {field: 'meetName', sort: true, title: '会议'},
             {field: 'enterprise', sort: true, title: '企业名称'},
             {field: 'taxpayerNumber', sort: true, title: '纳税人识别号'},
+            {field: 'contact', hide: true, title: '联系人'},
+            {field: 'billPhone', hide: true, title: '联系电话'},
+            {field: 'billEmail', hide: true, title: '发票接收邮箱'},
+            {field: 'address', hide: true, title: '发票接收地址'},
+            {field: 'billRemark', hide: true, title: '备注'},
             {field: 'food', sort: true, title: '饮食禁忌'},
             {field: 'hotel', sort: true, title: '酒店预订'},
             {align: 'center', minWidth: 130, title: '操作', templet: function(data){
@@ -41,10 +48,15 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
 
         queryData['userName'] = $('#userName').val();
         $('#userNameExp').val($('#userName').val());
+        queryData['meetId'] = $("#meetId").val();
         table.reload(Bill.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
+
+    form.on('select(meetId)', function(data){
+        Bill.search();
+    });
 
     /**
      * 仅查看详情
@@ -84,6 +96,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
      */
     Bill.exportExcel = function () {
         var checkRows = table.checkStatus(Bill.tableId);
+        console.log(checkRows);
         if (checkRows.data.length === 0) {
             Feng.error("请选择要导出的数据");
         } else {
@@ -101,6 +114,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             type: 'post',
             data: {
                 "userName":$('#userNameExp').val(),
+                "meetId":$('#meetId').val(),
             },
             async: false,
             dataType: 'json',
@@ -128,6 +142,21 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             }, {
                 field: 'taxpayerNumber',
                 title: '纳税人识别号',
+            }, {
+                field: 'contact',
+                title: '联系人',
+            }, {
+                field: 'billPhone',
+                title: '联系电话',
+            }, {
+                field: 'billEmail',
+                title: '发票接收邮箱',
+            }, {
+                field: 'address',
+                title: '发票接收地址',
+            }, {
+                field: 'billRemark',
+                title: '备注',
             }, {
                 field: 'food',
                 title: '饮食禁忌',
@@ -201,4 +230,31 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             Bill.onDisableItem(data);
         }
     });
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                form.render('select');
+            }
+        })
+    }
 });

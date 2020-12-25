@@ -335,7 +335,7 @@ public class MeetMemberController extends BaseController {
     @ResponseBody
     public ResponseData delete(MeetMemberParam meetMemberParam,HttpServletRequest request) {
         String thesisIdStr = request.getParameter("thesisId");
-        if(thesisIdStr != null && !("0").equals(thesisIdStr)){
+        if(thesisIdStr != null && !thesisIdStr.equals("") && !("0").equals(thesisIdStr)){
             //同时删除论文
             long thesisId = Long.parseLong(thesisIdStr);
             ThesisParam thesisParam = new ThesisParam();

@@ -6,6 +6,7 @@ import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.auth.service.AuthService;
 import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.service.MeetService;
+import cn.stylefeng.guns.meetRegister.entity.MeetMember;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.modular.checkIn.entity.CheckIn;
@@ -288,6 +289,9 @@ public class WeiXinController {
                         vipPayParam.setPayUser(Long.parseLong(userId));
                         vipPayParam.setPayTime(new Date());
                         vipPayParam.setMemberId(Long.parseLong(memberId));
+
+                        MeetMember meetMember = meetMemberService.getById(memberId);
+                        vipPayParam.setMeetId(meetMember.getMeetId());
 
                         //更新会议注册信息
                         MeetMemberParam meetMemberParam = new MeetMemberParam();

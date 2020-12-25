@@ -4,6 +4,7 @@ import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.entity.MeetMember;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
@@ -186,6 +187,15 @@ public class BillController extends BaseController {
             Page wrapped = new Page();
             return LayuiPageFactory.createPageInfo(wrapped);
         }
+
+        if (billParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            billParam.setMeetId(meet.getMeetId());
+        } else if (billParam.getMeetId() == 0) {
+            billParam.setMeetId(null);
+        }
+
+
         Page<Map<String, Object>> bill = this.billService.findPageWrap(billParam, userIds);
         Page wrapped = new BillWrapper(bill).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);

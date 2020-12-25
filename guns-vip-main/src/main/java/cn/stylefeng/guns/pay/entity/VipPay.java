@@ -69,6 +69,12 @@ public class VipPay implements Serializable {
     @TableField("pay_time")
     private Date payTime;
 
+    /**
+     * 会议ID
+     */
+    @TableField("meet_id")
+    private Long meetId;
+
 
     public Long getPayId() {
         return payId;
@@ -134,6 +140,14 @@ public class VipPay implements Serializable {
         this.memberId = memberId;
     }
 
+    public Long getMeetId() {
+        return meetId;
+    }
+
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
+    }
+
     @Override
     public String toString() {
         return "VipPay{" +
@@ -144,6 +158,8 @@ public class VipPay implements Serializable {
         ", payType=" + payType +
         ", tranNum=" + tranNum +
         ", payTime=" + payTime +
+        ", memberId=" + memberId +
+        ", meetId=" + meetId +
         "}";
     }
 }

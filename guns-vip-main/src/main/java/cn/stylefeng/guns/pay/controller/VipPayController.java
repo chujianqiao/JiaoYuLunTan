@@ -2,6 +2,8 @@ package cn.stylefeng.guns.pay.controller;
 
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.pay.entity.VipPay;
 import cn.stylefeng.guns.pay.model.params.VipPayParam;
 import cn.stylefeng.guns.pay.service.VipPayService;
@@ -42,6 +44,9 @@ public class VipPayController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MeetService meetService;
 
     /**
      * 跳转到主页面
@@ -159,6 +164,14 @@ public class VipPayController extends BaseController {
             Page wrapped = new Page();
             return LayuiPageFactory.createPageInfo(wrapped);
         }
+
+        if (vipPayParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            vipPayParam.setMeetId(meet.getMeetId());
+        } else if (vipPayParam.getMeetId() == 0) {
+            vipPayParam.setMeetId(null);
+        }
+
         Page<Map<String, Object>> pays = this.vipPayService.findPageWrap(vipPayParam,userIds);
         Page wrapped = new VipPayWrapper(pays).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
