@@ -146,31 +146,32 @@ public class AlipayController extends BaseController {
 			map.put("imgPatah",imgPatah);
 			map.put("imgBase64Str",imgBase64Str);
 			//存支付信息到缴费表
-			VipPayParam vipPayParam = new VipPayParam();
-			Long userId = LoginContextHolder.getContext().getUser().getId();
-			vipPayParam.setPayUser(userId);
-			vipPayParam.setOrderNum(orderNum);
-			vipPayParam.setMemberId(Long.parseLong(memberId));
-			vipPayParam.setPayType("alipay");
-			vipPayParam.setPayMoney(new BigDecimal(amout));
-			vipPayParam.setPayTime(null);
-			VipPayParam tempPayParam = new VipPayParam();
-			tempPayParam.setMemberId(Long.parseLong(memberId));
-			MeetMember meetMember = meetMemberService.getById(memberId);
-			vipPayParam.setMeetId(meetMember.getMeetId());
-			List<VipPayResult> list = this.vipPayService.customList(tempPayParam);
-			if(list.size() == 0){
-				this.vipPayService.add(vipPayParam);
-			}else {
-				vipPayParam.setPayId(list.get(0).getPayId());
-				this.vipPayService.update(vipPayParam);
-			}
+//			VipPayParam vipPayParam = new VipPayParam();
+//			Long userId = LoginContextHolder.getContext().getUser().getId();
+//			vipPayParam.setPayUser(userId);
+//			vipPayParam.setOrderNum(orderNum);
+//			vipPayParam.setMemberId(Long.parseLong(memberId));
+//			vipPayParam.setPayType("alipay");
+//			vipPayParam.setPayMoney(new BigDecimal(amout));
+//			vipPayParam.setPayTime(null);
+//			VipPayParam tempPayParam = new VipPayParam();
+//			tempPayParam.setMemberId(Long.parseLong(memberId));
+//			MeetMember meetMember = meetMemberService.getById(memberId);
+//			vipPayParam.setMeetId(meetMember.getMeetId());
+//			List<VipPayResult> list = this.vipPayService.customList(tempPayParam);
+//			if(list.size() == 0){
+//				this.vipPayService.add(vipPayParam);
+//			}else {
+//				vipPayParam.setPayId(list.get(0).getPayId());
+//				this.vipPayService.update(vipPayParam);
+//			}
 		} else {
 			logger.error("调用支付宝当面付接口失败");
 			String errMsg = response.getSubMsg();
 			map.put("errMsg",errMsg);
 		}
 		map.put("orderNum",orderNum);
+		map.put("memberId",memberId);
 		return ResponseData.success(map);
 	}
 
@@ -180,7 +181,7 @@ public class AlipayController extends BaseController {
 	 */
 	@RequestMapping("/searchOrder")
 	@ResponseBody
-	public ResponseData searchOrder(@RequestParam(required = false) String orderNum) {
+	public ResponseData searchOrder(@RequestParam(required = false) String orderNum,@RequestParam("memberId") String memberId) {
 		logger.info("轮询支付宝订单");
 		Map<String,String> map = new HashMap();
 		AlipayClient alipayClient = new DefaultAlipayClient(aliPayProperties.gatewayUrl,aliPayProperties.app_id,aliPayProperties.merchant_private_key,"json",aliPayProperties.charset,aliPayProperties.alipay_public_key,aliPayProperties.sign_type);
@@ -200,34 +201,43 @@ public class AlipayController extends BaseController {
 			String tradeStatus = response.getTradeStatus();
 			String successStr = "TRADE_SUCCESS";
 			if(successStr.equals(tradeStatus)){
-				map.put("tradeStatus","success");
-				//更新缴费表、会议成员表
-				VipPayParam vipPayParam = new VipPayParam();
-				vipPayParam.setOrderNum(orderNum);
-				List<VipPayResult> list = this.vipPayService.customList(vipPayParam);
-				if(list.size() != 0){
-					vipPayParam.setPayId(list.get(0).getPayId());
-					vipPayParam.setPayTime(new Date());
-					MeetMemberParam meetMemberParam = new MeetMemberParam();
-					meetMemberParam.setMemberId(list.get(0).getMemberId());
-					meetMemberParam.setMeetStatus(4);
-					this.vipPayService.update(vipPayParam);
-					this.meetMemberService.update(meetMemberParam);
+				//实付金额
+				String payAmount = response.getBuyerPayAmount();
+				//支付宝交易号
+				String aliTranNum = response.getOutTradeNo();
+				//缴费表添加、会议成员表更新
+				Long payId = ToolUtil.getNum19();
+				Long userId = LoginContextHolder.getContext().getUser().getId();
 
-					String templateId = "qsZGWqq2s575lbnSPYkmr4IkliPWh1yHJFXZwAdvDaY";
-					User resultUser = userService.getById(list.get(0).getPayUser());
-					String userWechatId = resultUser.getWechatId();
-					if (userWechatId != null && userWechatId != ""){
-						String first = "会议缴费成功";
-						String remark = "您可登录中国教育科学论坛平台查看详细信息。";
-						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-						String time = format.format(new Date());
-						List<String> dataList = new ArrayList<>();
-						dataList.add(resultUser.getName());
-						dataList.add(list.get(0).getPayMoney() + "");
-						dataList.add(time);
-						CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
-					}
+				VipPayParam vipPayParam = new VipPayParam();
+				vipPayParam.setPayUser(userId);
+				vipPayParam.setMemberId(Long.parseLong(memberId));
+				vipPayParam.setOrderNum(orderNum);
+				vipPayParam.setPayMoney(new BigDecimal(payAmount));
+				vipPayParam.setPayType("alipay");
+				vipPayParam.setTranNum(aliTranNum);
+				vipPayParam.setPayTime(new Date());
+
+				MeetMemberParam meetMemberParam = new MeetMemberParam();
+				meetMemberParam.setMemberId(Long.parseLong(memberId));
+				meetMemberParam.setMeetStatus(4);
+				this.vipPayService.add(vipPayParam);
+				this.meetMemberService.update(meetMemberParam);
+				map.put("tradeStatus","success");
+
+				String templateId = "qsZGWqq2s575lbnSPYkmr4IkliPWh1yHJFXZwAdvDaY";
+				User resultUser = userService.getById(userId);
+				String userWechatId = resultUser.getWechatId();
+				if (userWechatId != null && userWechatId != ""){
+					String first = "会议缴费成功";
+					String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					String time = format.format(new Date());
+					List<String> dataList = new ArrayList<>();
+					dataList.add(resultUser.getName());
+					dataList.add(payAmount + "");
+					dataList.add(time);
+					CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
 				}
 			}else{
 				map.put("tradeStatus","no");

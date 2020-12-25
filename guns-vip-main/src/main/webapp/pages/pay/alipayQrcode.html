@@ -34,8 +34,9 @@
         let $ = layui.jquery;
         let $ax = layui.ax;
         var orderNum;
+        var memberIdStr;
         $(function () {
-            debugger
+            debugger;
             let memberId = Feng.getUrlParam("memberId");
             let imgAjax = new $ax(Feng.ctxPath + "/alipay/createOrder?memberId=" + memberId);
             let imgRes = imgAjax.start();
@@ -45,6 +46,7 @@
             $("#img2").attr("src","${ctxPath}/assets/common/images/alipay2.png");
 
             orderNum = imgRes.data.orderNum;
+            memberIdStr = memberId;
             setInterval(searchOrder,3000);//轮询执行，3000ms一次
         })
 
@@ -52,8 +54,10 @@
          * 查询订单状态
          */
         function searchOrder(){
-            let param = orderNum;
-            let ordAjax = new $ax(Feng.ctxPath + "/alipay/searchOrder?orderNum=" + param);
+            debugger;
+            let orderNumPar = orderNum;
+            let memberIdPar = memberIdStr;
+            let ordAjax = new $ax(Feng.ctxPath + "/alipay/searchOrder?orderNum=" + orderNumPar + "&memberId=" + memberIdPar);
             let imgRes = ordAjax.start();
             let tradeStatus = imgRes.data.tradeStatus;
             if(tradeStatus != undefined && tradeStatus == 'success'){
