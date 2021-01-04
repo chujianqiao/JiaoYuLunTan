@@ -64,6 +64,7 @@ public class CollectTopicParam implements Serializable, BaseValidatingParam {
      * 管理员自定义备用字段2
      */
     private String diy2;
+    private Long meetId;
 
     @Override
     public String checkParam() {

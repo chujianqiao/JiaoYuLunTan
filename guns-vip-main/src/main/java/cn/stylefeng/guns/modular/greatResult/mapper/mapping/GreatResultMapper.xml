@@ -40,11 +40,12 @@
         <result column="introduce_name" property="introduceName" />
         <result column="belong_domain" property="belongDomain" />
         <result column="description" property="description" />
+        <result column="meet_id" property="meetId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        result_id AS "resultId", result_name AS "resultName", apply_type AS "applyType", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", mana_post AS "manaPost", mana_direct AS "manaDirect", result_mean AS "resultMean", value AS "value", result_range AS "resultRange", object AS "object", team AS "team", conclusion AS "conclusion", introduce AS "introduce", influence AS "influence", slogan AS "slogan", design_img AS "designImg", keyword AS "keyword", letter_path AS "letterPath", commit_path AS "commitPath", form AS "form", detail AS "detail", check_status AS "checkStatus", apply_id AS "applyId", apply_time AS "applyTime", refuse_time AS "refuseTime", pass_time AS "passTime", cancel_time AS "cancelTime", belong_name AS "belongName", letter_name AS "letterName", commit_name AS "commitName", introduce_path AS "introducePath", introduce_name AS "introduceName", belong_domain AS "belongDomain", description AS "description"
+        result_id AS "resultId", result_name AS "resultName", apply_type AS "applyType", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", mana_post AS "manaPost", mana_direct AS "manaDirect", result_mean AS "resultMean", value AS "value", result_range AS "resultRange", object AS "object", team AS "team", conclusion AS "conclusion", introduce AS "introduce", influence AS "influence", slogan AS "slogan", design_img AS "designImg", keyword AS "keyword", letter_path AS "letterPath", commit_path AS "commitPath", form AS "form", detail AS "detail", check_status AS "checkStatus", apply_id AS "applyId", apply_time AS "applyTime", refuse_time AS "refuseTime", pass_time AS "passTime", cancel_time AS "cancelTime", belong_name AS "belongName", letter_name AS "letterName", commit_name AS "commitName", introduce_path AS "introducePath", introduce_name AS "introduceName", belong_domain AS "belongDomain", description AS "description",meet_id AS "meetId"
     </sql>
 
 
@@ -71,7 +72,26 @@
             and result_name like CONCAT('%',#{paramCondition.resultName},'%')
         </if>
     </select>
-
+    <select id="customPageMapListPerson" resultType="map" parameterType="cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam">
+        select
+        <include refid="Base_Column_List"/>
+        from great_result where 1 = 1
+        <if test="paramCondition.applyId != null and paramCondition.applyId != ''">
+            and apply_id = #{paramCondition.applyId}
+        </if>
+        <if test="paramCondition.resultName != null and paramCondition.resultName != ''">
+            and result_name like CONCAT('%',#{paramCondition.resultName},'%')
+        </if>
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
+        <if test="paramCondition.checkStatus == 0">
+            and check_status != 2 and check_status != 3
+        </if>
+        <if test="paramCondition.checkStatus == 1">
+            and (check_status = 2 or check_status = 3)
+        </if>
+    </select>
     <select id="customPageListAdmin" resultType="cn.stylefeng.guns.modular.greatResult.model.result.GreatResultResult" parameterType="cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam">
         select
         <include refid="Base_Column_List"/>
@@ -97,6 +117,15 @@
                      separator="," close=")">
                 #{i}
             </foreach>
+        </if>
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
+        <if test="paramCondition.checkStatus == 0">
+            and check_status != 2 and check_status != 3
+        </if>
+        <if test="paramCondition.checkStatus == 1">
+            and (check_status = 2 or check_status = 3)
         </if>
     </select>
 

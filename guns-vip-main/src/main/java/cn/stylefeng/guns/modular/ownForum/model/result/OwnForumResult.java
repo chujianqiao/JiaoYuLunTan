@@ -195,4 +195,6 @@ public class OwnForumResult implements Serializable {
      */
     private Date endTime;
 
+    private Long meetId;
+
 }

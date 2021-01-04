@@ -200,6 +200,8 @@ public class EducationResultParam implements Serializable, BaseValidatingParam {
      */
     private String description;
 
+    private Long meetId;
+
     @Override
     public String checkParam() {
         return null;

@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 优秀成果表管理
@@ -14,7 +15,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             resultName: "",
         }
     };
-
+    meetSelectOption();
     /**
      * 初始化表格的列
      */
@@ -22,6 +23,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'resultName', sort: true, title: '成果名称'},
             {field: 'belongName', sort: true, title: '申请人姓名'},
             {field: 'team', sort: true, title: '所在单位'},
@@ -78,11 +80,14 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         var queryData = {};
 
         queryData['resultName'] = $("#resultName").val();
+        queryData['meetId'] = $("#meetId").val();
         table.reload(GreatResult.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(meetId)', function(data){
+        GreatResult.search();
+    });
     /**
      * 弹出添加对话框
      */
@@ -193,7 +198,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + GreatResult.tableId,
-        url: Feng.ctxPath + '/greatResult/list',
+        url: Feng.ctxPath + '/greatResult/wrapList',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
@@ -234,4 +239,31 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             GreatResult.openDetail(data);
         }
     });
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                form.render('select');
+            }
+        })
+    }
 });

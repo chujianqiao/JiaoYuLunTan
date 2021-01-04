@@ -128,8 +128,12 @@ public class MeetMemberController extends BaseController {
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
         User user = userService.getById(loginUser.getId());
         Meet meet = meetService.getByStatus(1);
+        Long meetId = null;
+        if (meet != null){
+            meetId = meet.getMeetId();
+        }
         model.addAttribute("userName", user.getName());
-        List<MeetMemberResult> list = meetMemberService.customListIfExist(meet.getMeetId(),user.getUserId());
+        List<MeetMemberResult> list = meetMemberService.customListIfExist(meetId,user.getUserId());
         if (list.size() > 0){
             model.addAttribute("isExist", "yes");
         }
@@ -142,7 +146,14 @@ public class MeetMemberController extends BaseController {
         }else{
             request.setAttribute("userTitle","无职称");
         }
-        return  "/meet_reg.html";
+
+        String meetTimeStatusStr = ToolUtil.getMeetTimeStatus();
+        model.addAttribute("meetTimeStatusStr",meetTimeStatusStr);
+        if (meetTimeStatusStr == "报名中"){
+            return  "/meet_reg.html";
+        }else {
+            return  "/meet_status.html";
+        }
     }
 
     /**
@@ -605,7 +616,9 @@ public class MeetMemberController extends BaseController {
 
         if (meetMemberParam.getMeetId() == null){
             Meet meet = meetService.getByStatus(1);
-            meetMemberParam.setMeetId(meet.getMeetId());
+            if (meet != null){
+                meetMemberParam.setMeetId(meet.getMeetId());
+            }
         } else if (meetMemberParam.getMeetId() == 0) {
             meetMemberParam.setMeetId(null);
         }
@@ -632,7 +645,9 @@ public class MeetMemberController extends BaseController {
         }
         if (meetMemberParam.getMeetId() == null){
             Meet meet = meetService.getByStatus(1);
-            meetMemberParam.setMeetId(meet.getMeetId());
+            if (meet != null){
+                meetMemberParam.setMeetId(meet.getMeetId());
+            }
         } else if (meetMemberParam.getMeetId() == 0) {
             meetMemberParam.setMeetId(null);
         }

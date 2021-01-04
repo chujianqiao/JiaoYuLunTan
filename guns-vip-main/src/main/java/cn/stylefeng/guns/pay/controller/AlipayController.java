@@ -113,7 +113,10 @@ public class AlipayController extends BaseController {
 		param.setCode("MONEY");
 		//SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
 		Meet meet = meetService.getByStatus(1);
-		String amout = meet.getFee().toString();
+		String amout = "0";
+		if (meet != null){
+			amout = meet.getFee().toString();
+		}
 		request.setBizContent("{" +
 				"\"out_trade_no\":\""+ orderNum +"\"," +
 				"\"seller_id\":\"\"," +
@@ -217,6 +220,8 @@ public class AlipayController extends BaseController {
 				vipPayParam.setPayType("alipay");
 				vipPayParam.setTranNum(aliTranNum);
 				vipPayParam.setPayTime(new Date());
+				MeetMember meetMember = meetMemberService.getById(memberId);
+				vipPayParam.setMeetId(meetMember.getMeetId());
 
 				MeetMemberParam meetMemberParam = new MeetMemberParam();
 				meetMemberParam.setMemberId(Long.parseLong(memberId));
@@ -278,7 +283,10 @@ public class AlipayController extends BaseController {
 		param.setCode("MONEY");
 		//SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
 		Meet meet = meetService.getByStatus(1);
-		String total_amount = meet.getFee().toString();
+		String total_amount = "0";
+		if (meet != null){
+			total_amount = meet.getFee().toString();
+		}
 		//订单名称，必填
 		String subject = "支付会议费用";
 		//商品描述，可空

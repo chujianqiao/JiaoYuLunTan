@@ -9,6 +9,8 @@ import cn.stylefeng.guns.core.constant.dictmap.ResultDict;
 import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.educationResult.entity.EducationResult;
 import cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam;
 import cn.stylefeng.guns.modular.educationResult.service.EducationResultService;
@@ -66,6 +68,8 @@ public class EducationResultController extends BaseController {
 
     @Autowired
     private ReviewMajorService reviewMajorService;
+    @Autowired
+    private MeetService meetService;
 
     @Autowired
     private EducationReviewMiddleService educationReviewMiddleService;
@@ -253,6 +257,11 @@ public class EducationResultController extends BaseController {
         educationResultParam.setApplyId(userId);
         educationResultParam.setCheckStatus(1);
         educationResultParam.setApplyTime(new Date());
+
+        Meet meet = meetService.getByStatus(1);
+        if (meet != null){
+            educationResultParam.setMeetId(meet.getMeetId());
+        }
         this.educationResultService.add(educationResultParam);
         return ResponseData.success();
     }
@@ -293,6 +302,15 @@ public class EducationResultController extends BaseController {
         middleParam.setMiddleId(middleId);
         middleParam.setReviewTime(new Date());
         this.educationReviewMiddleService.update(middleParam);
+
+        EducationResultParam param = new EducationResultParam();
+        param.setResultId(educationResultParam.getResultId());
+        if (middleParam.getReviewResult() == 0){
+            param.setCheckStatus(3);
+        }else if (middleParam.getReviewResult() == 1){
+            param.setCheckStatus(2);
+        }
+        this.educationResultService.update(param);
 
         String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
@@ -449,7 +467,7 @@ public class EducationResultController extends BaseController {
     @ResponseBody
     @RequestMapping("/wrapList")
     public Object wrapList(EducationResultParam educationResultParam) {
-        boolean isReview = ToolUtil.isReviewRole();
+        /*boolean isReview = ToolUtil.isReviewRole();
         List<Long> eduIdList = new ArrayList<>();
         String listStatus = "";
         if(isReview){
@@ -457,8 +475,21 @@ public class EducationResultController extends BaseController {
             if(eduIdList.size() != 0){
                 listStatus = "有数据";
             }
+        }*/
+        Long userId = LoginContextHolder.getContext().getUserId();
+        boolean isAdmin = ToolUtil.isAdminRole();
+        if (!isAdmin){
+            educationResultParam.setApplyId(userId);
         }
-        Page<Map<String, Object>> theses = this.educationResultService.findPageWrap(educationResultParam,eduIdList,listStatus);
+        if (educationResultParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                educationResultParam.setMeetId(meet.getMeetId());
+            }
+        } else if (educationResultParam.getMeetId() == 0) {
+            educationResultParam.setMeetId(null);
+        }
+        Page<Map<String, Object>> theses = this.educationResultService.findPageWrap(educationResultParam);
         Page wrapped = new EducationResultWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }
@@ -479,6 +510,14 @@ public class EducationResultController extends BaseController {
             if(eduIdList.size() != 0){
                 listStatus = "有数据";
             }
+        }
+        if (educationResultParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                educationResultParam.setMeetId(meet.getMeetId());
+            }
+        } else if (educationResultParam.getMeetId() == 0) {
+            educationResultParam.setMeetId(null);
         }
         if (listStatus == "有数据"){
             Page<Map<String, Object>> theses = this.educationResultService.findPageWrap(educationResultParam,eduIdList,listStatus);

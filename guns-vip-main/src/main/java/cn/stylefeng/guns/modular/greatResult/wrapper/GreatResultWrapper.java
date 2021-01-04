@@ -1,5 +1,6 @@
 package cn.stylefeng.guns.modular.greatResult.wrapper;
 
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.greatReviewMiddle.model.params.GreatReviewMiddleParam;
 import cn.stylefeng.guns.modular.greatReviewMiddle.model.result.GreatReviewMiddleResult;
 import cn.stylefeng.guns.modular.greatReviewMiddle.service.GreatReviewMiddleService;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class GreatResultWrapper extends BaseControllerWrapper {
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
     private UserService userService = SpringContextHolder.getBean(UserService.class);
+    private MeetService meetService = SpringContextHolder.getBean(MeetService.class);
     private GreatReviewMiddleService greatReviewMiddleService = SpringContextHolder.getBean(GreatReviewMiddleService.class);
 
 
@@ -70,10 +72,13 @@ public class GreatResultWrapper extends BaseControllerWrapper {
         } else if (reviewResult == 1){
             map.put("reviewResult","推荐参会");
         } else {
-            map.put("reviewResult","未评审");
+            map.put("reviewResult","未分配");
         }
 
-
+        Object meetId = map.get("meetId");
+        if (meetId != null){
+            map.put("meetName",meetService.getById(Long.parseLong(meetId.toString())).getMeetName());
+        }
 
     }
 }

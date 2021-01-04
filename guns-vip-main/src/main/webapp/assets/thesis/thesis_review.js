@@ -12,7 +12,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
     var Thesis = {
         tableId: "thesisTable"
     };
-
+    meetSelectOption();
     /**
      * 初始化表格的列
      */
@@ -20,6 +20,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'thesisId', hide: true, title: '论文ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             // {field: 'firstStatus', hide: true, title: '状态'},
             // {field: 'firstStatus', sort: true, title: '状态'},
             {field: 'thesisTitle', sort: true, title: '论文题目'},
@@ -47,11 +48,14 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
 
         queryData['thesisTitle'] = $('#thesisTitle').val();
         queryData['reviewStatus'] = $('#reviewStatus').val();
-
+        queryData['meetId'] = $("#meetId").val();
         table.reload(Thesis.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
+    form.on('select(meetId)', function(data){
+        Thesis.search();
+    });
     form.on('select(reviewStatus)', function(data){
         Thesis.search();
     });
@@ -186,6 +190,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'thesisId', hide: true, title: '论文ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'thesisTitle', sort: true, title: '论文题目'},
             {field: 'userName', sort: true, title: '论文作者'},
             {field: 'unitsName', sort: true, title: '所在单位'},
@@ -209,11 +214,14 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
     ThesisAgain.search = function () {
         var queryData = {};
         queryData['thesisTitle'] = $('#thesisTitleAgain').val();
+        queryData['meetId'] = $("#meetIdAgain").val();
         table.reload(ThesisAgain.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(meetIdAgain)', function(data){
+        ThesisAgain.search();
+    });
 
     /**
      * 跳转到编辑页面
@@ -309,6 +317,42 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         }
     });
 
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                $('#meetIdAgain').empty();
+                $('#meetIdAgain').append("<option value='0'>请选择会议</option>");
+                $('#meetIdAgain').append(options);
+                $('#meetIdResult').empty();
+                $('#meetIdResult').append("<option value='0'>请选择会议</option>");
+                $('#meetIdResult').append(options);
+                $('#meetIdResult2').empty();
+                $('#meetIdResult2').append("<option value='0'>请选择会议</option>");
+                $('#meetIdResult2').append(options);
+                form.render('select');
+            }
+        })
+    }
+
 
     /**--------------------------------------------------教改实验---------------------------------------------------------------------**/
     /**
@@ -328,6 +372,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'resultName', sort: true, title: '成果名称'},
             {field: 'belongName', sort: true, title: '申请人姓名'},
             {field: 'reviewName', sort: true, title: '评审专家'},
@@ -349,11 +394,18 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
     EducationResult.search = function () {
         var queryData = {};
         queryData['resultName'] = $("#resultName").val();
+        queryData['meetId'] = $("#meetIdResult").val();
+        queryData['checkStatus'] = $("#reviewStatusResult").val();
         table.reload(EducationResult.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(meetIdResult)', function(data){
+        EducationResult.search();
+    });
+    form.on('select(reviewStatusResult)', function(data){
+        EducationResult.search();
+    });
     /**
      * 点击详情
      * @param data 点击按钮时候的行数据
@@ -420,6 +472,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'resultName', sort: true, title: '成果名称'},
             {field: 'belongName', sort: true, title: '申请人姓名'},
             {field: 'reviewName', sort: true, title: '评审专家'},
@@ -443,11 +496,18 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
     GreatResult.search = function () {
         var queryData = {};
         queryData['resultName'] = $("#greatResultName").val();
+        queryData['meetId'] = $("#meetIdResult2").val();
+        queryData['checkStatus'] = $("#reviewStatusResult2").val();
         table.reload(GreatResult.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(meetIdResult2)', function(data){
+        GreatResult.search();
+    });
+    form.on('select(reviewStatusResult2)', function(data){
+        GreatResult.search();
+    });
     //点击li标签事件
     $("#greatRes").click(function(){
         GreatResult.search();

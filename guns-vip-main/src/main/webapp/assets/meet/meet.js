@@ -30,7 +30,20 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             //{field: 'regName', sort: true, title: '注册人'},
             {field: 'regTime', sort: true, title: '注册时间'},
             {field: 'pubStatus', sort: true, title: '发布状态'},
-            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth:250}
+            {align: 'center', title: '操作',minWidth:250,templet: function(data){
+                if (data.pubStatus == "已发布") {
+                    return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"edit\">修改</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"cancelPublish\">取消发布</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-xs\" lay-event=\"meetWord\">下载手册</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                }else {
+                    return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"edit\">修改</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"publish\">发布</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-xs\" lay-event=\"meetWord\">下载手册</a>\n" +
+                        "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                }
+
+                }}
         ]];
     };
 
@@ -107,6 +120,19 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         Feng.confirm("只能有一个状态为“发布”的会议，是否发布?", operation);
     };
 
+    Meet.onCancelPublishItem = function (data) {
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/meet/pubMeet", function (data) {
+                Feng.success("取消成功!");
+                table.reload(Meet.tableId);
+            }, function (data) {
+                Feng.error("取消失败!" + data.responseJSON.message + "!");
+            });
+            ajax.start();
+        };
+        Feng.confirm("取消后无正在进行的会议，是否取消发布?", operation);
+    };
+
     /**
      * 下载会议手册
      * @param data
@@ -164,6 +190,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             Meet.onDeleteItem(data);
         } else if (layEvent === 'publish') {
             Meet.onPublishItem(data);
+        } else if (layEvent === 'cancelPublish') {
+            Meet.onCancelPublishItem(data);
         } else if (layEvent === 'meetWord') {
             Meet.downloadWord(data);
         }

@@ -12,8 +12,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
         elem: '#birthday'
     });
     meetDetail();
-    thesisDetail();
-    meetMemberDetail();
+
 
 
     if ($("#roleId").val().indexOf("4") > -1 || $("#roleId").val().indexOf("5") > -1 || $("#roleId").val().indexOf("1") > -1){
@@ -28,16 +27,30 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             success: function (response) {
                 var data = response.data;
                 console.log(data);
-                $("#meetData1").html("<h2 style='font-weight: bold;'>" + data.detail.meetName + "</h2>");
-                $("#meetData2").html("会议描述：" + data.detail.meetDesc);
-                $("#meetData3").html("会议地点：" + data.detail.place);
-                $("#meetData4").html("会议时间：" + data.beginTime + " 至 " + data.endTime);
-                $("#meetData5").html("报名时间：" + data.joinBegTime + " 至 " + data.joinEndTime);
-                $("#meetName").html("" + data.detail.meetName);
-                $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
-                //绑定点击事件
-                let seatId = data.seatId;
-                ownSeat(seatId);
+                if (data.meetTimeStatusStr == "无会议"){
+                    $("#meetData1").html("<h2 style='font-weight: bold;'>当前无正在进行的会议。</h2>");
+                    $("#thesisData1").html("<h2 style='font-weight: bold;'>当前无正在进行的会议。</h2>");
+                    $("#forumData1").html("<h2 style='font-weight: bold;'>当前无正在进行的会议。</h2>");
+
+                } else {
+                    $("#meetFile").attr("href",Feng.ctxPath + "/meet/meetFile");
+                    $("#fileDownload").attr("href","javascript:fileDownload();");
+                    $("#iconFile").attr("style","font-size: 60px");
+                    $("#iconDownload").attr("style","font-size: 60px");
+                    $("#meetData1").html("<h2 style='font-weight: bold;'>" + data.detail.meetName + "</h2>");
+                    $("#meetData2").html("会议描述：" + data.detail.meetDesc);
+                    $("#meetData3").html("会议地点：" + data.detail.place);
+                    $("#meetData4").html("会议时间：" + data.beginTime + " 至 " + data.endTime);
+                    $("#meetData5").html("报名时间：" + data.joinBegTime + " 至 " + data.joinEndTime);
+                    $("#meetName").html("" + data.detail.meetName);
+                    $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
+                    //绑定点击事件
+                    let seatId = data.seatId;
+                    ownSeat(seatId);
+                    thesisDetail();
+                    meetMemberDetail();
+                }
+
             }
         });
     }

@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 自设论坛表管理
@@ -14,7 +15,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             forumName: "",
         }
     };
-
+    meetSelectOption();
     /**
      * 初始化表格的列
      */
@@ -22,6 +23,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'forumId', hide: true, title: '论坛ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'forumName', sort: true, title: '论坛名称'},
             {field: 'manager', sort: true, title: '申报人'},
             //{field: 'forumTopic', sort: true, title: '论坛主题'},
@@ -75,11 +77,14 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
         queryData['forumName'] = $("#forumName").val();
         $("#forumNameExp").val($("#forumName").val());
+        queryData['meetId'] = $("#meetId").val();
         table.reload(OwnForum.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(meetId)', function(data){
+        OwnForum.search();
+    });
     /**
      * 弹出添加对话框
      */
@@ -164,7 +169,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             url: Feng.ctxPath + '/ownForum/list',
             type: 'post',
             data: {
-                "forumName":$('#forumNameExp').val()
+                "forumName":$('#forumNameExp').val(),
+                "meetId":$('#meetId').val(),
             },
             async: false,
             dataType: 'json',
@@ -181,6 +187,9 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         title: '论坛申报全部数据',
         cols: [[ //表头
             {
+                field: 'meetName',
+                title: '会议名称',
+            },{
                 field: 'forumName',
                 title: '论坛名称',
             }, {
@@ -219,7 +228,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + OwnForum.tableId,
-        url: Feng.ctxPath + '/ownForum/list',
+        url: Feng.ctxPath + '/ownForum/wrapList',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
@@ -264,4 +273,31 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             OwnForum.openSet(data);
         }
     });
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                form.render('select');
+            }
+        })
+    }
 });

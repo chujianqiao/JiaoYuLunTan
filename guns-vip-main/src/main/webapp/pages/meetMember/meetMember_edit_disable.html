@@ -3,105 +3,103 @@
     <!-- 头部 -->
     @include("/common/person_header.html"){}
     <div class="func-column-container widthC mCenter mb40">
-<form class="layui-form" id="meetMemberForm" lay-filter="meetMemberForm">
-    <table class="sb-table fontSize16" width="100%">
-        <input type="hidden" name="thesisId" id="thesisId"/>
-        <input type="hidden" name="memberId" id="memberId"/>
-        <tr>
-            <!--<td class="sb-table-gap"></td>-->
-            <td class="sb-table-name">参会论坛：</td>
-            <td>
-                <input name="ownForumName" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
-            </td>
-        </tr>
-        <tr>
-            <!--<td class="sb-table-gap"></td>-->
-            <td class="sb-table-name">参会论文题目：</td>
-            <td>
-                <input name="thesisTitle" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
-            </td>
-        </tr>
-        <tr>
-            <td class="sb-table-name">参会论文英文题目：</td>
-            <td>
-                <input name="engTitle" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="sb-table-name">中文关键词：</td>
-            <td>
-            <input name="cnKeyword" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="sb-table-name">英文关键词：</td>
-            <td>
-            <input name="engKeyword" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="sb-table-name">中文摘要：</td>
-            <td>
-            <textarea name="cnAbstract" required lay-verify="required" disabled="disabled" class="layui-textarea" type="text"></textarea>
-            </td>
-        </tr>
-
-        <tr></tr>
-
-        <tr>
-            <td class="sb-table-name">英文摘要：</td>
-            <td>
-                <textarea name="engAbstract" required lay-verify="required" disabled="disabled" class="layui-textarea" type="text"></textarea>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="sb-table-name">论文所属领域：</td>
-            <td>
-                <input id="belongDomain" name="belongDomain" type="hidden">
-                <input id="pName" name="pName" disabled="disabled" type="text" class="layui-input"  autocomplete="off"/>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="sb-table-name">论文PDF附件：</td><td>
-            <input id="thesisPath" name="thesisPath" type="hidden" class="layui-input"/>
-            <input id="fileName" name="fileName" type="hidden" class="layui-input"/>
-            <input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
-            <div style="float: left;">
-                <button id="btnDownload" class="layui-btn layui-btn-sm" lay-filter="btnDownload" lay-submit>&emsp;下载论文PDF附件&emsp;</button>
+        <form class="layui-form" id="meetMemberForm" lay-filter="meetMemberForm">
+            <div class="layui-fluid" style="padding-bottom: 75px;">
+                <div class="layui-card">
+                    <div class="layui-card-header">基本信息</div>
+                    <div class="layui-card-body">
+                        <div class="layui-form-item layui-row">
+                            <input type="hidden" name="thesisId" id="thesisId"/>
+                            <input type="hidden" name="memberId" id="memberId"/>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">参会论坛：</label>
+                                <div class="layui-input-block">
+                                    <input name="ownForumName" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">参会论文题目：</label>
+                                <div class="layui-input-block">
+                                    <input name="thesisTitle" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">参会论文英文题目：</label>
+                                <div class="layui-input-block">
+                                    <input name="engTitle" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">中文关键词：</label>
+                                <div class="layui-input-block">
+                                    <input name="cnKeyword" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">英文关键词：</label>
+                                <div class="layui-input-block">
+                                    <input name="engKeyword" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">中文摘要：</label>
+                                <div class="layui-input-block">
+                                    <textarea name="cnAbstract" required lay-verify="required" disabled="disabled" class="layui-textarea" type="text"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">英文摘要：</label>
+                                <div class="layui-input-block">
+                                    <textarea name="engAbstract" required lay-verify="required" disabled="disabled" class="layui-textarea" type="text"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">论文所属领域：</label>
+                                <div class="layui-input-block">
+                                    <input id="belongDomain" name="belongDomain" type="hidden">
+                                    <input id="pName" name="pName" disabled="disabled" type="text" class="layui-input"  autocomplete="off"/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">论文PDF附件：</label>
+                                <div class="layui-input-block">
+                                    <input id="thesisPath" name="thesisPath" type="hidden" class="layui-input"/>
+                                    <input id="fileName" name="fileName" type="hidden" class="layui-input"/>
+                                    <input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
+                                    <div style="float: left;">
+                                        <button id="btnDownload" class="layui-btn layui-btn-sm" lay-filter="btnDownload" lay-submit>&emsp;下载论文PDF附件&emsp;</button>
+                                    </div>
+                                    <div style="float: left;">
+                                        <span name="fileNameTip" class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md12">
+                                <label class="layui-form-label">论文Word附件：</label>
+                                <div class="layui-input-block">
+                                    <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
+                                    <input id="wordName" name="wordName" type="hidden" class="layui-input"/>
+                                    <input id="wordInputHidden" name="wordInputHidden" type="hidden" class="layui-input"/>
+                                    <div style="float: left;">
+                                        <button id="btnDownloadWord" class="layui-btn layui-btn-sm" lay-filter="btnDownload" lay-submit>&emsp;下载论文Word附件&emsp;</button>
+                                    </div>
+                                    <div style="float: left;">
+                                        <span name="wordNameTip" class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordNameTip"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btns sb-btns fontSize16">
+                                <div class="btn cancel" id="btnCancel">返回</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="float: left;">
-                <span name="fileNameTip" class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>
-            </div>
-            <td class="sb-table-gap"></td>
-        </tr>
 
-        <tr>
-            <td class="sb-table-name">论文Word附件：</td><td>
-            <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
-            <input id="wordName" name="wordName" type="hidden" class="layui-input"/>
-            <input id="wordInputHidden" name="wordInputHidden" type="hidden" class="layui-input"/>
-            <div style="float: left;">
-                <button id="btnDownloadWord" class="layui-btn layui-btn-sm" lay-filter="btnDownload" lay-submit>&emsp;下载论文Word附件&emsp;</button>
-            </div>
-            <div style="float: left;">
-                <span name="wordNameTip" class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordNameTip"></span>
-            </div>
-            <td class="sb-table-gap"></td>
-        </tr>
-    </table>
-
-    <div class="btns sb-btns fontSize16">
-        <div class="btn cancel" id="btnCancel">关闭</div>
-    </div>
-
-</form>
+        </form>
     </div>
     <!-- 尾部 -->
     @include("/common/person_footer.html"){}
 </div>
+
 @}

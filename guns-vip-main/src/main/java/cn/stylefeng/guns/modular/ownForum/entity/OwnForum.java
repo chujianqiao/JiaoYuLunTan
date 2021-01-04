@@ -231,6 +231,12 @@ public class OwnForum implements Serializable {
     @TableField("end_time")
     private Date endTime;
 
+    /**
+     * 会议ID
+     */
+    @TableField("meet_id")
+    private Long meetId;
+
     public Long getForumId() {
         return forumId;
     }
@@ -511,6 +517,14 @@ public class OwnForum implements Serializable {
         this.endTime = endTime;
     }
 
+    public Long getMeetId() {
+        return meetId;
+    }
+
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
+    }
+
     @Override
     public String toString() {
         return "OwnForum{" +
@@ -549,6 +563,7 @@ public class OwnForum implements Serializable {
         ", status=" + status +
         ", startTime=" + startTime +
         ", endTime=" + endTime +
+        ", meetId=" + meetId +
         "}";
     }
 }

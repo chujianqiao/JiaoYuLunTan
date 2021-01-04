@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -59,7 +60,7 @@ public class SocialForumServiceImpl extends ServiceImpl<SocialForumMapper, Socia
     }
 
     @Override
-    public LayuiPageInfo findPageBySpec(SocialForumParam param){
+    public Page<Map<String, Object>> findPageBySpec(SocialForumParam param){
         Page pageContext = getPageContext();
         if (param.getUnitName()==null){
             param.setUnitName("%%");
@@ -67,7 +68,7 @@ public class SocialForumServiceImpl extends ServiceImpl<SocialForumMapper, Socia
             param.setUnitName("%" + param.getUnitName() + "%");
         }
 
-        IPage page = null;
+        Page page = null;
         LoginUser user = LoginContextHolder.getContext().getUser();
         List roleIds = user.getRoleList();
         long adminRole = 1;
@@ -77,7 +78,7 @@ public class SocialForumServiceImpl extends ServiceImpl<SocialForumMapper, Socia
             page = this.baseMapper.customPageList(pageContext, param);
         }
 
-        return LayuiPageFactory.createPageInfo(page);
+        return page;
     }
 
     private Serializable getKey(SocialForumParam param){

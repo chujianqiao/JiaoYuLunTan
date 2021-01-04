@@ -1,5 +1,7 @@
 package cn.stylefeng.guns.collTopic.wrapper;
 
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.mapper.MeetMapper;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.modular.system.controller.UserMgrController;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
@@ -17,6 +19,7 @@ import java.util.Map;
 public class CollectTopicWrapper extends BaseControllerWrapper {
 
 	private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
+	private MeetMapper meetMapper = SpringContextHolder.getBean(MeetMapper.class);
 
 	public CollectTopicWrapper(Map<String, Object> single) {
 		super(single);
@@ -45,6 +48,13 @@ public class CollectTopicWrapper extends BaseControllerWrapper {
 		String userPost = user.getPost();
 		if(userPost == null || userPost == ""){
 			userPost = user.getTitle();
+		}
+
+		Object meetIdObj = map.get("meetId");
+		if (meetIdObj != null){
+			Long meetId = Long.parseLong(meetIdObj.toString());
+			Meet meet = meetMapper.selectById(meetId);
+			map.put("meetName",meet.getMeetName());
 		}
 
 		//添加返回的数据

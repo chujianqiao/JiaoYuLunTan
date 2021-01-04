@@ -71,7 +71,7 @@
                         <input value="${roleId! }" id="roleId" hidden>
                         <div class="layui-card-body" style="width: 100%;float: left;text-align: center;">
                             <div class="layui-text">
-                                <h4 id="meetName" style="padding-top: 20px;font-size: 20px;font-weight: bold;color: rgb(43,121,183)">无</h4>
+                                <h4 id="meetName" style="padding-top: 20px;font-size: 20px;font-weight: bold;color: rgb(43,121,183)"></h4>
                             </div>
                         </div>
                         <div class="layui-card-body" style="width: 218px;height: 100px;float: left;margin-left: 40px">
@@ -190,8 +190,8 @@
                                                     </a>
                                                 </li>
                                                 <li class="layui-col-xs2">
-                                                    <a href="${ctxPath}/meet/meetFile" target="_blank">
-                                                        <i style="font-size: 60px" class="layui-icon layui-icon-file"></i>
+                                                    <a id="meetFile" target="_blank">
+                                                        <i style="font-size: 60px;color: grey" id="iconFile" class="layui-icon layui-icon-file"></i>
                                                         <cite>会议手册</cite>
                                                     </a>
                                                 </li>
@@ -208,8 +208,8 @@
                                                     </a>
                                                 </li>
                                                 <li class="layui-col-xs2">
-                                                    <a href="javascript:fileDownload();">
-                                                        <i style="font-size: 60px" class="layui-icon layui-icon-download-circle"></i>
+                                                    <a id="fileDownload">
+                                                        <i style="font-size: 60px;color: grey" id="iconDownload" class="layui-icon layui-icon-download-circle"></i>
                                                         <cite>材料下载</cite>
                                                     </a>
                                                 </li>

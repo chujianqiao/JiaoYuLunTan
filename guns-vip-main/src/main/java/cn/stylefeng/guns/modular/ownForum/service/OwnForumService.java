@@ -4,9 +4,11 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
 import cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam;
 import cn.stylefeng.guns.modular.ownForum.model.result.OwnForumResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -66,4 +68,5 @@ public interface OwnForumService extends IService<OwnForum> {
      */
      LayuiPageInfo findPageBySpec(OwnForumParam param);
 
+    Page<Map<String, Object>> findPageWrap(OwnForumParam param);
 }

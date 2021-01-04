@@ -167,7 +167,9 @@ public class VipPayController extends BaseController {
 
         if (vipPayParam.getMeetId() == null){
             Meet meet = meetService.getByStatus(1);
-            vipPayParam.setMeetId(meet.getMeetId());
+            if (meet != null){
+                vipPayParam.setMeetId(meet.getMeetId());
+            }
         } else if (vipPayParam.getMeetId() == 0) {
             vipPayParam.setMeetId(null);
         }

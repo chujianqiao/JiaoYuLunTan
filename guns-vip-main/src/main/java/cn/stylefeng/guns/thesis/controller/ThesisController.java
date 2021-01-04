@@ -51,6 +51,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -113,10 +114,18 @@ public class ThesisController extends BaseController {
         model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl","thesis");
         model.addAttribute("isReview", "yes");
+        String meetTimeStatusStr = ToolUtil.getMeetTimeStatus();
+        model.addAttribute("meetTimeStatusStr",meetTimeStatusStr);
+
         if(isAdmin){
             return PREFIX + "/thesis_disable.html";
         } else if(isReview){
-            return PREFIX + "/thesis_review.html";
+            if (meetTimeStatusStr == "报名中" || meetTimeStatusStr == "报名结束"){
+                return PREFIX + "/thesis_review.html";
+            }else {
+                return  "/meet_status.html";
+            }
+
         } else{
             return "没有权限";
         }
@@ -285,6 +294,9 @@ public class ThesisController extends BaseController {
         meetMemberParam.setUserId(userId);
         //论文ID
         long thesisId = ToolUtil.getNum19();
+        if (thesisId == 0){
+            thesisId = ToolUtil.getNum19();
+        }
         thesisParam.setThesisId(thesisId);
         meetMemberParam.setThesisId(thesisId);
         //时间
@@ -295,7 +307,11 @@ public class ThesisController extends BaseController {
         meetMemberParam.setMeetStatus(1);
 
         Meet meet = meetService.getByStatus(1);
-        meetMemberParam.setMeetId(meet.getMeetId());
+        if (meet != null){
+            meetMemberParam.setMeetId(meet.getMeetId());
+            thesisParam.setMeetId(meet.getMeetId());
+        }
+
         //同时更新用户表、论文表、会议成员表
         this.userService.editUser(user);
         if("big".equals(meetSize)){
@@ -328,10 +344,15 @@ public class ThesisController extends BaseController {
             List<MeetMemberResult> memberResults = members.getData();
             MeetMemberResult meetMemberResult = memberResults.get(0);
             long memberId = meetMemberResult.getMemberId();
+            Meet meet = meetService.getById(meetMemberResult.getMeetId());
             //设置参会成员ID
             meetMemberParam.setMemberId(memberId);
             if(isPass == 1){
-                meetMemberParam.setMeetStatus(2);
+                if (meet.getFee().compareTo(BigDecimal.ZERO) <= 0){
+                    meetMemberParam.setMeetStatus(4);
+                }else {
+                    meetMemberParam.setMeetStatus(2);
+                }
             }else if(isPass == 0){
                 meetMemberParam.setMeetStatus(5);
             }
@@ -410,12 +431,19 @@ public class ThesisController extends BaseController {
         MeetMemberResult meetMemberResult = members.get(0);
         long memberId = meetMemberResult.getMemberId();
         meetMemberParam.setMemberId(memberId);
+
+        Meet meet = meetService.getById(meetMemberResult.getMeetId());
+
         if(reviewNum == 0){
             meetMemberParam.setMeetStatus(5);
             //未通过，评审字典内容为空
             thesisParam.setStatus(null);
         }else {
-            meetMemberParam.setMeetStatus(2);
+            if (meet.getFee().compareTo(BigDecimal.ZERO) <= 0){
+                meetMemberParam.setMeetStatus(4);
+            }else {
+                meetMemberParam.setMeetStatus(2);
+            }
         }
 
         //同时修改中间表，查询条件：论文ID、专家ID、评审顺序（1）
@@ -743,6 +771,14 @@ public class ThesisController extends BaseController {
     public Object reviewList(ThesisParam thesisParam,String reviewStatus,HttpServletRequest request) {
         boolean isReview = ToolUtil.isReviewRole();
         List<Long> thesisIdList = new ArrayList<>();
+        if (thesisParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                thesisParam.setMeetId(meet.getMeetId());
+            }
+        } else if (thesisParam.getMeetId() == 0) {
+            thesisParam.setMeetId(null);
+        }
         if (isReview){
             LoginUser user = LoginContextHolder.getContext().getUser();
             Long userId = user.getId();
@@ -798,6 +834,16 @@ public class ThesisController extends BaseController {
             Long userId = user.getId();
             thesisParam.setThesisUser(userId.toString());
         }
+
+        if (thesisParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                thesisParam.setMeetId(meet.getMeetId());
+            }
+        } else if (thesisParam.getMeetId() == 0) {
+            thesisParam.setMeetId(null);
+        }
+
         Page<Map<String, Object>> theses = this.thesisService.findPageWrap(thesisParam);
         Page wrapped = new ThesisWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
@@ -906,7 +952,10 @@ public class ThesisController extends BaseController {
         Meet meet = meetService.getByStatus(1);
         MeetMemberParam meetMemberParam = new MeetMemberParam();
         meetMemberParam.setUserId(userId);
-        meetMemberParam.setMeetId(meet.getMeetId());
+        if (meet != null){
+            meetMemberParam.setMeetId(meet.getMeetId());
+        }
+
         List<MeetMemberResult> list = this.meetMemberService.customList(meetMemberParam);
         Long thesisId = null;
         if (list.size() > 0){

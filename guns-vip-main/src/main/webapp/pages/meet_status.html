@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit" />
+    <meta name ="viewport" content ="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>中国教育科学论坛</title>
+    <link href="${ctxPath}/assets/common/images/icon2_10.png" rel="icon">
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
+    <!--<link rel="stylesheet" href="${ctxPath}/assets/modular/frame/user_info.css" />-->
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/common.css" />
+    <link rel="stylesheet" href="${ctxPath}/assets/common/css/border-1px.css" />
+    <link rel="stylesheet" media="screen and (min-width:751px)" href="${ctxPath}/assets/common/css/custom_pc.css">
+    <link rel="stylesheet" media="screen and (max-width:751px)" href="${ctxPath}/assets/common/css/custom_mobile.css" />
+
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}" media="all"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>
+</head>
+<style>
+    .forumCharter{
+        font-size: 14px;
+        color: rgb(0,87,203);
+        cursor: pointer;
+    }
+    .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+        margin-top: 0px;
+        margin-right: -20px;
+    }
+</style>
+<body>
+<div class="page">
+    @include("/common/_nav.html"){}
+    <div class="func-column-container widthC mCenter mb40">
+        <div class="func-column-content mCenter mb20">
+            <div  class="form-title mCenter">
+                <span class="line inlineBlock"></span>
+                <span id="meetRegForm" class="fontSize20 inlineBlock mCenter title">会议注册</span>
+                <span class="line inlineBlock"></span>
+            </div>
+        </div>
+        <div class="forms">
+            <div class="form-box" id="formList">
+                <!--< class="form">-->
+                <form class="layui-form" id="" lay-filter="meetRegForm">
+
+                </form>
+            </div><!--end of form-->
+        </div>
+    </div>
+</div>
+<!-- 尾部 -->
+@include("/common/person_footer.html"){}
+</div>
+
+<style type="text/css">
+    /*body{ text-align:center}*/
+    .user-info-head {
+        width: 110px;
+        height: 110px;
+        /*position: relative;*/
+        display: inline-block;
+        text-align:center;
+        margin:0 auto;
+    }
+    .user-info-head img {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+    }
+
+    /*#divcss5{border:1px solid #000;width:300px;height:100px}*/
+</style>
+
+<script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
+<script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
+<script src="${ctxPath}/assets/common/js/custom.js"></script>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="/assets/meetMember/meetMember_add.js"></script>
+<script>
+    $(document).ready(function(){
+        myJs.navTab();
+    });
+</script>
+<script>
+    /**
+     * 按键监听esc
+     */
+    layui.use(['admin'], function () {
+        var admin = layui.admin;
+        var $ = layui.jquery;
+
+        $(window).keydown(function (event) {
+            if (event.keyCode === 27) {
+                admin.closeThisDialog();
+            }
+        });
+    });
+
+    var menuName = "会议注册";
+    if ("${menuUrl }" == "greatResult"){
+        menuName = "优秀成果会展申请";
+    }else if ("${menuUrl }" == "collectTopic"){
+        menuName = "主题征集";
+    }else if ("${menuUrl }" == "holdForum"){
+        menuName = "论坛申报";
+    }else if ("${menuUrl }" == "socailForum"){
+        menuName = "赞助意向";
+    }else if ("${menuUrl }" == "thesis"){
+        menuName = "专家评审";
+    }
+
+
+    if ("${meetTimeStatusStr! }" != ""){
+        var html = "";
+        if ("${meetTimeStatusStr! }" == "无会议"){
+            html = "<h2 style='text-align: center'>当前无正在进行的会议，无法进行" + menuName + "。</h2>";
+        }else if ("${meetTimeStatusStr! }" == "未开始"){
+            html = "<h2 style='text-align: center'>当前会议尚未开始，无法进行" + menuName + "。</h2>";
+        }else if ("${meetTimeStatusStr! }" == "进行中"){
+            html = "<h2 style='text-align: center'>当前会议正在进行，无法进行" + menuName + "。</h2>";
+        }else if ("${meetTimeStatusStr! }" == "报名结束"){
+            html = "<h2 style='text-align: center'>当前会议报名已经结束，无法进行" + menuName + "。</h2>";
+        }else if ("${meetTimeStatusStr! }" == "已结束"){
+            html = "<h2 style='text-align: center'>当前会议已经结束，无法进行" + menuName + "。</h2>";
+        }
+
+        $("#meetRegForm").html(html);
+    }
+
+    function forumCharter() {
+        window.open(Feng.ctxPath + '/system/forumCharter');
+    }
+</script>
+</body>
+</html>

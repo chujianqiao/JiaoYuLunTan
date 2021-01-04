@@ -87,10 +87,21 @@ public class HoldForumController extends BaseController {
         }
         List roles = user.getRoleList();
         long unit = 3;
+        String meetTimeStatusStr = ToolUtil.getMeetTimeStatus();
+        model.addAttribute("meetTimeStatusStr",meetTimeStatusStr);
+
         if (roles.contains(unit)){
-            return "/unitForum.html";
+            if (meetTimeStatusStr == "报名中" || meetTimeStatusStr == "报名结束"){
+                return "/unitForum.html";
+            }else {
+                return  "/meet_status.html";
+            }
         } else {
-            return "/forum.html";
+            if (meetTimeStatusStr == "报名中" || meetTimeStatusStr == "报名结束"){
+                return "/forum.html";
+            }else {
+                return  "/meet_status.html";
+            }
         }
     }
 

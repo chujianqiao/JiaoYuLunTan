@@ -115,12 +115,17 @@ public class MeetController extends BaseController {
      * @Date 2020-08-05
      */
     @RequestMapping("/meetFile")
-    public String meetFile(Model model, HttpServletRequest request) {
-        MeetParam meetParam = new MeetParam();
-        meetParam.setMeetStatus(1);
-        Page<Map<String, Object>> meets = this.meetService.findPageWrap(meetParam);
-        List<Map<String, Object>> list = meets.getRecords();
-        model.addAttribute("content", list.get(0).get("content"));
+    public String meetFile(Long meetId, Model model, HttpServletRequest request) {
+        if (meetId != null){
+            Meet meet = meetService.getById(meetId);
+            model.addAttribute("content", meet.getContent());
+        }else {
+            MeetParam meetParam = new MeetParam();
+            meetParam.setMeetStatus(1);
+            Page<Map<String, Object>> meets = this.meetService.findPageWrap(meetParam);
+            List<Map<String, Object>> list = meets.getRecords();
+            model.addAttribute("content", list.get(0).get("content"));
+        }
         LoginUser user = LoginContextHolder.getContext().getUser();
         model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "toPersonCenter");
@@ -141,9 +146,14 @@ public class MeetController extends BaseController {
         meetParam.setMeetStatus(1);
         Page<Map<String, Object>> meets = this.meetService.findPageWrap(meetParam);
         List<Map<String, Object>> list = meets.getRecords();
-        Long meetId = Long.parseLong(list.get(0).get("meetId").toString());
-        meetParam.setMeetId(meetId);
-        request.setAttribute("meetIdParam",meetId);
+        if (list.size() > 0){
+            Long meetId = Long.parseLong(list.get(0).get("meetId").toString());
+            meetParam.setMeetId(meetId);
+            request.setAttribute("meetIdParam",meetId);
+        }else {
+            request.setAttribute("meetIdParam","");
+        }
+
         return PREFIX + "/meet_edit_admin.html";
     }
 
@@ -207,8 +217,10 @@ public class MeetController extends BaseController {
             this.meetService.update(meetPar);
         }
         //修改需要发布的会议的状态
-        meetParam.setMeetStatus(1);
-        this.meetService.update(meetParam);
+        if (meetParam.getMeetId() != null){
+            meetParam.setMeetStatus(1);
+            this.meetService.update(meetParam);
+        }
         return ResponseData.success();
     }
 
@@ -246,27 +258,31 @@ public class MeetController extends BaseController {
     public ResponseData detailPub(MeetParam meetParam) {
         Meet detail = this.meetService.getByStatus(1);
         Map map = new HashMap();
-        LoginUser user = LoginContextHolder.getContext().getUser();
-        SeatDetailResult seatDetailResult = this.seatDetailService.getByUser(user.getId(),detail.getMeetId());
-        map.put("detail",detail);
-        if (seatDetailResult != null){
-            map.put("seat",seatDetailResult);
+
+        if (detail != null){
+            LoginUser user = LoginContextHolder.getContext().getUser();
+            SeatDetailResult seatDetailResult = this.seatDetailService.getByUser(user.getId(),detail.getMeetId());
+            map.put("detail",detail);
+            if (seatDetailResult != null){
+                map.put("seat",seatDetailResult);
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            map.put("beginTime",sdf.format(detail.getBeginTime()));
+            map.put("endTime",sdf.format(detail.getEndTime()));
+            map.put("joinBegTime",sdf.format(detail.getJoinBegTime()));
+            map.put("joinEndTime",sdf.format(detail.getJoinEndTime()));
+
+            SeatParam seatParam = new SeatParam();
+            seatParam.setMeetId(detail.getMeetId());
+            LayuiPageInfo results = this.seatService.findPageBySpec(seatParam);
+            List<SeatResult> list = results.getData();
+            SeatResult seatResult = list.get(0);
+            long seatId = seatResult.getSeatId();
+            map.put("seatId",seatId);
+        }else {
+            map.put("meetTimeStatusStr","无会议");
         }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        map.put("beginTime",sdf.format(detail.getBeginTime()));
-        map.put("endTime",sdf.format(detail.getEndTime()));
-        map.put("joinBegTime",sdf.format(detail.getJoinBegTime()));
-        map.put("joinEndTime",sdf.format(detail.getJoinEndTime()));
-
-        SeatParam seatParam = new SeatParam();
-        seatParam.setMeetId(detail.getMeetId());
-        LayuiPageInfo results = this.seatService.findPageBySpec(seatParam);
-        List<SeatResult> list = results.getData();
-        SeatResult seatResult = list.get(0);
-        long seatId = seatResult.getSeatId();
-        map.put("seatId",seatId);
-
         return ResponseData.success(map);
     }
 

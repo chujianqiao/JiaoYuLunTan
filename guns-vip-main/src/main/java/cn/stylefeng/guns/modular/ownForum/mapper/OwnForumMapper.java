@@ -60,5 +60,6 @@ public interface OwnForumMapper extends BaseMapper<OwnForum> {
      * @Date 2020-05-18
      */
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") OwnForumParam paramCondition);
+    Page<Map<String, Object>> customPageMapListAdmin(@Param("page") Page page, @Param("paramCondition") OwnForumParam paramCondition);
 
 }

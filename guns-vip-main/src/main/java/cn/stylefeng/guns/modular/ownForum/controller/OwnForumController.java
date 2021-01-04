@@ -3,17 +3,22 @@ package cn.stylefeng.guns.modular.ownForum.controller;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.log.BussinessLog;
+import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.OwnForumDict;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.ownForum.entity.OwnForum;
 import cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam;
 import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
+import cn.stylefeng.guns.modular.ownForum.wrapper.OwnForumWrapper;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -47,6 +53,9 @@ public class OwnForumController extends BaseController {
 
     @Autowired
     private FileInfoService fileInfoService;
+
+    @Autowired
+    private MeetService meetService;
 
     /**
      * 跳转到主页面
@@ -175,6 +184,10 @@ public class OwnForumController extends BaseController {
         ownForumParam.setApplyStatus(1);
         ownForumParam.setApplyId(userId);
         ownForumParam.setApplyTime(new Date());
+        Meet meet = meetService.getByStatus(1);
+        if (meet != null){
+            ownForumParam.setMeetId(meet.getMeetId());
+        }
         this.ownForumService.add(ownForumParam);
         return ResponseData.success();
     }
@@ -294,6 +307,23 @@ public class OwnForumController extends BaseController {
         return this.ownForumService.findPageBySpec(ownForumParam);
     }
 
+    @ResponseBody
+    @RequestMapping("/wrapList")
+    public Object wrapList(OwnForumParam ownForumParam) {
+        Long userId = LoginContextHolder.getContext().getUserId();
+        ownForumParam.setApplyId(userId);
+        if (ownForumParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                ownForumParam.setMeetId(meet.getMeetId());
+            }
+        } else if (ownForumParam.getMeetId() == 0) {
+            ownForumParam.setMeetId(null);
+        }
+        Page<Map<String, Object>> theses = this.ownForumService.findPageWrap(ownForumParam);
+        Page wrapped = new OwnForumWrapper(theses).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
+    }
     /**
      * 查询所有
      * @author CHUJIANQIAO

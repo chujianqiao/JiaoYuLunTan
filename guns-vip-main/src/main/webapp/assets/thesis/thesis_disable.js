@@ -18,6 +18,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
 
     $(function () {
         domainSelectOption();
+        meetSelectOption();
     })
 
     /**
@@ -27,6 +28,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'thesisId', hide: true, title: '论文ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'thesisTitle', sort: true, title: '论文名称（中文）'},
             {field: 'engTitle', sort: true, title: '论文名称（英文）'},
             {field: 'userName', sort: true, title: '作者'},
@@ -34,7 +36,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             {field: 'status', sort: true, title: '评审状态'},
             {field: 'reviewTime', sort: true, title: '评审时间'},
             {align: 'center', title: '操作',minWidth:220,templet: function(data){
-                if (data.status == "未评审"){
+                if (data.status == "未评审" || data.status == "未分配"){
                     return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">查看详情</a>\n" +
                         "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
                         "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
@@ -56,12 +58,15 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         queryData['thesisTitle'] = $('#thesisTitle').val();
         queryData['belongDomain'] = $('#belongDomain').val();
         queryData['reviewResult'] = $('#reviewResult').val();
+        queryData['meetId'] = $("#meetId").val();
         $('#thesisTitleExp').val($('#thesisTitle').val());
         table.reload(Thesis.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(meetId)', function(data){
+        Thesis.search();
+    });
     form.on('select(belongDomain)', function(data){
         Thesis.search();
     });
@@ -152,7 +157,8 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             data: {
                 "thesisTitle":$('#thesisTitleExp').val(),
                 "reviewResult":$('#reviewResult').val(),
-                "belongDomain":$('#belongDomain').val()
+                "belongDomain":$('#belongDomain').val(),
+                "meetId":$('#meetId').val(),
             },
             async: false,
             dataType: 'json',
@@ -169,6 +175,9 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         title: '论文初评全部数据',
         cols: [[ //表头
             {
+                field: 'meetName',
+                title: '会议名称',
+            },{
                 field: 'thesisTitle',
                 title: '论文名称（中文）',
             }, {
@@ -283,6 +292,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'thesisId', hide: true, title: '论文ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'thesisTitle', sort: true, title: '论文名称（中文）'},
             {field: 'engTitle', sort: true, title: '论文名称（英文）'},
             // {field: 'engTitle', sort: true, title: '英文题目'},
@@ -326,12 +336,15 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
 
         queryData['thesisTitle'] = $('#thesisTitleAgain').val();
         queryData['belongDomain'] = $("#belongDomainAgain").val();
+        queryData['meetId'] = $("#meetIdAgain").val();
         $('#thesisTitleExpAgain').val($('#thesisTitleAgain').val());
         table.reload(ThesisAgain.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(meetIdAgain)', function(data){
+        ThesisAgain.search();
+    });
     form.on('select(belongDomainAgain)', function(data){
         ThesisAgain.search();
     });
@@ -419,7 +432,8 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             type: 'post',
             data: {
                 "thesisTitle":$('#thesisTitleExpAgain').val(),
-                "belongDomain":$('#belongDomain').val()
+                "belongDomain":$('#belongDomainAgain').val(),
+                "meetId":$('#meetIdAgain').val(),
             },
             async: false,
             dataType: 'json',
@@ -436,6 +450,9 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
         title: '论文复评全部数据',
         cols: [[ //表头
             {
+                field: 'meetName',
+                title: '会议名称',
+            },{
                 field: 'thesisTitle',
                 title: '论文名称（中文）',
             }, {
@@ -542,16 +559,48 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
                 domains = data;
 
                 var options;
-                for (var i = 0 ;i < domains.length ;i++){
-                    var domain = data[i];
-                    options += '<option value="'+ domain.domainId+ '" >'+ domain.domainName +'</option>';
+                if (domains != null){
+                    for (var i = 0 ;i < domains.length ;i++){
+                        var domain = data[i];
+                        options += '<option value="'+ domain.domainId+ '" >'+ domain.domainName +'</option>';
+                    }
                 }
+
                 $('#belongDomain').empty();
                 $('#belongDomain').append("<option value=''>请选择领域</option>");
                 $('#belongDomain').append(options);
                 $('#belongDomainAgain').empty();
                 $('#belongDomainAgain').append("<option value=''>请选择领域</option>");
                 $('#belongDomainAgain').append(options);
+                form.render('select');
+            }
+        })
+    }
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                $('#meetIdAgain').empty();
+                $('#meetIdAgain').append("<option value='0'>请选择会议</option>");
+                $('#meetIdAgain').append(options);
                 form.render('select');
             }
         })

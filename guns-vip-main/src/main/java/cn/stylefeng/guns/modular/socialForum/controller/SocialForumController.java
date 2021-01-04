@@ -3,17 +3,22 @@ package cn.stylefeng.guns.modular.socialForum.controller;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.log.BussinessLog;
+import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.SocialForumDict;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.socialForum.entity.SocialForum;
 import cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam;
 import cn.stylefeng.guns.modular.socialForum.service.SocialForumService;
+import cn.stylefeng.guns.modular.socialForum.wrapper.SocialForumWrapper;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -25,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -47,7 +53,8 @@ public class SocialForumController extends BaseController {
 
     @Autowired
     private FileInfoService fileInfoService;
-
+    @Autowired
+    private MeetService meetService;
     /**
      * 跳转到主页面
      *
@@ -87,7 +94,14 @@ public class SocialForumController extends BaseController {
         }else {
             model.addAttribute("isReview", "no");
         }
-        return "/social.html";
+        String meetTimeStatusStr = ToolUtil.getMeetTimeStatus();
+        model.addAttribute("meetTimeStatusStr",meetTimeStatusStr);
+        if (meetTimeStatusStr == "报名中" || meetTimeStatusStr == "报名结束"){
+            return "/social.html";
+        }else {
+            return  "/meet_status.html";
+        }
+
     }
 
     /**
@@ -136,6 +150,10 @@ public class SocialForumController extends BaseController {
     @ResponseBody
     public ResponseData addItem(SocialForumParam socialForumParam) {
         Long userId = LoginContextHolder.getContext().getUserId();
+        Meet meet = meetService.getByStatus(1);
+        if (meet != null){
+            socialForumParam.setMeetId(meet.getMeetId());
+        }
         socialForumParam.setApplyStatus(1);
         socialForumParam.setApplyId(userId);
         socialForumParam.setApplyTime(new Date());
@@ -255,7 +273,17 @@ public class SocialForumController extends BaseController {
     public LayuiPageInfo list(SocialForumParam socialForumParam) {
         Long userId = LoginContextHolder.getContext().getUserId();
         socialForumParam.setApplyId(userId);
-        return this.socialForumService.findPageBySpec(socialForumParam);
+        if (socialForumParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                socialForumParam.setMeetId(meet.getMeetId());
+            }
+        } else if (socialForumParam.getMeetId() == 0) {
+            socialForumParam.setMeetId(null);
+        }
+        Page<Map<String, Object>> socialForum = this.socialForumService.findPageBySpec(socialForumParam);
+        Page wrapped = new SocialForumWrapper(socialForum).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
     }
 
     /**

@@ -19,15 +19,21 @@
                                 <div class="layui-form toolbar">
                                     <div class="layui-form-item">
                                         <div class="layui-inline">
-                                            <input id="thesisTitle" class="layui-input" type="text" placeholder="论文题目"/>
+                                            <input id="thesisTitle" style="width: 100px" class="layui-input" type="text" placeholder="论文题目"/>
                                             <input id="thesisTitleExp" style="display: none" class="layui-input" type="text"/>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <div class="">
+                                                <select id="meetId" name="meetId" lay-filter="meetId">
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="layui-inline">
                                             <select id="belongDomain" name="belongDomain" lay-filter="belongDomain">
                                             </select>
                                         </div>
                                         <div class="layui-inline">
-                                            <div class="">
+                                            <div class="" style="width: 130px">
                                                 <select id="reviewResult" name="reviewResult" lay-filter="reviewResult">
                                                     <option value="">请选择评审状态</option>
                                                     <option value="0">未评审</option>
@@ -52,8 +58,14 @@
                                 <div class="layui-form toolbar">
                                     <div class="layui-form-item">
                                         <div class="layui-inline">
-                                            <input id="thesisTitleAgain" class="layui-input" type="text" placeholder="论文题目"/>
+                                            <input id="thesisTitleAgain" style="width: 100px" class="layui-input" type="text" placeholder="论文题目"/>
                                             <input id="thesisTitleExpAgain" style="display: none" class="layui-input" type="text"/>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <div class="">
+                                                <select id="meetIdAgain" name="meetId" lay-filter="meetIdAgain">
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="layui-inline">
                                             <select id="belongDomainAgain" name="belongDomainAgain" lay-filter="belongDomainAgain">

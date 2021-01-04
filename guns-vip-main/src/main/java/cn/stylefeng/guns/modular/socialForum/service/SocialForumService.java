@@ -4,9 +4,11 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.modular.socialForum.entity.SocialForum;
 import cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam;
 import cn.stylefeng.guns.modular.socialForum.model.result.SocialForumResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -64,6 +66,6 @@ public interface SocialForumService extends IService<SocialForum> {
      * @author CHUJIANQIAO
      * @Date 2020-05-15
      */
-     LayuiPageInfo findPageBySpec(SocialForumParam param);
+    Page<Map<String, Object>> findPageBySpec(SocialForumParam param);
 
 }

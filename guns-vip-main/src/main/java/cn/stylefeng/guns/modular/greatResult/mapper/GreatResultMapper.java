@@ -61,5 +61,5 @@ public interface GreatResultMapper extends BaseMapper<GreatResult> {
     Page<Map<String, Object>> customPageMapList(@Param("page") Page page, @Param("paramCondition") GreatResultParam paramCondition,
                                                 @Param("list") List<Long> list,
                                                 @Param("listStatus") String listStatus);
-
+    Page<Map<String, Object>> customPageMapListPerson(@Param("page") Page page, @Param("paramCondition") GreatResultParam paramCondition);
 }

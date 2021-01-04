@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -78,6 +79,27 @@ public class OwnForumServiceImpl extends ServiceImpl<OwnForumMapper, OwnForum> i
         }
 
         return LayuiPageFactory.createPageInfo(page);
+    }
+
+    @Override
+    public Page<Map<String, Object>> findPageWrap(OwnForumParam param) {
+        Page pageContext = getPageContext();
+        if (param.getForumName()==null){
+            param.setForumName("%%");
+        }else {
+            param.setForumName("%" + param.getForumName() + "%");
+        }
+
+        Page page = null;
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        List roleIds = user.getRoleList();
+        long adminRole = 1;
+        if(roleIds.contains(adminRole)){
+            page = this.baseMapper.customPageMapListAdmin(pageContext, param);
+        }else {
+            page = this.baseMapper.customPageMapList(pageContext, param);
+        }
+        return page;
     }
 
     private Serializable getKey(OwnForumParam param){

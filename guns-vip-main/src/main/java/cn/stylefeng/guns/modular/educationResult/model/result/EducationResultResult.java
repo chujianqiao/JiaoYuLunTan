@@ -198,5 +198,6 @@ public class EducationResultResult implements Serializable {
      * 评审备注
      */
     private String description;
+    private Long meetId;
 
 }

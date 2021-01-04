@@ -75,6 +75,12 @@ public class CollectTopic implements Serializable {
     @TableField("diy2")
     private String diy2;
 
+    /**
+     * 会议ID
+     */
+    @TableField("meet_id")
+    private Long meetId;
+
 
     public Long getTopicId() {
         return topicId;
@@ -148,6 +154,14 @@ public class CollectTopic implements Serializable {
         this.diy2 = diy2;
     }
 
+    public Long getMeetId() {
+        return meetId;
+    }
+
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
+    }
+
     @Override
     public String toString() {
         return "CollectTopic{" +
@@ -160,6 +174,7 @@ public class CollectTopic implements Serializable {
         ", createTime=" + createTime +
         ", diy1=" + diy1 +
         ", diy2=" + diy2 +
+        ", meetId=" + meetId +
         "}";
     }
 }

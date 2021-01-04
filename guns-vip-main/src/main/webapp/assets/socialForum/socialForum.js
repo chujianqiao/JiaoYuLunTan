@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 社会资助论坛表管理
@@ -14,7 +15,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             unitName: "",
         }
     };
-
+    meetSelectOption();
     /**
      * 初始化表格的列
      */
@@ -24,7 +25,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             //{field: 'forumId', hide: true, title: '论坛ID'},
             //{field: 'forumName', sort: true, title: '论坛名称'},
             //{field: 'forumDesc', sort: true, title: '论坛描述'},
-
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'unitName', sort: true, title: '企业/单位名称'},
             {field: 'creditCode', sort: true, title: '统一社会信用代码'},
             {field: 'manager', sort: true, title: '联系人'},
@@ -61,11 +62,14 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
         queryData['unitName'] = $("#unitName").val();
         $("#unitNameExp").val($("#unitName").val());
+        queryData['meetId'] = $("#meetId").val();
         table.reload(SocialForum.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(meetId)', function(data){
+        SocialForum.search();
+    });
     /**
      * 弹出添加对话框
      */
@@ -137,7 +141,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             url: Feng.ctxPath + '/socialForum/list',
             type: 'post',
             data: {
-                "unitName":$('#unitNameExp').val()
+                "unitName":$('#unitNameExp').val(),
+                "meetId":$('#meetId').val(),
             },
             async: false,
             dataType: 'json',
@@ -155,6 +160,9 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         title: '赞助列表全部数据',
         cols: [[ //表头
             {
+                field: 'meetName',
+                title: '会议名称',
+            },{
                 field: 'unitName',
                 title: '企业/单位名称',
             }, {
@@ -244,4 +252,31 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             SocialForum.openDetail(data);
         }
     });
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                form.render('select');
+            }
+        })
+    }
 });

@@ -12,6 +12,8 @@ import cn.stylefeng.guns.collTopic.wrapper.CollectTopicWrapper;
 import cn.stylefeng.guns.core.constant.dictmap.CollectTopicDict;
 import cn.stylefeng.guns.core.constant.dictmap.OwnForumDict;
 import cn.stylefeng.guns.expert.wrapper.ReviewMajorWrapper;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
@@ -40,6 +42,8 @@ public class CollectTopicController extends BaseController {
 
     @Autowired
     private CollectTopicService collectTopicService;
+    @Autowired
+    private MeetService meetService;
 
     /**
      * 跳转到主页面
@@ -80,7 +84,15 @@ public class CollectTopicController extends BaseController {
         }else {
             model.addAttribute("isReview", "no");
         }
-        return "/collect.html";
+
+        String meetTimeStatusStr = ToolUtil.getMeetTimeStatus();
+        model.addAttribute("meetTimeStatusStr",meetTimeStatusStr);
+        if (meetTimeStatusStr == "报名中" || meetTimeStatusStr == "报名结束"){
+            return "/collect.html";
+        }else {
+            return  "/meet_status.html";
+        }
+
     }
 
     /**
@@ -115,6 +127,10 @@ public class CollectTopicController extends BaseController {
     @BussinessLog(value = "新增征集主题", key = "topicName", dict = CollectTopicDict.class)
     public ResponseData addItem(CollectTopicParam collectTopicParam) {
         LoginUser user = LoginContextHolder.getContext().getUser();
+        Meet meet = meetService.getByStatus(1);
+        if (meet != null){
+            collectTopicParam.setMeetId(meet.getMeetId());
+        }
         collectTopicParam.setCreateUser(user.getId());
         collectTopicParam.setCreateTime(new Date());
         this.collectTopicService.add(collectTopicParam);
@@ -187,6 +203,15 @@ public class CollectTopicController extends BaseController {
             userId = 0;
         }
         collectTopicParam.setCreateUser(userId);
+
+        if (collectTopicParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                collectTopicParam.setMeetId(meet.getMeetId());
+            }
+        } else if (collectTopicParam.getMeetId() == 0) {
+            collectTopicParam.setMeetId(null);
+        }
 
         Page<Map<String, Object>> topics = this.collectTopicService.findPageWrap(collectTopicParam);
         Page wrapped = new CollectTopicWrapper(topics).wrap();

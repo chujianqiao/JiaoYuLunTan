@@ -242,9 +242,16 @@ public class SeatController extends BaseController {
             }
         }
         //只返回当前环境变量设置的会议
-        Meet meet = meetService.getByStatus(1);
-        Long meetId = meet.getMeetId();
-        seatParam.setMeetId(meetId);
+        if (seatParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                Long meetId = meet.getMeetId();
+                seatParam.setMeetId(meetId);
+            }
+        } else if (seatParam.getMeetId() == 0) {
+            seatParam.setMeetId(null);
+        }
+
         Page<Map<String, Object>> seats = this.seatService.findPageWrap(seatParam,meetIdList);
         Page wrapped = new SeatWrapper(seats).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);

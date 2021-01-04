@@ -82,7 +82,10 @@ public class ForumController extends BaseController {
         forumParam.setExistNum(0);
         forumParam.setStatus(0);
         Meet meet = meetService.getByStatus(1);
-        forumParam.setMeetId(meet.getMeetId());
+        if (meet != null){
+            forumParam.setMeetId(meet.getMeetId());
+        }
+
         this.forumService.add(forumParam);
         return ResponseData.success();
     }
@@ -148,7 +151,9 @@ public class ForumController extends BaseController {
     public Object wrapList(ForumParam forumParam) {
         if (forumParam.getMeetId() == null){
             Meet meet = meetService.getByStatus(1);
-            forumParam.setMeetId(meet.getMeetId());
+            if (meet != null){
+                forumParam.setMeetId(meet.getMeetId());
+            }
         } else if (forumParam.getMeetId() == 0) {
             forumParam.setMeetId(null);
         }

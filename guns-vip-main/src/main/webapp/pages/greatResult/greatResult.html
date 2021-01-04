@@ -12,8 +12,23 @@
                     <div class="layui-form toolbar">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <input id="resultName" class="layui-input" type="text" placeholder="请输入论坛名称"/>
+                                <input id="resultName" class="layui-input" type="text" placeholder="请输入成果名称"/>
                                 <input id="resultNameExp" style="display:none" class="layui-input" type="text" />
+                            </div>
+                            <div class="layui-inline">
+                                <div class="">
+                                    <select id="meetId" name="meetId" lay-filter="meetId">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <div class="">
+                                    <select id="checkStatus" name="checkStatus" lay-filter="checkStatus">
+                                        <option value="">请选择评审状态</option>
+                                        <option value="0">未评审</option>
+                                        <option value="1">已评审</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="layui-inline">
                                 <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>

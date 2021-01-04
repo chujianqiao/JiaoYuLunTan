@@ -204,7 +204,9 @@ public class CheckInController extends BaseController {
 
         if (checkInParam.getMeetId() == null){
             Meet meet = meetService.getByStatus(1);
-            checkInParam.setMeetId(meet.getMeetId());
+            if (meet != null){
+                checkInParam.setMeetId(meet.getMeetId());
+            }
         } else if (checkInParam.getMeetId() == 0) {
             checkInParam.setMeetId(null);
         }

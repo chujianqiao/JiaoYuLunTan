@@ -75,4 +75,5 @@ public interface GreatResultService extends IService<GreatResult> {
      * @Date 2020-05-25
      */
     Page<Map<String, Object>> findPageWrap(GreatResultParam param,List<Long> list,String listStatus);
+    Page<Map<String, Object>> findPageWrap(GreatResultParam param);
 }

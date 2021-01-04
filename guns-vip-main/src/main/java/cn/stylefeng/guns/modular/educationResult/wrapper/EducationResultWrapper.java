@@ -3,6 +3,7 @@ package cn.stylefeng.guns.modular.educationResult.wrapper;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.educationReviewMiddle.entity.EducationReviewMiddle;
 import cn.stylefeng.guns.modular.educationReviewMiddle.model.params.EducationReviewMiddleParam;
 import cn.stylefeng.guns.modular.educationReviewMiddle.model.result.EducationReviewMiddleResult;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class EducationResultWrapper extends BaseControllerWrapper {
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
     private UserService userService = SpringContextHolder.getBean(UserService.class);
+    private MeetService meetService = SpringContextHolder.getBean(MeetService.class);
     private EducationReviewMiddleService educationReviewMiddleService = SpringContextHolder.getBean(EducationReviewMiddleService.class);
 
 
@@ -77,7 +79,7 @@ public class EducationResultWrapper extends BaseControllerWrapper {
         } else if (reviewResult == 1){
             map.put("reviewResult","推荐参会");
         } else {
-            map.put("reviewResult","未评审");
+            map.put("reviewResult","未分配");
         }
 
         EducationReviewMiddleParam middleParam = new EducationReviewMiddleParam();
@@ -93,5 +95,9 @@ public class EducationResultWrapper extends BaseControllerWrapper {
             }
         }
 
+        Object meetId = map.get("meetId");
+        if (meetId != null){
+            map.put("meetName",meetService.getById(Long.parseLong(meetId.toString())).getMeetName());
+        }
     }
 }

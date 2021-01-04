@@ -196,6 +196,8 @@ public class OwnForumParam implements Serializable, BaseValidatingParam {
      */
     private Date endTime;
 
+    private Long meetId;
+
     @Override
     public String checkParam() {
         return null;

@@ -2,6 +2,8 @@ package cn.stylefeng.guns.util;
 
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.sys.modular.system.entity.Role;
 import cn.stylefeng.guns.sys.modular.system.service.RoleService;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
@@ -33,6 +35,7 @@ public class ToolUtil {
 	private UserService userService = SpringContextHolder.getBean(UserService.class);
 
 	private static RoleService roleService = SpringContextHolder.getBean(RoleService.class);
+	private static MeetService meetService = SpringContextHolder.getBean(MeetService.class);
 	/**
 	 * 判断当前登录用户是否为管理员角色
 	 * @return
@@ -173,5 +176,33 @@ public class ToolUtil {
 		}
 	}
 
+	/**
+	 * 查询当前是否有会议，会议时间的状态
+	 * @return
+	 */
+	public static String getMeetTimeStatus(){
+		Meet meet = meetService.getByStatus(1);
+		if (meet == null){
+			return "无会议";
+		}else {
+			long nowDate = new Date().getTime();
+			long joinBegTime = meet.getJoinBegTime().getTime();
+			long joinEndTime = meet.getJoinEndTime().getTime();
+			long beginTime = meet.getBeginTime().getTime();
+			long endTime = meet.getEndTime().getTime();
 
+			if (nowDate <= joinEndTime && nowDate > joinBegTime){
+				return "报名中";
+			} else if (nowDate <= endTime && nowDate >= beginTime){
+				return "进行中";
+			} else if (nowDate > endTime){
+				return "已结束";
+			} else if (nowDate > joinEndTime && nowDate < beginTime){
+				return "报名结束";
+			} else {
+				return "未开始";
+			}
+		}
+
+	}
 }

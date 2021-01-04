@@ -109,6 +109,7 @@ public class SocialForumParam implements Serializable, BaseValidatingParam {
      * 统一社会信用代码
      */
     private String creditCode;
+    private Long meetId;
 
     @Override
     public String checkParam() {

@@ -65,6 +65,11 @@ public class GreatResultServiceImpl extends ServiceImpl<GreatResultMapper, Great
         Page page = LayuiPageFactory.defaultPage();
         return this.baseMapper.customPageMapList(page,param,list,listStatus);
     }
+    @Override
+    public Page<Map<String, Object>> findPageWrap(GreatResultParam param) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.customPageMapListPerson(page,param);
+    }
 
     @Override
     public LayuiPageInfo findPageBySpec(GreatResultParam param){

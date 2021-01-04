@@ -39,6 +39,12 @@
                                                                 </div>
                                                                 <div class="layui-inline">
                                                                     <div class="">
+                                                                        <select id="meetId" name="meetId" lay-filter="meetId">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="layui-inline">
+                                                                    <div class="">
                                                                         <select id="reviewStatus" name="reviewStatus" lay-filter="reviewStatus">
                                                                             <option value="">请选择评审状态</option>
                                                                             <option value="0">未评审</option>
@@ -58,6 +64,12 @@
                                                             <div class="layui-form-item">
                                                                 <div class="layui-inline">
                                                                     <input id="thesisTitleAgain" class="layui-input" type="text" placeholder="论文题目"/>
+                                                                </div>
+                                                                <div class="layui-inline">
+                                                                    <div class="">
+                                                                        <select id="meetIdAgain" name="meetId" lay-filter="meetIdAgain">
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="layui-inline">
                                                                     <button id="btnSearchAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
@@ -87,6 +99,21 @@
                                                         <input id="resultName" class="layui-input" type="text" placeholder="请输入名称"/>
                                                     </div>
                                                     <div class="layui-inline">
+                                                        <div class="">
+                                                            <select id="meetIdResult" name="meetId" lay-filter="meetIdResult">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="layui-inline">
+                                                        <div class="">
+                                                            <select id="reviewStatusResult" name="reviewStatus" lay-filter="reviewStatusResult">
+                                                                <option value="">请选择评审状态</option>
+                                                                <option value="0">未评审</option>
+                                                                <option value="1">已评审</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="layui-inline">
                                                         <button id="btnSearchEdu" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                                     </div>
                                                 </div>
@@ -103,19 +130,41 @@
                     </div>
                     <!-- 优秀论著 -->
                     <div class="layui-tab-item">
-                        <div class="layui-card">
-                            <div class="layui-card-body">
-                                <div class="layui-form toolbar">
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <input id="greatResultName" class="layui-input" type="text" placeholder="请输入名称"/>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <button id="btnSearchGreat" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                        <div class="layui-fluid">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-body">
+                                            <div class="layui-form toolbar">
+                                                <div class="layui-form-item">
+                                                    <div class="layui-inline">
+                                                        <input id="greatResultName" class="layui-input" type="text" placeholder="请输入名称"/>
+                                                    </div>
+                                                    <div class="layui-inline">
+                                                        <div class="">
+                                                            <select id="meetIdResult2" name="meetId" lay-filter="meetIdResult2">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="layui-inline">
+                                                        <div class="">
+                                                            <select id="reviewStatusResult2" name="reviewStatus" lay-filter="reviewStatusResult2">
+                                                                <option value="">请选择评审状态</option>
+                                                                <option value="0">未评审</option>
+                                                                <option value="1">已评审</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="layui-inline">
+                                                        <button id="btnSearchGreat" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <table class="layui-table" id="greatResultTable" lay-filter="greatResultTable"></table>
                                         </div>
                                     </div>
                                 </div>
-                                <table class="layui-table" id="greatResultTable" lay-filter="greatResultTable"></table>
+
                             </div>
                         </div>
                     </div>

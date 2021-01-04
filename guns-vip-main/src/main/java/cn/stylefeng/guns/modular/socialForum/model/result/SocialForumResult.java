@@ -109,4 +109,6 @@ public class SocialForumResult implements Serializable {
      */
     private String creditCode;
 
+    private Long meetId;
+
 }

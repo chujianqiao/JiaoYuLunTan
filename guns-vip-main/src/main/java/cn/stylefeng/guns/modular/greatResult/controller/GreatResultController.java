@@ -9,6 +9,8 @@ import cn.stylefeng.guns.core.constant.dictmap.ResultDict;
 import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.greatResult.entity.GreatResult;
 import cn.stylefeng.guns.modular.greatResult.model.params.GreatResultParam;
 import cn.stylefeng.guns.modular.greatResult.service.GreatResultService;
@@ -65,6 +67,9 @@ public class GreatResultController extends BaseController {
     private ReviewMajorService reviewMajorService;
 
     @Autowired
+    private MeetService meetService;
+
+    @Autowired
     private GreatReviewMiddleService greatReviewMiddleService;
 
     @Value("${file.uploadFolder}")
@@ -112,10 +117,21 @@ public class GreatResultController extends BaseController {
         }
         List roles = user.getRoleList();
         long unit = 3;
+        String meetTimeStatusStr = ToolUtil.getMeetTimeStatus();
+        model.addAttribute("meetTimeStatusStr",meetTimeStatusStr);
+
         if (roles.contains(unit)){
-            return "/unitResult.html";
+            if (meetTimeStatusStr == "报名中" || meetTimeStatusStr == "报名结束"){
+                return "/unitResult.html";
+            }else {
+                return  "/meet_status.html";
+            }
         } else {
-            return "/result.html";
+            if (meetTimeStatusStr == "报名中" || meetTimeStatusStr == "报名结束"){
+                return "/result.html";
+            }else {
+                return  "/meet_status.html";
+            }
         }
     }
 
@@ -269,6 +285,10 @@ public class GreatResultController extends BaseController {
         greatResultParam.setApplyId(userId);
         greatResultParam.setCheckStatus(1);
         greatResultParam.setApplyTime(new Date());
+        Meet meet = meetService.getByStatus(1);
+        if (meet != null){
+            greatResultParam.setMeetId(meet.getMeetId());
+        }
         this.greatResultService.add(greatResultParam);
         return ResponseData.success();
     }
@@ -309,6 +329,15 @@ public class GreatResultController extends BaseController {
         middleParam.setReviewTime(new Date());
 
         this.greatReviewMiddleService.update(middleParam);
+
+        GreatResultParam param = new GreatResultParam();
+        param.setResultId(greatResultParam.getResultId());
+        if (middleParam.getReviewResult() == 0){
+            param.setCheckStatus(3);
+        }else if (middleParam.getReviewResult() == 1){
+            param.setCheckStatus(2);
+        }
+        this.greatResultService.update(param);
 
         String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
@@ -455,8 +484,8 @@ public class GreatResultController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/wrapList")
-    public Object wrapList(GreatResultParam educationResultParam) {
-        boolean isReview = ToolUtil.isReviewRole();
+    public Object wrapList(GreatResultParam greatResultParam) {
+        /*boolean isReview = ToolUtil.isReviewRole();
         List<Long> greatIdList = new ArrayList<>();
         String listStatus = "";
         if(isReview){
@@ -464,8 +493,21 @@ public class GreatResultController extends BaseController {
             if(greatIdList.size() != 0){
                 listStatus = "有数据";
             }
+        }*/
+        Long userId = LoginContextHolder.getContext().getUserId();
+        boolean isAdmin = ToolUtil.isAdminRole();
+        if (!isAdmin){
+            greatResultParam.setApplyId(userId);
         }
-        Page<Map<String, Object>> theses = this.greatResultService.findPageWrap(educationResultParam,greatIdList,listStatus);
+        if (greatResultParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                greatResultParam.setMeetId(meet.getMeetId());
+            }
+        } else if (greatResultParam.getMeetId() == 0) {
+            greatResultParam.setMeetId(null);
+        }
+        Page<Map<String, Object>> theses = this.greatResultService.findPageWrap(greatResultParam);
         Page wrapped = new GreatResultWrapper(theses).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }
@@ -487,7 +529,14 @@ public class GreatResultController extends BaseController {
                 listStatus = "有数据";
             }
         }
-
+        if (educationResultParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                educationResultParam.setMeetId(meet.getMeetId());
+            }
+        } else if (educationResultParam.getMeetId() == 0) {
+            educationResultParam.setMeetId(null);
+        }
         if (listStatus == "有数据"){
             Page<Map<String, Object>> theses = this.greatResultService.findPageWrap(educationResultParam,greatIdList,listStatus);
             Page wrapped = new GreatResultWrapper(theses).wrap();

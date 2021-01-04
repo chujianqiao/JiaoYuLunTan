@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 优秀成果表管理
@@ -14,7 +15,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             resultName: "",
         }
     };
-
+    meetSelectOption();
     /**
      * 初始化表格的列
      */
@@ -22,6 +23,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'resultName', sort: true, title: '成果名称'},
             {field: 'belongName', sort: true, title: '申请人姓名'},
             {field: 'reviewName', sort: true, title: '评审专家'},
@@ -60,7 +62,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'passTime', sort: true, title: '审核通过时间'},
             {field: 'cancelTime', sort: true, title: '取消申请时间'},*/
             {align: 'center', title: '操作',minWidth:220, templet: function(data){
-                if (data.reviewResult == "未评审"){
+                if (data.reviewResult == "未评审" || data.reviewResult == "未分配"){
                     return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
                         "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
                         "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
@@ -80,11 +82,18 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
 
         queryData['resultName'] = $("#resultName").val();
         $("#resultNameExp").val($("#resultName").val());
+        queryData['meetId'] = $("#meetId").val();
+        queryData['checkStatus'] = $("#checkStatus").val();
         table.reload(EducationResult.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(meetId)', function(data){
+        EducationResult.search();
+    });
+    form.on('select(checkStatus)', function(data){
+        EducationResult.search();
+    });
     /**
      * 弹出添加对话框
      */
@@ -156,7 +165,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             url: Feng.ctxPath + '/educationResult/wrapList',
             type: 'post',
             data: {
-                "resultName":$('#resultNameExp').val()
+                "resultName":$('#resultNameExp').val(),
+                "meetId":$('#meetId').val(),
             },
             async: false,
             dataType: 'json',
@@ -173,6 +183,9 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         title: '教改实验申报全部数据',
         cols: [[ //表头
             {
+                field: 'meetName',
+                title: '会议名称',
+            },{
                 field: 'resultName',
                 title: '成果名称',
             }, {
@@ -296,4 +309,31 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             EducationResult.jumpAssignPage(data);
         }
     });
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                form.render('select');
+            }
+        })
+    }
 });

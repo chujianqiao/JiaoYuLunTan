@@ -190,7 +190,9 @@ public class BillController extends BaseController {
 
         if (billParam.getMeetId() == null){
             Meet meet = meetService.getByStatus(1);
-            billParam.setMeetId(meet.getMeetId());
+            if (meet != null){
+                billParam.setMeetId(meet.getMeetId());
+            }
         } else if (billParam.getMeetId() == 0) {
             billParam.setMeetId(null);
         }

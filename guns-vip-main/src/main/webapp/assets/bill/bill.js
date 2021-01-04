@@ -23,7 +23,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             {type: 'checkbox'},
             {field: 'billId', hide: true, title: '发票ID'},
             {field: 'userName', sort: true, title: '申请人'},
-            {field: 'meetName', sort: true, title: '会议'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'enterprise', sort: true, title: '企业名称'},
             {field: 'taxpayerNumber', sort: true, title: '纳税人识别号'},
             {field: 'contact', hide: true, title: '联系人'},

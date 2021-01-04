@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -83,7 +84,8 @@ public class MeetMaterialController extends BaseController {
      * @Date 2020-07-22
      */
     @RequestMapping("toFileDownload")
-    public String toFileDownload() {
+    public String toFileDownload(Long meetId, Model model) {
+        model.addAttribute("meetId",meetId);
         return PREFIX + "/meetFiles.html";
     }
 
@@ -179,7 +181,9 @@ public class MeetMaterialController extends BaseController {
         Long meetId = meetMaterialParam.getMeetId();
         if (meetId == null){
             Meet meet = meetService.getByStatus(1);
-            meetMaterialParam.setMeetId(meet.getMeetId());
+            if (meet != null){
+                meetMaterialParam.setMeetId(meet.getMeetId());
+            }
         } else if (meetId == 0) {
             meetMaterialParam.setMeetId(null);
         }
@@ -194,8 +198,19 @@ public class MeetMaterialController extends BaseController {
     @ResponseBody
     @RequestMapping("/wrapList")
     public Object wrapList(MeetMaterialParam meetMaterialParam) {
-        Meet meet = meetService.getByStatus(1);
-        meetMaterialParam.setMeetId(meet.getMeetId());
+        Long meetId = meetMaterialParam.getMeetId();
+        Meet meet = new Meet();
+        if (meetId != null){
+            meetMaterialParam.setMeetId(meetId);
+            meet = meetService.getById(meetId);
+        }else {
+            meet = meetService.getByStatus(1);
+            if (meet != null){
+                meetMaterialParam.setMeetId(meet.getMeetId());
+            }
+        }
+
+
         Page<Map<String, Object>> forum = this.meetMaterialService.findPageWrap(meetMaterialParam);
 
         List<User> userList = this.userService.getByCanDownloadFile();
@@ -223,10 +238,20 @@ public class MeetMaterialController extends BaseController {
         }
 
         Map map2 = new HashMap();
-        map2.put("matPath","1");
-        map2.put("matName","会议手册.doc");
-        map2.put("meetId",meet.getMeetId());
-        forum.getRecords().add(map2);
+        if (meet != null){
+            map2.put("matPath","1");
+            map2.put("matName","会议手册.doc");
+            map2.put("meetId",meet.getMeetId());
+        }
+
+        if (forum.getRecords().size() == 0){
+            List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
+            list.add(map2);
+            forum.setRecords(list);
+        }else {
+            forum.getRecords().add(map2);
+        }
+
 
         return LayuiPageFactory.createPageInfo(forum);
     }
@@ -242,6 +267,7 @@ public class MeetMaterialController extends BaseController {
         //检查是否有重复文件
         String originName = file.getOriginalFilename();
         checkRepeatFile(originName);
+
         String path = uploadFolder + "material" + File.separator ;
         UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
         String fileId = uploadResult.getFileId();
@@ -249,9 +275,12 @@ public class MeetMaterialController extends BaseController {
         map.put("fileId", fileId);
         map.put("path",uploadResult.getFileSavePath());
 
+        String fileSuffix = cn.stylefeng.roses.core.util.ToolUtil.getFileSuffix(file.getOriginalFilename());
+        String finalName = uploadResult.getOriginalFilename().replace("." + fileSuffix,System.currentTimeMillis() + "." + fileSuffix);
+
         MeetMaterialParam meetMaterialParam = new MeetMaterialParam();
         meetMaterialParam.setMaterialId(ToolUtil.getNum19());
-        meetMaterialParam.setMatName(uploadResult.getOriginalFilename());
+        meetMaterialParam.setMatName(finalName);
         meetMaterialParam.setMatPath(uploadResult.getFileSavePath());
 
         Meet pubMeet = this.meetService.getByStatus(1);

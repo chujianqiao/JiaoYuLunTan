@@ -3,6 +3,7 @@ package cn.stylefeng.guns.thesis.wrapper;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
@@ -30,6 +31,7 @@ public class ThesisWrapper extends BaseControllerWrapper {
 
 	private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
 	private UserService userService = SpringContextHolder.getBean(UserService.class);
+	private MeetService meetService = SpringContextHolder.getBean(MeetService.class);
 
 	private ThesisDomainService thesisDomainService = SpringContextHolder.getBean(ThesisDomainService.class);
 	private ThesisReviewMiddleService thesisReviewMiddleService = SpringContextHolder.getBean(ThesisReviewMiddleService.class);
@@ -212,11 +214,17 @@ public class ThesisWrapper extends BaseControllerWrapper {
 			map.put("scoreStr",scoreStr);
 		}
 
+		if (firstName.equals("")){
+			map.put("status","未分配");
+		}
 		map.put("firstName",firstName);
 		map.put("againName",againName);
 		map.put("belongDomainStr",belongDomainStr);
 		map.put("userName",nameBuilder.toString());
 		map.put("unitsName",unitsName);
-
+		Object meetId = map.get("meetId");
+		if (meetId != null){
+			map.put("meetName",meetService.getById(Long.parseLong(meetId.toString())).getMeetName());
+		}
 	}
 }

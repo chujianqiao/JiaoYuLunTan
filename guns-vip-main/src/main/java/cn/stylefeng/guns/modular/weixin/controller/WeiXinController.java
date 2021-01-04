@@ -152,8 +152,12 @@ public class WeiXinController {
         param.setCode("MONEY");
         //SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
         Meet meet = meetService.getByStatus(1);
-        BigDecimal bignum = new BigDecimal("100");
-        int money = (meet.getFee().multiply(bignum)).intValue();
+        int money = 0;
+        if (meet != null){
+            BigDecimal bignum = new BigDecimal("100");
+            money = (meet.getFee().multiply(bignum)).intValue();
+        }
+
         map.put("total_fee",money + "");
         // 终端IP
         map.put("spbill_create_ip","127.0.0.1");
@@ -278,7 +282,7 @@ public class WeiXinController {
 
                     }else{
                         //实现自己的业务
-                        double wxtotal_fee = Double.parseDouble(map.get("total_fee"));
+                        double wxtotal_fee = Double.parseDouble(map.get("total_fee")) * 0.01;
                         //支付详情
                         VipPayParam vipPayParam = new VipPayParam();
                         long payId = ToolUtil.getNum19();

@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -115,6 +116,24 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		if (meetId != null){
 			Meet meet = meetMapper.selectById(Long.parseLong(meetId.toString()));
 			map.put("meetName",meet.getMeetName());
+			map.put("meetPubStatus",meet.getMeetStatus());
+			long nowDate = new Date().getTime();
+			long joinBegTime = meet.getJoinBegTime().getTime();
+			long joinEndTime = meet.getJoinEndTime().getTime();
+			long beginTime = meet.getBeginTime().getTime();
+			long endTime = meet.getEndTime().getTime();
+
+			if (nowDate <= joinEndTime && nowDate > joinBegTime){
+				map.put("meetTimeStatusStr","报名中");
+			} else if (nowDate <= endTime && nowDate >= beginTime){
+				map.put("meetTimeStatusStr","进行中");
+			} else if (nowDate > endTime){
+				map.put("meetTimeStatusStr","已结束");
+			} else if (nowDate > joinEndTime && nowDate < beginTime){
+				map.put("meetTimeStatusStr","报名结束");
+			} else {
+				map.put("meetTimeStatusStr","未开始");
+			}
 		}
 
 

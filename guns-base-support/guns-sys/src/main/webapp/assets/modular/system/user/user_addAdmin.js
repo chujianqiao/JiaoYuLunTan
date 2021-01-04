@@ -37,7 +37,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
     // 添加表单验证方法
     form.verify({
-        psw: [/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{8,14}$/, '密码必须由8~14位大小写字母加数字组合！'],
+        psw: [/(?!.*[\u4E00-\u9FA5\s])(?!^[a-zA-Z]+$)(?!^[\d]+$)(?!^[^a-zA-Z\d]+$)^.{8,14}$/, '8~14位字母/数字以及标点符号至少包含2种，不允许有空格、中文！'],
         repsw: function (value) {
             if (value !== $('#userForm input[name=password]').val()) {
                 return '两次密码输入不一致';

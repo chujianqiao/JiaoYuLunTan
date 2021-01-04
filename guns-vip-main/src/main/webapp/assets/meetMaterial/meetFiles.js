@@ -137,10 +137,14 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
         }
     }
 
+    var meetId = "";
+    if ($("#meetId").val() != null){
+        meetId = $("#meetId").val();
+    }
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + MeetMaterial.tableId,
-        url: Feng.ctxPath + '/meetMaterial/wrapList',
+        url: Feng.ctxPath + '/meetMaterial/wrapList?meetId=' + meetId,
         page: true,
         height: "full-158",
         cellMinWidth: 100,

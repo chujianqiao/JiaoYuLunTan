@@ -206,8 +206,12 @@ public class ThesisDomainController extends BaseController {
     @RequestMapping("/existList")
     public LayuiPageInfo existList(ThesisDomainParam thesisDomainParam) {
         List<String> list = this.thesisService.findExistList();
+        if (list.size() > 0){
+            return this.thesisDomainService.findPageById(list);
+        }else {
+            return null;
+        }
 
-        return this.thesisDomainService.findPageById(list);
     }
 
     /**

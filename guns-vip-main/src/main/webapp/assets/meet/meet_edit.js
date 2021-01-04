@@ -58,23 +58,30 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
     if(meetId == null || meetId == "" || meetId == 'undefined'){
         meetId = $("#meetIdParam").val();
     }
-    var ajax = new $ax(Feng.ctxPath + "/meet/detail?meetId=" + meetId);
-    var result = ajax.start();
-    form.val('meetForm', result.data);
 
-    let size = result.data.size;
-    if(size == 'big' || size == "big"){
-        $("#meetFee").show();
-    }else if (size == 'small' || size == "small"){
-        $("#meetFee").hide();
+    if(meetId == null || meetId == "" || meetId == 'undefined'){
+        $("#userInfoTab").html("<h2 style='font-weight: bold;'>当前无正在进行的会议。</h2>");
+    }else {
+        var ajax = new $ax(Feng.ctxPath + "/meet/detail?meetId=" + meetId);
+        var result = ajax.start();
+        form.val('meetForm', result.data);
+
+        let size = result.data.size;
+        if(size == 'big' || size == "big"){
+            $("#meetFee").show();
+        }else if (size == 'small' || size == "small"){
+            $("#meetFee").hide();
+        }
+        // console.log(result.data)
+        $("#meetData1").html(result.data.meetName);
+        $("#meetData2").html("会议时间：" + result.data.beginTime + "-" + result.data.endTime);
+        $("#meetData3").html("会议地点：" + result.data.place);
+        $("#meetData4").html(result.data.meetName);
+        $("#meetData5").html("会议时间：" + result.data.beginTime + "-" + result.data.endTime);
+        $("#meetData6").html("会议地点：" + result.data.place);
     }
-    // console.log(result.data)
-    $("#meetData1").html(result.data.meetName);
-    $("#meetData2").html("会议时间：" + result.data.beginTime + "-" + result.data.endTime);
-    $("#meetData3").html("会议地点：" + result.data.place);
-    $("#meetData4").html(result.data.meetName);
-    $("#meetData5").html("会议时间：" + result.data.beginTime + "-" + result.data.endTime);
-    $("#meetData6").html("会议地点：" + result.data.place);
+
+
 
     //会议size监控
     form.on('select(size)', function(data){

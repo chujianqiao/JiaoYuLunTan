@@ -13,11 +13,12 @@
         <result column="create_time" property="createTime" />
         <result column="diy1" property="diy1" />
         <result column="diy2" property="diy2" />
+        <result column="meet_id" property="meetId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        topic_id AS "topicId", create_user AS "createUser", topic_name AS "topicName", topic_desc AS "topicDesc", sub_topic AS "subTopic", vote_num AS "voteNum", create_time AS "createTime", diy1 AS "diy1", diy2 AS "diy2"
+        topic_id AS "topicId", create_user AS "createUser", topic_name AS "topicName", topic_desc AS "topicDesc", sub_topic AS "subTopic", vote_num AS "voteNum", create_time AS "createTime", diy1 AS "diy1", diy2 AS "diy2",meet_id AS "meetId"
     </sql>
 
 
@@ -61,12 +62,15 @@
         select
         <include refid="Base_Column_List"/>
         from collect_topic where 1 = 1
-            <if test="paramCondition.createUser != null and paramCondition.createUser != '' and paramCondition.createUser != 0">
-                and create_user = #{paramCondition.createUser}
-            </if>
-            <if test="paramCondition.topicName != null and paramCondition.topicName != ''">
-                and topic_name like CONCAT('%',#{paramCondition.topicName},'%')
-            </if>
+        <if test="paramCondition.createUser != null and paramCondition.createUser != '' and paramCondition.createUser != 0">
+            and create_user = #{paramCondition.createUser}
+        </if>
+        <if test="paramCondition.topicName != null and paramCondition.topicName != ''">
+            and topic_name like CONCAT('%',#{paramCondition.topicName},'%')
+        </if>
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
     </select>
 
 </mapper>

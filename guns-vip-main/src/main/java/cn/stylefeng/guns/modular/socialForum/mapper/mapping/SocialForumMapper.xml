@@ -22,11 +22,12 @@
         <result column="contract_name" property="contractName" />
         <result column="remarks" property="remarks" />
         <result column="credit_code" property="creditCode" />
+        <result column="meet_id" property="meetId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        forum_id AS "forumId", forum_name AS "forumName", forum_desc AS "forumDesc", apply_status AS "applyStatus", unit_name AS "unitName", unit_place AS "unitPlace", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", already_meet AS "alreadyMeet", sup_plate AS "supPlate", sup_money AS "supMoney", contract_path AS "contractPath", apply_time AS "applyTime", apply_id AS "applyId", contract_name AS "contractName", remarks AS "remarks", credit_code AS "creditCode"
+        forum_id AS "forumId", forum_name AS "forumName", forum_desc AS "forumDesc", apply_status AS "applyStatus", unit_name AS "unitName", unit_place AS "unitPlace", manager AS "manager", mana_phone AS "manaPhone", mana_email AS "manaEmail", already_meet AS "alreadyMeet", sup_plate AS "supPlate", sup_money AS "supMoney", contract_path AS "contractPath", apply_time AS "applyTime", apply_id AS "applyId", contract_name AS "contractName", remarks AS "remarks", credit_code AS "creditCode",meet_id AS "meetId"
     </sql>
 
 
@@ -42,16 +43,22 @@
         from social_forum where 1 = 1
     </select>
 
-    <select id="customPageList" resultType="cn.stylefeng.guns.modular.socialForum.model.result.SocialForumResult" parameterType="cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam">
+    <select id="customPageList" resultType="map" parameterType="cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam">
         select
         <include refid="Base_Column_List"/>
         from social_forum where apply_id = #{paramCondition.applyId} and unit_name like CONCAT('%',#{paramCondition.unitName},'%')
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
     </select>
 
-    <select id="customPageListAdmin" resultType="cn.stylefeng.guns.modular.socialForum.model.result.SocialForumResult" parameterType="cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam">
+    <select id="customPageListAdmin" resultType="map" parameterType="cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam">
         select
         <include refid="Base_Column_List"/>
         from social_forum where 1 = 1 and unit_name like CONCAT('%',#{paramCondition.unitName},'%')
+        <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
+            and meet_id = #{paramCondition.meetId}
+        </if>
     </select>
 
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.modular.socialForum.model.params.SocialForumParam">

@@ -128,6 +128,12 @@ public class SocialForum implements Serializable {
     @TableField("credit_code")
     private String creditCode;
 
+    /**
+     * 会议ID
+     */
+    @TableField("meet_id")
+    private Long meetId;
+
 
     public Long getForumId() {
         return forumId;
@@ -273,6 +279,14 @@ public class SocialForum implements Serializable {
         this.creditCode = creditCode;
     }
 
+    public Long getMeetId() {
+        return meetId;
+    }
+
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
+    }
+
     @Override
     public String toString() {
         return "SocialForum{" +
@@ -294,6 +308,7 @@ public class SocialForum implements Serializable {
         ", contractName=" + contractName +
         ", remarks=" + remarks +
         ", creditCode=" + creditCode +
+        ", meetId=" + meetId +
         "}";
     }
 }

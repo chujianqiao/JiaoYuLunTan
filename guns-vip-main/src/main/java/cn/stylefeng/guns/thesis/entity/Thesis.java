@@ -176,6 +176,9 @@ public class Thesis implements Serializable {
     @TableField("review_batch")
     private Integer reviewBatch;
 
+    @TableField("meet_id")
+    private Long meetId;
+
 
     public Long getThesisId() {
         return thesisId;
@@ -385,6 +388,14 @@ public class Thesis implements Serializable {
         this.wordName = wordName;
     }
 
+    public Long getMeetId() {
+        return meetId;
+    }
+
+    public void setMeetId(Long meetId) {
+        this.meetId = meetId;
+    }
+
     @Override
     public String toString() {
         return "Thesis{" +
@@ -412,6 +423,7 @@ public class Thesis implements Serializable {
         ", belongDomain=" + belongDomain +
         ", reviewTime=" + reviewTime +
         ", reviewBatch=" + reviewBatch +
+        ", meetId=" + meetId +
         "}";
     }
 }

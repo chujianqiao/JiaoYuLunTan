@@ -149,6 +149,7 @@ public class ThesisParam implements Serializable, BaseValidatingParam {
      * 1-初评 2-复评
      */
     private Integer reviewBatch;
+    private Long meetId;
 
 
     @Override

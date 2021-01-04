@@ -74,4 +74,5 @@ public interface EducationResultService extends IService<EducationResult> {
      * @Date 2020-05-25
      */
     Page<Map<String, Object>> findPageWrap(EducationResultParam param,List<Long> list,String listStatus);
+    Page<Map<String, Object>> findPageWrap(EducationResultParam param);
 }

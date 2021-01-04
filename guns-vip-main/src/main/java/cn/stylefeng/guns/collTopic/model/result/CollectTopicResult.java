@@ -64,4 +64,6 @@ public class CollectTopicResult implements Serializable {
      */
     private String diy2;
 
+    private Long meetId;
+
 }

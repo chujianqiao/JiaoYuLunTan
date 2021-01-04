@@ -1,9 +1,10 @@
-layui.use(['table', 'admin', 'ax', 'func'], function () {
+layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
+    var form = layui.form;
 
     /**
      * 论坛主题征集表管理
@@ -11,7 +12,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
     var CollectTopic = {
         tableId: "collectTopicTable"
     };
-
+    meetSelectOption();
     /**
      * 初始化表格的列
      */
@@ -20,6 +21,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {type: 'checkbox'},
             // {field: 'topicId', hide: true, title: '主题ID'},
             // {field: 'createUser', sort: true, title: '创建人ID'},
+            {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'topicName', sort: true, title: '大会主题'},
             {field: 'topicDesc', sort: true, title: '选题意义'},
             {field: 'subTopic', sort: true, title: '分论坛主题'},
@@ -43,11 +45,15 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         queryData['createUser'] = $('#createUser').val();
         queryData['topicName'] = $('#topicName').val();
         $('#topicNameExp').val($('#topicName').val());
-
+        queryData['meetId'] = $("#meetId").val();
         table.reload(CollectTopic.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
+
+    form.on('select(meetId)', function(data){
+        CollectTopic.search();
+    });
 
     /**
      * 弹出添加对话框
@@ -94,7 +100,8 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             url: Feng.ctxPath + '/collectTopic/wraplist',
             type: 'post',
             data: {
-                "topicName":$('#topicNameExp').val()
+                "topicName":$('#topicNameExp').val(),
+                "meetId":$('#meetId').val(),
             },
             async: false,
             dataType: 'json',
@@ -111,6 +118,9 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
         title: '主题管理全部数据',
         cols: [[ //表头
             {
+                field: 'meetName',
+                title: '会议名称',
+            },{
                 field: 'topicName',
                 title: '大会主题',
             }, {
@@ -192,4 +202,31 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             CollectTopic.onDeleteItem(data);
         }
     });
+
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value='0'>请选择会议</option>");
+                $('#meetId').append(options);
+                form.render('select');
+            }
+        })
+    }
 });
