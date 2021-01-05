@@ -67,6 +67,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                     $("#thesisData3").html("作者：" + data.thesisUser);
                     $("#thesisData4").html("摘要：" + data.cnAbstract);
                     $("#thesisResult").attr("href","javascript:thesisResult('" + data.thesisId + "')")
+                    $("#iconThesisResult").attr("style","font-size: 60px");
                 }else {
                     $("#thesisData1").html("无");
                 }
@@ -208,7 +209,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
     });
     //表单提交事件
     form.on('submit(guestInfoSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/mgr/edit", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/meetMember/adminEditItem", function (data) {
             Feng.success("修改成功!");
         }, function (data) {
             Feng.error("修改失败!" + data.responseJSON.message + "!");

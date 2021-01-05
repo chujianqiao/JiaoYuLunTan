@@ -4,6 +4,10 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.service.MeetService;
+import cn.stylefeng.guns.meetRegister.entity.MeetMember;
+import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
+import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
+import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.modular.material.entity.MeetMaterial;
 import cn.stylefeng.guns.modular.material.model.params.MeetMaterialParam;
 import cn.stylefeng.guns.modular.material.model.result.MeetMaterialResult;
@@ -56,6 +60,9 @@ public class MeetMaterialController extends BaseController {
 
     @Autowired
     private MeetMaterialService meetMaterialService;
+
+    @Autowired
+    private MeetMemberService meetMemberService;
 
     @Autowired
     private UserService userService;
@@ -206,6 +213,7 @@ public class MeetMaterialController extends BaseController {
         }else {
             meet = meetService.getByStatus(1);
             if (meet != null){
+                meetId = meet.getMeetId();
                 meetMaterialParam.setMeetId(meet.getMeetId());
             }
         }
@@ -215,15 +223,28 @@ public class MeetMaterialController extends BaseController {
 
         List<User> userList = this.userService.getByCanDownloadFile();
         for (int i = 0;i < userList.size();i++){
+            MeetMemberParam meetMemberParam = new MeetMemberParam();
+            meetMemberParam.setMeetId(meetId);
+            meetMemberParam.setUserId(userList.get(i).getUserId());
+            List<MeetMemberResult> meetMemberList = meetMemberService.customList(meetMemberParam);
             if (userList.get(i).getCanDownloadPpt() == 1){
                 String pptName = userList.get(i).getPptName();
                 String pptPath = userList.get(i).getPptPath();
                 Map map = new HashMap();
                 map.put("matPath",pptPath);
                 map.put("matName",pptName);
-                if (pptName != null && pptName != "" && pptPath != null && pptPath != "" ){
-                    forum.getRecords().add(map);
+                if (meetMemberList.size() > 0){
+                    if (pptName != null && pptName != "" && pptPath != null && pptPath != "" ){
+                        if (forum.getRecords().size() == 0){
+                            List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
+                            list.add(map);
+                            forum.setRecords(list);
+                        }else {
+                            forum.getRecords().add(map);
+                        }
+                    }
                 }
+
             }
             if (userList.get(i).getCanDownloadWord() == 1){
                 String wordName = userList.get(i).getWordName();
@@ -231,9 +252,18 @@ public class MeetMaterialController extends BaseController {
                 Map map1 = new HashMap();
                 map1.put("matPath",wordPath);
                 map1.put("matName",wordName);
-                if (wordName != null && wordName != "" && wordPath != null && wordPath != "" ){
-                    forum.getRecords().add(map1);
+                if (meetMemberList.size() > 0){
+                    if (wordName != null && wordName != "" && wordPath != null && wordPath != "" ){
+                        if (forum.getRecords().size() == 0){
+                            List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
+                            list.add(map1);
+                            forum.setRecords(list);
+                        }else {
+                            forum.getRecords().add(map1);
+                        }
+                    }
                 }
+
             }
         }
 

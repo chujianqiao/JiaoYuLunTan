@@ -436,8 +436,11 @@ public class MeetMemberController extends BaseController {
         Long ownForumId = detail.getOwnForumid();
         if(ownForumId != null){
             Forum forum = this.forumService.getById(ownForumId);
-            String ownForumName = forum.getForumName();
-            map.put("ownForumName",ownForumName);
+            if (forum != null){
+                String ownForumName = forum.getForumName();
+                map.put("ownForumName",ownForumName);
+            }
+
         } else {
             map.put("ownForumName","未选择");
         }
@@ -637,6 +640,21 @@ public class MeetMemberController extends BaseController {
     @RequestMapping("/adminList")
     public Object adminList(MeetMemberParam meetMemberParam,@RequestParam(required = false) String roleId,@RequestParam(required = false) String userName) {
         List<Long> userIdList = userService.getUserIdByName(userName);
+
+        //根据角色进行筛选
+        Iterator iterator = userIdList.iterator();
+        while (iterator.hasNext()){
+            Long userId = (Long) iterator.next();
+            User user = this.userService.getById(userId);
+            String myRoleId = user.getRoleId();
+            String[] roleArr = myRoleId.split(",");
+            if(Arrays.asList(roleArr).contains(roleId)){
+                continue;
+            }else {
+                iterator.remove();
+            }
+        }
+
         String listStatus;
         if(userIdList.size() != 0&&userIdList!=null){
             listStatus = "有条件";
@@ -653,9 +671,9 @@ public class MeetMemberController extends BaseController {
         }
 
         Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIdList,listStatus);
-        List<Map<String, Object>> memberList = members.getRecords();
+        //List<Map<String, Object>> memberList = members.getRecords();
         //根据角色进行筛选
-        Iterator iterator = memberList.iterator();
+        /*Iterator iterator = memberList.iterator();
         while (iterator.hasNext()){
             Map<String, Object> resultMap = (Map<String, Object>) iterator.next();
             Long userId = Long.parseLong(resultMap.get("userId").toString());
@@ -665,11 +683,11 @@ public class MeetMemberController extends BaseController {
             if(Arrays.asList(roleArr).contains(roleId)){
                 continue;
             }else {
-               iterator.remove();
+                iterator.remove();
             }
-        }
+        }*/
         //将筛选后的list赋值给记录
-        members.setRecords(memberList);
+        //members.setRecords(memberList);
         Page wrapped = new MeetMemberWrapper(members).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }

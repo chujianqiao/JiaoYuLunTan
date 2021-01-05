@@ -3,6 +3,7 @@ package cn.stylefeng.guns.thesis.wrapper;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
+import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
@@ -99,10 +100,12 @@ public class ThesisWrapper extends BaseControllerWrapper {
 			}
 		}
 
-		Object greatObj = map.get("great");
+		Object greatObj = map.get("isgreat");
 		if(greatObj != null){
 			String greatStr = TransTypeUtil.getIsOrNo().get(greatObj).toString();
 			map.put("greatStr",greatStr);
+		}else {
+			map.put("greatStr","未评审");
 		}
 
 		String domainObj = map.get("belongDomain").toString();
@@ -219,12 +222,16 @@ public class ThesisWrapper extends BaseControllerWrapper {
 		}
 		map.put("firstName",firstName);
 		map.put("againName",againName);
+		if (againName == ""){
+			map.put("greatStr","未分配");
+		}
 		map.put("belongDomainStr",belongDomainStr);
 		map.put("userName",nameBuilder.toString());
 		map.put("unitsName",unitsName);
 		Object meetId = map.get("meetId");
 		if (meetId != null){
-			map.put("meetName",meetService.getById(Long.parseLong(meetId.toString())).getMeetName());
+			Meet meet = meetService.getById(Long.parseLong(meetId.toString()));
+			map.put("meetName",meet.getMeetName());
 		}
 	}
 }

@@ -530,8 +530,8 @@ public class ReviewMajorController extends BaseController {
     @RequestMapping("/addAccount")
     @ResponseBody
     public ResponseData addAccount(@Valid UserDto user, String majorType,
-                                   Integer joinType, Long ownForumId,
-                                   String belongDomain) {
+                                   Integer joinType, Long ownForumid,
+                                   String belongDomain, Long meetId) {
         ResponseData responseData = new ResponseData();
         /*StringBuffer id=new StringBuffer();
         Random random = new Random();
@@ -568,11 +568,12 @@ public class ReviewMajorController extends BaseController {
             meetMemberParam.setUserId(uid);
             meetMemberParam.setRegTime(new Date());
             meetMemberParam.setSpeak(1);
+            meetMemberParam.setMeetId(meetId);
             meetMemberParam.setThesisId(0l);
             if (joinType == 0){
                 meetMemberParam.setOwnForumid(0l);
             }else {
-                meetMemberParam.setOwnForumid(ownForumId);
+                meetMemberParam.setOwnForumid(ownForumid);
             }
             this.userService.addUser(user);
             meetMemberService.add(meetMemberParam);

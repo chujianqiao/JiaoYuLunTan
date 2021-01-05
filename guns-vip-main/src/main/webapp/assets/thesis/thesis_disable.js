@@ -312,7 +312,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             // {field: 'engKeyword', sort: true, title: '英文关键词'},
             //{field: 'cnAbstract', sort: true, title: '中文摘要'},
             // {field: 'engAbstract', sort: true, title: '英文摘要'},
-            {field: 'status', sort: true, title: '评审状态'},
+            {field: 'greatStr', sort: true, title: '是否推优'},
             {field: 'reviewTime', sort: true, title: '评审时间'},
             // {field: 'reviewResult', sort: true, title: '评审结果'},
             //{field: 'belongDomainStr', sort: true, title: '论文领域'},

@@ -61,7 +61,7 @@
                                             <input name="phone" placeholder="请输入电话" type="text" class="layui-input" lay-verify="required|phone" required/>
                                         </div>
                                     </div>
-                                    <div class="form-group-bottom text-center">
+                                    <div class="text-center">
                                         <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("BTN_CREATE","生成")}&emsp;</button>
                                         <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;${lang.get("BTN_CANCEL","取消")}&emsp;</button>
                                     </div>
@@ -110,14 +110,21 @@
                                                 </div>
                                             </div>
 
-                                            <div id="ownForumDiv" class="layui-inline layui-col-md12" style="display: none">
-                                                <label class="layui-form-label">${lang.get("FIELD_OWN_FORUM","参加论坛")}<span style="color: red;">*</span></label>
+                                            <div id="meetDiv" class="layui-inline layui-col-md12">
+                                                <label class="layui-form-label">${lang.get("FIELD_OWN_FORUM","参加会议")}<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
-                                                    <select id="ownForumId" name="ownForumId" lay-verify="" lay-search></select>
+                                                    <select id="meetId" name="meetId" lay-filter="meetId" lay-verify="required" required></select>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group-bottom text-center">
+                                            <div id="ownForumDiv" class="layui-inline layui-col-md12" style="display: none">
+                                                <label class="layui-form-label">${lang.get("FIELD_OWN_FORUM","参加论坛")}<span style="color: red;">*</span></label>
+                                                <div class="layui-input-block">
+                                                    <select id="ownForumid" name="ownForumid"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center">
                                                 <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("BTN_CREATE","生成")}&emsp;</button>
                                                 <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;${lang.get("BTN_CANCEL","取消")}&emsp;</button>
                                             </div>

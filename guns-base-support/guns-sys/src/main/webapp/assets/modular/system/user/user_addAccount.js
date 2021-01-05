@@ -22,7 +22,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
     $(function () {
         forumSelectOption();
-        //domainSelectOption();
+        meetSelectOption();
     })
 
     // 点击部门时
@@ -179,7 +179,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
      * 构建论坛下拉框候选值
      * @param ownForumid
      */
-    function forumSelectOption(){
+    /*function forumSelectOption(){
         $.ajax({
             type:'post',
             url:Feng.ctxPath + "/ownForum/listAll" ,
@@ -195,6 +195,64 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
                 }
                 $('#ownForumId').empty();
                 $('#ownForumId').append(options);
+                form.render('select');
+            }
+        })
+    }*/
+    //选择论坛时立刻刷新
+    form.on('select(meetId)', function(data){
+        forumSelectOption();
+    });
+    function forumSelectOption(){
+        var meetId = "";
+        if ($("#meetId").val() != null){
+            meetId = $("#meetId").val();
+        }
+        $.ajax({
+            type:'post',
+            // url:Feng.ctxPath + "/thesisDomain/list" ,
+            url:Feng.ctxPath + "/forum/wrapList?meetId=" + meetId,
+            success:function(response){
+                var data=response.data;
+                var forums = [];
+                forums = data;
+                var options;
+                for (i = 0 ;i < forums.length ;i++){
+                    var forum = data[i];
+                    if(forum.status == "未发布"){
+                        continue;
+                    }
+                    options += '<option value="'+ forum.forumId+ '" >'+ forum.forumName +'</option>';
+                }
+                $('#ownForumid').empty();
+                $('#ownForumid').append("<option value=''>请选择论坛</option>");
+                $('#ownForumid').append(options);
+                form.render('select');
+            }
+        })
+    }
+    function meetSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/meet/wrapList" ,
+            success:function(response){
+                var data=response.data;
+                var meet = [];
+                meet = data;
+                console.log(meet)
+
+                var options;
+                for (var i = 0 ;i < meet.length ;i++){
+                    if (meet[i].meetStatus == 1){
+                        options += '<option value="'+ meet[i].meetId+ '" selected>'+ meet[i].meetName +'</option>';
+                    } else {
+                        options += '<option value="'+ meet[i].meetId+ '" >'+ meet[i].meetName +'</option>';
+                    }
+
+                }
+                $('#meetId').empty();
+                $('#meetId').append("<option value=''>请选择会议</option>");
+                $('#meetId').append(options);
                 form.render('select');
             }
         })

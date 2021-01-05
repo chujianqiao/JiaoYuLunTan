@@ -33,7 +33,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             {field: 'registerTime', sort: true, title: '报到时间'},
             {field: 'signStatus', sort: true, title: '签到状态'},
             {field: 'signTime', sort: true, title: '签到时间'},
-            {field: 'signPlace', sort: true, title: '签到地点'},
+            //{field: 'signPlace', sort: true, title: '签到地点'},
             {align: 'center', toolbar: '#tableBar', minWidth: 180, title: '操作'}
         ]];
     };
@@ -295,11 +295,11 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             //{field: 'post', sort: true, title: '职称'},
             {field: 'roleName', sort: true, title: '参会角色'},
             {field: 'forumName', sort: true, title: '参会分论坛'},
-            {field: 'registerStatus', sort: true, title: '报到状态'},
-            {field: 'registerTime', sort: true, title: '报到时间'},
+            //{field: 'registerStatus', sort: true, title: '报到状态'},
+            //{field: 'registerTime', sort: true, title: '报到时间'},
             {field: 'signStatus', sort: true, title: '签到状态'},
             {field: 'signTime', sort: true, title: '签到时间'},
-            {field: 'signPlace', sort: true, title: '签到地点'},
+            //{field: 'signPlace', sort: true, title: '签到地点'},
             {align: 'center', toolbar: '#tableBarForum', minWidth: 180, title: '操作'}
         ]];
     };

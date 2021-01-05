@@ -580,10 +580,10 @@ public class ThesisController extends BaseController {
             String first = "您的论文被复评";
             String remark = "您可登录中国教育科学论坛平台查看详细信息。";
             String reviewResult = "";
-            if (thesisParam.getGreat() == 0){
+            if (thesisParam.getIsgreat() == 0){
                 reviewResult = "论文不推荐优秀";
             }
-            if (thesisParam.getGreat() == 1){
+            if (thesisParam.getIsgreat() == 1){
                 reviewResult = "论文推荐优秀";
             }
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

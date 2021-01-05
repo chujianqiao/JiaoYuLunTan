@@ -29,7 +29,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
             {field: 'belongDomainStr', sort: true, title: '论文领域'},
             {field: 'firstScore', sort: true, title: '初评分数'},
             {field: 'status', sort: true, title: '初评结果'},
-            {field: 'greatStr', sort: true, title: '是否优秀'},
+            {field: 'greatStr', sort: true, title: '是否推优'},
             {align: 'center', title: '操作',templet: function(data){
                     if(data.firstStatus == "未评审"){
                         return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review'>评审</a>";
@@ -195,9 +195,9 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
             {field: 'userName', sort: true, title: '论文作者'},
             {field: 'unitsName', sort: true, title: '所在单位'},
             {field: 'belongDomainStr', sort: true, title: '论文领域'},
-            {field: 'scoreStr', sort: true, title: '论文分数'},
+            {field: 'scoreStr', sort: true, title: '复评分数'},
             {field: 'status', sort: true, title: '初评结果'},
-            {field: 'aaa', sort: true, title: '复评结果'},
+            {field: 'greatStr', sort: true, title: '是否推优'},
             {align: 'center', title: '操作',templet: function(data){
                 if(data.secondStatus == "未评审"){
                     return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reviewAgain'>评审</a>";
