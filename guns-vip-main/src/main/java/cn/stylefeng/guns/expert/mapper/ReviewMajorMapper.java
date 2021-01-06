@@ -74,7 +74,7 @@ public interface ReviewMajorMapper extends BaseMapper<ReviewMajor> {
      * @author fengshuonan
      * @Date 2018/12/24 22:45
      */
-    Integer setStatus(Long reviewId, String status);
+    Integer setStatus(@Param("reviewId") Long reviewId,@Param("status") String status);
 
     List<Map<String, Object>> majorMapList(@Param("domain") String domain);
 }

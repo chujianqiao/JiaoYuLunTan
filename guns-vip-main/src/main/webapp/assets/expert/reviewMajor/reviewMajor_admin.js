@@ -154,6 +154,36 @@ layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
             }, {
                 field: 'applyTime',
                 title: '创建时间',
+            }, {
+                field: 'thesisCount',
+                title: '论文分配数量',
+            }, {
+                field: 'reviewCount',
+                title: '论文评审数量',
+            }, {
+                field: 'idCardType',
+                title: '证件类型',
+            }, {
+                field: 'idCard',
+                title: '证件号',
+            }, {
+                field: 'accountProvince',
+                title: '开户省份',
+            }, {
+                field: 'accountCity',
+                title: '开户城市',
+            }, {
+                field: 'bank',
+                title: '银行机构',
+            }, {
+                field: 'unionNumber',
+                title: '联行号',
+            }, {
+                field: 'accountBank',
+                title: '开户行',
+            }, {
+                field: 'personalAccount',
+                title: '个人账号',
             }
         ]]
     });

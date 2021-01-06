@@ -23,7 +23,7 @@ public enum DefaultDicts {
     FIELD_POST_1("FIELD_POST", TranslationEnum.CHINESE, "职位"),
     FIELD_POST_2("FIELD_POST", TranslationEnum.ENGLISH, "post"),
 
-    FIELD_PHONE_1("FIELD_PHONE", TranslationEnum.CHINESE, "电话"),
+    FIELD_PHONE_1("FIELD_PHONE", TranslationEnum.CHINESE, "手机号"),
     FIELD_PHONE_2("FIELD_PHONE", TranslationEnum.ENGLISH, "phone"),
 
     FIELD_CREATE_TIME_1("FIELD_CREATE_TIME", TranslationEnum.CHINESE, "创建时间"),
