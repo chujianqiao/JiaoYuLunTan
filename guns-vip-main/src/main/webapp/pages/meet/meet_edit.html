@@ -21,8 +21,8 @@
                             <div class="layui-input-block">
                                 <select id="size" name="size" lay-filter="size" lay-verify="required">
                                     <option value=""></option>
-                                    <option value="big">大会</option>
-                                    <option value="small">小会</option>
+                                    <option value="big">投稿会议</option>
+                                    <option value="small">非投稿会议</option>
                                 </select>
                             </div>
                         </div>
@@ -82,13 +82,20 @@
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">会议描述<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="meetDesc" name="meetDesc" placeholder="请输入会议描述" type="text" class="layui-input" lay-verify="required" required/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">会议地点<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="place" name="place" placeholder="请输入会议地点" type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
+
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">会议详细</label>
+                        <label class="layui-form-label">会议手册</label>
                         <div class="layui-input-block">
                             <script id="container" name="content" type="text/plain"></script>
                         </div>
