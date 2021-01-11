@@ -75,7 +75,7 @@ public class WXMenuController {
         //btn15.setUrl("http://fagexz.natappfree.cc/answer/getAnswerData");
 
         CommonButton btn21 = new CommonButton();
-        btn21.setName("优秀论著推送");
+        btn21.setName("优秀论著展示");
         btn21.setType("view");
         //btn21.setKey("21");
         btn21.setUrl("http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/yxlwj/");
