@@ -43,7 +43,9 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                     $("#meetData4").html("会议时间：" + data.beginTime + " 至 " + data.endTime);
                     $("#meetData5").html("报名时间：" + data.joinBegTime + " 至 " + data.joinEndTime);
                     $("#meetName").html("" + data.detail.meetName);
-                    $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
+                    if (data.seat != undefined){
+                        $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
+                    }
                     //绑定点击事件
                     let seatId = data.seatId;
                     ownSeat(seatId);
@@ -82,7 +84,6 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             url: Feng.ctxPath + '/meetMember/wraplist',
             success: function (response) {
                 var data = response.data;
-
 
                 for (var i = 0;i < data.length;i++){
                     console.log(data[i]);
