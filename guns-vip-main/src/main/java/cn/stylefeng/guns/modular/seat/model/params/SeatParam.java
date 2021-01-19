@@ -53,7 +53,7 @@ public class SeatParam implements Serializable, BaseValidatingParam {
     /**
      * 主席台列数
      */
-    private String platNum;
+    private Integer platNum;
 
     @Override
     public String checkParam() {

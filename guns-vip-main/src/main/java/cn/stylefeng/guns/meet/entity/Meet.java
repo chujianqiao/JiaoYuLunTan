@@ -132,6 +132,14 @@ public class Meet implements Serializable {
     private Integer realTheNum;
 
 
+    /**
+     * 是否必须提交论文
+     * 0-非必须，1-必须
+     */
+    @TableField("must_sub")
+    private Integer mustSub;
+
+
     public Long getMeetId() {
         return meetId;
     }
@@ -290,5 +298,13 @@ public class Meet implements Serializable {
         ", regUser=" + regUser +
         ", regTime=" + regTime +
         "}";
+    }
+
+    public Integer getMustSub() {
+        return mustSub;
+    }
+
+    public void setMustSub(Integer mustSub) {
+        this.mustSub = mustSub;
     }
 }

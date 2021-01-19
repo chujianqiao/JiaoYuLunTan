@@ -315,15 +315,21 @@ public class ThesisController extends BaseController {
         //同时更新用户表、论文表、会议成员表
         this.userService.editUser(user);
         if("big".equals(meetSize)){
-            //大会添加论文，小会不添加
-            this.thesisService.add(thesisParam);
+            //大会，判断论文
+            //根据题目判断是否提交了论文
+            String title = thesisParam.getThesisTitle();
+            if(title != null){
+                this.thesisService.add(thesisParam);
+            }else if(null == title){
+                meetMemberParam.setMeetStatus(2);
+            }
+
         }else if("small".equals(meetSize)){
-            //小会直接提交通过
+            //小会，直接提交通过
             meetMemberParam.setMeetStatus(7);
             meetMemberParam.setThesisId(null);
         }
         this.meetMemberService.add(meetMemberParam);
-
         return ResponseData.success();
     }
 

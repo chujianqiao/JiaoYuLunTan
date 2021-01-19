@@ -52,6 +52,6 @@ public class SeatResult implements Serializable {
     /**
      * 主席台列数
      */
-    private String platNum;
+    private Integer platNum;
 
 }

@@ -30,17 +30,22 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects'], func
     };
 
     //先隐藏会议金额，选择“大会”后放开
+    //是否必须提交论文类似
     $("#meetFee").hide();
+    $("#isSubmit").hide();
     form.on('select(size)', function(data){
         let size = data.value;
         if(size == 'big' || size == "big"){
             $("#meetFee").show();
+            $("#isSubmit").show();
         }else if (size == 'small' || size == "small"){
             $("#meetFee").hide();
+            $("#isSubmit").hide();
             //小会默认金额0
             $("#fee").val(0);
         }else{
             $("#meetFee").hide();
+            $("#isSubmit").hide();
         }
     })
 

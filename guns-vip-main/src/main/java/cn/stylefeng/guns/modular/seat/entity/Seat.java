@@ -59,7 +59,7 @@ public class Seat implements Serializable {
      * 主席台列数
      */
     @TableField("plat_num")
-    private String platNum;
+    private Integer platNum;
 
 
     public Long getSeatId() {
@@ -110,11 +110,11 @@ public class Seat implements Serializable {
         this.seatType = seatType;
     }
 
-    public String getPlatNum() {
+    public Integer getPlatNum() {
         return platNum;
     }
 
-    public void setPlatNum(String platNum) {
+    public void setPlatNum(Integer platNum) {
         this.platNum = platNum;
     }
 

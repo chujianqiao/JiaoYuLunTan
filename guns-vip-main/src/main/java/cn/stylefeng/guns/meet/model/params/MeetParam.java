@@ -112,6 +112,12 @@ public class MeetParam implements Serializable, BaseValidatingParam {
      */
     private Integer realTheNum;
 
+    /**
+     * 是否必须提交论文
+     * 0-非必须，1-必须
+     */
+    private Integer mustSub;
+
     @Override
     public String checkParam() {
         return null;

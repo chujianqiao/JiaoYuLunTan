@@ -36,6 +36,13 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     if(size == 'small' || size == "small"){
         //小会，移除所有论文的元素
         $(".thesisItem").remove();
+        $("#isSubmit").remove();
+    }else if(size == 'big' || size == "big") {
+        //是否必须投稿
+        let isSub = pubMeet.mustSub;
+        if(isSub == 1 || isSub == '1'){
+            $("#isSubmit").remove();
+        }
     }
 
     //定义数组，存储省份信息
@@ -377,18 +384,90 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         window.close();
     });
 
+    var thesisItems=$(".thesisItem");
+    form.on('radio(subRadio)', function(data){
+        if(data.value == 0){
+            $(".thesisItem").remove();
+        }else if(data.value == 1){
+            $("#thesisDiv").append(thesisItems);
+            //append后需要重新绑定upload
+            layui.use(['form','upload'],function(){
+                upload.render({
+                    elem: '#fileBtn'
+                    , url: Feng.ctxPath + '/holdForum/upload'
+                    , accept: 'file'
+                    , before: function (obj) {
+                        obj.preview(function (index, file, result) {
+                            var fileName = file.name;
+                            var fileType = fileName.substr(fileName.lastIndexOf("."));
+                            if(fileType.compare(".pdf")){
+                                $("#fileNameTip").val(file.name);
+                                $("#fileNameTip").html(file.name);
+                            }
 
-    // 点击上级角色时
-    $('#pName').click(function () {
+                        });
+                    }
+                    , done: function (res) {
+                        var type = res.data.type;
+                        if(type != ".pdf"){
+                            Feng.error("上传失败，文件格式不匹配");
+                        }else {
+                            $("#fileInputHidden").val(res.data.fileId);
+                            $("#thesisPath").val(res.data.path);
+                            $("#fileName").val($("#fileNameTip").val());
+                            Feng.success(res.message);
+                        }
+                    }
+                    , error: function () {
+                        Feng.error("上传文件失败！");
+                    }
+                });
+
+                upload.render({
+                    elem: '#wordBtn'
+                    , url: Feng.ctxPath + '/thesis/uploadWord'
+                    , accept: 'file'
+                    , before: function (obj) {
+                        obj.preview(function (index, file, result) {
+                            var fileName = file.name;
+                            var fileType = fileName.substr(fileName.lastIndexOf("."));
+                            if(fileType.compare(".doc") || fileType.compare(".docx")){
+                                $("#wordNameTip").val(file.name);
+                                $("#wordNameTip").html(file.name);
+                            }
+                        });
+                    }
+                    , done: function (res) {
+                        var status = res.data.status;
+                        if(status == "格式问题" || status === "格式问题"){
+                            Feng.error(res.message);
+                        }else {
+                            $("#wordInputHidden").val(res.data.fileId);
+                            $("#wordPath").val(res.data.path);
+                            $("#wordName").val($("#wordNameTip").val());
+                            Feng.success(res.message);
+                        }
+                    }
+                    , error: function (res) {
+                        Feng.error("上传文件失败");
+                    }
+                });
+            });
+
+        }
+    });
+
+    /**
+     * remove掉元素之后再append， $("#pName").click(function (){}失效，改用该方法
+     */
+    $(document).on('click',"#pName",function(){
         var formName = encodeURIComponent("parent.MeetMemberInfoDlg.data.pName");
         var formId = encodeURIComponent("parent.MeetMemberInfoDlg.data.belongDomain");
         var treeUrl = encodeURIComponent("/thesisDomain/tree");
-
         layer.open({
             type: 2,
             title: '论文领域',
             area: ['300px', '400px'],
-            //content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             end: function () {
                 $("#belongDomain").val(MeetMemberInfoDlg.data.belongDomain);
@@ -396,6 +475,25 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             }
         });
     });
+
+    // 点击上级角色时
+    // $("#pName").click(function () {
+    //     var formName = encodeURIComponent("parent.MeetMemberInfoDlg.data.pName");
+    //     var formId = encodeURIComponent("parent.MeetMemberInfoDlg.data.belongDomain");
+    //     var treeUrl = encodeURIComponent("/thesisDomain/tree");
+    //     layer.open({
+    //         type: 2,
+    //         title: '论文领域',
+    //         area: ['300px', '400px'],
+    //         //content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+    //         content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+    //         end: function () {
+    //             $("#belongDomain").val(MeetMemberInfoDlg.data.belongDomain);
+    //             $("#pName").val(MeetMemberInfoDlg.data.pName);
+    //         }
+    //     });
+    // });
+
 
     /*function domainSelectOption(){
         $.ajax({

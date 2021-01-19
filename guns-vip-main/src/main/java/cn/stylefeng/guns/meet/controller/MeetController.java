@@ -14,23 +14,20 @@ import cn.stylefeng.guns.modular.seat.model.result.SeatResult;
 import cn.stylefeng.guns.modular.seat.service.SeatDetailService;
 import cn.stylefeng.guns.modular.seat.service.SeatService;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
-import cn.stylefeng.guns.sys.modular.system.entity.FileInfo;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
-import cn.stylefeng.guns.util.MSOfficeGeneratorUtils;
 import cn.stylefeng.guns.util.ToolUtil;
-import cn.stylefeng.guns.util.WordUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import me.chanjar.weixin.mp.bean.device.RespMsg;
 import org.apache.poi.poifs.filesystem.DirectoryEntry;
 import org.apache.poi.poifs.filesystem.DocumentEntry;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,12 +40,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.io.FileUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 
 /**
@@ -179,6 +170,7 @@ public class MeetController extends BaseController {
         seatParam.setMeetType(1L);
         seatParam.setColNum(8);
         seatParam.setRowNum(8);
+        seatParam.setPlatNum(8);
         seatParam.setSeatType("A");
         this.seatService.add(seatParam);
         this.meetService.save(meet);

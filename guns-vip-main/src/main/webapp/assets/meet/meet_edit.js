@@ -65,12 +65,14 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
         var ajax = new $ax(Feng.ctxPath + "/meet/detail?meetId=" + meetId);
         var result = ajax.start();
         form.val('meetForm', result.data);
-
+        //金额、必须投稿是否展示
         let size = result.data.size;
         if(size == 'big' || size == "big"){
             $("#meetFee").show();
+            $("#isSubmit").show();
         }else if (size == 'small' || size == "small"){
             $("#meetFee").hide();
+            $("#isSubmit").hide();
         }
         // console.log(result.data)
         $("#meetData1").html(result.data.meetName);
@@ -88,12 +90,15 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
         let size = data.value;
         if(size == 'big' || size == "big"){
             $("#meetFee").show();
+            $("#isSubmit").show();
         }else if (size == 'small' || size == "small"){
             $("#meetFee").hide();
+            $("#isSubmit").hide();
             //小会默认金额0
             $("#fee").val(0);
         }else{
             $("#meetFee").hide();
+            $("#isSubmit").hide();
         }
     })
 
