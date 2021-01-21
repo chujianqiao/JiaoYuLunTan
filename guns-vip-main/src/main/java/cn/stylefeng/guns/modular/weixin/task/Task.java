@@ -23,10 +23,10 @@ public class Task {
     //定时生成AccessToken并存储数据库
     @Scheduled(fixedDelay = 7000000)
     public void taskToken(){
-        //Token token= CommonUtil.getToken(appid, secret);
-        //System.out.println(token.getAccessToken());
-        //System.out.println(new Date());
-        //TokenUtil.saveToken(token);
+        Token token= CommonUtil.getToken(appid, secret);
+//        System.out.println(token.getAccessToken());
+//        System.out.println(new Date());
+        TokenUtil.saveToken(token);
     }
 
 }
