@@ -117,7 +117,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func','upload'], function () {
         if (checkRows.data.length === 0) {
             Feng.error("请选择要导出的数据");
         } else {
-            table.exportFile(tableResult.config.id, checkRows.data, 'xls');
+            table.exportFile('exportTable', checkRows.data, 'xls');
         }
     };
     /**

@@ -1,0 +1,405 @@
+@layout("/common/_form.html",{title:"个人中心",css:["/assets/modular/frame/user_info.css"],js:["/assets/modular/frame/user_info.js","/assets/modular/frame/password.js"]}){
+
+<style>
+    .label0{
+        width: 70px !important;
+        margin-left: -30px;
+    }
+    .block0{
+        margin-left: 80px !important;
+    }
+    * { -webkit-user-select:auto !important; /*webkit浏览器*/ }
+</style>
+<div class="page">
+    <!-- 头部 -->
+    @include("/common/person_header.html"){}
+    <!-- 正文开始 -->
+    <div class="func-column-container widthC mCenter mb40">
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <!-- 左 -->
+                <div class="layui-col-sm12 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-body" style="padding: 25px;">
+                            <div class="text-center layui-text">
+                                <div class="user-info-head" id="imgHead">
+                                    <img id="avatarPreview" src="${avatar}"/>
+                                </div>
+                                <h2 style="padding-top: 20px;">${name}</h2>
+                                <p style="padding-top: 8px;">${roleName!} ${deptName!}</p>
+                            </div>
+                            <div class="dash"></div>
+                            <!--<h3>标签</h3>
+                            <div class="layui-badge-list" style="padding-top: 6px;">
+                                <span class="layui-badge layui-bg-gray">Guns</span>
+                                <span class="layui-badge layui-bg-gray">Roses</span>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+                <!-- 右 -->
+                <div class="layui-col-sm12 layui-col-md9">
+                    <div class="layui-card">
+                        <div class="mobile">
+                            <div class="layui-card-body">
+
+                                <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
+                                    <ul class="layui-tab-title">
+                                        <li class="layui-this">${lang.get("MENU_BASE_INFO","基本信息")}</li>
+                                        <li id="guestLi" style="display: none">${lang.get("MENU_GUEST_INFO","嘉宾信息")}</li>
+                                        <li id="expertLi" style="display: none">${lang.get("MENU_GUEST_INFO","专家信息")}</li>
+                                    </ul>
+                                    <div class="layui-tab-content">
+                                        <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
+                                            <input type="hidden" id="userId" name="userId"/>
+                                            <div class="layui-form user-info-form" style="max-width: 450px;padding-top: 25px;">
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_ACCOUNT","账号")}:</label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" name="account" class="layui-input layui-disabled" lay-verify="required" disabled/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_PASSWORD","密码")}:</label>
+                                                    <div class="layui-input-inline" style="margin-left: 83px">
+                                                        <input type="text" value="********" class="layui-input layui-disabled" lay-verify="required" disabled/>
+                                                    </div>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <a onclick="setPass()" href="#" style="line-height: 36px">修改密码?</a>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_weChat","微信")}:</label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <div class="layui-input-inline" style="margin-left: 3px">
+                                                            <input type="wechatName" id="wechatName" name="wechatName" class="layui-input layui-disabled" placeholder="当前未绑定微信账号" disabled/>
+                                                        </div>
+                                                        <a id="weChatBand" onclick="weChatBand()" href="#" style="line-height: 36px;">绑定</a>
+                                                        <a id="weChatCancelBand" onclick="weChatCancelBand()" href="#" style="line-height: 36px;">解绑</a>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_SEX","性别")}:</label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="radio" name="sex" value="M" title="男">
+                                                        <input type="radio" name="sex" value="F" title="女">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_EMAIL","邮箱")}:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="email" name="email" class="layui-input" lay-verify="required|email" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_NAME","姓名")}:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" name="name" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_BIRTHDAY","生日")}:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" id="birthday" name="birthday" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_WORK_UNIT","工作单位")}:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" name="workUnit" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_TITLE","职称")}:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" name="title" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_POST","职务")}:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" name="post" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_EDUCATION","学历")}:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" name="education" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_DIRECTION","研究方向")}:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" name="direction" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_PHONE","手机号")}:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" name="phone" class="layui-input layui-disabled" lay-verify="required|phone" required/>
+                                                    </div>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <a onclick="setPhone()" href="#" style="line-height: 36px">修改绑定手机?</a>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <button class="layui-btn" lay-filter="userInfoSubmit" lay-submit>
+                                                            ${lang.get("BTN_UPDATE_INFO","保存基本信息")}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--另一个标签-->
+                                        <div class="layui-tab-item" style="padding: 6px 25px 30px 25px;">
+                                            <div class="bd-list">
+                                                <div class="bd-list-item">
+                                                    <div class="bd-list-item-content">
+                                                        <div class="layui-inline layui-col-md12">
+                                                            <label class="layui-form-label label0" style=" width: 70px !important;">上传PPT<span style="color: red;">*</span></label>
+                                                            <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                                <input id="pptInputHidden" name="pptInputHidden" type="hidden" class="layui-input"/>
+                                                                <input id="pptPath" name="pptPath" type="hidden" class="layui-input"/>
+                                                                <input id="pptName" name="pptName" type="hidden" class="layui-input"/>
+                                                                <div style="float: left;">
+                                                                    <button type="button" class="layui-btn layui-btn-sm" id="pptBtn"><i class="layui-icon"></i>选择文件</button>
+                                                                </div>
+                                                                <div style="float: left;">
+                                                                    <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="pptFileNameTip"></span>
+                                                                    <input name="pptName" id="pptNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="bd-list-item">
+                                                    <div class="bd-list-item-content">
+                                                        <div class="layui-inline layui-col-md12">
+                                                            <label class="layui-form-label label0" style=" width: 70px !important;">上传发言稿<span style="color: red;">*</span></label>
+                                                            <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                                <input id="wordInputHidden" name="wordInputHidden" type="hidden" class="layui-input"/>
+                                                                <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
+                                                                <input id="wordName" name="wordName" type="hidden" class="layui-input"/>
+                                                                <div style="float: left;">
+                                                                    <button type="button" class="layui-btn layui-btn-sm" id="wordBtn"><i class="layui-icon"></i>选择文件</button>
+                                                                </div>
+                                                                <div style="float: left;">
+                                                                    <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordFileNameTip"></span>
+                                                                    <input name="wordName" id="wordNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="bd-list-item">
+                                                    <div class="bd-list-item-content">
+                                                        <div class="layui-inline layui-col-md12">
+                                                            <label class="layui-form-label label0" style=" width: 70px !important;">嘉宾简介<span style="color: red;">*</span></label>
+                                                            <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                                <textarea id="introduction" name="introduction" class="layui-textarea" lay-verify="required" required placeholder="请输入嘉宾简介"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <div class="layui-input-block">
+                                                        <button class="layui-btn" lay-filter="guestInfoSubmit" lay-submit>
+                                                            保存嘉宾信息
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!--<div class="bd-list-item">
+                                                    <div class="bd-list-item-content">
+                                                        <div class="bd-list-item-lable">密保手机</div>
+                                                        <div class="bd-list-item-text">已绑定手机：182****0000</div>
+                                                    </div>
+                                                    <a class="bd-list-item-oper">修改</a>
+                                                </div>
+                                                <div class="bd-list-item">
+                                                    <div class="bd-list-item-content">
+                                                        <div class="bd-list-item-lable">密保邮箱</div>
+                                                        <div class="bd-list-item-text">已绑定邮箱：sn***qq.com</div>
+                                                    </div>
+                                                    <a class="bd-list-item-oper">修改</a>
+                                                </div>
+                                                <div class="bd-list-item">
+                                                    <div class="bd-list-item-img">
+                                                        <i class="layui-icon layui-icon-login-qq"
+                                                           style="color: #3492ED;font-size: 48px;"></i>
+                                                    </div>
+                                                    <div class="bd-list-item-content">
+                                                        <div class="bd-list-item-lable">绑定QQ</div>
+                                                        <div class="bd-list-item-text">当前未绑定QQ账号</div>
+                                                    </div>
+                                                    <a class="bd-list-item-oper">绑定</a>
+                                                </div>
+                                                <div class="bd-list-item">
+                                                    <div class="bd-list-item-img">
+                                                        <i class="layui-icon layui-icon-login-wechat"
+                                                           style="color: #4DAF29;font-size: 48px;"></i>
+                                                    </div>
+                                                    <div class="bd-list-item-content">
+                                                        <div class="bd-list-item-lable">绑定微信</div>
+                                                        <div class="bd-list-item-text">当前未绑定绑定微信账号</div>
+                                                    </div>
+                                                    <a class="bd-list-item-oper">绑定</a>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                        <div class="layui-form layui-tab-item" lay-filter="expertInfoForm">
+                                            <div class="layui-form user-info-form" style="max-width: 450px;padding-top: 25px;">
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">证件类型<span style="color: red;">*</span>:</label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <select name="idCardType" lay-verify="required">
+                                                            <option value="">请选择</option>
+                                                            <option value="居民身份证">居民身份证</option>
+                                                            <option value="港澳通行证">港澳通行证</option>
+                                                            <option value="护照">护照</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">证件号<span style="color: red;">*</span>:</label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" placeholder="请输入证件号" name="idCard" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">开户省份:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <select name="accountProvince" id="selProvince" lay-filter="Province" lay-verify="required"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">开户城市:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <select name="accountCity" id="selCity" lay-verify="required"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">银行机构:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" placeholder="请输入银行机构" name="bank" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">联行号:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" placeholder="请输入联行号" name="unionNumber" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">开户行:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" placeholder="请输入开户行" name="accountBank" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label label0" style=" width: 70px !important;">个人账号:<span style="color: red;">*</span></label>
+                                                    <div class="layui-input-block block0" style="margin-left: 80px !important;">
+                                                        <input type="text" placeholder="请输入个人账号" name="personalAccount" class="layui-input" lay-verify="required" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <div class="layui-input-block">
+                                                        <button class="layui-btn" lay-filter="expertInfoSubmit" lay-submit>
+                                                            保存专家信息
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 尾部 -->
+    @include("/common/person_footer.html"){}
+</div>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script>
+    layui.config({
+        base: '${ctxPath}/assets/common/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'console']);
+    function setPass(){
+        layer.open({
+            id: 'pswForm',
+            type: 2,
+            title: "修改密码",
+            area:["300px","350px"],
+            content: '${ctxPath}/system/user_chpwd'
+        });
+    }
+
+    function setPhone(){
+        layer.open({
+            id: 'chPhone',
+            type: 2,
+            title: "修改绑定手机",
+            area:["440px","300px"],
+            content: '${ctxPath}/system/user_chPhone'
+        });
+    }
+    /*var uuid;
+    $(document).ready(function() {
+        //步骤二 ： 页面加载完后ajax请求生成二维码图片
+        $.ajax({
+            type: "post",
+            url: "${ctxPath}/weiXin/getLinkImage",
+            success: function (data) {
+                //存储UUID
+                uuid = data.uuid;
+            }
+        });
+    });*/
+
+    function weChatBand(){
+        layer.open({
+            id: 'band',
+            type: 2,
+            area:["300px","380px"],
+            title: "微信绑定",
+            content: '${ctxPath}/weiXin/weChatBand'
+        });
+    }
+
+    function weChatCancelBand(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/weiXin/weChatCancelBand" ,
+            success:function(response){
+                var data=response.data;
+                window.location.reload();
+            }
+        })
+    }
+    $(document).ready(function() {
+        if ("${wechatName }" != ""){
+            $("#weChatBand").attr("style","line-height: 36px;display: none");
+            $("#weChatCancelBand").attr("style","line-height: 36px;display: inline-block");
+        }else {
+            $("#weChatCancelBand").attr("style","line-height: 36px;display: none");
+            $("#weChatBand").attr("style","line-height: 36px;display: inline-block");
+        }
+    })
+
+</script>
+@}

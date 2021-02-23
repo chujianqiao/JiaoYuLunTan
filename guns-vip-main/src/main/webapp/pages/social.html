@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="renderer" content="webkit" />
     <meta name ="viewport" content ="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>赞助意向</title>
+    <title>合作意向</title>
     <link href="${ctxPath}/assets/common/images/icon2_10.png" rel="icon">
     <link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
     <link rel="stylesheet" href="${ctxPath}/assets/common/css/common.css" />
@@ -35,6 +35,7 @@
         margin-top: 0px;
         margin-right: -20px;
     }
+    * { -webkit-user-select:auto !important; /*webkit浏览器*/ }
 </style>
 <body>
 <div class="page">
@@ -44,7 +45,7 @@
         <div class="func-column-content mCenter mb20">
             <div  class="form-title mCenter">
                 <span class="line inlineBlock"></span>
-                <span class="fontSize20 inlineBlock mCenter title">赞助意向</span>
+                <span class="fontSize20 inlineBlock mCenter title">合作意向</span>
                 <span class='line inlineBlock'></span>
             </div>
         </div>
@@ -54,7 +55,7 @@
                     <form class="layui-form" id="socialForumForm" lay-filter="holdForumForm">
                         <div class="layui-fluid" style="padding-bottom: 75px;">
                             <div class="layui-card">
-                                <div class="layui-card-body">
+                                <div class="layui-card-body mo">
                                     <div class="layui-form-item layui-row">
                                         <div class="layui-inline layui-col-md12">
                                             <label class="layui-form-label">企业/单位名称 ：<span style="color: red;">*</span></label>
@@ -69,9 +70,9 @@
                                             </div>
                                         </div>
                                         <div class="layui-inline layui-col-md12">
-                                            <label class="layui-form-label">负责人电话 ：<span style="color: red;">*</span></label>
+                                            <label class="layui-form-label">负责人手机号 ：<span style="color: red;">*</span></label>
                                             <div class="layui-input-block">
-                                                <input name="manaPhone" type="text" placeholder="请输入负责人电话" class="layui-input" lay-verify="required|phone" required autocomplete="off"/>
+                                                <input name="manaPhone" type="text" placeholder="请输入负责人手机号" class="layui-input" lay-verify="required|phone" required autocomplete="off"/>
                                             </div>
                                         </div>
                                         <div class="layui-inline layui-col-md12">
@@ -93,7 +94,7 @@
                                             </div>
                                         </div>
                                         <div class="layui-inline layui-col-md12">
-                                            <label class="layui-form-label">赞助环节 ：<span style="color: red;">*</span></label>
+                                            <label class="layui-form-label">合作环节 ：<span style="color: red;">*</span></label>
                                             <div class="layui-input-block">
                                                 <div id="divLink">
                                                     <input type="checkbox" id="allCheck" value="" title="全部">
@@ -143,7 +144,7 @@
                                 <td class="sb-table-name">备注<span style="color: red;">*</span>：</td><td><input name="remarks" type="text" placeholder="请输入备注" class="layui-input" lay-verify="required" required/></td>
                             </tr>
                             <tr>
-                                <td class="sb-table-name">赞助环节<span style="color: red;">*</span>：</td>
+                                <td class="sb-table-name">合作方式<span style="color: red;">*</span>：</td>
                                 <td>
                                     <div id="divLink" style="padding-left: 10px">
                                         &lt;!&ndash;<input type="checkbox" name="supPlates" value="开幕式" title="开幕式">
@@ -236,7 +237,7 @@
             }
         });
     });
-    //获取赞助环节，填充表单
+    //获取合作方式，填充表单
     layui.use(['ax', 'form'], function () {
         var $ax = layui.ax;
         var form = layui.form;

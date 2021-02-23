@@ -59,8 +59,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             $("#manaDirectDiv").children('div').children('input').attr("lay-verify","required");
             $("#belongNameDiv").children('label').html("申请人姓名：<span style='color: red;'>*</span>");
             $("#belongNameDiv").children('div').children('input').attr("placeholder","请输入申请人姓名");
-            $("#manaPhoneDiv").children('label').html("申请人电话：<span style='color: red;'>*</span>");
-            $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入申请人电话");
+            $("#manaPhoneDiv").children('label').html("申请人手机号：<span style='color: red;'>*</span>");
+            $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入申请人手机号");
             $("#teamDiv").children('label').html("所在单位：<span style='color: red;'>*</span>");
             $("#teamDiv").children('div').children('input').attr("placeholder","请输入所在单位");
         } else {
@@ -72,8 +72,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             $("#manaDirectDiv").children('div').children('input').attr("lay-verify","");
             $("#belongNameDiv").children('label').html("负责人：<span style='color: red;'>*</span>");
             $("#belongNameDiv").children('div').children('input').attr("placeholder","请输入负责人");
-            $("#manaPhoneDiv").children('label').html("联系电话：<span style='color: red;'>*</span>");
-            $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入联系电话");
+            $("#manaPhoneDiv").children('label').html("负责人手机号：<span style='color: red;'>*</span>");
+            $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入负责人手机号");
             $("#teamDiv").children('label').html("单位名称：<span style='color: red;'>*</span>");
             $("#teamDiv").children('div').children('input').attr("placeholder","请输入单位名称");
         }

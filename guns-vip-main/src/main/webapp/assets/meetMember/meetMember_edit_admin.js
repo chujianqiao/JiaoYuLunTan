@@ -202,6 +202,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     $(function(){
         let ajax = new $ax(Feng.ctxPath + "/meetMember/adminDetail?memberId=" + Feng.getUrlParam("memberId"));
         let result = ajax.start();
+        console.log(result.data);
         //判断大小会
         let meetStatus = result.data.meetStatus;
         if(meetStatus == 7){

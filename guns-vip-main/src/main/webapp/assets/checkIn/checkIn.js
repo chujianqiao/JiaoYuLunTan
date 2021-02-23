@@ -393,7 +393,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     table.render({
         elem: '#tableExpAllForum',
         id: 'exportTableForum',
-        title: '分论坛报到签到全部数据',
+        title: '分论坛签到全部数据',
         cols: [[ //表头
             {
                 field: 'name',

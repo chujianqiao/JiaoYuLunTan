@@ -248,6 +248,37 @@ public class SystemController extends BaseController {
         return "/modular/frame/person_user_info.html";
     }
 
+    @RequestMapping("/person_info_mobile")
+    public String personInfoMobile(Model model) {
+        Long userId = LoginContextHolder.getContext().getUserId();
+        User user = this.userService.getById(userId);
+
+        model.addAllAttributes(BeanUtil.beanToMap(user));
+        model.addAttribute("roleName", ConstantFactory.me().getRoleName(user.getRoleId()));
+        model.addAttribute("deptName", ConstantFactory.me().getDeptName(user.getDeptId()));
+        model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
+        model.addAttribute("wechatName", user.getWechatName());
+        LogObjectHolder.me().set(user);
+
+        model.addAttribute("userName", user.getName());
+        model.addAttribute("menuUrl", "toPersonCenter");
+        if (user.getRoleId().indexOf("4") > -1){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
+
+        String[] roles = user.getRoleId().split(",");
+        for (String role : roles){
+            if (role.equals("3")){
+                return "/modular/frame/person_unit_info.html";
+            }else {
+                return "/modular/frame/person_user_info_mobile.html";
+            }
+        }
+        return "/modular/frame/person_user_info_mobile.html";
+    }
+
     /**
      * 通用的树列表选择器
      *

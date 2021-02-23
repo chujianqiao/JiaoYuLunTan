@@ -1,5 +1,7 @@
-@layout("/common/_form.html",{js:["/assets/socialForum/socialForum_edit.js"]}){
-
+@layout("/common/_form.html",{css:["/assets/common/css/custom_mobile.css"],js:["/assets/socialForum/socialForum_edit.js"]}){
+<style>
+    * { -webkit-user-select:auto !important; /*webkit浏览器*/ }
+</style>
 <form class="layui-form" id="socialForumForm" lay-filter="socialForumForm">
     <div class="layui-fluid" style="padding-bottom: 75px;">
         <div class="layui-card">
@@ -72,7 +74,7 @@
 
                     </div>-->
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">赞助环节<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">合作方式<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <div id="divLink">
                                 <!--<input type="checkbox" name="supPlates" value="开幕式" title="开幕式">

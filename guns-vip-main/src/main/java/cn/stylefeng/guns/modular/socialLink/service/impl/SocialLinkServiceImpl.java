@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * <p>
- * 赞助环节表 服务实现类
+ * 合作方式表 服务实现类
  * </p>
  *
  * @author CHU

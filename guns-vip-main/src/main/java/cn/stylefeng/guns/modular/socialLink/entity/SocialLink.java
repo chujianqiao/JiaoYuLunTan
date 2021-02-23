@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 赞助环节表
+ * 合作方式表
  * </p>
  *
  * @author CHU

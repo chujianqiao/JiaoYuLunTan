@@ -280,6 +280,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
                 Feng.error("修改失败,该手机号已被绑定！");
             } else {
                 Feng.success("修改成功!");
+                window.location.reload();
             }
         }, function (data) {
             Feng.error("修改失败!" + data.responseJSON.message + "!");
@@ -291,6 +292,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
     form.on('submit(guestInfoSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/mgr/edit", function (data) {
             Feng.success("修改成功!");
+            window.location.reload();
         }, function (data) {
             Feng.error("修改失败!" + data.responseJSON.message + "!");
         });
@@ -308,6 +310,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
         console.log(data)
         var ajax = new $ax(Feng.ctxPath + "/reviewMajor/editItem", function (data) {
             Feng.success("修改成功!");
+            window.location.reload();
         }, function (data) {
             Feng.error("修改失败!" + data.responseJSON.message + "!");
         });

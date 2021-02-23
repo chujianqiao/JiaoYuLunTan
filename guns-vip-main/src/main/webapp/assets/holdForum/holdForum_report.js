@@ -151,7 +151,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         })
         if (flag == 1) {
             var ajax = new $ax(Feng.ctxPath + "/socialForum/addItem", function (data) {
-                Feng.success("感谢赞助！</br>衷心感谢您携手中国教育科学论坛，</br>共谋中国教育改革与发展！");
+                Feng.success("衷心感谢您携手中国教育科学论坛，</br>共谋中国教育改革与发展！");
                 //传给上个页面，刷新table用
                 setTimeout(function (){
 

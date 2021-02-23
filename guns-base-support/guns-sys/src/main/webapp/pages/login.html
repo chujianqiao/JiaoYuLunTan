@@ -316,7 +316,19 @@
             @}
             ajax.start();
         });
+        /**
+         * 按键监听esc
+         */
+        layui.use(['admin'], function () {
+            var admin = layui.admin;
+            var $ = layui.jquery;
 
+            $(window).keydown(function (event) {
+                if (event.keyCode === 13) {
+                    $('#submit').click();
+                }
+            });
+        });
 
         // 加载当前语言字典并缓存
         var getUserTranslationAjax = new $ax(Feng.ctxPath + "/translation/getUserTranslation", function (data) {

@@ -269,7 +269,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     //上传PDF文件
     upload.render({
         elem: '#fileBtn'
-        , url: Feng.ctxPath + '/holdForum/upload'
+        , url: Feng.ctxPath + '/holdForum/uploadThesisPdf'
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
@@ -284,13 +284,21 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         }
         , done: function (res) {
             var type = res.data.type;
+            var sizeInfo = res.data.sizeInfo;
             if(type != ".pdf"){
                 Feng.error("上传失败，文件格式不匹配");
             }else {
-                $("#fileInputHidden").val(res.data.fileId);
-                $("#thesisPath").val(res.data.path);
-                $("#fileName").val($("#fileNameTip").val());
-                Feng.success(res.message);
+                if (sizeInfo != "yes"){
+                    $("#fileNameTip").val("");
+                    $("#fileNameTip").html("");
+                    Feng.error("上传失败，文件大小超过限制，请上传"+sizeInfo+"以内的文件。");
+                }else {
+                    $("#fileInputHidden").val(res.data.fileId);
+                    $("#thesisPath").val(res.data.path);
+                    $("#fileName").val($("#fileNameTip").val());
+                    Feng.success(res.message);
+                }
+
             }
         }
         , error: function () {
@@ -317,7 +325,11 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             var status = res.data.status;
             if(status == "格式问题" || status === "格式问题"){
                 Feng.error(res.message);
-            }else {
+            }else if (status == "大小问题" || status === "大小问题"){
+                $("#wordNameTip").val("");
+                $("#wordNameTip").html("");
+                Feng.error(res.message);
+            } else {
                 $("#wordInputHidden").val(res.data.fileId);
                 $("#wordPath").val(res.data.path);
                 $("#wordName").val($("#wordNameTip").val());
@@ -409,13 +421,19 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                     }
                     , done: function (res) {
                         var type = res.data.type;
+                        var sizeInfo = res.data.sizeInfo;
                         if(type != ".pdf"){
                             Feng.error("上传失败，文件格式不匹配");
                         }else {
-                            $("#fileInputHidden").val(res.data.fileId);
-                            $("#thesisPath").val(res.data.path);
-                            $("#fileName").val($("#fileNameTip").val());
-                            Feng.success(res.message);
+                            if (sizeInfo != "yes"){
+                                Feng.error("上传失败，文件大小超过限制，请上传"+sizeInfo+"以内的文件。");
+                            }else {
+                                $("#fileInputHidden").val(res.data.fileId);
+                                $("#thesisPath").val(res.data.path);
+                                $("#fileName").val($("#fileNameTip").val());
+                                Feng.success(res.message);
+                            }
+
                         }
                     }
                     , error: function () {
@@ -441,7 +459,9 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                         var status = res.data.status;
                         if(status == "格式问题" || status === "格式问题"){
                             Feng.error(res.message);
-                        }else {
+                        }else if (status == "大小问题" || status === "大小问题"){
+                            Feng.error(res.message);
+                        } else {
                             $("#wordInputHidden").val(res.data.fileId);
                             $("#wordPath").val(res.data.path);
                             $("#wordName").val($("#wordNameTip").val());

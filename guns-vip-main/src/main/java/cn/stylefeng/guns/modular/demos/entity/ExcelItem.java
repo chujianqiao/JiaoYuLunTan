@@ -86,7 +86,7 @@ public class ExcelItem implements Serializable {
      * 电话
      */
     @TableField("phone")
-    @Excel(name = "电话")
+    @Excel(name = "手机号")
     private String phone;
 
     /**

@@ -34,7 +34,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             //{field: 'unitPlace', sort: true, title: '企业/单位所在地'},
             /*
             {field: 'alreadyMeet', sort: true, title: '已资助的会议'},*/
-            {field: 'supPlate', sort: true, title: '赞助环节'},
+            {field: 'supPlate', sort: true, title: '合作方式'},
             //{field: 'supMoney', sort: true, title: '资助金额'},
             //{field: 'contractPath', sort: true, title: '合同条件附件路径'},
             /*{field: 'applyStatus', sort: true, title: '申报状态', templet: function(data){
@@ -157,7 +157,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     table.render({
         elem: '#tableExpAll',
         id: 'exportTable',
-        title: '赞助列表全部数据',
+        title: '合作列表全部数据',
         cols: [[ //表头
             {
                 field: 'meetName',
@@ -179,7 +179,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
                 title: '联系邮箱',
             }, {
                 field: 'supPlate',
-                title: '赞助环节',
+                title: '合作方式',
             }/*, {
                 field: 'supMoney',
                 title: '资助金额',

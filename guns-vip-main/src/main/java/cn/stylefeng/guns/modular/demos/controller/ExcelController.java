@@ -134,7 +134,7 @@ public class ExcelController {
         entity.add(new ExcelExportEntity("生日", "birthday"));
         entity.add(new ExcelExportEntity("性别", "sex"));
         entity.add(new ExcelExportEntity("邮箱", "email"));
-        entity.add(new ExcelExportEntity("电话", "phone"));
+        entity.add(new ExcelExportEntity("手机号", "phone"));
         entity.add(new ExcelExportEntity("角色id", "role_id"));
         entity.add(new ExcelExportEntity("部门id", "dept_id"));
         entity.add(new ExcelExportEntity("状态", "status"));

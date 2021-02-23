@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{js:["/assets/greatResult/greatResult_person.js","/assets/educationResult/educationResult_person.js"]}){
+@layout("/common/_container.html",{js:["/assets/greatResult/greatResult_person.js","/assets/educationResult/educationResult_person.js","/assets/modular/frame/user_info.js"]}){
 
 <head>
     <title>成果会展申请</title>
@@ -16,13 +16,13 @@
                 <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
                     <div class="layui-card">
                         <div class="forms">
-                            <div class="form-tab fontSize16 mb30" id="formTab">
-                                <span class="inlineBlock hover">优秀论著申报</span>
-                                <span class="inlineBlock" id="edu">教改实验申报</span>
-                            </div>
-                            <div class="form-box" id="formList">
-                                <div class="form">
-                                    <div class="layui-card-body">
+                            <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
+                                <ul class="layui-tab-title">
+                                    <li class="layui-this">著作申报</li>
+                                    <li>教改实验申报</li>
+                                </ul>
+                                <div class="layui-tab-content" id="formList">
+                                    <div class="layui-form layui-tab-item layui-show">
                                         <div class="layui-form toolbar">
                                             <div class="layui-form-item">
                                                 <div class="layui-inline">
@@ -42,10 +42,8 @@
                                             </div>
                                         </div>
                                         <table class="layui-table" id="greatResultTable" lay-filter="greatResultTable"></table>
-                                    </div>
-                                </div><!--end of form-->
-                                <div class="form hide">
-                                    <div class="layui-card-body">
+                                    </div><!--end of form-->
+                                    <div class="layui-tab-item">
                                         <div class="layui-form toolbar">
                                             <div class="layui-form-item">
                                                 <div class="layui-inline">
@@ -65,9 +63,10 @@
                                             </div>
                                         </div>
                                         <table class="layui-table" id="educationResultTable" lay-filter="educationResultTable"></table>
-                                    </div>
-                                </div><!--end of form-->
+                                    </div><!--end of form-->
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

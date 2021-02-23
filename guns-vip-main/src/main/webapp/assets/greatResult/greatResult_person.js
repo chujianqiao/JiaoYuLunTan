@@ -118,7 +118,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     GreatResult.openDetail = function (data) {
-        window.location.href = Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType;
+        window.location.href = Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=9';
         /*func.open({
             title: '详情信息',
             content: Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType,

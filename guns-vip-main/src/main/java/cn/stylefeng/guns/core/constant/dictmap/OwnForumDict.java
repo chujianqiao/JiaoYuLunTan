@@ -12,7 +12,7 @@ public class OwnForumDict extends AbstractDictMap {
         put("post", "职务");
         put("unitName", "单位名称");
         put("manager", "姓名");
-        put("manaPhone", "电话");
+        put("manaPhone", "手机号");
         put("manaEmail", "邮箱");
         put("direction", "研究方向");
         put("forumTopic", "论坛主题名称");

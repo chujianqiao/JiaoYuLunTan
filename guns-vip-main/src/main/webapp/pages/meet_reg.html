@@ -23,11 +23,13 @@
 		font-size: 14px;
 		color: rgb(0,87,203);
 		cursor: pointer;
+		margin-left: -20px;
 	}
 	.layui-form-item .layui-form-checkbox[lay-skin=primary] {
 		margin-top: 0px;
 		margin-right: -20px;
 	}
+	* { -webkit-user-select:auto !important; /*webkit浏览器*/ }
 </style>
 <body>
 	<div class="page">
@@ -47,19 +49,26 @@
 							<input id="userId"  value="${userId}" hidden/>
 							<div class="layui-fluid" style="padding-bottom: 75px;">
 								<div class="layui-card">
-									<div class="layui-card-body" id="meet_megBody">
+									<div class="layui-card-body mo" id="meet_megBody">
 										<div class=" mCenter mb20">
-											<div  class="form-title mCenter" style="text-align:center">
-												<span class="line inlineBlock"></span>
-												<span class="line inlineBlock"></span>
-												<span class="fontSize20 inlineBlock mCenter title" style="color:red">基本信息</span>
-												<span class='line inlineBlock'></span>
-												<span class="line inlineBlock"></span>
+											<div  class="form-title mCenter" style="text-align:center;margin-right:-40px">
+												<div class="pc">
+													<span class="line inlineBlock"></span>
+													<span class="line inlineBlock"></span>
+													<span class="fontSize20 inlineBlock mCenter title" style="color:red">基本信息</span>
+													<span class='line inlineBlock'></span>
+													<span class="line inlineBlock"></span>
+												</div>
+												<div class="mobile">
+													<span class="line inlineBlock"></span>
+													<span class="fontSize20 inlineBlock mCenter title" style="color:red">基本信息</span>
+													<span class='line inlineBlock'></span>
+												</div>
 											</div>
 										</div>
 										<div class="layui-form-item layui-row">
 											<div class="layui-inline layui-col-md12">
-												<label class="layui-form-label">头像 ：<span style="color: red;">*</span></label>
+												<label class="layui-form-label">头像 ：</label>
 												<div class="user-info-head" id="imgHead">
 													<img id="avatarPreview" src="${avatar}"/>
 												</div>
@@ -136,19 +145,26 @@
 
 										<div id="thesisDiv">
 										<div class="mCenter thesisItem">
-											<div  class="form-title mCenter" style="text-align:center">
-												<span class="line inlineBlock"></span>
-												<span class="line inlineBlock"></span>
-												<span class="fontSize20 inlineBlock mCenter title" style="color:red">论文信息</span>
-												<span class='line inlineBlock'></span>
-												<span class="line inlineBlock"></span>
+											<div  class="form-title mCenter" style="text-align:center;margin-right:-40px">
+												<div class="pc">
+													<span class="line inlineBlock"></span>
+													<span class="line inlineBlock"></span>
+													<span class="fontSize20 inlineBlock mCenter title" style="color:red">论文信息</span>
+													<span class='line inlineBlock'></span>
+													<span class="line inlineBlock"></span>
+												</div>
+												<div class="mobile">
+													<span class="line inlineBlock"></span>
+													<span class="fontSize20 inlineBlock mCenter title" style="color:red">基本信息</span>
+													<span class='line inlineBlock'></span>
+												</div>
 											</div>
 										</div>
 										<div class="layui-form-item layui-row thesisItem">
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">中文题目 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="thesisTitle" placeholder="请输入参会论文题目（中文）" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
+													<input name="thesisTitle" maxlength="20" placeholder="请输入参会论文题目（中文）" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
@@ -189,28 +205,30 @@
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
-												<label class="layui-form-label">论文PDF附件 ：<span style="color: red;">*</span></label>
+												<label class="layui-form-label">论文PDF附件<span style="color: red;">*</span></label>
 												<input id="thesisPath" name="thesisPath" type="hidden" class="layui-input"/>
 												<input id="fileName" name="fileName" type="hidden" class="layui-input"/>
-												<input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input" lay-verify="required" required/>
+												<input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
+												<div style="float: left;">
+													<input class="layui-input layui-inline layui-upload-choose" readonly placeholder="请上传论文PDF文件" style="padding: 4px 10px;" id="fileNameTip" lay-verify="required" required></input>
+												</div>
 												<div style="float: left;">
 													<button type="button" class="layui-btn layui-btn-sm" id="fileBtn"><i class="layui-icon"></i>选择文件</button>
 												</div>
-												<div style="float: left;">
-													<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>
-												</div>
+
 											</div>
 											<div class="layui-inline layui-col-md12">
-												<label class="layui-form-label">论文Word附件 ：<span style="color: red;">*</span></label>
+												<label class="layui-form-label">论文Word附件<span style="color: red;">*</span></label>
 												<input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
 												<input id="wordName" name="wordName" type="hidden" class="layui-input"/>
-												<input id="wordInputHidden" name="wordInputHidden" type="hidden" class="layui-input" lay-verify="required" required/>
+												<input id="wordInputHidden" name="wordInputHidden" type="hidden" class="layui-input"H/>
+												<div style="float: left;">
+													<input class="layui-input layui-inline layui-upload-choose" readonly placeholder="请上传论文Word文件" style="padding: 4px 10px;" id="wordNameTip" lay-verify="required" required></input>
+												</div>
 												<div style="float: left;">
 													<button type="button" class="layui-btn layui-btn-sm" id="wordBtn"><i class="layui-icon"></i>选择文件</button>
 												</div>
-												<div style="float: left;">
-													<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordNameTip"></span>
-												</div>
+
 											</div>
 										</div>
 										</div>

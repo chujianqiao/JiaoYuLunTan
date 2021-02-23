@@ -33,7 +33,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             {field: 'manaEmail', sort: true, title: '联系邮箱'},
             /*{field: 'unitPlace', sort: true, title: '企业/单位所在地'},
             {field: 'alreadyMeet', sort: true, title: '已资助的会议'},*/
-            {field: 'supPlate', sort: true, title: '赞助环节'},
+            {field: 'supPlate', sort: true, title: '合作方式'},
             //{field: 'supMoney', sort: true, title: '资助金额'},
             //{field: 'contractPath', sort: true, title: '合同条件附件路径'},
             /*{field: 'applyStatus', sort: true, title: '申报状态', templet: function(data){

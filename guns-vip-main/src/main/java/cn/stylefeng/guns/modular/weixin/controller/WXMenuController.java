@@ -105,7 +105,7 @@ public class WXMenuController {
         btn33.setUrl("http://cesf.nies.net.cn/holdForum/add");
 
         CommonButton btn34 = new CommonButton();
-        btn34.setName("赞助意向");
+        btn34.setName("合作意向");
         btn34.setType("view");
         //btn34.setKey("34");
         btn34.setUrl("http://cesf.nies.net.cn/socialForum/add");

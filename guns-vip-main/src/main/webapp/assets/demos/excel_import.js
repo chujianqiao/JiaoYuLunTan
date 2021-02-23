@@ -33,7 +33,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax','upload']
             {field: 'roleName', sort: true, title: '角色'},
             {field: 'deptName', sort: true, title: '部门'},
             {field: 'email', sort: true, title: '邮箱'},
-            {field: 'phone', sort: true, title: '电话'},
+            {field: 'phone', sort: true, title: '手机号'},
             {field: 'createTime', sort: true, title: '创建时间'},
             {field: 'status', sort: true, templet: '#statusTpl', title: '状态'}
         ]];

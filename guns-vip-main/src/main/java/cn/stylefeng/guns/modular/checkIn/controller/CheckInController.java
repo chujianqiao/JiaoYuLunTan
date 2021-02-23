@@ -157,8 +157,13 @@ public class CheckInController extends BaseController {
         //类转Map
         Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        map.put("registerTime",sf.format(map.get("registerTime")));
-        map.put("signTime",sf.format(map.get("signTime")));
+        if(map.get("registerTime") != "" && map.get("registerTime") != null){
+            map.put("registerTime",sf.format(map.get("registerTime")));
+        }
+        if(map.get("signTime") != "" && map.get("signTime") != null){
+            map.put("signTime",sf.format(map.get("signTime")));
+        }
+
         map = new CheckInWrapper(map).wrap();
         return ResponseData.success(map);
     }

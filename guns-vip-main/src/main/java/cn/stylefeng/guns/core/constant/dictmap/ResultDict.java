@@ -10,7 +10,7 @@ public class ResultDict extends AbstractDictMap {
         put("resultName", "成果名称");
         put("belongName", "姓名/单位名称");
         put("manager", "负责人姓名");
-        put("manaPhone", "电话");
+        put("manaPhone", "手机号");
         put("manaEmail", "邮箱");
         put("team", "所在单位");
         put("manaPost", "申请人职称/职务");

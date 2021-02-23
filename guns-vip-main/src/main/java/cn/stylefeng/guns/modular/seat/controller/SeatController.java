@@ -149,13 +149,16 @@ public class SeatController extends BaseController {
 
             LayuiPageInfo results = this.seatDetailService.findPageBySpec(seatDetailParam);
             List<SeatDetailResult> list = results.getData();
-            SeatDetailResult seatDetailResult = list.get(0);
+            SeatDetailResult seatDetailResult = new SeatDetailResult();
+            if (list.size() > 0){
+                seatDetailResult = list.get(0);
+                this.seatDetailService.deleteData(seatDetailParam);
+            }
 
-            this.seatDetailService.deleteData(seatDetailParam);
 
-            String templateId = "dTxk2FjY3SZmx-X5AR1sJ4Aw9-Me4bhMSa6zU4Yq_Ac";
-            User resultUser = userService.getById(seatDetailResult.getUserId());
-            String userWechatId = resultUser.getWechatId();
+            //String templateId = "dTxk2FjY3SZmx-X5AR1sJ4Aw9-Me4bhMSa6zU4Yq_Ac";
+            //User resultUser = userService.getById(seatDetailResult.getUserId());
+            //String userWechatId = resultUser.getWechatId();
             /*if (userWechatId != null && userWechatId != ""){
                 String first = "您好，您的座位已被变更。";
                 String remark = "您可登录中国教育科学论坛平台查看详细信息。";

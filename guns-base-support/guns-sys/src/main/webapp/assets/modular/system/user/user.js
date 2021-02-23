@@ -173,7 +173,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
                 title: '姓名',
             }, {
                 field: 'phone',
-                title: '电话',
+                title: '手机号',
             }, {
                 field: 'createTime',
                 title: '创建时间',

@@ -162,7 +162,20 @@ ul.mobile-hydt-list .mobile-hydt-title2 a{color:#000;}
 .form-tab span.hover{color:#196bc6;cursor:pointer;}
 .form-tab span.hover:after{position:absolute;bottom:0;left:50%;margin-left:-3px;content:'';width:0;height:0;border-width:6px;border-style:solid;border-color:transparent transparent #f0cc6c transparent;}
 
+.func-column-container{background:rgba(255,255,255,0.7);padding:.3rem;}
+.func-column-content{background:url(../images/form_03.png) no-repeat center;height:1.17rem;display: flex;flex-direction: column;justify-content: center;}
+.form-title{font-size:0;}
+.form-title span{vertical-align: middle;}
+.form-title span.line{background:url(../images/line_03.png) repeat-x center;width:1.8rem;height:1px;}
+.form-title span.title{padding:0 .3rem;color:#fff;font-weight:700;}
 
+.layui-form-label{width: 100px !important;margin-left: -20px;}
+.layui-input-block{ margin-left: 110px !important;}
+.btn{margin-right:0.25rem;border-radius:4px;display:inline-block;cursor:pointer;width:2.35rem;height:.56rem;line-height:.56rem;text-align:center;color:#fff;}
+.btn.submit{background:#196bc6;}
+.btn.cancel{background:#b7babe;}
+.mo{padding: 10px 15px !important;}
+.layui-inlineMo{float: left}
 @media screen and (max-width: 750px) {
     html {
         font-size:13.33vw;

@@ -51,22 +51,29 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload','sele
     majorSelectOption();
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/thesis/assignItem", function (data) {
-            Feng.success("分配成功！");
-            //传给上个页面，刷新table用
-            admin.putTempData('formOk', true);
-            //关掉对话框
-            admin.closeThisDialog();
-            // window.location.href = Feng.ctxPath + '/thesis'
-        }, function (data) {
-            Feng.error("分配失败！" + data.responseJSON.message)
-        });
-        ajax.set(data.field);
-        ajax.set("reviewBatch","1");
-        ajax.set("thesisIds",Feng.getUrlParam("thesisId"));
-        ajax.start();
+        var reviewUsers = data.field.reviewUser;
+        if (reviewUsers != "" && reviewUsers != null){
+            var ajax = new $ax(Feng.ctxPath + "/thesis/assignItem", function (data) {
+                Feng.success("分配成功！");
+                //传给上个页面，刷新table用
+                admin.putTempData('formOk', true);
+                //关掉对话框
+                admin.closeThisDialog();
+                // window.location.href = Feng.ctxPath + '/thesis'
+            }, function (data) {
+                Feng.error("分配失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.set("reviewBatch","1");
+            ajax.set("thesisIds",Feng.getUrlParam("thesisId"));
+            ajax.start();
 
-        return false;
+            return false;
+        } else {
+            Feng.error("请选择专家后进行提交。");
+            return false;
+        }
+
     });
 
     form.on('submit(btnSubmitAgain)', function (data) {
@@ -113,7 +120,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload','sele
                 var majors = [];
                 majors = data;
 
-                var options;
+                var options = '<option value="" >请选择专家（可手动输入专家名称筛选）</option>';
                 for (var i = 0 ;i < majors.length ;i++){
                     var major = data[i];
                     options += '<option value="'+ major.reviewId+ '" >'+ major.name +'</option>';

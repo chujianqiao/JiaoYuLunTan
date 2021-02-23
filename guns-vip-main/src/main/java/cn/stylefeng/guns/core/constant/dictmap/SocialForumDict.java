@@ -11,7 +11,7 @@ public class SocialForumDict extends AbstractDictMap {
         put("unitName", "申报企业/单位名称");
         put("unitPlace", "企业/单位所在地");
         put("manager", "负责人");
-        put("manaPhone", "负责人电话");
+        put("manaPhone", "负责人手机号");
         put("manaEmail", "负责人邮箱");
         put("alreadyMeet", "已资助的会议");
         put("supPlate", "拟资助版块");

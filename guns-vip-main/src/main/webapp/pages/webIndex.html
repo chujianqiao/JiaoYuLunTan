@@ -80,14 +80,10 @@
 <div class="mobile" style="overflow:hidden;width:100%;">
     <header class="pr">
         <div class="language-select pa">
-            <!--<div class="language-select-icon inlineBlock"><img src="${ctxPath}/assets/common/images/icon1_03.png" width="100%" /></div>
-            <div class="language-select-box inlineBlock">
-                <div class="language fontSize24 inlineBlock">
-                    <a href="#">中文</a>
-                    <a href="#" class="hover">英文</a>
-                </div>
-                <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn" id="langSelect_mobile" />
-            </div>-->
+
+            <div id="userDivMo" class="fontSize16" style="float:left;display: block;margin-right: 10px">
+                <!--<a href="/system/person_info" target="_blank" style="color: white">个人中心</a>-->
+            </div>
         </div>
     </header>
     <iframe src="http://cesf.nies.net.cn:8080/pub/lt_new_6/" height="1237" width="100%"></iframe>
@@ -432,11 +428,16 @@
         if ("${roleNames! }" == "[超级管理员]"){
             $("#userDiv").append("<a href=\"/admin\" target=\"_blank\" style=\"color: white;margin-right: 10px\">后台管理</a>");
             $("#userDiv").append("<a href=\"/#\" id='btnLogout' style=\"color: white\">退出</a>");
+            $("#userDivMo").append("<a href=\"/admin\" target=\"_blank\" style=\"color: white;margin-right: 10px\">后台管理</a>");
+            $("#userDivMo").append("<a href=\"/#\" id='btnLogoutMo' style=\"color: white\">退出</a>");
         } else if ("${userName! }" == "" || "${userName! }" == null) {
             $("#userDiv").append("<a id='btnLogin' style=\"color: white;cursor:pointer \">登录</a>");
+            $("#userDivMo").append("<a id='btnLoginMo' style=\"color: white;cursor:pointer \">登录</a>");
         } else {
             $("#userDiv").append("<a href=\"/mgr/toPersonCenter\" target=\"_blank\" style=\"color: white;margin-right: 10px;text-decoration:underline;\"><i class=\"layui-icon\">&#xe770;</i>${userName! }</a>");
             $("#userDiv").append("<a href=\"/#\" id='btnLogout' style=\"color: white\">退出</a>");
+            $("#userDivMo").append("<a href=\"/mgr/toPersonCenter\" target=\"_blank\" style=\"color: white;margin-right: 10px;text-decoration:underline;\"><i class=\"layui-icon\">&#xe770;</i>${userName! }</a>");
+            $("#userDivMo").append("<a href=\"/#\" id='btnLogoutMo' style=\"color: white\">退出</a>");
         }
         if ("${ifVideo }" == "yes"){
             $("#video").attr("style","position:relative;display: block");
@@ -495,9 +496,29 @@
                 }
             });
         })
+        $("#btnLoginMo").click(function(){
+            layer.open({
+                type: 2,
+                title: false,
+                area: ['400px', '415px'],
+                content: '/login',
+                success: function(layero, index){
+
+                }
+            });
+        })
 
         // 退出登录点击事件
         $('#btnLogout').click(function () {
+            var ajax = new $ax(Feng.ctxPath + "/logout", function (data) {
+                Feng.success("退出成功!");
+                window.location.href = Feng.ctxPath + "/index";
+            }, function (data) {
+                layer.msg("退出失败！" + data.responseJSON.message, {icon: 5, anim: 6});
+            });
+            ajax.start();
+        });
+        $('#btnLogoutMo').click(function () {
             var ajax = new $ax(Feng.ctxPath + "/logout", function (data) {
                 Feng.success("退出成功!");
                 window.location.href = Feng.ctxPath + "/index";

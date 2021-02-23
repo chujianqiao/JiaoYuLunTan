@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
- * 赞助环节表控制器
+ * 合作方式表控制器
  *
  * @author CHU
  * @Date 2020-07-15 10:57:17

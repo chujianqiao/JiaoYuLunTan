@@ -153,6 +153,9 @@ public class EducationResultController extends BaseController {
             //    return PREFIX + "/educationResult_detailUnit.html";
             //}
         }else if(isReview){
+            if (applyType == 9){
+                return PREFIX + "/educationResult_detail_person.html";
+            }
             return PREFIX + "/educationResult_detail_review.html";
         }else {
             return PREFIX + "/educationResult_detail_person.html";

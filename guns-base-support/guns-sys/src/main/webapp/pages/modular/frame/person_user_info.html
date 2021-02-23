@@ -46,7 +46,6 @@
                 <div class="layui-col-sm12 layui-col-md9">
                     <div class="layui-card">
                         <div class="layui-card-body">
-
                             <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
                                 <ul class="layui-tab-title">
                                     <li class="layui-this">${lang.get("MENU_BASE_INFO","基本信息")}</li>
@@ -102,9 +101,9 @@
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_BIRTHDAY","生日")}:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_BIRTHDAY","生日")}:</label>
                                                 <div class="layui-input-block">
-                                                    <input type="text" id="birthday" name="birthday" class="layui-input" lay-verify="required" required/>
+                                                    <input type="text" id="birthday" name="birthday" class="layui-input" />
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
@@ -128,7 +127,14 @@
                                             <div class="layui-form-item">
                                                 <label class="layui-form-label">${lang.get("FIELD_EDUCATION","学历")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
-                                                    <input type="text" name="education" class="layui-input" lay-verify="required" required/>
+                                                    <!--<input type="text" name="education" class="layui-input" lay-verify="required" required/>-->
+                                                    <select name="education" lay-verify="required">
+                                                        <option value=""></option>
+                                                        <option value="专科">专科</option>
+                                                        <option value="本科">本科</option>
+                                                        <option value="硕士">硕士</option>
+                                                        <option value="博士">博士</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
@@ -139,7 +145,7 @@
                                             </div>
 
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_PHONE","电话")}:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_PHONE","手机号")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <input type="text" name="phone" class="layui-input layui-disabled" lay-verify="required|phone" required/>
                                                 </div>
@@ -314,13 +320,12 @@
                                                     <button class="layui-btn" lay-filter="expertInfoSubmit" lay-submit>
                                                         保存专家信息
                                                     </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -374,7 +379,7 @@
                 id: 'pswForm',
                 type: 2,
                 title: "修改绑定手机",
-                area:["440px","500px"],
+                area:["440px","300px"],
                 content: '${ctxPath}/system/user_chPhone'
             });
         });
@@ -405,7 +410,7 @@
             layer.open({
                 id: 'pswForm',
                 type: 2,
-                area:["300px","350px"],
+                area:["300px","380px"],
                 title: "微信绑定",
                 content: '${ctxPath}/weiXin/weChatBand'
             });

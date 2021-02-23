@@ -18,6 +18,9 @@
 	<link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>
 
 </head>
+<style>
+	* { -webkit-user-select:auto !important; /*webkit浏览器*/ }
+</style>
 <body>
 	<div class="page">
 
@@ -36,7 +39,7 @@
 						<form class="layui-form" id="collectTopicForm" lay-filter="collectTopicForm">
 							<div class="layui-fluid" style="padding-bottom: 75px;">
 								<div class="layui-card">
-									<div class="layui-card-body">
+									<div class="layui-card-body mo">
 										<div class="layui-form-item layui-row">
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">大会主题 ：<span style="color: red;">*</span></label>

@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 赞助环节表 Mapper 接口
+ * 合作方式表 Mapper 接口
  * </p>
  *
  * @author CHU

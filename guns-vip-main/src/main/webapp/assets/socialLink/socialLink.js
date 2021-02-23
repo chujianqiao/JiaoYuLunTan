@@ -7,7 +7,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     var form = layui.form;
 
     /**
-     * 赞助环节表管理
+     * 合作方式表管理
      */
     var SocialLink = {
         tableId: "socialLinkTable"
@@ -47,7 +47,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
      */
     SocialLink.openAddDlg = function () {
         func.open({
-            title: '添加赞助环节表',
+            title: '添加合作方式表',
             content: Feng.ctxPath + '/socialLink/add',
             tableId: SocialLink.tableId
         });
@@ -60,7 +60,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
       */
       SocialLink.openEditDlg = function (data) {
           func.open({
-              title: '修改赞助环节表',
+              title: '修改合作方式表',
               content: Feng.ctxPath + '/socialLink/edit?linkId=' + data.linkId,
               tableId: SocialLink.tableId
           });
@@ -102,11 +102,11 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     table.render({
         elem: '#tableExpAll',
         id: 'exportTable',
-        title: '赞助字典全部数据',
+        title: '合作字典全部数据',
         cols: [[ //表头
             {
                 field: 'linkName',
-                title: '环节名称',
+                title: '方式名称',
             }, {
                 field: 'description',
                 title: '备注',

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * <p>
- * 赞助环节表 服务类
+ * 合作方式表 服务类
  * </p>
  *
  * @author CHU

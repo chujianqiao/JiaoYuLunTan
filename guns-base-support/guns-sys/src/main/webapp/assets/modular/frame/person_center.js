@@ -34,17 +34,23 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
 
                 } else {
                     $("#meetFile").attr("href",Feng.ctxPath + "/meet/meetFile");
+                    $("#meetFileMo").attr("href",Feng.ctxPath + "/meet/meetFile");
                     $("#fileDownload").attr("href","javascript:fileDownload();");
+                    $("#fileDownloadMo").attr("href","javascript:fileDownloadMo();");
                     $("#iconFile").attr("style","font-size: 60px");
+                    $("#iconFileMo").attr("style","font-size: 60px");
                     $("#iconDownload").attr("style","font-size: 60px");
+                    $("#iconDownloadMo").attr("style","font-size: 60px");
                     $("#meetData1").html("<h2 style='font-weight: bold;'>" + data.detail.meetName + "</h2>");
                     $("#meetData2").html("会议描述：" + data.detail.meetDesc);
                     $("#meetData3").html("会议地点：" + data.detail.place);
                     $("#meetData4").html("会议时间：" + data.beginTime + " 至 " + data.endTime);
                     $("#meetData5").html("报名时间：" + data.joinBegTime + " 至 " + data.joinEndTime);
                     $("#meetName").html("" + data.detail.meetName);
+                    $("#meetNameMo").html("" + data.detail.meetName);
                     if (data.seat != undefined){
                         $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
+                        $("#seatMo").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
                     }
                     //绑定点击事件
                     let seatId = data.seatId;
@@ -89,22 +95,31 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                     console.log(data[i]);
                     if (data[i].meetStatus == 4 || data[i].meetStatus == 6){
                         if (data[i].ownForumid != null && data[i].ownFourmid != ""){
-                            $("#forum").attr("href","javascript:forumAdd('exist')")
+                            $("#forum").attr("href","javascript:forumAdd('exist')");
+                            $("#forumMo").attr("href","javascript:forumAdd('exist')");
                         } else {
-                            $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')")
+                            $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')");
+                            $("#forumMo").attr("href","javascript:forumAdd('" + data[i].memberId + "')");
                             $("#iconEdit").attr("style","font-size: 60px");
+                            $("#iconEditMo").attr("style","font-size: 60px");
                         }
-                        $("#pay").attr("href","javascript:toPay('yes')")
+                        $("#pay").attr("href","javascript:toPay('yes')");
+                        $("#payMo").attr("href","javascript:toPay('yes')");
                         forumSelectOption(data[i].ownForumid);
                         break;
                     }else if (data[i].meetStatus == 2){
-                        $("#forum").attr("href","javascript:forumAdd('toPay')")
-                        $("#pay").attr("href","javascript:toPay('" + data[i].memberId + "')")
+                        $("#forum").attr("href","javascript:forumAdd('toPay')");
+                        $("#forumMo").attr("href","javascript:forumAdd('toPay')");
+                        $("#pay").attr("href","javascript:toPay('" + data[i].memberId + "')");
+                        $("#payMo").attr("href","javascript:toPay('" + data[i].memberId + "')");
                         $("#iconNotice").attr("style","font-size: 60px");
+                        $("#iconNoticeMo").attr("style","font-size: 60px");
                         break;
                     }else {
-                        $("#forum").attr("href","javascript:forumAdd('')")
-                        $("#pay").attr("href","javascript:toPay('')")
+                        $("#forum").attr("href","javascript:forumAdd('')");
+                        $("#forumMo").attr("href","javascript:forumAdd('')");
+                        $("#pay").attr("href","javascript:toPay('')");
+                        $("#payMo").attr("href","javascript:toPay('')");
                         $("#forumData1").html("无");
                         $("#forumData2").empty();
                         $("#forumData3").empty();
@@ -138,6 +153,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                         $("#forumData3").html("论坛时间：" + forum.startTime + " 至 " + forum.endTime);
                         $("#forumData4").html("报名时间：" + forum.registerStartTime + " 至 " + forum.registerEndTime);
                         $("#forumName").html("论坛：" + forum.forumName);
+                        $("#forumNameMo").html("论坛：" + forum.forumName);
                         break;
                     }else{
                         $("#forumData1").html("无");
@@ -153,6 +169,21 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
     function ownSeat(seatId){
         $("#seat").each(function(){
             let seatText = document.getElementById("seat").innerText;
+            let index = seatText.indexOf('无');
+            if(index < 0){
+                $(this).click(function(){
+                    layer.open({
+                        title: '我的座位',
+                        type: 2,
+                        area: ['1200px','580px'],
+                        // resize:false,
+                        content: Feng.ctxPath + '/meetSeat?seatId='+ seatId
+                    });
+                });
+            }
+        })
+        $("#seatMo").each(function(){
+            let seatText = document.getElementById("seatMo").innerText;
             let index = seatText.indexOf('无');
             if(index < 0){
                 $(this).click(function(){

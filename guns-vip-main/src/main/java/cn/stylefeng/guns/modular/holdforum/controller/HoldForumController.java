@@ -11,6 +11,9 @@ import cn.stylefeng.guns.modular.holdforum.model.params.HoldForumParam;
 import cn.stylefeng.guns.modular.holdforum.service.HoldForumService;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.core.util.FileDownload;
+import cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam;
+import cn.stylefeng.guns.sys.modular.consts.model.result.SysConfigResult;
+import cn.stylefeng.guns.sys.modular.consts.service.SysConfigService;
 import cn.stylefeng.guns.sys.modular.system.entity.FileInfo;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
@@ -52,6 +55,9 @@ public class HoldForumController extends BaseController {
 
     @Autowired
     private FileInfoService fileInfoService;
+
+    @Autowired
+    private SysConfigService sysConfigService;
 
     /**
      * 跳转到主页面
@@ -294,6 +300,54 @@ public class HoldForumController extends BaseController {
         HashMap<String, Object> map = new HashMap<>();
         map.put("fileId", fileId);
         map.put("path",uploadResult.getFileSavePath());
+        map.put("type",fileType);
+
+        return ResponseData.success(0, "上传成功", map);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/uploadThesisPdf")
+    @ResponseBody
+    public ResponseData uploadThesisPdf(@RequestPart("file") MultipartFile file) {
+
+        String path = uploadFolder;
+
+        String fileId = "";
+        String pathReturn = "";
+        String fileName = file.getOriginalFilename();
+        String fileType = fileName.substring(fileName.lastIndexOf("."));
+        long len  = file.getSize();
+        SysConfigParam param = new SysConfigParam();
+        param.setCode("FILE_SIZE");
+        SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
+        String sysFileSize = sysConfigResult.getValue();
+        String unit = sysFileSize.substring(sysFileSize.length()-1);
+        int size = Integer.parseInt(sysFileSize.substring(0,sysFileSize.length()-1));
+        double fileSize = 0;
+        if ("B".equals(unit.toUpperCase())) {
+            fileSize = (double) len ;
+        } else if ("K".equals(unit.toUpperCase())) {
+            fileSize = (double) len  / 1024;
+        } else if ("M".equals(unit.toUpperCase())) {
+            fileSize = (double) len  / 1048576;
+        } else if ("G".equals(unit.toUpperCase())) {
+            fileSize = (double) len  / 1073741824;
+        }
+        HashMap<String, Object> map = new HashMap<>();
+
+        if (fileType.equals(".pdf")){
+            if (fileSize <= size) {
+                UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
+                fileId = uploadResult.getFileId();
+                pathReturn = uploadResult.getFileSavePath();
+                map.put("sizeInfo", "yes");
+            }else {
+                map.put("sizeInfo", sysFileSize);
+            }
+        }
+
+
+        map.put("fileId", fileId);
+        map.put("path",pathReturn);
         map.put("type",fileType);
 
         return ResponseData.success(0, "上传成功", map);

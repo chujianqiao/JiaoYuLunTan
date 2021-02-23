@@ -12,7 +12,7 @@ public class HoldForumDict extends AbstractDictMap {
         put("year", "承办年份");
         put("ability", "承办能力(会议规模)");
         put("manager", "负责人");
-        put("manaPhone", "负责人电话");
+        put("manaPhone", "负责人手机号");
         put("manaEmail", "负责人邮箱");
         put("planName", "承办方案附件");
     }

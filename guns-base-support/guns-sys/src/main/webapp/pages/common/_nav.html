@@ -1,8 +1,10 @@
 <script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
-<div class="pc">
+<div>
     <header>
         <div class="head mCenter widthC pr">
-            <img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
+            <div class="pc">
+                <img src="${ctxPath}/assets/common/images/icon1_06.png" width="502" height="107" class="jykxltIcon" />
+            </div>
             <div class="language-select pa">
                 <!--<img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
                 <div class="language-select-box pr">
@@ -19,198 +21,122 @@
             </div>
         </div>
     </header>
-    <nav class="widthC mCenter pr nav_pc">
-        <div class="inlineBlock">
-            <a href="/" class="fontSize18 item" target="_blank">首页</a>
-        </div>
-        <div class="inlineBlock">
-            <a href="${ctxPath}/mgr/toPersonCenter" class="fontSize18 item" target="_blank">个人中心</a>
-        </div>
-        <div class="inlineBlock">
-            <a href="${ctxPath}/meetMember/add" id="meetMember" class="fontSize18 item" target="_blank">会议注册</a>
-            <!--<a class="fontSize18 item" target="_blank">关于论坛</a>
-            <div class="childNav pa fontSize16 hide">
-                <div class="childNav-items inlineBlock">
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/ltjj/" target="_blank">论坛简介</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/ltzc/" target="_blank">论坛章程</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/xszxwyhcy/" target="_blank">学术咨询委员会成员</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/gwt/" target="_blank">顾问团</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/zzjg/" target="_blank">组织架构</a>
-                </div>
-            </div>-->
-        </div>
-        <div class="inlineBlock">
-            <a href="${ctxPath}/greatResult/add" id="greatResult" class="fontSize18 item" target="_blank">优秀成果会展申请</a>
-            <!--<a class="fontSize18 item" target="_blank">论坛活动</a>
-            <div class="childNav pa fontSize16 hide">
-                <div class="childNav-items inlineBlock">
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/lthd/zxhy/" target="_blank">最新会议</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/lthd/lnhy/" target="_blank">历年论坛</a>
-                </div>
-            </div>-->
-        </div>
-        <div>
-            <a href="${ctxPath}/collectTopic/add" id="collectTopic" class="fontSize18 item" target="_blank">主题征集</a>
-            <!--<a class="fontSize18 item" target="_blank">论坛之声</a>
-            <div class="childNav pa fontSize16 hide">
-                <div class="childNav-items inlineBlock">
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltzs/chjb/" target="_blank">参会嘉宾</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltzs/chxz/" target="_blank">参会学者</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltzs/qnzs/" target="_blank">青年之声</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltzs/kyzx/" target="_blank">科研战线</a>
-                </div>
-            </div>-->
-        </div>
-        <div>
-            <a href="${ctxPath}/holdForum/add" id="holdForum" class="fontSize18 item" target="_blank">论坛申报</a>
-            <!--<a class="fontSize18 item" target="_blank">论坛成果</a>
-            <div class="childNav pa fontSize16 hide">
-                <div class="childNav-items inlineBlock">
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/yxlwj/" target="_blank">优秀论文集</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/xszz/" target="_blank">学术著作</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/yjbg/" target="_blank">研究报告</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/zcbg/" target="_blank">政策报告</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/jgsy/" target="_blank">教改实验</a>
-                </div>
-            </div>-->
-        </div>
-        <div>
-            <a href="${ctxPath}/socialForum/add" id="socialForum" class="fontSize18 item" target="_blank">赞助意向</a>
-            <!--<a class="fontSize18 item" target="_blank">国内外会议信息</a>
-            <div class="childNav pa fontSize16 hide">
-                <div class="childNav-items inlineBlock">
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gnwhyxx/gnhy/" target="_blank">国内会议</a>
-                    <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gnwhyxx/gjhy/" target="_blank">国际会议</a>
-                </div>
-            </div>-->
-        </div>
-        <!--<div>
-            <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/lxwm/" class="fontSize18 item" target="_blank">联系我们</a>
-        </div>-->
-    </nav>
-</div>
-<div class="mobile" style="overflow:hidden;width:100%;">
-    <header class="pr">
-        <div class="language-select pa">
-            <!--<div class="language-select-icon inlineBlock"><img src="${ctxPath}/assets/common/images/icon1_03.png" width="100%" /></div>
-            <div class="language-select-box inlineBlock">
-                <div class="language fontSize24 inlineBlock">
-                    <a href="#">中文</a>
-                    <a href="#" class="hover">英文</a>
-                </div>
-                <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn" id="langSelect_mobile" />
-            </div>-->
-        </div>
-    </header>
-    <!--<nav class="mobile_nav pr">
-        <div class="swiper-container mobile_swiper1" id="mobileSwiper1">
-            <div class="swiper-wrapper pr fontSize32">
-                <div class="swiper-slide home">
-                    <a href="#" class="lavel1-name hover">首页</a>
-                </div>
-                <div class="swiper-slide">
-                    <div class="lavel1-name"><span>关于论坛</span><span class="down carset"></span></div>
-                    <div class="lavel2 pa hide">
-                        <div class="lavel2-name fontSize30"><a href="关于论坛.html">关于论坛</a>
-                        </div>
-                        <ul class="lavel2-list clearfix fontSize28">
-                            <li class="fl"><a href="#" target="_blank">论坛简介</a></li>
-                            <li class="fr"><a href="#" target="_blank">论坛章程</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">顾问团</a></li>
-                            <li class="fr"><a href="#" target="_blank">组织架构</a></li>
-                        </ul>
+    <div class="pc">
+        <nav class="widthC mCenter pr nav_pc">
+            <div class="inlineBlock">
+                <a href="/" class="fontSize18 item" target="_blank">首页</a>
+            </div>
+            <div class="inlineBlock">
+                <a href="${ctxPath}/mgr/toPersonCenter" class="fontSize18 item" target="_blank">个人中心</a>
+            </div>
+            <div class="inlineBlock">
+                <a href="${ctxPath}/meetMember/add" id="meetMember" class="fontSize18 item" target="_blank">会议注册</a>
+                <!--<a class="fontSize18 item" target="_blank">关于论坛</a>
+                <div class="childNav pa fontSize16 hide">
+                    <div class="childNav-items inlineBlock">
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/ltjj/" target="_blank">论坛简介</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/ltzc/" target="_blank">论坛章程</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/xszxwyhcy/" target="_blank">学术咨询委员会成员</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/gwt/" target="_blank">顾问团</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/zzjg/" target="_blank">组织架构</a>
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="lavel1-name"><span>论坛活动</span><span class="down carset"></span></div>
-                    <div class="lavel2 pa hide">
-                        <div class="lavel2-name fontSize30">	<a href="手机版-论坛活动.html" target="_blank">论坛活动</a>
-                        </div>
-                        <ul class="lavel2-list clearfix fontSize28">
-                            <li class="fl"><a href="#" target="_blank">论坛简介</a></li>
-                            <li class="fr"><a href="#" target="_blank">论坛章程</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">顾问团</a></li>
-                            <li class="fr"><a href="#" target="_blank">组织架构</a></li>
-                        </ul>
+                </div>-->
+            </div>
+            <div class="inlineBlock">
+                <a href="${ctxPath}/greatResult/add" id="greatResult" class="fontSize18 item" target="_blank">优秀成果会展申请</a>
+                <!--<a class="fontSize18 item" target="_blank">论坛活动</a>
+                <div class="childNav pa fontSize16 hide">
+                    <div class="childNav-items inlineBlock">
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/lthd/zxhy/" target="_blank">最新会议</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/lthd/lnhy/" target="_blank">历年论坛</a>
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="lavel1-name"><span>论坛之声</span><span class="down carset"></span></div>
-                    <div class="lavel2 pa hide">
-                        <div class="lavel2-name fontSize30">	<a href="手机版-论坛之声.html" target="_blank">论坛之声</a>
-                        </div>
-                        <ul class="lavel2-list clearfix fontSize28">
-                            <li class="fl"><a href="#" target="_blank">论坛简介</a></li>
-                            <li class="fr"><a href="#" target="_blank">论坛章程</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">顾问团</a></li>
-                            <li class="fr"><a href="#" target="_blank">组织架构</a></li>
-                        </ul>
+                </div>-->
+            </div>
+            <div>
+                <a href="${ctxPath}/collectTopic/add" id="collectTopic" class="fontSize18 item" target="_blank">主题征集</a>
+                <!--<a class="fontSize18 item" target="_blank">论坛之声</a>
+                <div class="childNav pa fontSize16 hide">
+                    <div class="childNav-items inlineBlock">
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltzs/chjb/" target="_blank">参会嘉宾</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltzs/chxz/" target="_blank">参会学者</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltzs/qnzs/" target="_blank">青年之声</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltzs/kyzx/" target="_blank">科研战线</a>
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="lavel1-name"><span>论坛成果</span><span class="down carset"></span></div>
-                    <div class="lavel2 pa hide">
-                        <div class="lavel2-name fontSize30">	<a href="#" target="_blank">论坛成果</a>
-                        </div>
-                        <ul class="lavel2-list clearfix fontSize28">
-                            <li class="fl"><a href="#" target="_blank">论坛简介</a></li>
-                            <li class="fr"><a href="#" target="_blank">论坛章程</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">顾问团</a></li>
-                            <li class="fr"><a href="#" target="_blank">组织架构</a></li>
-                        </ul>
+                </div>-->
+            </div>
+            <div>
+                <a href="${ctxPath}/holdForum/add" id="holdForum" class="fontSize18 item" target="_blank">论坛申报</a>
+                <!--<a class="fontSize18 item" target="_blank">论坛成果</a>
+                <div class="childNav pa fontSize16 hide">
+                    <div class="childNav-items inlineBlock">
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/yxlwj/" target="_blank">优秀论文集</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/xszz/" target="_blank">学术著作</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/yjbg/" target="_blank">研究报告</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/zcbg/" target="_blank">政策报告</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/jgsy/" target="_blank">教改实验</a>
                     </div>
-                </div>
-                <div class="swiper-slide gnw-swiper-slide">
-                    <div class="lavel1-name"><span>国内外会议信息</span><span class="down carset"></span></div>
-                    <div class="lavel2 pa hide">
-                        <div class="lavel2-name fontSize30">	<a href="#" target="_blank">国内外会议信息</a>
-                        </div>
-                        <ul class="lavel2-list clearfix fontSize28">
-                            <li class="fl"><a href="#" target="_blank">论坛简介</a></li>
-                            <li class="fr"><a href="#" target="_blank">论坛章程</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">学术咨询委员会成员</a></li>
-                            <li class="fr"><a href="#" target="_blank">理事成员</a></li>
-                            <li class="fl"><a href="#" target="_blank">顾问团</a></li>
-                            <li class="fr"><a href="#" target="_blank">组织架构</a></li>
-                        </ul>
+                </div>-->
+            </div>
+            <div>
+                <a href="${ctxPath}/socialForum/add" id="socialForum" class="fontSize18 item" target="_blank">合作意向</a>
+                <!--<a class="fontSize18 item" target="_blank">国内外会议信息</a>
+                <div class="childNav pa fontSize16 hide">
+                    <div class="childNav-items inlineBlock">
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gnwhyxx/gnhy/" target="_blank">国内会议</a>
+                        <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/gnwhyxx/gjhy/" target="_blank">国际会议</a>
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <a href="手机版-联系我们.html" target="_blank" class="lavel1-name">联系我们</a>
+                </div>-->
+            </div>
+            <!--<div>
+                <a href="http://cesf.nies.net.cn:8080/pub/lt_new_6/lxwm/" class="fontSize18 item" target="_blank">联系我们</a>
+            </div>-->
+        </nav>
+    </div>
+    <div class="mobile">
+        <nav class="mobile_nav pr">
+            <div class="swiper-container mobile_swiper1" id="mobileSwiper1">
+                <div class="swiper-wrapper pr fontSize32">
+                    <div class="swiper-slide home">
+                        <a href="${ctxPath}/index" class="lavel1-name hover" target="_blank">首页</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="${ctxPath}/mgr/toPersonCenter" id="toPersonCenterMo" class="lavel1-name" target="_blank">个人中心</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="${ctxPath}/meetMember/add" id="meetMemberMo" class="lavel1-name" target="_blank">会议注册</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="${ctxPath}/greatResult/add" id="greatResultMo" class="lavel1-name" target="_blank">成果申请</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="${ctxPath}/collectTopic/add" id="collectTopicMo" class="lavel1-name" target="_blank">主题征集</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="${ctxPath}/holdForum/add" id="holdForumMo" class="lavel1-name" target="_blank">论坛申报</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="${ctxPath}/socialForum/add" id="socialForumMo" class="lavel1-name" target="_blank">合作意向</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="cover pa"></div>
-        <div class="lavel2-container"></div>
-    </nav>-->
-
+        </nav>
+    </div>
 </div>
+
 <script type="text/javascript">
     var Feng = {
         ctxPath: "${ctxPath}",
         version: '${constants.getReleaseVersion()}'
     };
+    $(document).ready(function(){
+        myJs.swiper_init();
+        myJs.navTab();
+        myJs.mobile_swiper_init1();
+    });
 </script>
 <script>
     $("#" + "${menuUrl }").attr("style","color:#196bc6;background:#c5def6;")
+    $("#" + "${menuUrl }" + "Mo").attr("style","color:#196bc6;background:#c5def6;")
 
     function logout() {
         $.ajax({

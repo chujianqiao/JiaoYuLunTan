@@ -449,7 +449,12 @@ public class MeetMemberController extends BaseController {
         Long thesisId = detail.getThesisId();
         if(thesisId != null && thesisId != 0){
             Thesis thesis = this.thesisService.getById(thesisId);
-            String thesisName = thesis.getThesisTitle();
+            String thesisName = "";
+            if (thesis != null){
+                thesisName = thesis.getThesisTitle();
+            }else {
+                thesisName = "无";
+            }
             map.put("thesisName",thesisName);
         }
 

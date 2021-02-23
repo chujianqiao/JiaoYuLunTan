@@ -119,21 +119,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         })
         data.field.supPlate = supPlate;
 
-        if (result.data.applyStatus == 0) {
-            var ajax = new $ax(Feng.ctxPath + "/socialForum/editItem", function (data) {
-                Feng.success("更新成功！");
-                //传给上个页面，刷新table用
-                admin.putTempData('formOk', true);
-                //关掉对话框
-                admin.closeThisDialog();
-            }, function (data) {
-                Feng.error("更新失败！" + data.responseJSON.message)
-            });
-            ajax.set(data.field);
-            ajax.start();
-        }else {
-            Feng.success("请先取消申请再进行修改！");
-        }
+        var ajax = new $ax(Feng.ctxPath + "/socialForum/editItem", function (data) {
+            Feng.success("更新成功！");
+            //传给上个页面，刷新table用
+            admin.putTempData('formOk', true);
+            //关掉对话框
+            admin.closeThisDialog();
+        }, function (data) {
+            Feng.error("更新失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.start();
 
         return false;
     });

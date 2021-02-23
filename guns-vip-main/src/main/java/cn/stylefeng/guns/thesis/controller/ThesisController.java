@@ -17,6 +17,9 @@ import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.modular.weixin.util.CommonUtil;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
+import cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam;
+import cn.stylefeng.guns.sys.modular.consts.model.result.SysConfigResult;
+import cn.stylefeng.guns.sys.modular.consts.service.SysConfigService;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.model.UserDto;
@@ -97,6 +100,9 @@ public class ThesisController extends BaseController {
 
     @Autowired
     private MeetService meetService;
+
+    @Autowired
+    private SysConfigService sysConfigService;
 
     @Value("${file.uploadFolder}")
     private String uploadFolder;
@@ -390,12 +396,26 @@ public class ThesisController extends BaseController {
 
             String[] thesisId = thesisIds.split(";");
             for (int j = 0;j < thesisId.length;j++){
-                ThesisReviewMiddleParam param = new ThesisReviewMiddleParam();
-                param.setThesisId(Long.parseLong(thesisId[j]));
-                param.setUserId(userId);
-                //param.setScore(0);
-                param.setReviewSort(thesisParam.getReviewBatch());
-                this.thesisReviewMiddleService.add(param);
+                if (thesisParam.getReviewBatch() == 1){
+                    ThesisReviewMiddleParam param = new ThesisReviewMiddleParam();
+                    param.setThesisId(Long.parseLong(thesisId[j]));
+                    param.setReviewSort(thesisParam.getReviewBatch());
+                    param.setUserId(userId);
+                    List<ThesisReviewMiddleResult> listResult = thesisReviewMiddleService.getByThesisId(Long.parseLong(thesisId[j]),1);
+                    if (listResult.size() > 0){
+                        param.setMiddleId(listResult.get(0).getMiddleId());
+                        this.thesisReviewMiddleService.update(param);
+                    }else {
+                        this.thesisReviewMiddleService.add(param);
+                    }
+                }else {
+                    ThesisReviewMiddleParam param = new ThesisReviewMiddleParam();
+                    param.setThesisId(Long.parseLong(thesisId[j]));
+                    param.setUserId(userId);
+                    //param.setScore(0);
+                    param.setReviewSort(thesisParam.getReviewBatch());
+                    this.thesisReviewMiddleService.add(param);
+                }
             }
 
         }
@@ -490,7 +510,7 @@ public class ThesisController extends BaseController {
         User resultUser = userService.getById(meetMemberResult.getUserId());
         String userWechatId = resultUser.getWechatId();
         if (userWechatId != null && userWechatId != ""){
-            String first = "您的论文已初评完毕，请尽快前往平台完成缴费。";
+            String first = "您的论文已初评完毕，请尽快前往中国教科论坛网站完成缴费。";
             String remark = "您可登录中国教育科学论坛平台查看详细信息。";
             String reviewResult = "";
             if (reviewNum == 0){
@@ -893,14 +913,40 @@ public class ThesisController extends BaseController {
         String fileName = file.getOriginalFilename();
         String fileType = fileName.substring(fileName.lastIndexOf("."));
         HashMap<String, Object> map = new HashMap<>();
+
+        long len  = file.getSize();
+        SysConfigParam param = new SysConfigParam();
+        param.setCode("FILE_SIZE");
+        SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
+        String sysFileSize = sysConfigResult.getValue();
+        String unit = sysFileSize.substring(sysFileSize.length()-1);
+        int size = Integer.parseInt(sysFileSize.substring(0,sysFileSize.length()-1));
+        double fileSize = 0;
+        if ("B".equals(unit.toUpperCase())) {
+            fileSize = (double) len ;
+        } else if ("K".equals(unit.toUpperCase())) {
+            fileSize = (double) len  / 1024;
+        } else if ("M".equals(unit.toUpperCase())) {
+            fileSize = (double) len  / 1048576;
+        } else if ("G".equals(unit.toUpperCase())) {
+            fileSize = (double) len  / 1073741824;
+        }
+
         if((".doc").equalsIgnoreCase(fileType) || ".docx".equalsIgnoreCase(fileType)){
-            UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
-            String fileId = uploadResult.getFileId();
-            map.put("fileId", fileId);
-            map.put("path",uploadResult.getFileSavePath());
-            map.put("status","成功");
-            message = "上传成功";
-            return ResponseData.success(0, message, map);
+            if (fileSize <= size) {
+                UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
+                String fileId = uploadResult.getFileId();
+                map.put("fileId", fileId);
+                map.put("path",uploadResult.getFileSavePath());
+                map.put("status","成功");
+                message = "上传成功";
+                return ResponseData.success(0, message, map);
+            }else {
+                message = "上传失败，文件大小超过限制，请上传"+sysFileSize+"以内的文件。";
+                map.put("status","大小问题");
+                return ResponseData.success(0, message, map);
+            }
+
         }else{
             message = "上传失败，文件格式不匹配";
             map.put("status","格式问题");

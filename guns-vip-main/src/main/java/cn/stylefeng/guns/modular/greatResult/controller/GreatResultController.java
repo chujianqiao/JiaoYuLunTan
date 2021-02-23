@@ -171,6 +171,9 @@ public class GreatResultController extends BaseController {
             //    return PREFIX + "/greatResult_detailUnit.html";
             //}
         }else if(ToolUtil.isReviewRole()){
+            if (applyType == 9){
+                return PREFIX + "/greatResult_detail_person.html";
+            }
             return PREFIX + "/greatResult_detail_review.html";
         }else {
             return PREFIX + "/greatResult_detail_person.html";
