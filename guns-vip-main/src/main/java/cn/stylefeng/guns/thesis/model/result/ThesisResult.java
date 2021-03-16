@@ -149,5 +149,5 @@ public class ThesisResult implements Serializable {
      */
     private Integer reviewBatch;
     private Long meetId;
-
+    private Integer finalResult;
 }

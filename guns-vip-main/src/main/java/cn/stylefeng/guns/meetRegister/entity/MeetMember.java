@@ -123,6 +123,9 @@ public class MeetMember implements Serializable {
     @TableField("meet_id")
     private Long meetId;
 
+    @TableField("if_meet")
+    private Integer ifMeet;
+
     public MeetMember() {
     }
 
@@ -261,6 +264,14 @@ public class MeetMember implements Serializable {
     public void setMeetId(Long meetId) {
         this.meetId = meetId;
     }
+
+    public Integer getIfMeet() {
+        return ifMeet;
+    }
+
+    public void setIfMeet(Integer ifMeet) {
+        this.ifMeet = ifMeet;
+    }
     @Override
     public String toString() {
         return "MeetMember{" +
@@ -276,6 +287,7 @@ public class MeetMember implements Serializable {
         ", pptPath=" + pptPath +
         ", pptName=" + pptName +
         ", meetId=" + meetId +
+        ", ifMeet=" + ifMeet +
         "}";
     }
 }

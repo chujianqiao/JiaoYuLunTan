@@ -150,7 +150,7 @@ public class ThesisParam implements Serializable, BaseValidatingParam {
      */
     private Integer reviewBatch;
     private Long meetId;
-
+    private Integer finalResult;
 
     @Override
     public String checkParam() {

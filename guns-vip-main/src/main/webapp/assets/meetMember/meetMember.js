@@ -39,7 +39,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
             // {field: 'ownForumid', sort: true, title: '自设论坛ID'},
             // {field: 'regTime', sort: true, title: '注册时间'},
             // {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180},
-            {align: 'center', minWidth: 250, title: '操作', templet: function(data){
+            {align: 'center', minWidth: 300, title: '操作', templet: function(data){
                 if (data.meetTimeStatusStr == "已结束" || data.meetPubStatus == "0"){
                     if (data.meetStatusStr == "已通过") {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' target='_blank' lay-event='meetFile'>会议手册</a><a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='fileDownload'>材料下载</a>";
@@ -58,49 +58,52 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
                         } else if (data.meetStatusStr == "已取消") {
                             return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                         } else if (data.meetStatusStr == "评审通过") {
-                            return "<a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >缴费</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
+                            return "<a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >缴费</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
                         } else if (data.meetStatusStr == "已缴费") {
                             if (data.ownForumid != "" && data.ownForumid != null){
-                                return "<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a>";
+                                return "<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                             } else {
-                                return "<a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a>";
+                                return "<a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                             }
                         } else if (data.meetStatusStr == "已通过") {
-                            return "";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                         } else if (data.meetStatusStr == "未通过") {
                             return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                         } else if (data.meetStatusStr == "已申请开票") {
                             if (data.ownForumid != "" && data.ownForumid != null){
-                                return "<a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a>";
+                                return "<a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                             } else {
-                                return "<a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a>";
+                                return "<a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                             }
-
+                        }else {
+                            return "";
                         }
                     } else {
                         if (data.meetStatusStr == "评审中") {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel'>取消申请</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                         } else if (data.meetStatusStr == "已取消") {
                             return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                         } else if (data.meetStatusStr == "评审通过") {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >缴费</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >缴费</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
                         } else if (data.meetStatusStr == "已缴费") {
                             if (data.ownForumid != "" && data.ownForumid != null){
-                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a>";
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                             } else {
-                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a>";
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                             }
                         } else if (data.meetStatusStr == "已通过") {
-                            return "";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                         } else if (data.meetStatusStr == "未通过") {
                             return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
                         } else if (data.meetStatusStr == "已申请开票") {
                             if (data.ownForumid != "" && data.ownForumid != null){
-                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a>";
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                             } else {
-                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a>";
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票信息</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
                             }
 
+                        }else {
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a>";
                         }
                     }
                 }
@@ -261,6 +264,21 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         };
         Feng.confirm("是否取消会议申请?", operation);
     };
+    MeetMember.onCancelMeet = function (data){
+        var operation = function () {
+            var ajax = new $ax(Feng.ctxPath + "/meetMember/cancelMeet", function (data) {
+                Feng.success("取消成功!");
+                table.reload(MeetMember.tableId);
+                // window.location.href=window.location.href;
+            }, function (data) {
+                Feng.error("取消失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("memberId", data.memberId);
+            ajax.set("meetStatus", data.meetStatus);
+            ajax.start();
+        };
+        Feng.confirm("是否取消参会?", operation);
+    };
 
     // 渲染表格
     var tableResult = table.render({
@@ -280,6 +298,11 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
     // 添加按钮点击事件
     $('#btnAdd').click(function () {
         MeetMember.openAddDlg();
+    });
+
+    // 添加按钮点击事件
+    $('#btnCreate').click(function () {
+        window.location.href = Feng.ctxPath + "/meetMember/add";
     });
 
     // 导出excel
@@ -337,6 +360,8 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
             MeetMember.onDisableItem(data);
         } else if (layEvent === 'cancel') {
             MeetMember.onCancelItem(data);
+        } else if (layEvent === 'cancelMeet') {
+            MeetMember.onCancelMeet(data);
         } else if (layEvent === 'forum') {
             MeetMember.onForumItem(data);
         } else if (layEvent === 'pay') {

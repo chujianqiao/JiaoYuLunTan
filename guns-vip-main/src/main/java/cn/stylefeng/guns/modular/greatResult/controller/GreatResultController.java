@@ -240,7 +240,10 @@ public class GreatResultController extends BaseController {
     public String assign() {
         return PREFIX + "/assign_great.html";
     }
-
+    @RequestMapping("/reviewBatch")
+    public String reviewBatch() {
+        return PREFIX + "/review_Batch.html";
+    }
     /**
      * 分配评审专家接口
      * @author wucy
@@ -306,9 +309,105 @@ public class GreatResultController extends BaseController {
     @ResponseBody
     public ResponseData editItem(GreatResultParam greatResultParam) {
         this.greatResultService.update(greatResultParam);
+        GreatResult greatResult = greatResultService.getById(greatResultParam.getResultId());
+        GreatReviewMiddleParam middleParam = new GreatReviewMiddleParam();
+        if (greatResultParam.getCheckStatus() == 3){
+            middleParam.setReviewResult(0);
+        }else if (greatResultParam.getCheckStatus() == 2){
+            middleParam.setReviewResult(1);
+        }
+        middleParam.setMiddleId(greatResultParam.getResultId());
+        middleParam.setReviewTime(new Date());
+        this.greatReviewMiddleService.update(middleParam);
+        if (greatResultParam.getCheckStatus() != null){
+            String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+            LoginUser loginUser = LoginContextHolder.getContext().getUser();
+            User resultUser = userService.getById(greatResult.getApplyId());
+            String userWechatId = resultUser.getWechatId();
+            if (userWechatId != null && userWechatId != ""){
+                String first = "您的著作申报已审核";
+                String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                String reviewResult = "";
+                if (greatResultParam.getCheckStatus() == 3){
+                    reviewResult = "不推荐参会";
+                }
+                if (greatResultParam.getCheckStatus() == 2){
+                    reviewResult = "推荐参会";
+                }
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String time = format.format(new Date());
+                List<String> dataList = new ArrayList<>();
+                dataList.add("著作申报");
+                dataList.add(reviewResult);
+                dataList.add(time);
+                CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+            }
+        }
         return ResponseData.success();
     }
+    /**
+     * 批量评审接口
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/reviewAdmin")
+    @ResponseBody
+    public ResponseData reviewAdmin(GreatResultParam greatResultParam, String resultIds) {
+        int reviewNum = greatResultParam.getCheckStatus();
+        String[] resultId = resultIds.split(";");
+        for (int j = 0;j < resultId.length;j++){
+            GreatResultParam result = new GreatResultParam();
+            result.setResultId(Long.parseLong(resultId[j]));
+            result.setCheckStatus(reviewNum);
+            result.setFinalResult(greatResultParam.getFinalResult());
+            this.greatResultService.update(result);
 
+            GreatReviewMiddleParam middleParam = new GreatReviewMiddleParam();
+
+            middleParam.setResultId(Long.parseLong(resultId[j]));
+            LayuiPageInfo records = this.greatReviewMiddleService.findPageBySpec(middleParam);
+            List<GreatReviewMiddleResult> results = records.getData();
+            if (results.size() > 0){
+                GreatReviewMiddleResult middleResult = results.get(0);
+                Long middleId = middleResult.getMiddleId();
+
+                if (reviewNum == 3){
+                    middleParam.setReviewResult(0);
+                }else if (reviewNum == 2){
+                    middleParam.setReviewResult(1);
+                }
+                middleParam.setMiddleId(middleId);
+                middleParam.setReviewTime(new Date());
+                this.greatReviewMiddleService.update(middleParam);
+            }
+
+
+            GreatResult greatResult = greatResultService.getById(Long.parseLong(resultId[j]));
+            String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+            User resultUser = userService.getById(greatResult.getApplyId());
+            String userWechatId = resultUser.getWechatId();
+            if (userWechatId != null && userWechatId != ""){
+                String first = "您的著作申报已审核";
+                String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                String reviewResult = "";
+                if (greatResultParam.getCheckStatus() == 3){
+                    reviewResult = "不推荐参会";
+                }
+                if (greatResultParam.getCheckStatus() == 2){
+                    reviewResult = "推荐参会";
+                }
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String time = format.format(new Date());
+                List<String> dataList = new ArrayList<>();
+                dataList.add("著作申报");
+                dataList.add(reviewResult);
+                dataList.add(time);
+                CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+            }
+        }
+
+        return ResponseData.success();
+    }
     /**
      * 评审接口
      * @author wucy
@@ -340,9 +439,10 @@ public class GreatResultController extends BaseController {
         }else if (middleParam.getReviewResult() == 1){
             param.setCheckStatus(2);
         }
+        param.setFinalResult(greatResultParam.getFinalResult());
         this.greatResultService.update(param);
 
-        String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+        /*String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
         User resultUser = userService.getById(greatResult.getApplyId());
         String userWechatId = resultUser.getWechatId();
@@ -363,7 +463,7 @@ public class GreatResultController extends BaseController {
             dataList.add(reviewResult);
             dataList.add(time);
             CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
-        }
+        }*/
 
 //        this.greatResultService.update(greatResultParam);
         return ResponseData.success();

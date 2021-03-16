@@ -62,14 +62,19 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             {field: 'passTime', sort: true, title: '审核通过时间'},
             {field: 'cancelTime', sort: true, title: '取消申请时间'},*/
             {align: 'center', title: '操作',minWidth:220, templet: function(data){
-                if (data.reviewResult == "未评审" || data.reviewResult == "未分配"){
-                    return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
-                        "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
-                        "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
-                }else {
-                    return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
-                        "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
-                }
+                    if (data.reviewResult == "未评审" || data.reviewResult == "未分配"){
+                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
+                            "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
+                            "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                    }else {
+                        if (data.finalResult == 1) {
+                            return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">评审</a>\n" +
+                                "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                        }else {
+                            return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
+                                "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                        }
+                    }
                 }}
         ]];
     };
@@ -255,6 +260,23 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             });
         }
     };
+    EducationResult.jumpReviewPageBatch = function (data) {
+        var checkRows = table.checkStatus(EducationResult.tableId);
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择被评审的数据");
+        } else {
+            var resultIds = "";
+            for (var i = 0;i < checkRows.data.length;i++){
+                resultIds = resultIds + checkRows.data[i].resultId + ";";
+            }
+            func.open({
+                title: '批量评审',
+                area: ['350px', '300px'],
+                content: Feng.ctxPath + '/educationResult/reviewBatch?resultId=' + resultIds,
+                tableId: EducationResult.tableId
+            });
+        }
+    };
 
     // 渲染表格
     var tableResult = table.render({
@@ -290,6 +312,10 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     //批量分配
     $('#assignBatch').click(function () {
         EducationResult.jumpAssignPageBatch();
+    });
+    //批量评审
+    $('#reviewBatch').click(function () {
+        EducationResult.jumpReviewPageBatch();
     });
 
     // 工具条点击事件

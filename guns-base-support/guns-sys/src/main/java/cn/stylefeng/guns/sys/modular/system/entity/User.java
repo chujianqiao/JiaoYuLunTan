@@ -234,6 +234,23 @@ public class User implements Serializable {
     @TableField("wechat_open_id")
     private String wechatOpenId;
 
+    /**
+     *  所属国家
+     */
+    @TableField("country")
+    private String country;
+    /**
+     *  所属省份
+     */
+    @TableField("province")
+    private String province;
+
+    /**
+     * 所属城市
+     */
+    @TableField("city")
+    private String city;
+
 
     public Long getUserId() {
         return userId;
@@ -523,6 +540,29 @@ public class User implements Serializable {
         this.wechatOpenId = wechatOpenId;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
     @Override
     public String toString() {
         return "User{" +
@@ -562,6 +602,9 @@ public class User implements Serializable {
         ", wechatId=" + wechatId +
         ", unionId=" + unionId +
         ", wechatOpenId=" + wechatOpenId +
+        ", country=" + country +
+        ", province=" + province +
+        ", city=" + city +
         "}";
     }
 }

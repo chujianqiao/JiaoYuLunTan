@@ -162,9 +162,6 @@ public class ThesisReviewMiddleController extends BaseController {
         String userNameFirst = "";
 
         for (int i = 0;i < theses.size();i++){
-            Long userId = theses.get(i).getUserId();
-            User user = userService.getById(userId);
-
             if (theses.get(i).getScore() == null){
                 userNameFirst = userNameFirst + "专家" + (i+1) + "(未评审)" + ";";
             }else {
@@ -181,9 +178,6 @@ public class ThesisReviewMiddleController extends BaseController {
         String userNameSecond = "";
 
         for (int i = 0;i < thesesSecond.size();i++){
-            Long userId = thesesSecond.get(i).getUserId();
-            User user = userService.getById(userId);
-
             if (thesesSecond.get(i).getScore() == null){
                 userNameSecond = userNameSecond + "专家" + (i+1) + "(未评审)" + ";";
             }else {
@@ -216,6 +210,18 @@ public class ThesisReviewMiddleController extends BaseController {
             }else if (thesis.getReviewResult() == 1){
                 map.put("reviewResult", "同意参会");
             }
+        }
+        if (thesis.getFinalResult() != 2){
+            String userName = "";
+            if (theses.size() == 0){
+                map.put("userNameFirst", "未分配");
+            }else {
+                for (int i = 0;i < theses.size();i++){
+                    userName = userName + "专家" + (i+1) + "(未评审)" + ";";
+                }
+                map.put("userNameFirst", userName);
+            }
+            map.put("status", "未评审");
         }
 
         return ResponseData.success(map);

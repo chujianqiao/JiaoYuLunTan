@@ -118,5 +118,8 @@ public class UserDto {
 
     /*@NotBlank
     private String position;*/
+    private String country;
+    private String province;
+    private String city;
 
 }

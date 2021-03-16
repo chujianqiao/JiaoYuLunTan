@@ -24,29 +24,8 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     var func = layui.func;
     var layer = layui.layer;
 
-    //获取详情信息，填充表单
-    let userId = $("#userId").val()
-    var ajax = new $ax(Feng.ctxPath + "/mgr/getUserInfo?userId=" + userId);
-    var result = ajax.start();
-    form.val('meetRegForm', result.data);
-    //判断大小会
-    let ajaxPubMeet = new $ax(Feng.ctxPath + "/meet/detailPub");
-    let pubMeet = ajaxPubMeet.start().data.detail;
-    var size = pubMeet.size;
-    if(size == 'small' || size == "small"){
-        //小会，移除所有论文的元素
-        $(".thesisItem").remove();
-        $("#isSubmit").remove();
-    }else if(size == 'big' || size == "big") {
-        //是否必须投稿
-        let isSub = pubMeet.mustSub;
-        if(isSub == 1 || isSub == '1'){
-            $("#isSubmit").remove();
-        }
-    }
-
     //定义数组，存储省份信息
-    var province = ["北京", "上海", "天津", "重庆", "浙江", "江苏", "广东", "福建", "湖南", "湖北", "辽宁",
+    var province = ["","北京", "上海", "天津", "重庆", "浙江", "江苏", "广东", "福建", "湖南", "湖北", "辽宁",
         "吉林", "黑龙江", "河北", "河南", "山东", "陕西", "甘肃", "新疆", "青海", "山西", "四川",
         "贵州", "安徽", "江西", "云南", "内蒙古", "西藏", "广西", "宁夏", "海南", "香港", "澳门", "台湾"];
     //定义数组,存储城市信息
@@ -102,6 +81,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     function setProvince() {
         //给省份下拉列表赋值
         var $sel = $("#selProvince");
+        $sel.html("");
         //获取对应省份城市
         for (var i = 0, len = province.length; i < len; i++) {
             modelVal = province[i];
@@ -112,7 +92,16 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         form.render('select');
         setCity($($sel.get(0)).val());
     }
-
+    form.on('select(country)', function (data) {
+        if (data.value.indexOf("中国") > -1){
+            $("#province").css("display","block");
+            $("#city").css("display","block");
+        }else {
+            setProvince();
+            $("#province").css("display","none");
+            $("#city").css("display","none");
+        }
+    });
     //根据选中的省份获取对应的城市
     function setCity(provinec) {
         var $city = $("#selCity");
@@ -225,13 +214,50 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
         //先清空之前绑定的值
         $city.empty();
         //设置对应省份的城市
-        for (var i = 0, len = proCity.length; i < len; i++) {
-            modelVal = proCity[i];
-            option = "<option value='" + modelVal + "'>" + modelVal + "</option>";
-            //添加
-            $city.append(option);
+        if (proCity != undefined){
+            for (var i = 0, len = proCity.length; i < len; i++) {
+                modelVal = proCity[i];
+                option = "<option value='" + modelVal + "'>" + modelVal + "</option>";
+                //添加
+                $city.append(option);
+            }
         }
+
         form.render('select');
+    }
+
+
+    //获取详情信息，填充表单
+    let userId = $("#userId").val()
+    var ajax = new $ax(Feng.ctxPath + "/mgr/getUserInfo?userId=" + userId);
+    var result = ajax.start();
+    setCity(result.data.province);
+    form.val('meetRegForm', result.data);
+    //判断大小会
+    let ajaxPubMeet = new $ax(Feng.ctxPath + "/meet/detailPub");
+    let pubMeet = ajaxPubMeet.start().data.detail;
+    var size = pubMeet.size;
+    if(size == 'small' || size == "small"){
+        //小会，移除所有论文的元素
+        $(".thesisItem").remove();
+        $("#isSubmit").remove();
+        $("#btnSubmit").css("display","")
+        $("#btnNext").css("display","none")
+
+    }else if(size == 'big' || size == "big") {
+        //是否必须投稿
+        let isSub = pubMeet.mustSub;
+        if(isSub == 1 || isSub == '1'){
+            $("#isSubmit").remove();
+        }
+    }
+
+    if (result.data.country.indexOf("中国") > -1){
+        $("#province").css("display","block");
+        $("#city").css("display","block");
+    } else {
+        $("#province").css("display","none");
+        $("#city").css("display","none");
     }
 
     var userTitle = $("#userTitle").val();
@@ -263,6 +289,18 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             Feng.error("请先阅读并同意《论坛章程》！");
         }
 
+        return false;
+    });
+    //表单提交事件
+    form.on('submit(btnNext)', function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/thesis/addUserItem", function (data) {
+            Feng.success("提交成功！");
+            window.location.href = Feng.ctxPath + "/thesis/toAddItem";
+        }, function (data) {
+            Feng.error("提交失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.start();
         return false;
     });
 
@@ -400,8 +438,12 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     form.on('radio(subRadio)', function(data){
         if(data.value == 0){
             $(".thesisItem").remove();
+            $("#btnSubmit").css("display","")
+            $("#btnNext").css("display","none")
         }else if(data.value == 1){
             $("#thesisDiv").append(thesisItems);
+            $("#btnSubmit").css("display","none")
+            $("#btnNext").css("display","")
             //append后需要重新绑定upload
             layui.use(['form','upload'],function(){
                 upload.render({

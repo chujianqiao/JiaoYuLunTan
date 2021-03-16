@@ -102,6 +102,7 @@ public class MeetMemberParam implements Serializable, BaseValidatingParam {
     private Double sort;
 
     private Long meetId;
+    private Integer ifMeet;
     @Override
     public String checkParam() {
         return null;

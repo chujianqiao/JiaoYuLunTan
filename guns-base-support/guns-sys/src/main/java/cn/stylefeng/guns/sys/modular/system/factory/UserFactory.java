@@ -138,6 +138,19 @@ public class UserFactory {
             if (ToolUtil.isNotEmpty(newUser.getWechatOpenId())) {
                 oldUser.setWechatOpenId(newUser.getWechatOpenId());
             }
+            if (ToolUtil.isNotEmpty(newUser.getCountry())) {
+                oldUser.setCountry(newUser.getCountry());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getProvince())) {
+                oldUser.setProvince(newUser.getProvince());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getCity())) {
+                oldUser.setCity(newUser.getCity());
+            }
+            if (newUser.getProvince().equals("无")){
+                oldUser.setProvince("");
+                oldUser.setCity("");
+            }
 
             return oldUser;
         }

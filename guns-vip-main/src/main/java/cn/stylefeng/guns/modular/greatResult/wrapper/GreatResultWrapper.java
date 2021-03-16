@@ -7,6 +7,7 @@ import cn.stylefeng.guns.modular.greatReviewMiddle.service.GreatReviewMiddleServ
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
+import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.warpper.BaseControllerWrapper;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.kernel.model.page.PageResult;
@@ -65,20 +66,53 @@ public class GreatResultWrapper extends BaseControllerWrapper {
         }else {
             map.put("score",score);
         }
+
+        int checkStatus = -1;
+        if (map.get("checkStatus") != null){
+            checkStatus = Integer.parseInt(map.get("checkStatus").toString());
+        }
         if (reviewResult == 2){
             map.put("reviewResult","未评审");
         } else if (reviewResult == 0){
-            map.put("reviewResult","不推荐参会");
+            if (checkStatus == 2){
+                map.put("reviewResult","推荐参会");
+            }else {
+                map.put("reviewResult","不推荐参会");
+            }
         } else if (reviewResult == 1){
-            map.put("reviewResult","推荐参会");
+            if (checkStatus == 3){
+                map.put("reviewResult","不推荐参会");
+            }else {
+                map.put("reviewResult","推荐参会");
+            }
         } else {
-            map.put("reviewResult","未分配");
+            if (checkStatus == 2){
+                map.put("reviewResult","推荐参会");
+            }else if (checkStatus == 3){
+                map.put("reviewResult","不推荐参会");
+            }else {
+                map.put("reviewResult","未分配");
+            }
+
         }
 
         Object meetId = map.get("meetId");
         if (meetId != null){
             map.put("meetName",meetService.getById(Long.parseLong(meetId.toString())).getMeetName());
         }
+
+        boolean isAdmin = ToolUtil.isAdminRole();
+        boolean isReviewRole = ToolUtil.isReviewRole();
+        if (!isAdmin && !isReviewRole){
+            if (map.get("finalResult") != null){
+                int finalResult = Integer.parseInt(map.get("finalResult").toString());
+                if (finalResult != 2){
+                    map.put("score","-");
+                    map.put("reviewResult","未评审");
+                }
+            }
+        }
+
 
     }
 }

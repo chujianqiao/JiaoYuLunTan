@@ -82,7 +82,7 @@
         select
         <include refid="Base_Column_List"/>
         from review_major where 1 = 1 and check_status = 'ENABLE'
-        and belong_domain = #{domain}
+        and belong_domain like CONCAT('%',#{domain},'%');
     </select>
 </mapper>
         <!--and find_in_set(#{domain}, belong_domain);-->

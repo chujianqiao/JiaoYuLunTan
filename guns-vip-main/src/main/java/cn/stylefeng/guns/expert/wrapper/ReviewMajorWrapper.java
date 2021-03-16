@@ -69,9 +69,15 @@ public class ReviewMajorWrapper extends BaseControllerWrapper {
 		if (map.get("belongDomain") == null){
 			belongDomainStr = "";
 		}else {
-			Long domainObj = Long.parseLong(map.get("belongDomain").toString());
-			ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
-			belongDomainStr = thesisDomainResult.getDomainName();
+			String domains[] = map.get("belongDomain").toString().split(";");
+			for (int i = 0;i < domains.length;i++){
+				Long domainObj = Long.parseLong(domains[i]);
+				ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
+				belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + ";";
+			}
+			//Long domainObj = Long.parseLong(map.get("belongDomain").toString());
+			//ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
+			//belongDomainStr = thesisDomainResult.getDomainName();
 			/*String domainObj = map.get("belongDomain").toString();
 			if (domainObj.equals("") || domainObj == null){
 				belongDomainStr = "";

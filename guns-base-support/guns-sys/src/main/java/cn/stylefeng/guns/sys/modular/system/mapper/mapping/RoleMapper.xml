@@ -14,11 +14,12 @@
         <result column="update_time" property="updateTime" />
         <result column="create_user" property="createUser" />
         <result column="update_user" property="updateUser" />
+        <result column="if_admin" property="ifAdmin" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        role_id AS "roleId", pid AS "pid", name AS "name", description AS "description", sort AS "sort", version AS "version", create_time AS "createTime", update_time AS "updateTime", create_user AS "createUser", update_user AS "updateUser"
+        role_id AS "roleId", pid AS "pid", name AS "name", description AS "description", sort AS "sort", version AS "version", create_time AS "createTime", update_time AS "updateTime", create_user AS "createUser", update_user AS "updateUser", if_admin AS "ifAdmin"
     </sql>
 
     <select id="selectRoles" resultType="map">

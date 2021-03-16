@@ -181,6 +181,10 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     CollectTopic.openAddDlg();
 
     });
+    // 添加按钮点击事件
+    $('#btnCreate').click(function () {
+        window.location.href = Feng.ctxPath + "/collectTopic/add";
+    });
 
     // 导出excel
     $('#btnExp').click(function () {

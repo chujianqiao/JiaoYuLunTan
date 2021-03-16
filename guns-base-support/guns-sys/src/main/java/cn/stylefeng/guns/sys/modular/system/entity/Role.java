@@ -81,6 +81,12 @@ public class Role implements Serializable {
     @TableField(value = "update_user", fill = FieldFill.UPDATE)
     private Long updateUser;
 
+    /**
+     * 是否有管理员权限
+     */
+    @TableField("if_admin")
+    private Integer ifAdmin;
+
 
     public Long getRoleId() {
         return roleId;
@@ -162,6 +168,14 @@ public class Role implements Serializable {
         this.updateUser = updateUser;
     }
 
+    public Integer getIfAdmin() {
+        return ifAdmin;
+    }
+
+    public void setIfAdmin(Integer ifAdmin) {
+        this.ifAdmin = ifAdmin;
+    }
+
     @Override
     public String toString() {
         return "Role{" +
@@ -175,6 +189,7 @@ public class Role implements Serializable {
         ", updateTime=" + updateTime +
         ", createUser=" + createUser +
         ", updateUser=" + updateUser +
+        ", ifAdmin=" + ifAdmin +
         "}";
     }
 }

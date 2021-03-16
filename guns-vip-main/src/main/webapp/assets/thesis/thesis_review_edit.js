@@ -43,8 +43,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
     if(fileName != null && fileName != "" && fileName != 'undefined'){
         $("#fileNameTip").html(fileName);
     }
+
     //构建评审字典选项
     createReviewDic();
+    var status = result.data.status;
+    $("input:checkbox[name = status]").each(function(i){
+        //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
+        if (status.indexOf($(this).val()) > -1) {
+            $(this).attr("checked",true);
+        }
+    })
+    form.render('checkbox');
 
     //隐藏是否优秀的选项
     // var isPass = result.data.reviewResult;
@@ -127,6 +136,35 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
                 Feng.error("提交评审结果失败！" + data.responseJSON.message)
             });
             ajax.set(data.field);
+            ajax.set("finalResult",1);
+            ajax.start();
+        }else{
+            Feng.error("评分区间 0~100分");
+        }
+        return false;
+    });
+
+    /**
+     * 保存
+     */
+    form.on('submit(btnSave)', function (data) {
+        var score = data.field.score;
+        if(score >= 0 && score <=100){
+            var dicts = "";
+            $("input:checkbox[name = status]:checked").each(function(i){
+                //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
+                dicts += $(this).val() + ";";
+            })
+            data.field.status = dicts;
+
+            var ajax = new $ax(Feng.ctxPath + "/thesis/reviewItem", function (data) {
+                Feng.success("保存评审结果成功！");
+                window.location.href = Feng.ctxPath + '/thesis'
+            }, function (data) {
+                Feng.error("保存评审结果失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.set("finalResult",0);
             ajax.start();
         }else{
             Feng.error("评分区间 0~100分");
@@ -173,5 +211,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
         window.open("/assets/pdfview/web/viewer.html?file=" + encodeURIComponent("/meetMember/loadThesisPdf?thesisId=" + Feng.getUrlParam("thesisId")));
 
     });
+
+
 
 });

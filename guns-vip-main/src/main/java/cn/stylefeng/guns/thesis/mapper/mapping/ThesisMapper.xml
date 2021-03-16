@@ -31,11 +31,12 @@
         <result column="review_time" property="reviewTime" />
         <result column="review_batch" property="reviewBatch" />
         <result column="meet_id" property="meetId" />
+        <result column="final_result" property="finalResult" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        thesis_id AS "thesisId", thesis_title AS "thesisTitle", eng_title AS "engTitle", thesis_user AS "thesisUser", status AS "status", review_result AS "reviewResult", isgreat AS "isgreat", great_num AS "greatNum", great_id AS "greatId", apply_time AS "applyTime", thesis_text AS "thesisText", score AS "score", review_user AS "reviewUser", great AS "great", cn_keyword AS "cnKeyword", eng_keyword AS "engKeyword", cn_abstract AS "cnAbstract", eng_abstract AS "engAbstract", thesis_direct AS "thesisDirect", thesis_path AS "thesisPath", file_name AS "fileName", belong_domain AS "belongDomain", review_time AS "reviewTime", review_batch AS "reviewBatch" ,word_path AS "wordPath" ,word_name AS "wordName",meet_id AS "meetId"
+        thesis_id AS "thesisId", thesis_title AS "thesisTitle", eng_title AS "engTitle", thesis_user AS "thesisUser", status AS "status", review_result AS "reviewResult", isgreat AS "isgreat", great_num AS "greatNum", great_id AS "greatId", apply_time AS "applyTime", thesis_text AS "thesisText", score AS "score", review_user AS "reviewUser", great AS "great", cn_keyword AS "cnKeyword", eng_keyword AS "engKeyword", cn_abstract AS "cnAbstract", eng_abstract AS "engAbstract", thesis_direct AS "thesisDirect", thesis_path AS "thesisPath", file_name AS "fileName", belong_domain AS "belongDomain", review_time AS "reviewTime", review_batch AS "reviewBatch" ,word_path AS "wordPath" ,word_name AS "wordName",meet_id AS "meetId",final_result AS "finalResult"
     </sql>
 
 
@@ -80,7 +81,10 @@
             and review_result is null
         </if>
         <if test="paramCondition.reviewResult == 1">
-            and review_result is not null
+            and (review_result is not null and review_result != 2)
+        </if>
+        <if test="paramCondition.reviewResult == 2">
+            and review_result = 2
         </if>
         <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
             and meet_id = #{paramCondition.meetId}

@@ -27,6 +27,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax', 'func'], function () {
             {field: 'name', align: "center", sort: true, title: '名称'},
             {field: 'pName', align: "center", sort: true, title: '上级角色'},
             {field: 'description', align: "center", sort: true, title: '别名'},
+            {field: 'ifAdmin', align: "center", sort: true, title: '是否是管理员'},
             {align: 'center', toolbar: '#tableBar', title: '操作', minWidth: 200}
         ]];
     };

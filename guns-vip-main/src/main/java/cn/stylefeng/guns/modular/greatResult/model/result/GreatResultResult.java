@@ -200,5 +200,6 @@ public class GreatResultResult implements Serializable {
     private String description;
 
     private Long meetId;
+    private Integer finalResult;
 
 }

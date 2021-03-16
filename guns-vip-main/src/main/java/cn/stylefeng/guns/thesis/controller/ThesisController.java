@@ -227,7 +227,15 @@ public class ThesisController extends BaseController {
     public String assignAgain() {
         return PREFIX + "/assignAgain_review.html";
     }
-
+    /**
+     * 分配评审人
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/reviewBatch")
+    public String reviewBatch() {
+        return PREFIX + "/review_batch.html";
+    }
     /**
      * 分配评审人
      * @author wucy
@@ -274,6 +282,34 @@ public class ThesisController extends BaseController {
         return PREFIX + "/thesis_review_editAgain.html";
     }
 
+
+    @RequestMapping("/toAddItem")
+    public String toAddItem(Model model) {
+        LoginUser user = LoginContextHolder.getContext().getUser();
+        model.addAttribute("userName", user.getName());
+        model.addAttribute("menuUrl", "meetMember");
+        model.addAttribute("userId", user.getId());
+        if (ToolUtil.isReviewRole()){
+            model.addAttribute("isReview", "yes");
+        }else {
+            model.addAttribute("isReview", "no");
+        }
+        return "/meet_reg_thesis.html";
+    }
+
+    @RequestMapping("/addUserItem")
+    @ResponseBody
+    @BussinessLog(value = "注册会议提交基本信息", key = "thesisTitle", dict = MeetMemberDict.class)
+    public ResponseData addUserItem(@Valid UserDto user) {
+        LoginUser loginUser = LoginContextHolder.getContext().getUser();
+        Long userId = loginUser.getId();
+        user.setUserId(userId);
+        if (user.getProvince().equals("")){
+            user.setProvince("无");
+        }
+        this.userService.editUser(user);
+        return ResponseData.success();
+    }
     /**
      * 新增接口
      * @author wucy
@@ -369,6 +405,31 @@ public class ThesisController extends BaseController {
                 meetMemberParam.setMeetStatus(5);
             }
             this.meetMemberService.update(meetMemberParam);
+
+            if (meet.getFee().compareTo(BigDecimal.ZERO) <= 0){
+            }else {
+                String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+                User resultUser = userService.getById(meetMemberResult.getUserId());
+                String userWechatId = resultUser.getWechatId();
+                if (userWechatId != null && userWechatId != ""){
+                    String first = "您的论文已初评完毕，请尽快前往中国教育科学论坛网站完成缴费。";
+                    String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                    String reviewResult = "";
+                    if (isPass == 0){
+                        reviewResult = "不同意参会";
+                    }
+                    if (isPass == 1){
+                        reviewResult = "同意参会;" + thesisParam.getStatus();
+                    }
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    String time = format.format(new Date());
+                    List<String> dataList = new ArrayList<>();
+                    dataList.add("论文");
+                    dataList.add(reviewResult);
+                    dataList.add(time);
+                    CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+                }
+            }
         }
         this.thesisService.update(thesisParam);
         return ResponseData.success();
@@ -424,6 +485,73 @@ public class ThesisController extends BaseController {
     }
 
     /**
+     * 批量评审接口
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/reviewAdmin")
+    @ResponseBody
+    public ResponseData reviewAdmin(ThesisParam thesisParam, String thesisIds) {
+        int reviewNum = thesisParam.getReviewResult();
+        String[] thesisId = thesisIds.split(";");
+        for (int j = 0;j < thesisId.length;j++){
+            ThesisParam thesis = new ThesisParam();
+            thesis.setThesisId(Long.parseLong(thesisId[j]));
+            thesis.setReviewResult(reviewNum);
+            thesis.setFinalResult(thesisParam.getFinalResult());
+            this.thesisService.update(thesis);
+
+            MeetMemberParam meetMemberParam = new MeetMemberParam();
+            meetMemberParam.setThesisId(Long.parseLong(thesisId[j]));
+            List<MeetMemberResult> members = this.meetMemberService.customList(meetMemberParam);
+            MeetMemberResult meetMemberResult = members.get(0);
+            long memberId = meetMemberResult.getMemberId();
+            meetMemberParam.setMemberId(memberId);
+
+            Meet meet = meetService.getById(meetMemberResult.getMeetId());
+
+            if(reviewNum == 0){
+                meetMemberParam.setMeetStatus(5);
+                //未通过，评审字典内容为空
+                thesisParam.setStatus(null);
+            }else {
+                if (meet.getFee().compareTo(BigDecimal.ZERO) <= 0){
+                    meetMemberParam.setMeetStatus(4);
+                }else {
+                    meetMemberParam.setMeetStatus(2);
+                }
+            }
+            this.meetMemberService.update(meetMemberParam);
+            if (meet.getFee().compareTo(BigDecimal.ZERO) <= 0){
+            }else {
+                String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+                User resultUser = userService.getById(meetMemberResult.getUserId());
+                String userWechatId = resultUser.getWechatId();
+                if (userWechatId != null && userWechatId != ""){
+                    String first = "您的论文已初评完毕，请尽快前往中国教育科学论坛网站完成缴费。";
+                    String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                    String reviewResult = "";
+                    if (reviewNum == 0){
+                        reviewResult = "不同意参会";
+                    }
+                    if (reviewNum == 1){
+                        reviewResult = "同意参会;" + thesisParam.getStatus();
+                    }
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    String time = format.format(new Date());
+                    List<String> dataList = new ArrayList<>();
+                    dataList.add("论文");
+                    dataList.add(reviewResult);
+                    dataList.add(time);
+                    CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+                }
+            }
+        }
+
+        return ResponseData.success();
+    }
+
+    /**
      * 初评接口
      * @author wucy
      * @Date 2020-05-21
@@ -433,9 +561,9 @@ public class ThesisController extends BaseController {
     public ResponseData reviewItem(ThesisParam thesisParam) {
         int reviewNum = thesisParam.getReviewResult();
         //通过，检查参会人数；拒绝则不检查
-        if(reviewNum == 1){
+        /*if(reviewNum == 1){
             checkMeetRealNum();
-        }
+        }*/
         LoginUser user = LoginContextHolder.getContext().getUser();
         String userIdStr = user.getId().toString();
 
@@ -506,27 +634,32 @@ public class ThesisController extends BaseController {
         this.thesisReviewMiddleService.update(middleParam);
         this.reviewMajorService.update(reviewMajorParam);
 
-        String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
-        User resultUser = userService.getById(meetMemberResult.getUserId());
-        String userWechatId = resultUser.getWechatId();
-        if (userWechatId != null && userWechatId != ""){
-            String first = "您的论文已初评完毕，请尽快前往中国教科论坛网站完成缴费。";
-            String remark = "您可登录中国教育科学论坛平台查看详细信息。";
-            String reviewResult = "";
-            if (reviewNum == 0){
-                reviewResult = "不同意参会";
+        /*if (meet.getFee().compareTo(BigDecimal.ZERO) <= 0){
+
+        }else {
+            String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+            User resultUser = userService.getById(meetMemberResult.getUserId());
+            String userWechatId = resultUser.getWechatId();
+            if (userWechatId != null && userWechatId != ""){
+                String first = "您的论文已初评完毕，请尽快前往中国教育科学论坛网站完成缴费。";
+                String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                String reviewResult = "";
+                if (reviewNum == 0){
+                    reviewResult = "不同意参会";
+                }
+                if (reviewNum == 1){
+                    reviewResult = "同意参会;" + thesisParam.getStatus();
+                }
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String time = format.format(middleParam.getReviewTime());
+                List<String> dataList = new ArrayList<>();
+                dataList.add("论文");
+                dataList.add(reviewResult);
+                dataList.add(time);
+                CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
             }
-            if (reviewNum == 1){
-                reviewResult = "同意参会;" + thesisParam.getStatus();
-            }
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String time = format.format(middleParam.getReviewTime());
-            List<String> dataList = new ArrayList<>();
-            dataList.add("论文");
-            dataList.add(reviewResult);
-            dataList.add(time);
-            CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
-        }
+        }*/
+
 
         return ResponseData.success();
     }
@@ -604,7 +737,7 @@ public class ThesisController extends BaseController {
         String userWechatId = resultUser.getWechatId();
         if (userWechatId != null && userWechatId != ""){
             String first = "您的论文被复评";
-            String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+            String remark = "您可登录中国教育科学论坛网站查看详细信息。";
             String reviewResult = "";
             if (thesisParam.getIsgreat() == 0){
                 reviewResult = "论文不推荐优秀";

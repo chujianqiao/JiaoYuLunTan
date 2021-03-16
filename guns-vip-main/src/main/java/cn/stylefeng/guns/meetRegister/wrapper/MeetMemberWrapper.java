@@ -69,16 +69,24 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 
 		//论文
 		Object thesisIdObj = map.get("thesisId");
+		int finalResult = 3;
 		if(thesisIdObj != null){
 			long thesisId = Long.parseLong(thesisIdObj.toString());
 			Thesis thesis = thesisMapper.selectById(thesisId);
 			String thesisName = "";
 			if (thesis != null){
 				thesisName = thesis.getThesisTitle();
+				if (thesis.getFinalResult() != null){
+					finalResult = thesis.getFinalResult();
+				}
+				map.put("finalResult",finalResult);
 			}else {
 				thesisName = "无";
 			}
 			map.put("thesisName",thesisName);
+
+		}else {
+			map.put("thesisName","无");
 		}
 
 		//论坛
@@ -104,7 +112,15 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		if(meetObj != null){
 			Integer meetStatus = Integer.parseInt(map.get("meetStatus").toString());
 			String meetStatusStr = TransTypeUtil.getMeetStatus().get(meetStatus).toString();
-			map.put("meetStatusStr",meetStatusStr);
+			if (meetStatusStr.equals("已取消参会")){
+				map.put("meetStatusStr",meetStatusStr);
+			}else {
+				if (finalResult == 2 || thesisIdObj == null){
+					map.put("meetStatusStr",meetStatusStr);
+				}else {
+					map.put("meetStatusStr","评审中");
+				}
+			}
 		}
 
 		Object forumObj = map.get("ownForumid");
@@ -155,6 +171,18 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 		map.put("direct",direct);
 		map.put("forumName",forumName);
 //		map.put("speak",speak);
+
+		Object ifMeet = map.get("ifMeet");
+		if (ifMeet != null){
+			int ifMeetNum = Integer.parseInt(ifMeet.toString());
+			if (ifMeetNum == 1){
+				map.put("ifMeet","参加大会");
+			}else {
+				map.put("ifMeet","不参加大会");
+			}
+		}else {
+			map.put("ifMeet","未选择");
+		}
 
 	}
 }

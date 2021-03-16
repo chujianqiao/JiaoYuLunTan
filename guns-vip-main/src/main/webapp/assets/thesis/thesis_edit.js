@@ -47,12 +47,13 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/thesis/editItem", function (data) {
-            Feng.success("更新成功！");
+            Feng.success("提交成功！");
             window.location.href = Feng.ctxPath + '/thesis'
         }, function (data) {
-            Feng.error("更新失败！" + data.responseJSON.message)
+            Feng.error("提交失败！" + data.responseJSON.message)
         });
         ajax.set(data.field);
+        ajax.set("finalResult",2);
         ajax.start();
         return false;
     });

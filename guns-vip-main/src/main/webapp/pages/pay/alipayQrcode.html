@@ -36,6 +36,10 @@
         var orderNum;
         var memberIdStr;
         $(function () {
+            layer.confirm("会议费用一旦支付，可取消参会，但不再退还，请慎重考虑！",{title:"提示", btn:"确认"},function(index){
+
+                layer.close(index);
+            });
             debugger;
             let memberId = Feng.getUrlParam("memberId");
             let imgAjax = new $ax(Feng.ctxPath + "/alipay/createOrder?memberId=" + memberId);

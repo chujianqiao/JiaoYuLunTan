@@ -67,11 +67,14 @@
         <result column="wechat_id" property="wechatId" />
         <result column="union_id" property="unionId" />
         <result column="wechat_open_id" property="wechatOpenId" />
+        <result column="country" property="country" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id AS "userId", avatar AS "avatar", account AS "account", password AS "password", salt AS "salt", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", vip AS "vip", work_unit AS "workUnit", title AS "title", post AS "post", education AS "education", direction AS "direction", wrong_times AS "wrongTimes" , can_download_word AS "canDownloadWord",can_download_ppt AS "canDownloadPpt", word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",introduction AS "introduction",wechat_name AS "wechatName",wechat_id AS "wechatId",union_id AS "unionId",wechat_open_id AS "wechatOpenId"
+        user_id AS "userId", avatar AS "avatar", account AS "account", password AS "password", salt AS "salt", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", vip AS "vip", work_unit AS "workUnit", title AS "title", post AS "post", education AS "education", direction AS "direction", wrong_times AS "wrongTimes" , can_download_word AS "canDownloadWord",can_download_ppt AS "canDownloadPpt", word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",introduction AS "introduction",wechat_name AS "wechatName",wechat_id AS "wechatId",union_id AS "unionId",wechat_open_id AS "wechatOpenId",country AS "country",province AS "province",city AS "city"
     </sql>
 
     <sql id="Base_Column_List_With_Pwd">

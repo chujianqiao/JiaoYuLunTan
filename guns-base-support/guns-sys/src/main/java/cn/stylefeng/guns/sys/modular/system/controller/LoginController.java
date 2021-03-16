@@ -27,7 +27,9 @@ import cn.stylefeng.guns.sys.core.auth.cache.SessionManager;
 import cn.stylefeng.guns.sys.core.constant.DefaultAvatar;
 import cn.stylefeng.guns.sys.core.exception.InvalidKaptchaException;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
+import cn.stylefeng.guns.sys.modular.system.entity.Role;
 import cn.stylefeng.guns.sys.modular.system.entity.User;
+import cn.stylefeng.guns.sys.modular.system.service.RoleService;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.mutidatasource.DataSourceContextHolder;
@@ -69,6 +71,9 @@ public class LoginController extends BaseController {
     private UserService userService;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
     private SessionManager sessionManager;
 
     /**
@@ -105,6 +110,12 @@ public class LoginController extends BaseController {
                     model.addAttribute("wechatSign", "yes");
                 }else {
                     model.addAttribute("wechatSign", "no");
+                }
+                for (int i = 0;i < roles.size();i++){
+                    Role role = roleService.getById(Long.parseLong(roles.get(i).toString()));
+                    if (role.getIfAdmin() == 1){
+                        model.addAttribute("ifAdmin", 1);
+                    }
                 }
                 model.addAttribute("roleNames", user.getRoleNames());
                 //String loginUrl = "redirect:http://cesf.nies.net.cn/pub/lt_new_6/";
@@ -200,7 +211,15 @@ public class LoginController extends BaseController {
                     model.addAttribute("roleNames",user.getRoleNames());
                 }
                 List roles = user.getRoleList();
-                if (roles.contains(1l)){
+                int ifAdmin = 0;
+                for (int i = 0;i < roles.size();i++){
+                    Role role = roleService.getById(Long.parseLong(roles.get(i).toString()));
+                    if (role.getIfAdmin() == 1){
+                        model.addAttribute("ifAdmin", 1);
+                        ifAdmin = 1;
+                    }
+                }
+                if (ifAdmin == 1){
                     return "/index.html";
                 }else {
                     model.addAttribute("ifVideo","no");
@@ -358,7 +377,15 @@ public class LoginController extends BaseController {
             if (user != null){
                 model.addAttribute("userName",user.getName());
                 model.addAttribute("roleNames",user.getRoleNames());
+                List roles = user.getRoleList();
+                for (int i = 0;i < roles.size();i++){
+                    Role role = roleService.getById(Long.parseLong(roles.get(i).toString()));
+                    if (role.getIfAdmin() == 1){
+                        model.addAttribute("ifAdmin", 1);
+                    }
+                }
             }
+
         }
         model.addAttribute("ifVideo","no");
         return "/webIndex.html";

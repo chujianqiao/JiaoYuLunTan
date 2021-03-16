@@ -130,10 +130,43 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
                 Feng.error("评审失败！" + data.responseJSON.message)
             });
             ajax.set(data.field);
+            ajax.set("finalResult",1);
             ajax.start();
         }else {
             Feng.error("评分区间 0~100分");
         }
+        return false;
+    });
+    /**
+     * 提交评审结果
+     */
+    form.on('submit(reviewSave)', function (data) {
+        var score = data.field.score;
+        if (score >= 0 && score <=100) {
+            var ajax = new $ax(Feng.ctxPath + "/greatResult/reviewItem", function (data) {
+                Feng.success("评审成功！");
+                window.location.href = Feng.ctxPath + '/thesis';
+            }, function (data) {
+                Feng.error("评审失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.set("finalResult",0);
+            ajax.start();
+        }else {
+            Feng.error("评分区间 0~100分");
+        }
+        return false;
+    });
+    form.on('submit(adminSubmit)', function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/greatResult/editItem", function (data) {
+            Feng.success("评审成功！");
+            window.location.href = Feng.ctxPath + '/greatResult';
+        }, function (data) {
+            Feng.error("评审失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.set("finalResult",2);
+        ajax.start();
         return false;
     });
 

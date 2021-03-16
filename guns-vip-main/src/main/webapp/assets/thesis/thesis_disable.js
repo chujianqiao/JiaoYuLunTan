@@ -40,9 +40,18 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
                     return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">查看详情</a>\n" +
                         "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
                         "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                } else if (data.status == "已取消参会"){
+                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">查看详情</a>\n" +
+                            "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
                 } else {
-                    return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">查看详情</a>\n" +
-                        "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                    if (data.finalResult == 1) {
+                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">评审</a>\n" +
+                            "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                    } else {
+                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"disable\">查看详情</a>\n" +
+                            "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                    }
+
                 }
 
                 }}
@@ -130,6 +139,29 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
                 title: '分配评审人',
                 area: ['350px', '300px'],
                 content: Feng.ctxPath + '/thesis/assign?thesisId=' + thesisIds,
+                tableId: Thesis.tableId
+            });
+        }
+    };
+    Thesis.jumpReviewPageBatch = function (data) {
+        var checkRows = table.checkStatus(Thesis.tableId);
+        var thesisIds = "";
+        var sign = 0;
+        for (var i = 0;i < checkRows.data.length;i++){
+            thesisIds = thesisIds + checkRows.data[i].thesisId + ";";
+            if (checkRows.data[i].status == "已取消参会"){
+                sign = 1;
+            }
+        }
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择被评审的数据");
+        } else if (sign === 1) {
+            Feng.error("请选择未取消参会的数据");
+        } else {
+            func.open({
+                title: '批量评审',
+                area: ['350px', '300px'],
+                content: Feng.ctxPath + '/thesis/reviewBatch?thesisId=' + thesisIds,
                 tableId: Thesis.tableId
             });
         }
@@ -252,6 +284,10 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
     //批量分配
     $('#assignBatch').click(function () {
         Thesis.jumpAssignPageBatch();
+    });
+    //批量分配
+    $('#reviewBatch').click(function () {
+        Thesis.jumpReviewPageBatch();
     });
 
     // 工具条点击事件

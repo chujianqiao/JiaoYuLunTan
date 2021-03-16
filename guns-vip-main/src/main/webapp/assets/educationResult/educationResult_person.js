@@ -67,7 +67,11 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
                     }else if(data.checkStatus == 2 || data.checkStatus == 3){
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
                     }else {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</a>";
+                        if (data.reviewResult == "未评审") {
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
+                        }else {
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</a>";
+                        }
                     }
                 }}
         ]];

@@ -198,7 +198,9 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
         SocialForum.openAddDlg();
 
     });
-
+    $('#btnCreate').click(function () {
+        window.location.href = Feng.ctxPath + "/socialForum/add";
+    });
     // 导出excel
     $('#btnExp').click(function () {
         SocialForum.exportExcel();

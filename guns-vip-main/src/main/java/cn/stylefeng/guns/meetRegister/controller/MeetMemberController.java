@@ -276,6 +276,30 @@ public class MeetMemberController extends BaseController {
     }
 
     /**
+     * 取消参会
+     * @author wucy
+     * @Date 2020-07-13
+     */
+    @RequestMapping("/cancelMeet")
+    @ResponseBody
+    public ResponseData cancelMeet(MeetMemberParam meetMemberParam) {
+        meetMemberParam.setMeetStatus(8);
+        this.meetMemberService.update(meetMemberParam);
+        Meet pubMeet = this.meetService.getByStatus(1);
+        MeetParam meetParam = new MeetParam();
+        int realTheNum =pubMeet.getRealTheNum() - 1;
+        meetParam.setMeetId(pubMeet.getMeetId());
+        meetParam.setRealTheNum(realTheNum);
+        this.meetService.update(meetParam);
+        MeetMember meetMember = meetMemberService.getById(meetMemberParam.getMemberId());
+        ThesisParam thesisParam = new ThesisParam();
+        thesisParam.setThesisId(meetMember.getThesisId());
+        thesisParam.setReviewResult(2);
+        this.thesisService.update(thesisParam);
+        return ResponseData.success();
+    }
+
+    /**
      * 更新论坛信息
      * @author wucy
      * @Date 2020-07-13
@@ -283,17 +307,46 @@ public class MeetMemberController extends BaseController {
     @RequestMapping("/editForum")
     @ResponseBody
     public ResponseData editForum(MeetMemberParam meetMemberParam) {
+        int ifMeetNum = meetMemberParam.getIfMeet();
+        Meet pubMeet = this.meetService.getByStatus(1);
+        int meetNumAdd = 0;
+        //通过，检查参会人数；拒绝则不检查
+        if(ifMeetNum == 1){
+
+            Long meetId = pubMeet.getMeetId();
+            //参会限制人数
+            int peoNum = pubMeet.getPeopleNum();
+            //当前参会人数
+            int realPeoNum = pubMeet.getRealPeoNum();
+            if(realPeoNum >= peoNum){
+                //参会人数已满
+                ResponseData responseData = new ResponseData();
+                responseData.setMessage("meetFull");
+                return responseData;
+            }else {
+                meetNumAdd = 1;
+            }
+        }
+
         Long forumId = meetMemberParam.getOwnForumid();
         //判断论坛报名人数
         Forum forum = this.forumService.getById(forumId);
         Integer existNum = forum.getExistNum();
         Integer setNum = forum.getSetNum();
-        if(existNum + 1 > setNum){
+        if(existNum >= setNum){
             //人数已满，抛出异常
             ResponseData responseData = new ResponseData();
             responseData.setMessage("full");
             return responseData;
         }else{
+            if (meetNumAdd == 1){
+                MeetParam meetParam = new MeetParam();
+                int realPeoNum = pubMeet.getRealPeoNum() + 1;
+                meetParam.setMeetId(pubMeet.getMeetId());
+                meetParam.setRealPeoNum(realPeoNum);
+                this.meetService.update(meetParam);
+            }
+
             existNum++;
             ForumParam forumParam = new ForumParam();
             forumParam.setForumId(forumId);
@@ -484,6 +537,18 @@ public class MeetMemberController extends BaseController {
         String direction = user.getDirection();
         if(direction != null && direction != ""){
             map.put("direction",direction);
+        }
+        String country = user.getCountry();
+        String province = user.getProvince();
+        String city = user.getCity();
+        if(country != null && country != ""){
+            map.put("country",country);
+        }
+        if(province != null && province != ""){
+            map.put("province",province);
+        }
+        if(city != null && city != ""){
+            map.put("city",city);
         }
 
         Object meetStatusObj = map.get("meetStatus");

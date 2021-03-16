@@ -29,11 +29,18 @@
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">职称<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="title" disabled name="title" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                            <!--<input id="title" disabled name="title" placeholder="" type="text" class="layui-input" lay-verify="required" required/>-->
+                            <select name="title" lay-verify="required">
+                                <option value=""></option>
+                                <option value="无">无</option>
+                                <option value="初级">初级</option>
+                                <option value="中级">中级</option>
+                                <option value="高级">高级</option>
+                            </select>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">职位<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">职务<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="post" disabled name="post" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                         </div>

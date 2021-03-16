@@ -80,6 +80,8 @@ public class TransTypeUtil {
 	public static Map<Object,Object> getIsPass(){
 		isPass.put(0,"不同意参会");
 		isPass.put(1,"同意参会");
+		isPass.put(2,"已取消参会");
+
 		//isPass.put(2,"同意参会并推荐优秀");
 		return isPass;
 	}
@@ -95,6 +97,7 @@ public class TransTypeUtil {
 		meetStatus.put(4,"已缴费");
 		meetStatus.put(5,"未通过");
 		meetStatus.put(6,"已申请开票");
+		meetStatus.put(8,"已取消参会");
 		//小会
 		meetStatus.put(7,"已通过");
 		return meetStatus;

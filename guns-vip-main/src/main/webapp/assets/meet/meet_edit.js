@@ -28,6 +28,7 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
     var upload = layui.upload;
     var nowTime = new Date().valueOf();
 
+
     getCheckImage();
     getSignImage();
 
@@ -65,6 +66,15 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
         var ajax = new $ax(Feng.ctxPath + "/meet/detail?meetId=" + meetId);
         var result = ajax.start();
         form.val('meetForm', result.data);
+
+        var nowDate = new Date();
+        var beginDate = new Date(result.data.beginTime);
+        if (nowDate.getTime() < beginDate.getTime()){
+        }else {
+            $("#fee").attr("disabled","disabled");
+            $("#fee").attr("class","layui-input layui-disabled");
+        }
+
         //金额、必须投稿是否展示
         let size = result.data.size;
         if(size == 'big' || size == "big"){

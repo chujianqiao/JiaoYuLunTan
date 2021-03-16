@@ -201,6 +201,7 @@ public class GreatResultParam implements Serializable, BaseValidatingParam {
     private String description;
 
     private Long meetId;
+    private Integer finalResult;
 
     @Override
     public String checkParam() {

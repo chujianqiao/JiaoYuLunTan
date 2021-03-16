@@ -179,6 +179,12 @@ public class Thesis implements Serializable {
     @TableField("meet_id")
     private Long meetId;
 
+    /**
+     * 最终结果（0-评审保存；1-评审提交；2-管理员提交）
+     */
+    @TableField("final_result")
+    private Integer finalResult;
+
 
     public Long getThesisId() {
         return thesisId;
@@ -396,6 +402,14 @@ public class Thesis implements Serializable {
         this.meetId = meetId;
     }
 
+    public Integer getFinalResult() {
+        return finalResult;
+    }
+
+    public void setFinalResult(Integer finalResult) {
+        this.finalResult = finalResult;
+    }
+
     @Override
     public String toString() {
         return "Thesis{" +
@@ -424,6 +438,7 @@ public class Thesis implements Serializable {
         ", reviewTime=" + reviewTime +
         ", reviewBatch=" + reviewBatch +
         ", meetId=" + meetId +
+        ", finalResult=" + finalResult +
         "}";
     }
 }

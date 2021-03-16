@@ -76,11 +76,21 @@ public class ThesisWrapper extends BaseControllerWrapper {
 		String unitsName = Arrays.toString(unitList.toArray()).replace("[","").replace("]","");
 
 		Object statusObj = map.get("status");
+		Object passObj = map.get("reviewResult");
 		if(statusObj != null){
 			if (!statusObj.toString().equals("")){
-				map.put("status",statusObj.toString());
+				if (passObj != null){
+					Map passMap = TransTypeUtil.getIsPass();
+					String isPass = passMap.get(passObj).toString();
+					if (isPass.equals("不同意参会")){
+						map.put("status",isPass);
+					}else {
+						map.put("status",statusObj.toString());
+					}
+				}else {
+					map.put("status",statusObj.toString());
+				}
 			}else {
-				Object passObj = map.get("reviewResult");
 				if(passObj != null){
 					Map passMap = TransTypeUtil.getIsPass();
 					String isPass = passMap.get(passObj).toString();
@@ -90,7 +100,6 @@ public class ThesisWrapper extends BaseControllerWrapper {
 				}
 			}
 		}else {
-			Object passObj = map.get("reviewResult");
 			if(passObj != null){
 				Map passMap = TransTypeUtil.getIsPass();
 				String isPass = passMap.get(passObj).toString();
@@ -179,7 +188,7 @@ public class ThesisWrapper extends BaseControllerWrapper {
 				map.put("firstStatus","未评审");
 			}
 		}
-
+		map.put("finalResult",map.get("finalResult"));
 		//复评状态
 		middleParam.setReviewSort(2);
 		List<ThesisReviewMiddleResult> midResAgain = this.thesisReviewMiddleService.findListBySpec(middleParam);
@@ -217,8 +226,19 @@ public class ThesisWrapper extends BaseControllerWrapper {
 			map.put("scoreStr",scoreStr);
 		}
 
+
 		if (firstName.equals("")){
-			map.put("status","未分配");
+			if(passObj != null){
+				Map passMap = TransTypeUtil.getIsPass();
+				String isPass = passMap.get(passObj).toString();
+				if (isPass.equals("已取消参会")){
+					map.put("status",isPass);
+				}else {
+					map.put("status","未分配");
+				}
+			}else {
+				map.put("status","未分配");
+			}
 		}
 		map.put("firstName",firstName);
 		map.put("againName",againName);

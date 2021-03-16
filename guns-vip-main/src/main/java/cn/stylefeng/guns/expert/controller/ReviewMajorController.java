@@ -320,9 +320,16 @@ public class ReviewMajorController extends BaseController {
         Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
         String belongDomain = detail.getBelongDomain();
         if(belongDomain != null){
-            Long domainObj = Long.parseLong(detail.getBelongDomain());
-            ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
-            map.put("domainName",thesisDomainResult.getDomainName());
+            String domains[] = detail.getBelongDomain().split(";");
+            String belongDomainStr = "";
+            for (int i = 0;i < domains.length;i++){
+                Long domainObj = Long.parseLong(domains[i]);
+                ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
+                belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + ";";
+            }
+            //Long domainObj = Long.parseLong(detail.getBelongDomain());
+            //ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
+            map.put("domainName",belongDomainStr);
         }else{
             map.put("domainName","");
         }
@@ -558,8 +565,8 @@ public class ReviewMajorController extends BaseController {
         log.info("password---" + password);*/
         long uid = ToolUtil.getNum19();
         user.setUserId(uid);
-        user.setAccount(user.getPhone());
-        user.setPassword("Nies2020");
+        //user.setAccount(user.getPhone());
+        //user.setPassword("Nies2020");
 
 
         if (joinType != null){

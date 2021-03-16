@@ -13,6 +13,7 @@ import cn.stylefeng.guns.meet.entity.Meet;
 import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.modular.educationResult.entity.EducationResult;
 import cn.stylefeng.guns.modular.educationResult.model.params.EducationResultParam;
+import cn.stylefeng.guns.modular.educationResult.model.result.EducationResultResult;
 import cn.stylefeng.guns.modular.educationResult.service.EducationResultService;
 import cn.stylefeng.guns.modular.educationResult.wrapper.EducationResultWrapper;
 import cn.stylefeng.guns.modular.educationReviewMiddle.entity.EducationReviewMiddle;
@@ -212,6 +213,11 @@ public class EducationResultController extends BaseController {
         return PREFIX + "/assign_education.html";
     }
 
+    @RequestMapping("/reviewBatch")
+    public String reviewBatch() {
+        return PREFIX + "/review_Batch.html";
+    }
+
     /**
      * 分配评审专家接口
      * @author wucy
@@ -268,7 +274,68 @@ public class EducationResultController extends BaseController {
         this.educationResultService.add(educationResultParam);
         return ResponseData.success();
     }
+    /**
+     * 批量评审接口
+     * @author wucy
+     * @Date 2020-05-21
+     */
+    @RequestMapping("/reviewAdmin")
+    @ResponseBody
+    public ResponseData reviewAdmin(EducationResultParam educationResultParam, String resultIds) {
+        int reviewNum = educationResultParam.getCheckStatus();
+        String[] resultId = resultIds.split(";");
+        for (int j = 0;j < resultId.length;j++){
+            EducationResultParam result = new EducationResultParam();
+            result.setResultId(Long.parseLong(resultId[j]));
+            result.setCheckStatus(reviewNum);
+            result.setFinalResult(educationResultParam.getFinalResult());
+            this.educationResultService.update(result);
 
+            EducationReviewMiddleParam middleParam = new EducationReviewMiddleParam();
+
+            middleParam.setResultId(Long.parseLong(resultId[j]));
+            LayuiPageInfo records = this.educationReviewMiddleService.findPageBySpec(middleParam);
+            List<EducationReviewMiddleResult> results = records.getData();
+            if (results.size() > 0){
+                EducationReviewMiddleResult middleResult = results.get(0);
+                Long middleId = middleResult.getMiddleId();
+
+                if (reviewNum == 3){
+                    middleParam.setReviewResult(0);
+                }else if (reviewNum == 2){
+                    middleParam.setReviewResult(1);
+                }
+                middleParam.setMiddleId(middleId);
+                middleParam.setReviewTime(new Date());
+                this.educationReviewMiddleService.update(middleParam);
+            }
+
+            EducationResult educationResult = educationResultService.getById(Long.parseLong(resultId[j]));
+            String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+            User resultUser = userService.getById(educationResult.getApplyId());
+            String userWechatId = resultUser.getWechatId();
+            if (userWechatId != null && userWechatId != ""){
+                String first = "您的教改实验申报已审核";
+                String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                String reviewResult = "";
+                if (reviewNum == 3){
+                    reviewResult = "不推荐参会";
+                }
+                if (reviewNum == 2){
+                    reviewResult = "推荐参会";
+                }
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String time = format.format(new Date());
+                List<String> dataList = new ArrayList<>();
+                dataList.add("教改实验申报");
+                dataList.add(reviewResult);
+                dataList.add(time);
+                CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+            }
+        }
+
+        return ResponseData.success();
+    }
     /**
      * 编辑接口
      * @author CHUJIANQIAO
@@ -279,6 +346,49 @@ public class EducationResultController extends BaseController {
     @ResponseBody
     public ResponseData editItem(EducationResultParam educationResultParam) {
         this.educationResultService.update(educationResultParam);
+
+
+        EducationReviewMiddleParam middleParam = new EducationReviewMiddleParam();
+        middleParam.setResultId(educationResultParam.getResultId());
+        LayuiPageInfo records = this.educationReviewMiddleService.findPageBySpec(middleParam);
+        List<EducationReviewMiddleResult> results = records.getData();
+        EducationReviewMiddleResult result = results.get(0);
+        Long middleId = result.getMiddleId();
+
+        if (educationResultParam.getCheckStatus() == 3){
+            middleParam.setReviewResult(0);
+        }else if (educationResultParam.getCheckStatus() == 2){
+            middleParam.setReviewResult(1);
+        }
+        middleParam.setMiddleId(middleId);
+        middleParam.setReviewTime(new Date());
+        this.educationReviewMiddleService.update(middleParam);
+
+        EducationResult educationResult = educationResultService.getById(educationResultParam.getResultId());
+        if (educationResultParam.getCheckStatus() != null){
+            String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+            LoginUser loginUser = LoginContextHolder.getContext().getUser();
+            User resultUser = userService.getById(educationResult.getApplyId());
+            String userWechatId = resultUser.getWechatId();
+            if (userWechatId != null && userWechatId != ""){
+                String first = "您的教改实验申报已审核";
+                String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                String reviewResult = "";
+                if (educationResultParam.getCheckStatus() == 3){
+                    reviewResult = "不推荐参会";
+                }
+                if (educationResultParam.getCheckStatus() == 2){
+                    reviewResult = "推荐参会";
+                }
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String time = format.format(new Date());
+                List<String> dataList = new ArrayList<>();
+                dataList.add("教改实验申报");
+                dataList.add(reviewResult);
+                dataList.add(time);
+                CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+            }
+        }
         return ResponseData.success();
     }
 
@@ -313,9 +423,10 @@ public class EducationResultController extends BaseController {
         }else if (middleParam.getReviewResult() == 1){
             param.setCheckStatus(2);
         }
+        param.setFinalResult(educationResultParam.getFinalResult());
         this.educationResultService.update(param);
 
-        String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+        /*String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
         User resultUser = userService.getById(educationResult.getApplyId());
         String userWechatId = resultUser.getWechatId();
@@ -336,7 +447,7 @@ public class EducationResultController extends BaseController {
             dataList.add(reviewResult);
             dataList.add(time);
             CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
-        }
+        }*/
 
 //        this.educationResultService.update(educationResultParam);
         return ResponseData.success();

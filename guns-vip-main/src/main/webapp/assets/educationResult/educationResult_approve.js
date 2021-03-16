@@ -68,11 +68,11 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         $("#manaPostDiv").children('div').children('input').attr("lay-verify","required");
         $("#manaDirectDiv").attr("style","display:block")
         $("#manaDirectDiv").children('div').children('input').attr("lay-verify","required");
-        $("#belongNameDiv").children('label').html("申请人姓名：<span style='color: red;'>*</span>");
+        $("#belongNameDiv").children('label').html("申请人姓名");
         $("#belongNameDiv").children('div').children('input').attr("placeholder","请输入申请人姓名");
-        $("#manaPhoneDiv").children('label').html("申请人手机号：<span style='color: red;'>*</span>");
+        $("#manaPhoneDiv").children('label').html("申请人手机号");
         $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入申请人手机号");
-        $("#teamDiv").children('label').html("所在单位：<span style='color: red;'>*</span>");
+        $("#teamDiv").children('label').html("所在单位");
         $("#teamDiv").children('div').children('input').attr("placeholder","请输入所在单位");
     } else {
         $("#manaEmailDiv").attr("style","display:none")
@@ -81,11 +81,11 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         $("#manaPostDiv").children('div').children('input').attr("lay-verify","");
         $("#manaDirectDiv").attr("style","display:none")
         $("#manaDirectDiv").children('div').children('input').attr("lay-verify","");
-        $("#belongNameDiv").children('label').html("负责人：<span style='color: red;'>*</span>");
+        $("#belongNameDiv").children('label').html("负责人");
         $("#belongNameDiv").children('div').children('input').attr("placeholder","请输入负责人");
-        $("#manaPhoneDiv").children('label').html("负责人手机号：<span style='color: red;'>*</span>");
+        $("#manaPhoneDiv").children('label').html("负责人手机号");
         $("#manaPhoneDiv").children('div').children('input').attr("placeholder","请输入负责人手机号");
-        $("#teamDiv").children('label').html("单位名称：<span style='color: red;'>*</span>");
+        $("#teamDiv").children('label').html("单位名称");
         $("#teamDiv").children('div').children('input').attr("placeholder","请输入单位名称");
     }
 
@@ -202,6 +202,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
                 Feng.error("评审失败！" + data.responseJSON.message)
             });
             ajax.set(data.field);
+            ajax.set("finalResult",1);
             ajax.start();
         }else {
             Feng.error("评分区间 0~100分");
@@ -209,4 +210,33 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         return false;
     });
 
+    form.on('submit(reviewSave)', function (data) {
+        var score = data.field.score;
+        if (score >= 0 && score <=100) {
+            var ajax = new $ax(Feng.ctxPath + "/educationResult/reviewItem", function (data) {
+                Feng.success("评审成功！");
+                window.location.href = Feng.ctxPath + '/thesis';
+            }, function (data) {
+                Feng.error("评审失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.set("finalResult",0);
+            ajax.start();
+        }else {
+            Feng.error("评分区间 0~100分");
+        }
+        return false;
+    });
+    form.on('submit(adminSubmit)', function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/educationResult/editItem", function (data) {
+            Feng.success("评审成功！");
+            window.location.href = Feng.ctxPath + '/educationResult';
+        }, function (data) {
+            Feng.error("评审失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.set("finalResult",2);
+        ajax.start();
+        return false;
+    });
 });

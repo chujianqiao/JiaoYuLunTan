@@ -149,7 +149,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     $('#pName').click(function () {
         var formName = encodeURIComponent("parent.ReviewMajorInfoDlg.data.pName");
         var formId = encodeURIComponent("parent.ReviewMajorInfoDlg.data.belongDomain");
-        var treeUrl = encodeURIComponent("/thesisDomain/tree");
+        var treeUrl = encodeURIComponent("/thesisDomain/tree?reviewId=" + Feng.getUrlParam("reviewId"));
 
         layer.open({
             type: 2,

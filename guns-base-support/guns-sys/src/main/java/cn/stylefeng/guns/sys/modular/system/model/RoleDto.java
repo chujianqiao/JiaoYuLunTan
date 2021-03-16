@@ -35,4 +35,5 @@ public class RoleDto implements Serializable {
      * 序号
      */
     private Integer sort;
+    private Integer ifAdmin;
 }

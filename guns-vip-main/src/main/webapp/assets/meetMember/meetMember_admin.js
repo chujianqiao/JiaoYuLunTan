@@ -23,10 +23,11 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'memberName', sort: true, title: '参会人姓名'},
             {field: 'unitName', sort: true, title: '所在单位'},
             {field: 'userPost', sort: true, title: '职务/职称'},
-            {field: 'direct', sort: true, title: '研究方向'},
+            //{field: 'direct', sort: true, title: '研究方向'},
             {field: 'thesisName', sort: true, title: '参会论文'},
             {field: 'forumName', sort: true, title: '参会论坛'},
             {field: 'meetStatusStr', sort: true, title: '会议状态'},
+            {field: 'ifMeet', sort: true, title: '是否参加大会'},
             {align: 'center', minWidth: 130, title: '操作', templet: function(data){
                 return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>"
                     +  "<a class='layui-btn layui-btn-xs layui-btn-danger' lay-event='delete'>删除</a>";

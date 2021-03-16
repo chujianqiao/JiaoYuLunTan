@@ -179,7 +179,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         form.attr("style","display:none");
         //form.attr("target","_blank");
         form.attr("method","post");
-        form.attr("action",Feng.ctxPath + "/system/downloadTemp");    // 此处填写文件下载提交路径
+        //form.attr("action",Feng.ctxPath + "/system/downloadTemp");    // 此处填写文件下载提交路径
+        form.attr("action",Feng.ctxPath + "/system/download");
         var input1=$("<input>");
         input1.attr("type","hidden");
         input1.attr("name","name");    // 后台接收参数名

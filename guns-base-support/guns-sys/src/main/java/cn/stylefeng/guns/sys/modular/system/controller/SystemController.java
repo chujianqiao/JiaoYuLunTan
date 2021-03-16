@@ -38,6 +38,7 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import cn.stylefeng.roses.kernel.model.response.SuccessResponseData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +71,9 @@ public class SystemController extends BaseController {
 
     @Autowired
     private NoticeService noticeService;
+
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
 
     /**
      * 控制台页面
@@ -248,6 +252,11 @@ public class SystemController extends BaseController {
         return "/modular/frame/person_user_info.html";
     }
 
+    @RequestMapping("/person_guest_info")
+    public String personGuestInfo() {
+        return "/modular/frame/person_guest_info.html";
+    }
+
     @RequestMapping("/person_info_mobile")
     public String personInfoMobile(Model model) {
         Long userId = LoginContextHolder.getContext().getUserId();
@@ -301,12 +310,16 @@ public class SystemController extends BaseController {
         } catch (UnsupportedEncodingException e) {
             throw new RequestEmptyException("请求数据不完整！");
         }
-
-        if (treeUrl.equals("/thesisDomain/tree")){
-            return "/common/thesisDomainTree_dlg.html";
+        if (formName.equals("parent.ReviewMajorInfoDlg.data.pName")||formName.equals("parent.UserInfoDlg.data.pName")){
+            return "/common/reviewDomainTree_dlg.html";
         }else {
-            return "/common/tree_dlg.html";
+            if (treeUrl.equals("/thesisDomain/tree")){
+                return "/common/thesisDomainTree_dlg.html";
+            }else {
+                return "/common/tree_dlg.html";
+            }
         }
+
     }
 
     /**
@@ -399,6 +412,9 @@ public class SystemController extends BaseController {
 
 
         try {
+            if (path == null || path.equals("")){
+                path = uploadFolder + "\\template\\" + name;
+            }
             FileDownload.fileDownload(httpServletResponse, path, name);
         } catch (Exception e) {
             e.printStackTrace();

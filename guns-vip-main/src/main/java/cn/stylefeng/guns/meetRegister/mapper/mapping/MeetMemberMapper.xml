@@ -19,11 +19,12 @@
         <result column="city" property="city" />
         <result column="sort" property="sort" />
         <result column="meet_id" property="meetId" />
+        <result column="if_meet" property="ifMeet" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime" ,meet_status AS "meetStatus" ,pay_id AS "payId",word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",province AS "province",city AS "city",sort AS "sort",meet_id AS "meetId"
+        member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime" ,meet_status AS "meetStatus" ,pay_id AS "payId",word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",province AS "province",city AS "city",sort AS "sort",meet_id AS "meetId",if_meet AS "ifMeet"
     </sql>
 
     <select id="customListAll" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
@@ -130,7 +131,7 @@
         from meet_member where 1 = 1
         and meet_id = #{meetId}
         and user_id = #{userId}
-        and meet_status != 5
+        and (meet_status != 5 and meet_status != 8)
     </select>
 
     <select id="sortMember" resultType="Long">

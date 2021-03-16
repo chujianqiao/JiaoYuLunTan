@@ -101,5 +101,6 @@ public class MeetMemberResult implements Serializable {
     private Double sort;
 
     private Long meetId;
+    private Integer ifMeet;
 
 }

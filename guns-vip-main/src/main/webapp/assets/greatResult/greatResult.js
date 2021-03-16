@@ -67,8 +67,14 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
                             "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
                             "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
                     }else {
-                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
-                            "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                        if (data.finalResult == 1) {
+                            return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">评审</a>\n" +
+                                "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                        }else {
+                            return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
+                                "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                        }
+
                     }
                 }}
         ]];
@@ -255,7 +261,23 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             });
         }
     };
-
+    GreatResult.jumpReviewPageBatch = function (data) {
+        var checkRows = table.checkStatus(GreatResult.tableId);
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择被评审的数据");
+        } else {
+            var resultIds = "";
+            for (var i = 0;i < checkRows.data.length;i++){
+                resultIds = resultIds + checkRows.data[i].resultId + ";";
+            }
+            func.open({
+                title: '批量评审',
+                area: ['350px', '300px'],
+                content: Feng.ctxPath + '/greatResult/reviewBatch?resultId=' + resultIds,
+                tableId: GreatResult.tableId
+            });
+        }
+    };
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + GreatResult.tableId,
@@ -290,6 +312,9 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     //批量分配
     $('#assignBatch').click(function () {
         GreatResult.jumpAssignPageBatch();
+    });
+    $('#reviewBatch').click(function () {
+        GreatResult.jumpReviewPageBatch();
     });
 
     // 工具条点击事件

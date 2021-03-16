@@ -8,7 +8,18 @@
 <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
 <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}" media="all"/>
 <link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>
-
+<style>
+    /* 错误提示信息样式 */
+    .error{
+        color:#F00;
+        font-size: 12px;
+    }
+    /* 成功提示信息样式 */
+    .success{
+        color: rgb(39,186,125);
+        font-size: 12px;
+    }
+</style>
     <div class="layui-fluid" style="padding-bottom: 75px;">
         <div class="layui-card">
             <div class="layui-card-header">${lang.get("TITLE_BASE_INFO","个人基本信息")}</div>
@@ -23,9 +34,30 @@
                             <div class="form">
                                 <form class="layui-form" id="expertForm" lay-filter="expertForm">
                                     <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_ACCOUNT","账号")}<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block" style="margin-bottom: -16px">
+                                            <input name="account" id="account" placeholder="请输入账号" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+                                            <span id="accountSpan"></span>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_PASSWORD","密码")}<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block" style="margin-bottom: -16px">
+                                            <input name="password" id="password" placeholder="请输入密码" type="password" class="layui-input" lay-verify="required|psw" autocomplete="new-password" required/>
+                                            <span id="passwordSpan"></span>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
                                         <label class="layui-form-label">${lang.get("FIELD_NAME","名称")}<span style="color: red;">*</span></label>
                                         <div class="layui-input-block">
                                             <input name="name" placeholder="请输入专家姓名" type="text" class="layui-input" lay-verify="required" required/>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline layui-col-md12">
+                                        <label class="layui-form-label">${lang.get("FIELD_PHONE","手机号")}<span style="color: red;">*</span></label>
+                                        <div class="layui-input-block">
+                                            <input name="phone" id="phone" placeholder="请输入手机号" type="text" class="layui-input" lay-verify="required|phone" required/>
+                                            <span id="phoneSpan"></span>
                                         </div>
                                     </div>
                                     <div class="layui-inline layui-col-md12">
@@ -55,14 +87,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="layui-inline layui-col-md12">
-                                        <label class="layui-form-label">${lang.get("FIELD_PHONE","手机号")}<span style="color: red;">*</span></label>
-                                        <div class="layui-input-block">
-                                            <input name="phone" placeholder="请输入手机号" type="text" class="layui-input" lay-verify="required|phone" required/>
-                                        </div>
-                                    </div>
+
                                     <div class="text-center">
-                                        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("BTN_CREATE","生成")}&emsp;</button>
+                                        <button id="registerSub" disabled="disabled" class="layui-btn layui-bg-gray" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("BTN_CREATE","生成")}&emsp;</button>
                                         <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;${lang.get("BTN_CANCEL","取消")}&emsp;</button>
                                     </div>
                                 </form>
@@ -71,14 +98,33 @@
                                 <div class="form-box" id="typeList">
                                     <div class="type">
                                         <form class="layui-form" id="guestForm" lay-filter="guestForm">
-
+                                            <div class="layui-inline layui-col-md12">
+                                                <label class="layui-form-label">${lang.get("FIELD_ACCOUNT","账号")}<span style="color: red;">*</span></label>
+                                                <div class="layui-input-block" style="margin-bottom: -16px">
+                                                    <input name="account" id="accountGuest" placeholder="请输入账号" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+                                                    <span id="accountSpanGuest"></span>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline layui-col-md12">
+                                                <label class="layui-form-label">${lang.get("FIELD_PASSWORD","密码")}<span style="color: red;">*</span></label>
+                                                <div class="layui-input-block" style="margin-bottom: -16px">
+                                                    <input name="password" id="passwordGuest" placeholder="请输入密码" type="password" class="layui-input" lay-verify="required|psw" autocomplete="new-password" required/>
+                                                    <span id="passwordSpanGuest"></span>
+                                                </div>
+                                            </div>
                                             <div class="layui-inline layui-col-md12">
                                                 <label class="layui-form-label">${lang.get("FIELD_NAME","名称")}<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <input name="name" placeholder="请输入嘉宾姓名" type="text" class="layui-input" lay-verify="required" required/>
                                                 </div>
                                             </div>
-
+                                            <div class="layui-inline layui-col-md12">
+                                                <label class="layui-form-label">${lang.get("FIELD_PHONE","手机号")}<span style="color: red;">*</span></label>
+                                                <div class="layui-input-block">
+                                                    <input name="phone" id="phoneGuest" placeholder="请输入手机号" type="text" class="layui-input" lay-verify="required|phone" required/>
+                                                    <span id="phoneSpanGuest"></span>
+                                                </div>
+                                            </div>
 
                                             <div class="layui-inline layui-col-md12">
                                                 <label class="layui-form-label">${lang.get("FIELD_WORK_UNIT","工作单位")}<span style="color: red;">*</span></label>
@@ -95,12 +141,6 @@
                                                 </div>
                                             </div>
 
-                                            <div class="layui-inline layui-col-md12">
-                                                <label class="layui-form-label">${lang.get("FIELD_PHONE","手机号")}<span style="color: red;">*</span></label>
-                                                <div class="layui-input-block">
-                                                    <input name="phone" placeholder="请输入手机号" type="text" class="layui-input" lay-verify="required|phone" required/>
-                                                </div>
-                                            </div>
 
                                             <div class="layui-inline layui-col-md12">
                                                 <label class="layui-form-label">${lang.get("FIELD_JOIN_TYPE","参会类别")}<span style="color: red;">*</span></label>
@@ -125,7 +165,7 @@
                                             </div>
 
                                             <div class="text-center">
-                                                <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("BTN_CREATE","生成")}&emsp;</button>
+                                                <button id="registerSubGuest" disabled="disabled" class="layui-btn layui-bg-gray" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("BTN_CREATE","生成")}&emsp;</button>
                                                 <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;${lang.get("BTN_CANCEL","取消")}&emsp;</button>
                                             </div>
                                         </form>

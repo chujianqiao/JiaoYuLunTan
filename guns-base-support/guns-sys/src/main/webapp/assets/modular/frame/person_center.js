@@ -19,6 +19,13 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
         $("#thesisDataDiv").attr("style","display:none");
         $("#thesisDiv").attr("style","display:none");
     }
+    if ($("#roleId").val().indexOf("5") > -1){
+        $("#pay").attr("style","display:none");
+        $("#payMo").attr("style","display:none");
+    }else {
+        $("#guest").attr("style","display:none");
+        $("#guestMo").attr("style","display:none");
+    }
 
     function meetDetail() {
         $.ajax({
@@ -55,7 +62,12 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                     //绑定点击事件
                     let seatId = data.seatId;
                     ownSeat(seatId);
-                    thesisDetail();
+                    if (data.meetSize == "big"){
+                        thesisDetail();
+                    } else {
+                        $("#thesisData1").html("无");
+                    }
+
                     meetMemberDetail();
                 }
 
@@ -93,28 +105,41 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
 
                 for (var i = 0;i < data.length;i++){
                     console.log(data[i]);
-                    if (data[i].meetStatus == 4 || data[i].meetStatus == 6){
-                        if (data[i].ownForumid != null && data[i].ownFourmid != ""){
-                            $("#forum").attr("href","javascript:forumAdd('exist')");
-                            $("#forumMo").attr("href","javascript:forumAdd('exist')");
-                        } else {
-                            $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')");
-                            $("#forumMo").attr("href","javascript:forumAdd('" + data[i].memberId + "')");
-                            $("#iconEdit").attr("style","font-size: 60px");
-                            $("#iconEditMo").attr("style","font-size: 60px");
+                    $("#guest").attr("href","javascript:editGuest('" + data[i].userId + "')");
+                    $("#guestMo").attr("href","javascript:editGuest('" + data[i].userId + "')");
+                    if (data[i].finalResult == 2 || data[i].thesisName == "无"){
+                        if (data[i].meetStatus == 4 || data[i].meetStatus == 6){
+                            if (data[i].ownForumid != null && data[i].ownFourmid != ""){
+                                $("#forum").attr("href","javascript:forumAdd('exist')");
+                                $("#forumMo").attr("href","javascript:forumAdd('exist')");
+                            } else {
+                                $("#forum").attr("href","javascript:forumAdd('" + data[i].memberId + "')");
+                                $("#forumMo").attr("href","javascript:forumAdd('" + data[i].memberId + "')");
+                                $("#iconEdit").attr("style","font-size: 60px");
+                                $("#iconEditMo").attr("style","font-size: 60px");
+                            }
+                            $("#pay").attr("href","javascript:toPay('yes')");
+                            $("#payMo").attr("href","javascript:toPay('yes')");
+                            forumSelectOption(data[i].ownForumid);
+                            break;
+                        }else if (data[i].meetStatus == 2){
+                            $("#forum").attr("href","javascript:forumAdd('toPay')");
+                            $("#forumMo").attr("href","javascript:forumAdd('toPay')");
+                            $("#pay").attr("href","javascript:toPay('" + data[i].memberId + "')");
+                            $("#payMo").attr("href","javascript:toPay('" + data[i].memberId + "')");
+                            $("#iconNotice").attr("style","font-size: 60px");
+                            $("#iconNoticeMo").attr("style","font-size: 60px");
+                            break;
+                        }else {
+                            $("#forum").attr("href","javascript:forumAdd('')");
+                            $("#forumMo").attr("href","javascript:forumAdd('')");
+                            $("#pay").attr("href","javascript:toPay('')");
+                            $("#payMo").attr("href","javascript:toPay('')");
+                            $("#forumData1").html("无");
+                            $("#forumData2").empty();
+                            $("#forumData3").empty();
+                            $("#forumData4").empty();
                         }
-                        $("#pay").attr("href","javascript:toPay('yes')");
-                        $("#payMo").attr("href","javascript:toPay('yes')");
-                        forumSelectOption(data[i].ownForumid);
-                        break;
-                    }else if (data[i].meetStatus == 2){
-                        $("#forum").attr("href","javascript:forumAdd('toPay')");
-                        $("#forumMo").attr("href","javascript:forumAdd('toPay')");
-                        $("#pay").attr("href","javascript:toPay('" + data[i].memberId + "')");
-                        $("#payMo").attr("href","javascript:toPay('" + data[i].memberId + "')");
-                        $("#iconNotice").attr("style","font-size: 60px");
-                        $("#iconNoticeMo").attr("style","font-size: 60px");
-                        break;
                     }else {
                         $("#forum").attr("href","javascript:forumAdd('')");
                         $("#forumMo").attr("href","javascript:forumAdd('')");
@@ -125,7 +150,6 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                         $("#forumData3").empty();
                         $("#forumData4").empty();
                     }
-
 
 
                 }

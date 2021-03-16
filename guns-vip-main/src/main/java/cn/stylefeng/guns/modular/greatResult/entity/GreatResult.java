@@ -242,6 +242,12 @@ public class GreatResult implements Serializable {
     @TableField("meet_id")
     private Long meetId;
 
+    /**
+     * 最终结果（0-评审保存；1-评审提交；2-管理员提交）
+     */
+    @TableField("final_result")
+    private Integer finalResult;
+
 
     public Long getResultId() {
         return resultId;
@@ -539,6 +545,14 @@ public class GreatResult implements Serializable {
         this.meetId = meetId;
     }
 
+    public Integer getFinalResult() {
+        return finalResult;
+    }
+
+    public void setFinalResult(Integer finalResult) {
+        this.finalResult = finalResult;
+    }
+
     @Override
     public String toString() {
         return "GreatResult{" +
@@ -579,6 +593,7 @@ public class GreatResult implements Serializable {
         ", belongDomain=" + belongDomain +
         ", description=" + description +
         ", meetId=" + meetId +
+        ", finalResult=" + finalResult +
         "}";
     }
 }

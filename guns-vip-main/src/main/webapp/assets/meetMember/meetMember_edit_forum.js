@@ -37,6 +37,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         if (ownForumid != null && ownForumid != ""){
             $("#editDiv").attr("style","display:none");
             $("#ownForumid").attr("disabled","disabled");
+            $("#ifMeet1").attr("disabled","disabled");
+            $("#ifMeet0").attr("disabled","disabled");
         } else {
             $("#detailDiv").attr("style","display:none");
         }
@@ -89,6 +91,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
                 // 传给上个页面，刷新table用
                 if (data.message == "full"){
                     Feng.error("论坛人数已满，请选择其它论坛。")
+                } else if (data.message == "meetFull"){
+                    Feng.error("参会人数已满。")
                 } else {
                     parent.location.reload();
                     admin.putTempData('formOk', true);

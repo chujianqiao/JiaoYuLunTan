@@ -8,6 +8,7 @@ import cn.stylefeng.guns.base.pojo.node.ZTreeNode;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.base.pojo.page.LayuiPageInfo;
 import cn.stylefeng.guns.core.constant.dictmap.ThesisDomainDict;
+import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.model.result.ReviewMajorResult;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
@@ -254,9 +255,24 @@ public class ThesisDomainController extends BaseController {
      */
     @RequestMapping(value = "/tree")
     @ResponseBody
-    public List<ZTreeNode> tree() {
+    public List<ZTreeNode> tree(Long reviewId) {
         List<ZTreeNode> tree = this.thesisDomainService.tree();
-        tree.add(ZTreeNode.createParent());
+
+        if (reviewId != null){
+            ReviewMajor reviewMajor = reviewMajorService.getById(reviewId);
+            String domains[] = reviewMajor.getBelongDomain().split(";");
+            for (int i = 0;i < tree.size();i++){
+                for (int j = 0;j < domains.length;j++){
+                    String treeId = tree.get(i).getId().toString();
+                    String domain = domains[j];
+                    if (treeId.equals(domain)){
+                        tree.get(i).setChecked(true);
+                    }
+                }
+            }
+        }
+
+        //tree.add(ZTreeNode.createParent());
         return tree;
     }
 

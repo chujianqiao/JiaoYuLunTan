@@ -214,7 +214,12 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
     OwnForum.openAddDlg();
 
     });
-
+    $('#btnCreate').click(function () {
+        window.location.href = Feng.ctxPath + "/holdForum/add";
+    });
+    $('#btnCreate2').click(function () {
+        window.location.href = Feng.ctxPath + "/holdForum/add";
+    });
     // 导出excel
     $('#btnExp').click(function () {
         OwnForum.exportExcel();
