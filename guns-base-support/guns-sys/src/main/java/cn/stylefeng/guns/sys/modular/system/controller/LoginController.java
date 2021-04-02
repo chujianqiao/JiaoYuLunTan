@@ -144,22 +144,37 @@ public class LoginController extends BaseController {
                 }else {
                     if (url.equals("/greatResult/add")){
                         loginUrl = "/result.html";
+                        model.addAttribute("menuUrl","greatResult");
                         DefaultAvatar.setLoginUrl("");
                     }
                     if (url.equals("/holdForum/add")){
                         loginUrl = "/forum.html";
+                        model.addAttribute("menuUrl","holdForum");
                         DefaultAvatar.setLoginUrl("");
                     }
                     if (url.equals("/socialForum/add")){
                         loginUrl = "/social.html";
+                        model.addAttribute("menuUrl","socialForum");
                         DefaultAvatar.setLoginUrl("");
                     }
                     if (url.equals("/collectTopic/add")){
                         loginUrl = "/collect.html";
+                        model.addAttribute("menuUrl","collectTopic");
                         DefaultAvatar.setLoginUrl("");
                     }
-                    if (url.equals("/reviewMajor/add")){
-                        loginUrl = "/majorReport.html";
+                    if (url.equals("/thesis")){
+                        model.addAttribute("userName", user.getName());
+                        model.addAttribute("menuUrl","thesis");
+                        model.addAttribute("isReview", "yes");
+
+                        if(roles.contains(1)){
+                            loginUrl = "/thesis/thesis_disable.html";
+                        } else if(roles.contains(4)){
+                            loginUrl = "/thesis/thesis_review.html";
+
+                        } else{
+                            loginUrl = "没有权限";
+                        }
                         DefaultAvatar.setLoginUrl("");
                     }
                     if (url.equals("/meetMember/add")) {
@@ -171,6 +186,7 @@ public class LoginController extends BaseController {
                             request.setAttribute("userTitle","无职称");
                         }
                         loginUrl = "/meet_reg.html";
+                        model.addAttribute("menuUrl","meetMember");
                         DefaultAvatar.setLoginUrl("");
                     }
                 }

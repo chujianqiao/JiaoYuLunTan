@@ -28,7 +28,7 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
             {field: 'forumName', sort: true, title: '参会论坛'},
             {field: 'meetStatusStr', sort: true, title: '会议状态'},
             {field: 'ifMeet', sort: true, title: '是否参加大会'},
-            {align: 'center', minWidth: 130, title: '操作', templet: function(data){
+            {align: 'center', minWidth: 140, title: '操作', templet: function(data){
                 return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>"
                     +  "<a class='layui-btn layui-btn-xs layui-btn-danger' lay-event='delete'>删除</a>";
                 }}
@@ -64,7 +64,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     MeetMember.onDisableItem = function (data) {
-        window.location.href = Feng.ctxPath + '/meetMember/disable?memberId=' + data.memberId ;
+        func.open({
+            title: '查看详情',
+            content: Feng.ctxPath + '/meetMember/disable?memberId=' + data.memberId,
+            tableId: MeetMember.tableId
+        });
+        //window.location.href = Feng.ctxPath + '/meetMember/disable?memberId=' + data.memberId ;
     };
 
     /**
@@ -271,7 +276,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     MeetMemberJB.onDisableItem = function (data) {
-        window.location.href = Feng.ctxPath + '/meetMember/guestDetail?memberId=' + data.memberId ;
+        func.open({
+            title: '查看详情',
+            content: Feng.ctxPath + '/meetMember/guestDetail?memberId=' + data.memberId,
+            tableId: MeetMemberJB.tableId
+        });
+        //window.location.href = Feng.ctxPath + '/meetMember/guestDetail?memberId=' + data.memberId ;
     };
 
     /**
@@ -354,8 +364,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     MeetMemberJB.onDeleteItem = function (data) {
+        var thesisId = data.thesisId;
+        if (thesisId == null || thesisId == "" || thesisId == "undefined") {
+            thesisId = 0;
+        }
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/meetMember/delete?thesisId="+data.thesisId, function (data) {
+            var ajax = new $ax(Feng.ctxPath + "/meetMember/delete?thesisId="+thesisId, function (data) {
                 Feng.success("删除成功!");
                 table.reload(MeetMemberJB.tableId);
             }, function (data) {
@@ -551,7 +565,12 @@ layui.use(['table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     MeetMemberMajor.onDisableItem = function (data) {
-        window.location.href = Feng.ctxPath + Feng.ctxPath + '/reviewMajor/disable?reviewId=' + data.reviewId;
+        func.open({
+            title: '查看详情',
+            content: Feng.ctxPath + '/reviewMajor/disable?reviewId=' + data.reviewId,
+            tableId: MeetMemberMajor.tableId
+        });
+        //window.location.href = Feng.ctxPath + Feng.ctxPath + '/reviewMajor/disable?reviewId=' + data.reviewId;
     };
 
     /**

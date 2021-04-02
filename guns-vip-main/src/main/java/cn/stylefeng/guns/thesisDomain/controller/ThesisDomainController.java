@@ -260,16 +260,19 @@ public class ThesisDomainController extends BaseController {
 
         if (reviewId != null){
             ReviewMajor reviewMajor = reviewMajorService.getById(reviewId);
-            String domains[] = reviewMajor.getBelongDomain().split(";");
-            for (int i = 0;i < tree.size();i++){
-                for (int j = 0;j < domains.length;j++){
-                    String treeId = tree.get(i).getId().toString();
-                    String domain = domains[j];
-                    if (treeId.equals(domain)){
-                        tree.get(i).setChecked(true);
+            if (reviewMajor.getBelongDomain() != null && reviewMajor.getBelongDomain() != null){
+                String domains[] = reviewMajor.getBelongDomain().split(";");
+                for (int i = 0;i < tree.size();i++){
+                    for (int j = 0;j < domains.length;j++){
+                        String treeId = tree.get(i).getId().toString();
+                        String domain = domains[j];
+                        if (treeId.equals(domain)){
+                            tree.get(i).setChecked(true);
+                        }
                     }
                 }
             }
+
         }
 
         //tree.add(ZTreeNode.createParent());

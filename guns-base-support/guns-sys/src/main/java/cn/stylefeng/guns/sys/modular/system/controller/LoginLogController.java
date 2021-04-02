@@ -66,7 +66,7 @@ public class LoginLogController extends BaseController {
      * @Date 2018/12/23 5:51 PM
      */
     @RequestMapping("/list")
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object list(@RequestParam(required = false) String beginTime,
                        @RequestParam(required = false) String endTime,
@@ -90,7 +90,7 @@ public class LoginLogController extends BaseController {
      */
     @BussinessLog("清空登录日志")
     @RequestMapping("/delLoginLog")
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object delLog() {
         SqlExe.delete("delete from sys_login_log", null);

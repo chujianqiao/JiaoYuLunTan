@@ -103,6 +103,7 @@ public class MeetMemberParam implements Serializable, BaseValidatingParam {
 
     private Long meetId;
     private Integer ifMeet;
+    private String roleId;
     @Override
     public String checkParam() {
         return null;

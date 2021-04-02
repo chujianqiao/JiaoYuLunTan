@@ -98,6 +98,26 @@
             and (create_time between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
         </if>
     </select>
+    <select id="selectUsersRole" resultType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where status != 'DELETED'
+        <if test="name != null and name != ''">
+            and (phone like CONCAT('%',#{name},'%')
+            or account like CONCAT('%',#{name},'%')
+            or name like CONCAT('%',#{name},'%'))
+        </if>
+        <if test="deptId != null and deptId != 0">
+            and (dept_id = #{deptId} or dept_id in ( select dept_id from sys_dept where pids like CONCAT('%$[', #{deptId}, '$]%') escape '$' ))
+        </if>
+        <if test="roleId != null and roleId != 0">
+            and find_in_set(#{roleId},role_id)
+        </if>
+        <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+            and (create_time between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>
+    </select>
 
     <select id="listByName" resultType="Long">
         select
@@ -180,7 +200,7 @@
             or u.name like CONCAT('%',#{name},'%'))
         </if>
         <if test="roleId != null and roleId != 0">
-            and u.role_id like CONCAT('%',#{roleId},'%')
+            and find_in_set(#{roleId},u.role_id)
         </if>
         <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
             and (u.create_time between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
@@ -339,7 +359,7 @@
         <include refid="Base_Column_List"/>
         from sys_user where 1 = 1
         <if test="roleIds != null and roleIds != ''">
-            and role_id like CONCAT('%',#{roleIds},'%')
+            and find_in_set(#{roleIds},role_id)
         </if>
     </select>
     <select id="listByRole" resultType="cn.stylefeng.guns.sys.modular.system.entity.User">
@@ -347,7 +367,7 @@
         <include refid="Base_Column_List"/>
         from sys_user where 1 = 1
         <if test="roleId != null and roleId != ''">
-            and role_id like CONCAT('%',#{roleId},'%')
+            and find_in_set(#{roleId},role_id)
         </if>
         <if test="name != null and name != ''">
             and name like CONCAT('%',#{name},'%')

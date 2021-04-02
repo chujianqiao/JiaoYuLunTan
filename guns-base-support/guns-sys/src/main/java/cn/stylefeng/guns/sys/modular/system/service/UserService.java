@@ -195,6 +195,10 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         Page page = LayuiPageFactory.defaultPage();
         return this.baseMapper.selectUsers(page, dataScope, name, beginTime, endTime, deptId);
     }
+    public Page<Map<String, Object>> selectUsersRole(DataScope dataScope, String name, String beginTime, String endTime, Long deptId, Long roleId) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.selectUsersRole(page, dataScope, name, beginTime, endTime, deptId, roleId);
+    }
 
     /**
      * 设置用户的角色

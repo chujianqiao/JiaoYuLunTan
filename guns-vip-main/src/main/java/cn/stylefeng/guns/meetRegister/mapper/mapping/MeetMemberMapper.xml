@@ -20,11 +20,12 @@
         <result column="sort" property="sort" />
         <result column="meet_id" property="meetId" />
         <result column="if_meet" property="ifMeet" />
+        <result column="role_id" property="roleId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime" ,meet_status AS "meetStatus" ,pay_id AS "payId",word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",province AS "province",city AS "city",sort AS "sort",meet_id AS "meetId",if_meet AS "ifMeet"
+        member_id AS "memberId", user_id AS "userId", thesis_id AS "thesisId", speak AS "speak", judge AS "judge", own_forumid AS "ownForumid", reg_time AS "regTime" ,meet_status AS "meetStatus" ,pay_id AS "payId",word_path AS "wordPath",word_name AS "wordName",ppt_path AS "pptPath",ppt_name AS "pptName",province AS "province",city AS "city",sort AS "sort",meet_id AS "meetId",if_meet AS "ifMeet",role_id AS "roleId"
     </sql>
 
     <select id="customListAll" resultType="cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult" parameterType="cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam">
@@ -107,6 +108,9 @@
             <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
                 and meet_id=#{paramCondition.meetId}
             </if>
+            <if test="paramCondition.roleId != null and paramCondition.roleId != '' and paramCondition.roleId == 5">
+                and find_in_set(#{paramCondition.roleId},role_id)
+            </if>
             <if test="listStatus != null and listStatus != ''">
                 and user_id in
                 <foreach collection="list" index="index" item="i" open="("
@@ -131,7 +135,7 @@
         from meet_member where 1 = 1
         and meet_id = #{meetId}
         and user_id = #{userId}
-        and (meet_status != 5 and meet_status != 8)
+        and (meet_status is null or (meet_status != 5 and meet_status != 8))
     </select>
 
     <select id="sortMember" resultType="Long">

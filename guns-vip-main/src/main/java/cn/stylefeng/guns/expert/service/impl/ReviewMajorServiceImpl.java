@@ -85,9 +85,11 @@ public class ReviewMajorServiceImpl extends ServiceImpl<ReviewMajorMapper, Revie
         //普通用户查看自己，管理员查看所有
         LoginUser user = LoginContextHolder.getContext().getUser();
         long userId = user.getId();
-        List roleIds = user.getRoleList();
-        long adminRole = 1;
-        if(roleIds.contains(adminRole)){
+        //List roleIds = user.getRoleList();
+        //long adminRole = 1;
+        boolean isAdmin = cn.stylefeng.guns.util.ToolUtil.isAdminRole();
+        //if(roleIds.contains(adminRole)){
+        if(isAdmin){
             //xml查询条件会忽略0的情况，返回所有
             userId = 0;
         }

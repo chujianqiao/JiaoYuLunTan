@@ -8,70 +8,70 @@
                 <div class="layui-form-item layui-row">
                     <input id="memberId" name="memberId" type="hidden"/>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">头像 ：<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">头像 ：</label>
                         <div class="user-info-head" id="imgHead">
                             <img id="avatarPreview" src="${avatar}"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">嘉宾姓名<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">嘉宾姓名</label>
                         <div class="layui-input-block">
-                            <input id="name" name="name" placeholder="" type="text" class="layui-input" />
+                            <input id="name" name="name" disabled placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">所属省份<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">所属省份</label>
                         <div class="layui-input-block">
-                            <select name="province" id="selProvince" lay-filter="Province" lay-verify="required"></select>
+                            <select name="province" id="selProvince" lay-filter="Province" ></select>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">所属城市<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">所属城市</label>
                         <div class="layui-input-block">
-                            <select name="city" id="selCity" lay-verify="required"></select>
+                            <select name="city" id="selCity" ></select>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">所在单位</label>
                         <div class="layui-input-block">
                             <input id="workUnit" name="workUnit" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">职务/职称<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">职务/职称</label>
                         <div class="layui-input-block">
                             <input id="post" name="post" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">研究方向<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">研究方向</label>
                         <div class="layui-input-block">
                             <input id="direction" name="direction" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <div class="layui-inline layui-col-md12">
-                            <label class="layui-form-label">参会论坛<span style="color: red;">*</span></label>
+                            <label class="layui-form-label">参会论坛</label>
                             <div class="layui-input-block">
                                 <select id="ownForumid" name="ownForumid" lay-verify="" lay-search></select>
                             </div>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">注册时间<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">注册时间</label>
                         <div class="layui-input-block">
-                            <input id="regTime" name="regTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="regTime" name="regTime" disabled="disabled" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">嘉宾简介<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">嘉宾简介</label>
                         <div class="layui-input-block">
-                            <textarea id="introduction" name="introduction" type="text" lay-verify="required" required class="layui-textarea"></textarea>
+                            <textarea id="introduction" name="introduction" type="text" class="layui-textarea"></textarea>
                         </div>
                     </div>
 
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">PPT<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">PPT</label>
                         <div class="layui-input-block">
                             <input id="pptPath" name="pptPath" type="hidden" class="layui-input"/>
                             <input id="pptName" name="pptName" type="hidden" class="layui-input"/>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">发言稿<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">发言稿</label>
                         <div class="layui-input-block">
                             <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
                             <input id="wordName" name="wordName" type="hidden" class="layui-input"/>
@@ -99,21 +99,21 @@
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">同意下载发言稿<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">同意下载发言稿</label>
                         <div class="layui-input-block">
                             <input type="radio" name="canDownloadWord" value="1" title="是" />
                             <input type="radio" name="canDownloadWord" value="0" title="否" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">同意下载PPT<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">同意下载PPT</label>
                         <div class="layui-input-block">
                             <input type="radio" name="canDownloadPpt" value="1" title="是" />
                             <input type="radio" name="canDownloadPpt" value="0" title="否" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">排序权重<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">排序权重</label>
                         <div class="layui-input-block">
                             <input id="sort" name="sort" placeholder="" type="text" class="layui-input" />
                         </div>

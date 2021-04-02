@@ -279,7 +279,8 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
      * 取消
      */
     $('#cancelGuest').click(function () {
-        window.location.href = window.location.href = Feng.ctxPath + '/meetMember';
+        //window.location.href = Feng.ctxPath + '/meetMember';
+        admin.closeThisDialog();
     });
 
     function downloadPPT(memberId){
@@ -314,7 +315,9 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }
         let ajax = new $ax(Feng.ctxPath + "/meetMember/adminEditItem", function (data) {
             Feng.success("更新成功！");
-            window.location.href = Feng.ctxPath + '/meetMember';
+            //window.location.href = Feng.ctxPath + '/meetMember';
+            parent.location.reload();
+            admin.closeThisDialog();
         }, function (data) {
             Feng.error("更新失败！" + data.responseJSON.message)
         });

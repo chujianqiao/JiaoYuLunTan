@@ -17,6 +17,8 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
     var layer = layui.layer;
     var formSelects = layui.formSelects;
 
+    roleSelectOption();
+
     // 点击部门时
     $('#deptName').click(function () {
         var formName = encodeURIComponent("parent.UserInfoDlg.data.deptName");
@@ -36,14 +38,164 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
     });
 
     // 添加表单验证方法
-    form.verify({
+    /*form.verify({
         psw: [/(?!.*[\u4E00-\u9FA5\s])(?!^[a-zA-Z]+$)(?!^[\d]+$)(?!^[^a-zA-Z\d]+$)^.{8,14}$/, '8~14位字母/数字以及标点符号至少包含2种，不允许有空格、中文！'],
         repsw: function (value) {
             if (value !== $('#userForm input[name=password]').val()) {
                 return '两次密码输入不一致';
             }
         }
-    });
+    });*/
+    var isAccountOk = false;
+    var isPasswordOk = false;
+    $("#account").focus(function() {
+        accounttips = layer.tips('设置后不可更改，中英文均可，最长14个英文或7个汉字', '#account',{tips:[1,'#000'],time: 30000});
+    })
+    $("#account").blur(function() {
+        layer.close(accounttips);
+
+        // 去除多余的空白字符
+        var uname = this.value.trim();
+        // 判断是否为空
+        if (uname == '') {
+            // 设置错误信息
+            var span = this.nextElementSibling;
+            span.className = 'error';
+            span.innerHTML = '用户名不允许为空';
+            // 设置用户名标记为false
+            isAccountOk = false;
+            ifCanSub();
+            // 终止程序
+            return;
+        }
+        // 判断是否有非法字符(除了中英文,数字,下划线以外的字符)
+        var charReg = /[^\u4E00-\u9FA5\w]/;
+        var res = charReg.test(uname);
+        // 如果res为真,表示有非法字符
+        if (res) {
+            // 设置错误信息
+            var span = this.nextElementSibling;
+            span.className = 'error';
+            span.innerHTML = '用户名仅支持中英文,数字和下划线,且不能为纯数字';
+            // 设置用户名标记为false
+            isAccountOk = false;
+            ifCanSub();
+            // 终止程序
+            return;
+        }
+        // 经过上述判断后,说明都是合法的字符(中英文,下划线,数字),接下来判断是否为纯数字
+        var numReg = /\D/;
+        var res = numReg.test(uname);
+        // 如果res为false,则表示出了数字以外无其他字符
+        if (!res) {
+            // 设置错误信息
+            var span = this.nextElementSibling;
+            span.className = 'error';
+            span.innerHTML = '用户名仅支持中英文,数字和下划线,且不能为纯数字';
+            // 设置用户名标记为false
+            isAccountOk = false;
+            ifCanSub();
+            // 终止程序
+            return;
+        }
+        // 满足以上条件后,判断用户名字符串的长度
+        var len = 0; // 表示用户名的长度
+        for (var i = 0; i < uname.length; i++) {
+            // 如果是中文,就+2；否则+1
+            if (/[\u4e00-\u9fa5]/.test(uname[i])) {
+                len += 2;
+            } else {
+                len += 1;
+            }
+            // 尽量避免执行过多的次数,一旦len超过14就不满足条件了
+            if (len > 14) {
+                break;
+            }
+        }
+        // 判断是否满足条件
+        if (len > 14) {
+            // 设置错误信息
+            var span = this.nextElementSibling;
+            span.className = 'error';
+            span.innerHTML = '用户名不能超过7个汉字或14个字符';
+            // 设置用户名标记为false
+            isAccountOk = false;
+            ifCanSub();
+            // 终止程序
+            return;
+        } else {
+            // 设置成功信息
+            var span = this.nextElementSibling;
+            span.className = 'success';
+            span.innerHTML = '√';
+            // 设置成功的标志
+            isAccountOk = true;
+            ifCanSub();
+
+            var ajax = new $ax(Feng.ctxPath + "/mgr/addCheck", function (data) {
+                console.log(data)
+                if (data.message == 'existAccount') {
+                    // 设置错误信息
+                    span.className = 'error';
+                    span.innerHTML = '此用户名已存在,请更换一个';
+                    // 设置用户名标记为false
+                    isAccountOk = false;
+                    ifCanSub();
+                    // 终止程序
+                    return;
+                }else {
+                    // 设置成功信息
+                    span.className = 'success';
+                    span.innerHTML = '√';
+                    // 设置成功的标志
+                    isAccountOk = true;
+                    ifCanSub();
+                }
+
+            }, function (data) {
+            });
+            ajax.set("account",this.value);
+            ajax.start();
+        }
+        /*var pattern = /^[\u4e00-\u9fa5]{1,7}$|^[\A-Za-z]{1,14}$/,
+            str = $("#account").val();
+        alert(pattern.test(str));*/
+    })
+    var passwordtips;
+    $("#password").focus(function() {
+        passwordtips = layer.tips('8~14位字母/数字以及标点符号至少包含2种，不允许有空格、中文', '#password',{tips:[1,'#000'],time: 30000});
+    })
+    $("#password").blur(function() {
+        layer.close(passwordtips);
+        var pass = this.value;
+        var passTest = /(?!.*[\u4E00-\u9FA5\s])(?!^[a-zA-Z]+$)(?!^[\d]+$)(?!^[^a-zA-Z\d]+$)^.{8,14}$/;
+        if (passTest.test(pass)) {
+            // 设置成功信息
+            var span = this.nextElementSibling;
+            span.className = 'success';
+            span.innerHTML = '√';
+            // 设置成功的标志
+            isPasswordOk = true;
+            ifCanSub();
+        }else {
+            // 设置成功信息
+            var span = this.nextElementSibling;
+            span.className = 'error';
+            span.innerHTML = '密码设置不符合要求';
+            // 设置成功的标志
+            isPasswordOk = false;
+            ifCanSub();
+        }
+    })
+    function ifCanSub() {
+        if (isAccountOk && isPasswordOk){
+            $("#btnSubmit").attr('disabled',false);
+            $("#btnSubmit").removeClass("layui-bg-gray");
+        }else {
+            $("#btnSubmit").attr('disabled',true);
+            $("#btnSubmit").addClass("layui-bg-gray");
+        }
+    }
 
     // 渲染时间选择框
     laydate.render({
@@ -193,4 +345,27 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
         //添加 return false 可成功跳转页面
         return false;
     });
+
+
+    function roleSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/role/adminList" ,
+            success:function(response){
+                var data=response.data;
+                var role = [];
+                role = data;
+                console.log(role)
+
+                var options;
+                for (var i = 0 ;i < role.length ;i++){
+                    options += '<option value="'+ role[i].id+ '" >'+ role[i].name +'</option>';
+                }
+                $('#roleId').empty();
+                $('#roleId').append("<option value=''>请选择角色</option>");
+                $('#roleId').append(options);
+                form.render('select');
+            }
+        })
+    }
 });

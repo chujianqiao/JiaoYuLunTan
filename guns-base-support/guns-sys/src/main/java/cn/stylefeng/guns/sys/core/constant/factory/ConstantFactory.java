@@ -122,6 +122,18 @@ public class ConstantFactory implements IConstantFactory {
         }
         return "";
     }
+    @Override
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_ROLE_TIP + "'+#roleId")
+    public Integer getSingleRole(Long roleId) {
+        if (0 == roleId) {
+            return 0;
+        }
+        Role roleObj = roleMapper.selectById(roleId);
+        if (ToolUtil.isNotEmpty(roleObj) && ToolUtil.isNotEmpty(roleObj.getName())) {
+            return roleObj.getIfAdmin();
+        }
+        return 0;
+    }
 
     @Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.DEPT_NAME + "'+#deptId")

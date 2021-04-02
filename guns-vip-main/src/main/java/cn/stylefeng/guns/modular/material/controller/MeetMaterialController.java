@@ -309,7 +309,11 @@ public class MeetMaterialController extends BaseController {
         String finalName = uploadResult.getOriginalFilename().replace("." + fileSuffix,System.currentTimeMillis() + "." + fileSuffix);
 
         MeetMaterialParam meetMaterialParam = new MeetMaterialParam();
-        meetMaterialParam.setMaterialId(ToolUtil.getNum19());
+        Long materialId = ToolUtil.getNum19();
+        while (materialId == 0){
+            materialId = ToolUtil.getNum19();
+        }
+        meetMaterialParam.setMaterialId(materialId);
         meetMaterialParam.setMatName(finalName);
         meetMaterialParam.setMatPath(uploadResult.getFileSavePath());
 

@@ -152,7 +152,7 @@ public class SocialLinkController extends BaseController {
      */
     @RequestMapping("/freeze")
     @BussinessLog(value = "冻结", key = "linkId", dict = SocialLinkDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData freeze(@RequestParam Long linkId) {
         if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(linkId)) {
@@ -170,7 +170,7 @@ public class SocialLinkController extends BaseController {
      */
     @RequestMapping("/unfreeze")
     @BussinessLog(value = "解除冻结", key = "linkId", dict = SocialLinkDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData unfreeze(@RequestParam Long linkId) {
         if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(linkId)) {

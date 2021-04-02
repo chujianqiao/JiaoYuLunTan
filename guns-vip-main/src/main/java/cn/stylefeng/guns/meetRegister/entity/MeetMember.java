@@ -126,6 +126,9 @@ public class MeetMember implements Serializable {
     @TableField("if_meet")
     private Integer ifMeet;
 
+    @TableField("role_id")
+    private String roleId;
+
     public MeetMember() {
     }
 
@@ -272,6 +275,15 @@ public class MeetMember implements Serializable {
     public void setIfMeet(Integer ifMeet) {
         this.ifMeet = ifMeet;
     }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
     @Override
     public String toString() {
         return "MeetMember{" +
@@ -288,6 +300,7 @@ public class MeetMember implements Serializable {
         ", pptName=" + pptName +
         ", meetId=" + meetId +
         ", ifMeet=" + ifMeet +
+        ", roleId=" + roleId +
         "}";
     }
 }

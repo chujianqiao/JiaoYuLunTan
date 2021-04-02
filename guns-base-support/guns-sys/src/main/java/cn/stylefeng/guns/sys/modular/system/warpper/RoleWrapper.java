@@ -50,6 +50,15 @@ public class RoleWrapper extends BaseControllerWrapper {
 
     @Override
     protected void wrapTheMap(Map<String, Object> map) {
+        if (map.get("ifAdmin") != null && map.get("ifAdmin") != ""){
+            if (Integer.parseInt(map.get("ifAdmin").toString()) == 1){
+                map.put("ifAdmin","是");
+            }else {
+                map.put("ifAdmin","否");
+            }
+        }else {
+            map.put("ifAdmin","否");
+        }
         map.put("pName", ConstantFactory.me().getSingleRoleName(DecimalUtil.getLong(map.get("pid"))));
         map.put("deptName", ConstantFactory.me().getDeptName(DecimalUtil.getLong(map.get("deptId"))));
     }

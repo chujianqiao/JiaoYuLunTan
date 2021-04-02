@@ -304,6 +304,7 @@
                 parent.location.href = Feng.ctxPath + "/";
                 admin.closeThisDialog();
             }, function (data) {
+                $('img.login-captcha').attr("src",$('img.login-captcha').attr("src") + '?t=' + (new Date).getTime());
                 layer.msg("登录失败！" + data.responseJSON.message, {icon: 5, anim: 6});
             });
             ajax.set("username", $("#username").val());

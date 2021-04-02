@@ -146,7 +146,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/add")
     @BussinessLog(value = "添加角色", key = "name", dict = RoleDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData add(Role role) {
         this.roleService.addRole(role);
@@ -161,7 +161,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/edit")
     @BussinessLog(value = "修改角色", key = "name", dict = RoleDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData edit(RoleDto roleDto) {
         this.roleService.editRole(roleDto);
@@ -176,7 +176,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/remove")
     @BussinessLog(value = "删除角色", key = "roleId", dict = DeleteDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData remove(@RequestParam Long roleId) {
 
@@ -217,7 +217,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping("/setAuthority")
     @BussinessLog(value = "配置权限", key = "roleId,ids", dict = RoleDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData setAuthority(@RequestParam("roleId") Long roleId, @RequestParam("ids") String ids) {
         if (ToolUtil.isOneEmpty(roleId)) {
@@ -251,6 +251,9 @@ public class RoleController extends BaseController {
     @ResponseBody
     public List<ZTreeNode> roleTreeListByUserId(@PathVariable Long userId) {
         User theUser = this.userService.getById(userId);
+        if (ToolUtil.isEmpty(theUser)){
+            return this.roleService.roleTreeList();
+        }
         String roleId = theUser.getRoleId();
         if (ToolUtil.isEmpty(roleId)) {
             return this.roleService.roleTreeList();
@@ -274,9 +277,9 @@ public class RoleController extends BaseController {
      * @author fengshuonan
      * @Date 2019-8-23 13:27
      */
-    @RequestMapping("/listRole")
+    @RequestMapping("/adminList")
     @ResponseBody
-    public LayuiPageInfo listRole(@RequestParam(value = "name", required = false) String name) {
+    public LayuiPageInfo adminList(@RequestParam(value = "name", required = false) String name) {
         IPage page = roleService.listRole(name);
         return LayuiPageFactory.createPageInfo(page);
     }

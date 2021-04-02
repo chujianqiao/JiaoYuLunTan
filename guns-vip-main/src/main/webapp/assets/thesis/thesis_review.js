@@ -29,22 +29,27 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
             {field: 'belongDomainStr', sort: true, title: '论文领域'},
             {field: 'firstScore', sort: true, title: '初评分数'},
             {field: 'status', sort: true, title: '初评结果'},
-            {field: 'finalResult', sort: true, title: '是否推优'},
+            //{field: 'finalResult', sort: true, title: '是否推优'},
             {align: 'center', title: '操作',templet: function(data){
 
-                if (data.status == "已取消参会"){
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
-                }else {
-                    if(data.firstStatus == "未评审"){
-                        return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review'>评审</a>";
-                    }else{
-                        if (data.finalResult == 0) {
-                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review'>修改评审</a>";
-                        } else {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
+                if (data.meetTimeStatusStr == "报名中" || data.meetTimeStatusStr == "报名结束"){
+                    if (data.status == "已取消参会"){
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
+                    }else {
+                        if(data.firstStatus == "未评审"){
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review'>评审</a>";
+                        }else{
+                            if (data.finalResult == 0) {
+                                return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review'>修改评审</a>";
+                            } else {
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
+                            }
                         }
                     }
+                } else {
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
                 }
+
                     /*if(data.firstStatus == "未评审"){
                         return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review'>评审</a>";
                     }else{
@@ -213,11 +218,16 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
             {field: 'status', sort: true, title: '初评结果'},
             {field: 'greatStr', sort: true, title: '是否推优'},
             {align: 'center', title: '操作',templet: function(data){
-                if(data.secondStatus == "未评审"){
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reviewAgain'>评审</a>";
-                }else{
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='secondDetail'>查看详情</a>";
-                }
+                    if (data.meetTimeStatusStr == "报名中" || data.meetTimeStatusStr == "报名结束"){
+                        if(data.secondStatus == "未评审"){
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='reviewAgain'>评审</a>";
+                        }else{
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='secondDetail'>查看详情</a>";
+                        }
+                    }else {
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='secondDetail'>查看详情</a>";
+                    }
+
                 }}
         ]];
     };

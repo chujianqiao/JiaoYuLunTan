@@ -286,6 +286,9 @@ public class WeiXinController {
                         //支付详情
                         VipPayParam vipPayParam = new VipPayParam();
                         long payId = ToolUtil.getNum19();
+                        while (payId == 0){
+                            payId = ToolUtil.getNum19();
+                        }
                         vipPayParam.setPayId(payId);
                         vipPayParam.setOrderNum(out_trade_no);
                         vipPayParam.setPayMoney(new BigDecimal(wxtotal_fee));

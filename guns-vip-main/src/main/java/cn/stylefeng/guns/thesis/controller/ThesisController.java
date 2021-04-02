@@ -326,7 +326,8 @@ public class ThesisController extends BaseController {
         String meetSize = pubMeet.getSize();
         //用户ID
         LoginUser loginUser = LoginContextHolder.getContext().getUser();
-        Long userId = loginUser.getId();
+        User user1 = userService.getById(loginUser.getId());
+        Long userId = user1.getUserId();
         thesisParam.setThesisUser(userId.toString());
         thesisParam.setGreatNum(0);
         thesisParam.setGreat(0);
@@ -334,9 +335,10 @@ public class ThesisController extends BaseController {
 
         user.setUserId(userId);
         meetMemberParam.setUserId(userId);
+        meetMemberParam.setRoleId(user1.getRoleId());
         //论文ID
         long thesisId = ToolUtil.getNum19();
-        if (thesisId == 0){
+        while (thesisId == 0){
             thesisId = ToolUtil.getNum19();
         }
         thesisParam.setThesisId(thesisId);
@@ -364,6 +366,7 @@ public class ThesisController extends BaseController {
                 this.thesisService.add(thesisParam);
             }else if(null == title){
                 meetMemberParam.setMeetStatus(2);
+                meetMemberParam.setThesisId(null);
             }
 
         }else if("small".equals(meetSize)){
@@ -385,6 +388,8 @@ public class ThesisController extends BaseController {
     public ResponseData editItem(ThesisParam thesisParam) {
         long thesisId = thesisParam.getThesisId();
         Integer isPass = thesisParam.getReviewResult();
+        thesisParam.setReviewBatch(2);
+        thesisParam.setReviewTime(new Date());
         if(isPass != null){
             MeetMemberParam meetMemberParam = new MeetMemberParam();
             meetMemberParam.setThesisId(thesisId);
@@ -445,6 +450,8 @@ public class ThesisController extends BaseController {
     public ResponseData assignItem(ThesisParam thesisParam, String thesisIds) {
         String majors = thesisParam.getReviewUser();
         String [] majorIds = majors.split(",");
+        //thesisParam.setReviewBatch(2);
+        //thesisParam.setReviewTime(new Date());
         for(int i =0 ;i < majorIds.length ;i++){
             long userId = Long.parseLong(majorIds[i]);
             ReviewMajor reviewMajor = this.reviewMajorService.getById(userId);
@@ -1028,6 +1035,14 @@ public class ThesisController extends BaseController {
             LoginUser user = LoginContextHolder.getContext().getUser();
             Long userId = user.getId();
             thesisParam.setThesisUser(userId.toString());
+        }
+        if (thesisParam.getMeetId() == null){
+            Meet meet = meetService.getByStatus(1);
+            if (meet != null){
+                thesisParam.setMeetId(meet.getMeetId());
+            }
+        } else if (thesisParam.getMeetId() == 0) {
+            thesisParam.setMeetId(null);
         }
         Page<Map<String, Object>> theses = this.thesisService.findPageWrapByBatch(thesisParam,2);
         Page wrapped = new ThesisWrapper(theses).wrap();

@@ -32,7 +32,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             // {field: 'createTime', sort: true, title: '创建日期'},
             // {field: 'diy1', sort: true, title: '管理员自定义备用字段1'},
             // {field: 'diy2', sort: true, title: '管理员自定义备用字段2'},
-            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 120}
+            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 140}
         ]];
     };
 

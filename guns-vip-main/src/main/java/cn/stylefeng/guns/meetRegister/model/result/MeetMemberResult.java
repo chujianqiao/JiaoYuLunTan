@@ -102,5 +102,5 @@ public class MeetMemberResult implements Serializable {
 
     private Long meetId;
     private Integer ifMeet;
-
+    private String roleId;
 }

@@ -161,6 +161,9 @@ public class MeetController extends BaseController {
     @ResponseBody
     public Object addItem(Meet meet) {
         Long meetId = ToolUtil.getNum19();
+        while (meetId == 0){
+            meetId = ToolUtil.getNum19();
+        }
         LoginUser user = LoginContextHolder.getContext().getUser();
         meet.setRegUser(user.getId());
         meet.setRegTime(new Date());

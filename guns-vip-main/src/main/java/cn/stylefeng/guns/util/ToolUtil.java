@@ -45,8 +45,14 @@ public class ToolUtil {
 	public static boolean isAdminRole(){
 		LoginUser user = LoginContextHolder.getContext().getUser();
 		List roleIds = user.getRoleList();
-		long adminRole = 1;
-		if(roleIds.contains(adminRole)){
+		int isAdmin = 0;
+		for (int i = 0;i < roleIds.size();i++){
+			Role role = roleService.getById(Long.parseLong(roleIds.get(i).toString()));
+			if (role.getIfAdmin() == 1){
+				isAdmin = 1;
+			}
+		}
+		if(isAdmin == 1){
 			return true;
 		}else{
 			return false;

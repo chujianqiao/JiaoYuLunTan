@@ -41,13 +41,22 @@ layui.use(['form', 'upload', 'admin', 'element', 'ax', 'laydate'], function () {
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
-                $("#pptNameTip").val(file.name);
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".pdf")){
+                    $("#pptNameTip").val(file.name);
+                }
             });
         }
         , done: function (res) {
-            $("#pptInputHidden").val(res.data.fileId);
-            $("#pptPath").val(res.data.path);
-            $("#pptName").val($("#pptNameTip").val());
+            var type = res.data.type;
+            if(type != ".pdf"){
+                Feng.error("上传失败，文件格式不匹配，请上传pdf文件。");
+            }else {
+                $("#pptInputHidden").val(res.data.fileId);
+                $("#pptPath").val(res.data.path);
+                $("#pptName").val($("#pptNameTip").val());
+            }
             /*var ajax = new $ax(Feng.ctxPath + "/meetMember/updateFile", function (data) {
                 if (data.message == "sizeError"){
                     Feng.error("上传失败，无参会信息！");
@@ -77,13 +86,22 @@ layui.use(['form', 'upload', 'admin', 'element', 'ax', 'laydate'], function () {
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
-                $("#wordNameTip").val(file.name);
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".doc") || fileType.compare(".docx")){
+                    $("#wordNameTip").val(file.name);
+                }
             });
         }
         , done: function (res) {
-            $("#wordInputHidden").val(res.data.fileId);
-            $("#wordPath").val(res.data.path);
-            $("#wordName").val($("#wordNameTip").val());
+            var type = res.data.type;
+            if(!type.compare(".doc") && !type.compare(".docx")){
+                Feng.error("上传失败，文件格式不匹配，请上传word文件。");
+            }else {
+                $("#wordInputHidden").val(res.data.fileId);
+                $("#wordPath").val(res.data.path);
+                $("#wordName").val($("#wordNameTip").val());
+            }
 
             /*var ajax = new $ax(Feng.ctxPath + "/meetMember/updateFile", function (data) {
                 if (data.message == "sizeError"){
@@ -107,4 +125,13 @@ layui.use(['form', 'upload', 'admin', 'element', 'ax', 'laydate'], function () {
             Feng.error("上传失败！");
         }
     });
+
+    String.prototype.compare = function(str) {
+        //不区分大小写
+        if(this.toLowerCase() == str.toLowerCase()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 });

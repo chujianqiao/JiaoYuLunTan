@@ -147,10 +147,13 @@ public class UserFactory {
             if (ToolUtil.isNotEmpty(newUser.getCity())) {
                 oldUser.setCity(newUser.getCity());
             }
-            if (newUser.getProvince().equals("无")){
-                oldUser.setProvince("");
-                oldUser.setCity("");
+            if (newUser.getProvince() != null){
+                if (newUser.getProvince().equals("无")){
+                    oldUser.setProvince("");
+                    oldUser.setCity("");
+                }
             }
+
 
             return oldUser;
         }

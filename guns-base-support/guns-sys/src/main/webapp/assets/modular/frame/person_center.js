@@ -22,6 +22,8 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
     if ($("#roleId").val().indexOf("5") > -1){
         $("#pay").attr("style","display:none");
         $("#payMo").attr("style","display:none");
+        $("#guest").attr("href","javascript:editGuest('" + $("#userId").val() + "')");
+        $("#guestMo").attr("href","javascript:editGuest('" + $("#userId").val() + "')");
     }else {
         $("#guest").attr("style","display:none");
         $("#guestMo").attr("style","display:none");
@@ -105,8 +107,6 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
 
                 for (var i = 0;i < data.length;i++){
                     console.log(data[i]);
-                    $("#guest").attr("href","javascript:editGuest('" + data[i].userId + "')");
-                    $("#guestMo").attr("href","javascript:editGuest('" + data[i].userId + "')");
                     if (data[i].finalResult == 2 || data[i].thesisName == "无"){
                         if (data[i].meetStatus == 4 || data[i].meetStatus == 6){
                             if (data[i].ownForumid != null && data[i].ownFourmid != ""){

@@ -62,6 +62,9 @@
                     //不包含专家，删除
                     deleteReviewMajor();
                 }
+                if (idArr.indexOf("5") != -1) {
+                    addGuest();
+                }
                 Feng.success("分配角色成功!");
                 parent.layer.close(ZTreeDlg.index);
             }, function (data) {
@@ -71,14 +74,22 @@
             ajax.set("userId", "${userId}");
             ajax.start();
         });
-
+        function addGuest() {
+            let majorAjax = new $ax(Feng.ctxPath + "/reviewMajor/addGuest", function (data) {
+                if (data.message == "null"){
+                    confirm("提示：当前无正在进行的会议，嘉宾角色分配后无参会信息，请在有会议进行时再次分配。");
+                }
+            })
+            majorAjax.set("userId", "${userId}");
+            majorAjax.start();
+        }
         /**
          * 添加专家
          */
         function addReviewMajor() {
-            let majorAjax = new $ax(Feng.ctxPath + "/reviewMajor/addItem", function (data) {
+            let majorAjax = new $ax(Feng.ctxPath + "/reviewMajor/addByRole", function (data) {
             })
-            majorAjax.set("reviewId", "${userId}");
+            majorAjax.set("userId", "${userId}");
             majorAjax.start();
         }
 
@@ -86,9 +97,9 @@
          * 删除专家
          */
         function deleteReviewMajor() {
-            let majorAjax = new $ax(Feng.ctxPath + "/reviewMajor/delete", function (data) {
+            let majorAjax = new $ax(Feng.ctxPath + "/reviewMajor/deleteByRole", function (data) {
             })
-            majorAjax.set("reviewId", "${userId}");
+            majorAjax.set("userId", "${userId}");
             majorAjax.start();
         }
 
@@ -106,8 +117,13 @@
                 }
             }
         };
-
-        var ztree = new $ZTree("zTree", "/role/roleTreeListByUserId/${userId}");
+        var ztree = null;
+        if (("${userId}").indexOf(";") > -1){
+            ztree = new $ZTree("zTree", "/role/roleTreeListByUserId/0");
+        } else {
+            ztree = new $ZTree("zTree", "/role/roleTreeListByUserId/${userId}");
+        }
+        //var ztree = new $ZTree("zTree", "/role/roleTreeListByUserId/${userId}");
         ztree.setSettings(setting);
         ztree.init();
     });

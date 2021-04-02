@@ -69,10 +69,11 @@ public class SocialForumServiceImpl extends ServiceImpl<SocialForumMapper, Socia
         }
 
         Page page = null;
-        LoginUser user = LoginContextHolder.getContext().getUser();
-        List roleIds = user.getRoleList();
-        long adminRole = 1;
-        if(roleIds.contains(adminRole)){
+        //LoginUser user = LoginContextHolder.getContext().getUser();
+        //List roleIds = user.getRoleList();
+        //long adminRole = 1;
+        boolean isAdmin = cn.stylefeng.guns.util.ToolUtil.isAdminRole();
+        if(isAdmin){
             page = this.baseMapper.customPageListAdmin(pageContext, param);
         }else {
             page = this.baseMapper.customPageList(pageContext, param);

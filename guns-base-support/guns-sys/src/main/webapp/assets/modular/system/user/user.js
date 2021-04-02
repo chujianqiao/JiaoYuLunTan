@@ -21,7 +21,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
             timeLimit: ""
         }
     };
-
+    roleSelectOption();
     /**
      * 初始化表格的列
      */
@@ -61,13 +61,16 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
         queryData['deptId'] = MgrUser.condition.deptId;
         queryData['name'] = $("#name").val();
         queryData['timeLimit'] = $("#timeLimit").val();
+        queryData['roleId'] = $("#roleId").val();
         $("#nameExp").val($("#name").val());
         $("#timeLimitExp").val($("#timeLimit").val());
         table.reload(MgrUser.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
-
+    form.on('select(roleId)', function(data){
+        MgrUser.search();
+    });
     /**
      * 弹出添加用户对话框
      */
@@ -220,7 +223,30 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
             }
         });
     };
+    MgrUser.roleAssignAll = function (data) {
+        var checkRows = table.checkStatus(MgrUser.tableId);
+        if (checkRows.data.length === 0) {
+            Feng.error("请选择被分配的数据");
+        } else {
+            var userIds = "";
+            for (var i = 0; i < checkRows.data.length; i++) {
+                userIds = userIds + checkRows.data[i].userId + ";";
+            }
+            //获取多语言
+            var langs = layui.data('system').lang;
 
+            layer.open({
+                type: 2,
+                title: langs.TITLE_ROLE_ASSIGN,
+                area: ['300px', '400px'],
+                content: Feng.ctxPath + '/mgr/role_assign?userId=' + userIds,
+                end: function () {
+                    table.reload(MgrUser.tableId);
+                }
+            });
+        }
+
+    };
     /**
      * 重置密码
      *
@@ -321,7 +347,9 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
     $('#btnExpAll').click(function () {
         MgrUser.exportExcelAll();
     });
-
+    $('#btnAssign').click(function () {
+        MgrUser.roleAssignAll();
+    });
     // 工具条点击事件
     table.on('tool(' + MgrUser.tableId + ')', function (obj) {
         var data = obj.data;
@@ -346,6 +374,30 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
 
         MgrUser.changeUserStatus(userId, checked);
     });
+
+    function roleSelectOption(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/role/list" ,
+            success:function(response){
+                var data=response.data;
+                var roles = [];
+                roles = data;
+
+                var options;
+                for (var i = 0 ;i < roles.length ;i++){
+                    options += '<option value="'+ roles[i].roleId+ '" >'+ roles[i].name +'</option>';
+                }
+                $('#roleId').empty();
+                $('#roleId').append("<option value=''>请选择角色</option>");
+                $('#roleId').append(options);
+                $('#roleIdForum').empty();
+                $('#roleIdForum').append("<option value=''>请选择角色</option>");
+                $('#roleIdForum').append(options);
+                form.render('select');
+            }
+        })
+    }
 
 });
 

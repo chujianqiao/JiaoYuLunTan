@@ -49,9 +49,12 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
     var status = result.data.status;
     $("input:checkbox[name = status]").each(function(i){
         //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
-        if (status.indexOf($(this).val()) > -1) {
-            $(this).attr("checked",true);
+        if (status != null && status != ""){
+            if (status.indexOf($(this).val()) > -1) {
+                $(this).attr("checked",true);
+            }
         }
+
     })
     form.render('checkbox');
 

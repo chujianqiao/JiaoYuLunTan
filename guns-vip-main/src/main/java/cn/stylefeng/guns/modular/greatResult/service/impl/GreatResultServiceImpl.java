@@ -81,10 +81,11 @@ public class GreatResultServiceImpl extends ServiceImpl<GreatResultMapper, Great
         }
 
         IPage page = null;
-        LoginUser user = LoginContextHolder.getContext().getUser();
-        List roleIds = user.getRoleList();
-        long adminRole = 1;
-        if(roleIds.contains(adminRole)){
+        //LoginUser user = LoginContextHolder.getContext().getUser();
+        //List roleIds = user.getRoleList();
+        boolean isAdmin = cn.stylefeng.guns.util.ToolUtil.isAdminRole();
+        //long adminRole = 1;
+        if(isAdmin){
             page = this.baseMapper.customPageListAdmin(pageContext, param);
         }else {
             page = this.baseMapper.customPageList(pageContext, param);

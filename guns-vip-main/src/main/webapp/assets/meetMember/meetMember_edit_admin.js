@@ -274,21 +274,38 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     // 下载论文附件
     $('#btnDownload').click(function () {
         var thesisId = $('#thesisId').val();
-        downloadThesis(thesisId);
+        if ($("#thesisName").val() == "无"){
+            Feng.error("该成员无论文可供下载！");
+        }else {
+            downloadThesis(thesisId);
+        }
+
+    });
+    // 下载论文附件
+    $('#btnWordDownload').click(function () {
+        var thesisId = $('#thesisId').val();
+        if ($("#thesisName").val() == "无"){
+            Feng.error("该成员无论文可供下载！");
+        } else {
+            downloadThesisWord(thesisId);
+        }
+
     });
 
     /**
      * 取消
      */
     $('#cancel').click(function () {
-        window.location.href = window.location.href = Feng.ctxPath + '/meetMember';
+        //window.location.href = Feng.ctxPath + '/meetMember';
+        admin.closeThisDialog();
     });
 
     /**
      * 取消
      */
     $('#cancelGuest').click(function () {
-        window.location.href = window.location.href = Feng.ctxPath + '/meetMember';
+        //window.location.href = Feng.ctxPath + '/meetMember';
+        admin.closeThisDialog();
     });
 
     function downloadThesis(thesisId){
@@ -297,6 +314,15 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         form.attr("target","_blank");
         form.attr("method","post");
         form.attr("action",Feng.ctxPath + "/meetMember/downloadThesis?thesisId=" + thesisId);    // 此处填写文件下载提交路径
+        $("body").append(form);    // 将表单放置在web中
+        form.submit();
+    }
+    function downloadThesisWord(thesisId){
+        var form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        form.attr("target","_blank");
+        form.attr("method","post");
+        form.attr("action",Feng.ctxPath + "/meetMember/downloadThesisWord?thesisId=" + thesisId);    // 此处填写文件下载提交路径
         $("body").append(form);    // 将表单放置在web中
         form.submit();
     }
@@ -314,7 +340,9 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }
         let ajax = new $ax(Feng.ctxPath + "/meetMember/adminEditItem", function (data) {
             Feng.success("更新成功！");
-            window.location.href = Feng.ctxPath + '/meetMember';
+            //window.location.href = Feng.ctxPath + '/meetMember';
+            parent.location.reload();
+            admin.closeThisDialog();
         }, function (data) {
             Feng.error("更新失败！" + data.responseJSON.message)
         });

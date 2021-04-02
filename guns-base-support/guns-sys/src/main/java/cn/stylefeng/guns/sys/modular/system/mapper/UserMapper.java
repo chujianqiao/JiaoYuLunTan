@@ -42,6 +42,13 @@ public interface UserMapper extends BaseMapper<User> {
                                           @Param("beginTime") String beginTime,
                                           @Param("endTime") String endTime,
                                           @Param("deptId") Long deptId);
+    Page<Map<String, Object>> selectUsersRole(@Param("page") Page page,
+                                          @Param("dataScope") DataScope dataScope,
+                                          @Param("name") String name,
+                                          @Param("beginTime") String beginTime,
+                                          @Param("endTime") String endTime,
+                                          @Param("deptId") Long deptId,
+                                          @Param("roleId") Long roleId);
 
     /**
      * 根据条件查询用户列表（根据角色）

@@ -292,10 +292,17 @@ public class MeetMemberController extends BaseController {
         meetParam.setRealTheNum(realTheNum);
         this.meetService.update(meetParam);
         MeetMember meetMember = meetMemberService.getById(meetMemberParam.getMemberId());
-        ThesisParam thesisParam = new ThesisParam();
-        thesisParam.setThesisId(meetMember.getThesisId());
-        thesisParam.setReviewResult(2);
-        this.thesisService.update(thesisParam);
+
+        if (meetMember.getThesisId() != null){
+            Thesis thesis = thesisService.getById(meetMember.getThesisId());
+            if (thesis != null){
+                ThesisParam thesisParam = new ThesisParam();
+                thesisParam.setThesisId(meetMember.getThesisId());
+                thesisParam.setReviewResult(2);
+                this.thesisService.update(thesisParam);
+            }
+        }
+
         return ResponseData.success();
     }
 
@@ -509,6 +516,8 @@ public class MeetMemberController extends BaseController {
                 thesisName = "无";
             }
             map.put("thesisName",thesisName);
+        }else {
+            map.put("thesisName","无");
         }
 
         Date date = new Date(Long.parseLong(map.get("regTime").toString()));
@@ -740,6 +749,9 @@ public class MeetMemberController extends BaseController {
             meetMemberParam.setMeetId(null);
         }
 
+        if (roleId.equals("5")){
+            listStatus = "";
+        }
         Page<Map<String, Object>> members = this.meetMemberService.findPageWrap(meetMemberParam,userIdList,listStatus);
         //List<Map<String, Object>> memberList = members.getRecords();
         //根据角色进行筛选
@@ -838,7 +850,8 @@ public class MeetMemberController extends BaseController {
     public ResponseData upload(@RequestPart("file") MultipartFile file) {
 
         String path = uploadFolder;
-
+        String fileName = file.getOriginalFilename();
+        String fileType = fileName.substring(fileName.lastIndexOf("."));
         UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
         String fileId = uploadResult.getFileId();
         /*if (fileId!=null&&!fileId.equals("")){
@@ -851,7 +864,7 @@ public class MeetMemberController extends BaseController {
         HashMap<String, Object> map = new HashMap<>();
         map.put("fileId", fileId);
         map.put("path",uploadResult.getFileSavePath());
-
+        map.put("type",fileType);
         return ResponseData.success(0, "上传成功", map);
     }
 

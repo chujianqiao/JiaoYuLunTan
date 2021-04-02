@@ -93,7 +93,7 @@ public class MenuController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 5:53 PM
      */
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @RequestMapping(value = "/menu_edit")
     public String menuEdit(@RequestParam Long menuId) {
         if (ToolUtil.isEmpty(menuId)) {
@@ -113,7 +113,7 @@ public class MenuController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 5:53 PM
      */
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @RequestMapping(value = "/edit")
     @BussinessLog(value = "修改菜单", key = "name", dict = MenuDict.class)
     @ResponseBody
@@ -134,7 +134,7 @@ public class MenuController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 5:53 PM
      */
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(@RequestParam(required = false) String menuName,
@@ -151,7 +151,7 @@ public class MenuController extends BaseController {
      * @author fengshuonan
      * @Date 2019年2月23日22:01:47
      */
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @RequestMapping(value = "/listTree")
     @ResponseBody
     public Object listTree(@RequestParam(required = false) String menuName,
@@ -170,7 +170,7 @@ public class MenuController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 5:53 PM
      */
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @RequestMapping(value = "/add")
     @BussinessLog(value = "菜单新增", key = "name", dict = MenuDict.class)
     @ResponseBody
@@ -185,7 +185,7 @@ public class MenuController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 5:53 PM
      */
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @RequestMapping(value = "/remove")
     @BussinessLog(value = "删除菜单", key = "menuId", dict = DeleteDict.class)
     @ResponseBody

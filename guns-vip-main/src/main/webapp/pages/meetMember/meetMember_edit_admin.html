@@ -8,53 +8,54 @@
                 <div class="layui-form-item layui-row">
                     <input name="memberId" type="hidden"/>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">姓名<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">姓名</label>
                         <div class="layui-input-block">
-                            <input id="name" name="name" placeholder="" type="text" class="layui-input" />
+                            <input id="name" name="name" disabled placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">所属省份<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">所属省份</label>
                         <div class="layui-input-block">
-                            <select name="province" id="selProvince" lay-filter="Province" lay-verify="required"></select>
+                            <select name="province" id="selProvince" lay-filter="Province" ></select>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">所属城市<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">所属城市</label>
                         <div class="layui-input-block">
-                            <select name="city" id="selCity" lay-verify="required"></select>
+                            <select name="city" id="selCity" ></select>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">所在单位<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">所在单位</label>
                         <div class="layui-input-block">
                             <input id="workUnit" name="workUnit" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">职务/职称<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">职务/职称</label>
                         <div class="layui-input-block">
                             <input id="post" name="post" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12 bigMeetItem">
                         <div class="layui-inline layui-col-md12">
-                            <label class="layui-form-label">参会论坛<span style="color: red;">*</span></label>
+                            <label class="layui-form-label">参会论坛</label>
                             <div class="layui-input-block">
                                 <select id="ownForumid" name="ownForumid" lay-verify="" lay-search></select>
                             </div>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12 bigMeetItem">
-                        <label class="layui-form-label">参会论文<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">参会论文</label>
                         <div class="layui-input-block">
                             <input id="thesisId" name="thesisId" type="hidden"/>
-                            <input id="thesisName" disabled="disabled" name="thesisName" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
-                            <button id="btnDownload" class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;下载论文附件&emsp;</button>
+                            <input id="thesisName" disabled="disabled" name="thesisName" placeholder="" type="text" class="layui-input" />
+                            <button id="btnDownload" class="layui-btn layui-btn-xs" lay-filter="btnDownload" lay-submit>&emsp;下载论文PDF附件&emsp;</button>
+                            <button id="btnWordDownload" class="layui-btn layui-btn-xs" lay-filter="btnWordDownload" lay-submit>&emsp;下载论文Word附件&emsp;</button>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12 bigMeetItem">
-                        <label class="layui-form-label">是否申请发言<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">是否申请发言</label>
                         <div class="layui-input-block">
                             <input type="radio" name="speak" value="1" title="是" />
                             <input type="radio" name="speak" value="0" title="否" />
@@ -68,20 +69,20 @@
                         <!--</div>-->
                     <!--</div>-->
                     <div class="layui-inline layui-col-md12 bigMeetItem">
-                        <label class="layui-form-label">注册时间<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">注册时间</label>
                         <div class="layui-input-block">
-                            <input id="regTime" name="regTime" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="regTime" name="regTime" disabled="disabled" placeholder="" type="text" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12 bigMeetItem">
-                        <label class="layui-form-label">是否缴费<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">是否缴费</label>
                         <div class="layui-input-block">
                             <input type="radio" name="isPay" value="1" title="是" disabled="disabled"/>
                             <input type="radio" name="isPay" value="0" title="否" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">排序权重<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">排序权重</label>
                         <div class="layui-input-block">
                             <input id="sort" name="sort" placeholder="输入排序权重，例如 1.1，2.2 等" type="text" class="layui-input" />
                         </div>

@@ -305,7 +305,7 @@ public class UserMgrController extends BaseController {
      */
     @Permission
     @RequestMapping("/role_assign")
-    public String roleAssign(@RequestParam Long userId, Model model) {
+    public String roleAssign(@RequestParam String userId, Model model) {
         model.addAttribute("userId", userId);
         return PREFIX + "user_roleassign.html";
     }
@@ -407,7 +407,8 @@ public class UserMgrController extends BaseController {
     @ResponseBody
     public Object list(@RequestParam(required = false) String name,
                        @RequestParam(required = false) String timeLimit,
-                       @RequestParam(required = false) Long deptId) {
+                       @RequestParam(required = false) Long deptId,
+                       @RequestParam(required = false) Long roleId) {
 
         //拼接查询条件
         String beginTime = "";
@@ -420,7 +421,7 @@ public class UserMgrController extends BaseController {
         }
 
         if (LoginContextHolder.getContext().isAdmin()) {
-            Page<Map<String, Object>> users = userService.selectUsers(null, name, beginTime, endTime, deptId);
+            Page<Map<String, Object>> users = userService.selectUsersRole(null, name, beginTime, endTime, deptId, roleId);
             Page wrapped = new UserWrapper(users).wrap();
             return LayuiPageFactory.createPageInfo(wrapped);
         } else {
@@ -562,7 +563,7 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/reset")
     @BussinessLog(value = "重置管理员密码", key = "userId", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData reset(@RequestParam Long userId) {
         if (ToolUtil.isEmpty(userId)) {
@@ -584,7 +585,7 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/freeze")
     @BussinessLog(value = "冻结用户", key = "userId", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData freeze(@RequestParam Long userId) {
         if (ToolUtil.isEmpty(userId)) {
@@ -607,7 +608,7 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/unfreeze")
     @BussinessLog(value = "解除冻结用户", key = "userId", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData unfreeze(@RequestParam Long userId) {
         if (ToolUtil.isEmpty(userId)) {
@@ -626,20 +627,22 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/setRole")
     @BussinessLog(value = "分配角色", key = "userId,roleIds", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
-    public ResponseData setRole(@RequestParam("userId") Long userId,
+    public ResponseData setRole(@RequestParam("userId") String userId,
                                 @RequestParam("roleIds") @NotBlank String roleIds) {
-        //不能修改超级管理员
-        if (userId.equals(Const.ADMIN_ID)) {
-            throw new ServiceException(BizExceptionEnum.CANT_CHANGE_ADMIN);
+        String userIdArr[] = userId.split(";");
+        for (int i = 0;i < userIdArr.length;i++){
+            //不能修改超级管理员
+            if (Long.parseLong(userIdArr[i]) == Const.ADMIN_ID) {
+                throw new ServiceException(BizExceptionEnum.CANT_CHANGE_ADMIN);
+            }
         }
-        this.userService.assertAuth(userId);
-        this.userService.setRoles(userId, roleIds);
-        String[] roleArr = roleIds.split(",");
-        if(Arrays.asList(roleArr).contains("4")){
+        for (int j = 0;j < userIdArr.length;j++){
+            this.userService.assertAuth(Long.parseLong(userIdArr[j]));
+            this.userService.setRoles(Long.parseLong(userIdArr[j]), roleIds);
+        }
 
-        }
         return SUCCESS_TIP;
     }
 

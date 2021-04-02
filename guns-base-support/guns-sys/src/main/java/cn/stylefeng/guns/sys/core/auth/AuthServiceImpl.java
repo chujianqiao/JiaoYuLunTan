@@ -116,7 +116,18 @@ public class AuthServiceImpl implements AuthService {
             }else {
                 userMapper.editUserByWrong(user.getUserId(),status,wrongTimes);
             }
-            throw new AuthException(AuthExceptionEnum.USERNAME_PWD_ERROR);
+            if (wrongTimes == 1){
+                throw new AuthException(AuthExceptionEnum.USERNAME_PWD_ERROR1);
+            }else if (wrongTimes == 2){
+                throw new AuthException(AuthExceptionEnum.USERNAME_PWD_ERROR2);
+            }else if (wrongTimes == 3){
+                throw new AuthException(AuthExceptionEnum.USERNAME_PWD_ERROR3);
+            }else if (wrongTimes == 4){
+                throw new AuthException(AuthExceptionEnum.USERNAME_PWD_ERROR4);
+            }else {
+                throw new AuthException(AuthExceptionEnum.USERNAME_PWD_ERROR);
+            }
+
         }
 
         return login(username,request);

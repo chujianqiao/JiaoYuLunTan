@@ -160,7 +160,7 @@ public class AnswerController extends BaseController {
      */
     @RequestMapping("/freeze")
     @BussinessLog(value = "冻结", key = "answerId", dict = AnswerDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData freeze(@RequestParam Long answerId) {
         if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(answerId)) {
@@ -178,7 +178,7 @@ public class AnswerController extends BaseController {
      */
     @RequestMapping("/unfreeze")
     @BussinessLog(value = "解除冻结", key = "answerId", dict = AnswerDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData unfreeze(@RequestParam Long answerId) {
         if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(answerId)) {

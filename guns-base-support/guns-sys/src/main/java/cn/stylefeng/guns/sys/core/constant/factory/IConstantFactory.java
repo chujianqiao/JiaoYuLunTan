@@ -60,6 +60,11 @@ public interface IConstantFactory {
     String getSingleRoleTip(Long roleId);
 
     /**
+     * 通过角色id获取角色是否是管理员
+     */
+    Integer getSingleRole(Long roleId);
+
+    /**
      * 获取部门名称
      */
     String getDeptName(Long deptId);

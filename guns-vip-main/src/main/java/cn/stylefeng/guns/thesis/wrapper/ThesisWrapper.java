@@ -77,10 +77,10 @@ public class ThesisWrapper extends BaseControllerWrapper {
 
 		Object statusObj = map.get("status");
 		Object passObj = map.get("reviewResult");
+		Map passMap = TransTypeUtil.getIsPass();
 		if(statusObj != null){
 			if (!statusObj.toString().equals("")){
 				if (passObj != null){
-					Map passMap = TransTypeUtil.getIsPass();
 					String isPass = passMap.get(passObj).toString();
 					if (isPass.equals("不同意参会")){
 						map.put("status",isPass);
@@ -92,7 +92,6 @@ public class ThesisWrapper extends BaseControllerWrapper {
 				}
 			}else {
 				if(passObj != null){
-					Map passMap = TransTypeUtil.getIsPass();
 					String isPass = passMap.get(passObj).toString();
 					map.put("status",isPass);
 				}else {
@@ -101,7 +100,6 @@ public class ThesisWrapper extends BaseControllerWrapper {
 			}
 		}else {
 			if(passObj != null){
-				Map passMap = TransTypeUtil.getIsPass();
 				String isPass = passMap.get(passObj).toString();
 				map.put("status",isPass);
 			}else {
@@ -188,7 +186,7 @@ public class ThesisWrapper extends BaseControllerWrapper {
 				map.put("firstStatus","未评审");
 			}
 		}
-		map.put("finalResult",map.get("finalResult"));
+
 		//复评状态
 		middleParam.setReviewSort(2);
 		List<ThesisReviewMiddleResult> midResAgain = this.thesisReviewMiddleService.findListBySpec(middleParam);
@@ -226,20 +224,6 @@ public class ThesisWrapper extends BaseControllerWrapper {
 			map.put("scoreStr",scoreStr);
 		}
 
-
-		if (firstName.equals("")){
-			if(passObj != null){
-				Map passMap = TransTypeUtil.getIsPass();
-				String isPass = passMap.get(passObj).toString();
-				if (isPass.equals("已取消参会")){
-					map.put("status",isPass);
-				}else {
-					map.put("status","未分配");
-				}
-			}else {
-				map.put("status","未分配");
-			}
-		}
 		map.put("firstName",firstName);
 		map.put("againName",againName);
 		if (againName == ""){
@@ -249,9 +233,54 @@ public class ThesisWrapper extends BaseControllerWrapper {
 		map.put("userName",nameBuilder.toString());
 		map.put("unitsName",unitsName);
 		Object meetId = map.get("meetId");
+		Meet meet = new Meet();
 		if (meetId != null){
-			Meet meet = meetService.getById(Long.parseLong(meetId.toString()));
+			meet = meetService.getById(Long.parseLong(meetId.toString()));
 			map.put("meetName",meet.getMeetName());
 		}
+
+		Object finalResult = map.get("finalResult");
+		if (finalResult != null){
+			map.put("finalResult",map.get("finalResult"));
+			if (Integer.parseInt(finalResult.toString()) == 2){
+
+			}else {
+				if (firstName.equals("")){
+					if(passObj != null){
+						String isPass = passMap.get(passObj).toString();
+						if (isPass.equals("已取消参会")){
+							map.put("status",isPass);
+						}else {
+							map.put("status","未分配");
+						}
+					}else {
+						map.put("status","未分配");
+					}
+				}
+			}
+		}
+
+		if (meet == null){
+			map.put("meetTimeStatusStr","无会议");
+		}else {
+			long nowDate = new Date().getTime();
+			long joinBegTime = meet.getJoinBegTime().getTime();
+			long joinEndTime = meet.getJoinEndTime().getTime();
+			long beginTime = meet.getBeginTime().getTime();
+			long endTime = meet.getEndTime().getTime();
+
+			if (nowDate <= joinEndTime && nowDate > joinBegTime){
+				map.put("meetTimeStatusStr","报名中");
+			} else if (nowDate <= endTime && nowDate >= beginTime){
+				map.put("meetTimeStatusStr","进行中");
+			} else if (nowDate > endTime){
+				map.put("meetTimeStatusStr","已结束");
+			} else if (nowDate > joinEndTime && nowDate < beginTime){
+				map.put("meetTimeStatusStr","报名结束");
+			} else {
+				map.put("meetTimeStatusStr","未开始");
+			}
+		}
+
 	}
 }

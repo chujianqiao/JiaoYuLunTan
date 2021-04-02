@@ -278,14 +278,17 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
      * 关闭
      */
     $('#closeAdmin').click(function () {
-        window.location.href = window.location.href = Feng.ctxPath + '/meetMember';
+        //window.location.href = Feng.ctxPath + '/meetMember';
+        admin.closeThisDialog();
     });
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/reviewMajor/adminEditItem", function (data) {
             Feng.success("更新成功！");
-            window.location.href = Feng.ctxPath + '/meetMember';
+            parent.location.reload();
+            admin.closeThisDialog();
+            //window.location.href = Feng.ctxPath + '/meetMember';
         }, function (data) {
             Feng.error("更新失败！" + data.responseJSON.message)
         });

@@ -107,5 +107,14 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects','upload'], fun
         $("body").append(form);    // 将表单放置在web中
         form.submit();
     });
+    $('#downloadBtnWord').click(function(){
+        var form=$("<form>");    // 定义一个form表单
+        form.attr("style","display:none");
+        // form.attr("target","_blank");
+        form.attr("method","post");
+        form.attr("action",Feng.ctxPath + "/meetMember/downloadThesisWord?thesisId=" + Feng.getUrlParam("thesisId"));    // 此处填写文件下载提交路径
+        $("body").append(form);    // 将表单放置在web中
+        form.submit();
+    });
 
 });

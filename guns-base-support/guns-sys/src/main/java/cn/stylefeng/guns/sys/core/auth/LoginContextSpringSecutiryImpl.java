@@ -86,8 +86,8 @@ public class LoginContextSpringSecutiryImpl implements LoginContext {
         List<Long> roleList = getUser().getRoleList();
         if(roleList != null){
             for (Long integer : roleList) {
-                String singleRoleTip = ConstantFactory.me().getSingleRoleTip(integer);
-                if (singleRoleTip.equals(Const.ADMIN_NAME)) {
+                int singleRoleTip = ConstantFactory.me().getSingleRole(integer);
+                if (singleRoleTip == 1) {
                     return true;
                 }
             }

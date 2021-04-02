@@ -13,7 +13,10 @@ import cn.stylefeng.guns.expert.entity.ReviewMajor;
 import cn.stylefeng.guns.expert.model.params.ReviewMajorParam;
 import cn.stylefeng.guns.expert.service.ReviewMajorService;
 import cn.stylefeng.guns.expert.wrapper.ReviewMajorWrapper;
+import cn.stylefeng.guns.meet.entity.Meet;
+import cn.stylefeng.guns.meet.service.MeetService;
 import cn.stylefeng.guns.meetRegister.model.params.MeetMemberParam;
+import cn.stylefeng.guns.meetRegister.model.result.MeetMemberResult;
 import cn.stylefeng.guns.meetRegister.service.MeetMemberService;
 import cn.stylefeng.guns.reviewunit.model.params.ReviewUnitParam;
 import cn.stylefeng.guns.sys.core.constant.Const;
@@ -81,6 +84,9 @@ public class ReviewMajorController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MeetService meetService;
 
     @Autowired
     private ExcelTool excelTool;
@@ -169,6 +175,27 @@ public class ReviewMajorController extends BaseController {
             reviewMajorParam.setReviewCount(0);
             reviewMajorParam.setRefuseCount(0);
             this.reviewMajorService.add(reviewMajorParam);
+        }
+        return ResponseData.success();
+    }
+
+    @RequestMapping("/addByRole")
+    @ResponseBody
+    public ResponseData addByRole(String userId) {
+        String userIdArr[] = userId.split(";");
+        for (int i = 0;i < userIdArr.length;i++){
+            ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
+            ReviewMajor reviewMajor = this.reviewMajorService.getById(Long.parseLong(userIdArr[i]));
+            if(reviewMajor == null){
+                reviewMajorParam.setReviewId(Long.parseLong(userIdArr[i]));
+                reviewMajorParam.setApplyTime(new Date());
+                reviewMajorParam.setApplyFrom("非邀请");
+                reviewMajorParam.setCheckStatus(ManagerStatus.OK.getCode());
+                reviewMajorParam.setThesisCount(0);
+                reviewMajorParam.setReviewCount(0);
+                reviewMajorParam.setRefuseCount(0);
+                this.reviewMajorService.add(reviewMajorParam);
+            }
         }
         return ResponseData.success();
     }
@@ -293,6 +320,19 @@ public class ReviewMajorController extends BaseController {
         this.reviewMajorService.delete(reviewMajorParam);
         return ResponseData.success();
     }
+    @RequestMapping("/deleteByRole")
+    @ResponseBody
+    @BussinessLog(value = "删除", key = "reviewId", dict = ReviewMajorDict.class)
+    public ResponseData deleteByRole(String userId) {
+        String userIdArr[] = userId.split(";");
+        ReviewMajorParam reviewMajorParam = new ReviewMajorParam();
+        for (int i = 0;i < userIdArr.length;i++){
+            reviewMajorParam.setReviewId(Long.parseLong(userIdArr[i]));
+            this.reviewMajorService.delete(reviewMajorParam);
+        }
+
+        return ResponseData.success();
+    }
 
     /**
      * 管理员删除接口
@@ -389,10 +429,18 @@ public class ReviewMajorController extends BaseController {
     @ResponseBody
     public ResponseData adminDetail(ReviewMajorParam reviewMajorParam) {
         ReviewMajor detail = this.reviewMajorService.getById(reviewMajorParam.getReviewId());
-        Long domainObj = Long.parseLong(detail.getBelongDomain());
+        String belongDomains = "";
         String belongDomainStr = "";
-        ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
-        detail.setBelongDomain(thesisDomainResult.getDomainName());
+        if (detail.getBelongDomain() != null && detail.getBelongDomain() != ""){
+            belongDomains = detail.getBelongDomain();
+            String belongDomain[] = belongDomains.split(";");
+            for (int i = 0;i < belongDomain.length;i++){
+                Long domainObj = Long.parseLong(belongDomain[i]);
+                ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(domainObj);
+                belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + ";";
+            }
+        }
+        detail.setBelongDomain(belongDomainStr);
 
         //类转Map
         Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
@@ -505,6 +553,9 @@ public class ReviewMajorController extends BaseController {
                     //新增的用户
                     UserDto user = new UserDto();
                     long userId = ToolUtil.getNum19();
+                    while (userId == 0){
+                        userId = ToolUtil.getNum19();
+                    }
                     user.setUserId(userId);
                     user.setName(dataCols.get(0));
                     user.setAccount(dataCols.get(0));
@@ -532,7 +583,38 @@ public class ReviewMajorController extends BaseController {
 //        return ResponseData.success(0, "导入成功", "");
     }
 
+    @RequestMapping("/addGuest")
+    @ResponseBody
+    public ResponseData addGuest(String userId) {
+        String userIdArr[] = userId.split(";");
+        ResponseData responseData = new ResponseData();
+        Meet meet = meetService.getByStatus(1);
+        if (meet == null){
+            responseData.setMessage("null");
+        }else {
+            MeetMemberParam meetMemberParam = new MeetMemberParam();
+            meetMemberParam.setRegTime(new Date());
+            meetMemberParam.setSpeak(1);
+            meetMemberParam.setMeetId(meet.getMeetId());
+            meetMemberParam.setThesisId(0l);
+            meetMemberParam.setOwnForumid(0l);
+            for (int i = 0;i < userIdArr.length;i++){
+                User user = userService.getById(Long.parseLong(userIdArr[i]));
+                meetMemberParam.setUserId(Long.parseLong(userIdArr[i]));
+                meetMemberParam.setRoleId(user.getRoleId());
+                List<MeetMemberResult> list = meetMemberService.customListIfExist(meet.getMeetId(),Long.parseLong(userIdArr[i]));
+                if (list.size() > 0){
+                    meetMemberParam.setMemberId(list.get(0).getMemberId());
+                    meetMemberService.update(meetMemberParam);
+                }else {
+                    meetMemberService.add(meetMemberParam);
+                }
+            }
+            responseData.setMessage("success");
+        }
 
+        return responseData;
+    }
 
     @RequestMapping("/addAccount")
     @ResponseBody
@@ -564,6 +646,9 @@ public class ReviewMajorController extends BaseController {
         String password = id.toString();
         log.info("password---" + password);*/
         long uid = ToolUtil.getNum19();
+        while (uid == 0){
+            uid = ToolUtil.getNum19();
+        }
         user.setUserId(uid);
         //user.setAccount(user.getPhone());
         //user.setPassword("Nies2020");
@@ -577,6 +662,7 @@ public class ReviewMajorController extends BaseController {
             meetMemberParam.setSpeak(1);
             meetMemberParam.setMeetId(meetId);
             meetMemberParam.setThesisId(0l);
+            meetMemberParam.setRoleId("5");
             if (joinType == 0){
                 meetMemberParam.setOwnForumid(0l);
             }else {
@@ -612,7 +698,7 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/freeze")
     @BussinessLog(value = "冻结专家", key = "reviewId", dict = ReviewMajorDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData freeze(@RequestParam Long reviewId) {
         if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(reviewId)) {
@@ -630,7 +716,7 @@ public class ReviewMajorController extends BaseController {
      */
     @RequestMapping("/unfreeze")
     @BussinessLog(value = "解除冻结专家", key = "reviewId", dict = ReviewMajorDict.class)
-    @Permission(Const.ADMIN_NAME)
+    //@Permission(Const.ADMIN_NAME)
     @ResponseBody
     public ResponseData unfreeze(@RequestParam Long reviewId) {
         if (cn.stylefeng.roses.core.util.ToolUtil.isEmpty(reviewId)) {

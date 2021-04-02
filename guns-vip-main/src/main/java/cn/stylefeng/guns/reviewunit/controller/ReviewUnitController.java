@@ -279,6 +279,9 @@ public class ReviewUnitController extends BaseController {
                     user.setAccount(dataCols.get(0));
                     user.setPassword("111111");
                     long userId = ToolUtil.getNum19();
+                    while (userId == 0){
+                        userId = ToolUtil.getNum19();
+                    }
                     user.setUserId(userId);
                     ReviewUnitParam reviewUnitParam = new ReviewUnitParam();
 

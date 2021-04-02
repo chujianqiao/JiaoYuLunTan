@@ -1,6 +1,9 @@
 $(function () {
     var countries = [
         {
+            "code": "",
+            "name": ""
+        }, {
             "code": "AF",
             "name": "阿富汗 | Afghanistan"
         }, {
