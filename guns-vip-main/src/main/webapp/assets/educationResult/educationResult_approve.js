@@ -228,7 +228,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         return false;
     });
     form.on('submit(adminSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/educationResult/editItem", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/educationResult/approveItem", function (data) {
             Feng.success("评审成功！");
             window.location.href = Feng.ctxPath + '/educationResult';
         }, function (data) {

@@ -1,7 +1,16 @@
 @layout("/common/_container.html",{js:["/assets/meetMember/meetMember.js"]}){
 <head>
-    <title>会议注册</title>
+    <title>${lang.get("FIELD_MeetRegistration","会议注册")}</title>
 </head>
+<style>
+    .layui-btn-xs{
+        width: 60px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+</style>
 <div class="page">
 <!-- 头部 -->
 @include("/common/person_header.html"){}
@@ -27,8 +36,8 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-inlineMo">
-                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                <button id="btnCreate" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>会议注册</button>
+                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get("FIELD_Search","搜索")}</button>
+                                <button id="btnCreate" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>${lang.get("FIELD_MeetRegistration","会议注册")}</button>
                                 <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
                                 <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
                             </div>

@@ -12,9 +12,21 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
     var MeetMember = {
         tableId: "meetMemberTable"
     };
-
+    getUserTranslationAjax();
+    function getUserTranslationAjax() {
+        $.ajax({
+            type: 'post',
+            url: Feng.ctxPath + "/translation/getUserTranslation",
+            success: function (response) {
+                layui.data('system', {
+                    key: "lang",
+                    value: response.data
+                });
+            }
+        });
+    }
     meetSelectOption();
-
+    var langs = layui.data('system').lang;
     /**
      * 初始化表格的列
      */
@@ -24,14 +36,14 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
             {field: 'memberId', hide: true, title: '主键'},
             // {field: 'userId', sort: true, title: '参会人员ID'},
             // {field: 'thesisId', sort: true, title: '参会论文ID'},
-            {field: 'meetName', sort: true,minWidth: 250, title: '会议名称'},
-            {field: 'memberName', sort: true, title: '参会人姓名'},
+            {field: 'meetName', sort: true,minWidth: 250, title: langs.FIELD_ConferenceName},
+            {field: 'memberName', sort: true, title: langs.FIELD_NameParticipants},
             //{field: 'unitName', sort: true, title: '所在单位'},
             //{field: 'userPost', sort: true, title: '职务/职称'},
             //{field: 'direct', sort: true, title: '研究方向'},
-            {field: 'thesisName', sort: true, title: '参会论文'},
-            {field: 'meetTimeStatusStr', sort: true, title: '会议状态'},
-            {field: 'meetStatusStr', sort: true, title: '申请状态'},
+            {field: 'thesisName', sort: true, title: langs.FIELD_PSTC},
+            {field: 'meetTimeStatusStr', sort: true, title: langs.FIELD_ConferenceStatus},
+            {field: 'meetStatusStr', sort: true, title: langs.FIELD_ApplicationStatus},
             // {field: 'forumName', sort: true, title: '自设论坛'},
 
             // {field: 'speak', sort: true, title: '是否申请发言'},
@@ -39,71 +51,71 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
             // {field: 'ownForumid', sort: true, title: '自设论坛ID'},
             // {field: 'regTime', sort: true, title: '注册时间'},
             // {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180},
-            {align: 'center', minWidth: 300, title: '操作', templet: function(data){
+            {align: 'center', minWidth: 300, title: langs.FIELD_Operate, templet: function(data){
                 if (data.meetTimeStatusStr == "已结束" || data.meetPubStatus == "0"){
                     if (data.meetStatusStr == "已通过") {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' target='_blank' lay-event='meetFile'>会议手册</a><a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='fileDownload'>材料下载</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' title='" + langs.FIELD_ConferenceManual + "' target='_blank' lay-event='meetFile'>" + langs.FIELD_ConferenceManual + "</a><a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='fileDownload' title='" + langs.FIELD_DocumentsDownload + "'>" + langs.FIELD_DocumentsDownload + "</a>";
                     }else {
                         if (data.thesisName == null || data.thesisName == "" || data.thesisName == "无"){
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' target='_blank' lay-event='meetFile'>会议手册</a><a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='fileDownload'>材料下载</a>   ";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' target='_blank' lay-event='meetFile' title='" + langs.FIELD_ConferenceManual + "'>" + langs.FIELD_ConferenceManual + "</a><a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='fileDownload' title='" + langs.FIELD_DocumentsDownload + "'>" + langs.FIELD_DocumentsDownload + "</a>   ";
                         }else {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-primary layui-btn-xs' target='_blank' lay-event='meetFile'>会议手册</a><a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='fileDownload'>材料下载</a>   ";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_PapaerDetails + "'>" + langs.FIELD_PapaerDetails + "</a><a class='layui-btn layui-btn-primary layui-btn-xs' target='_blank' lay-event='meetFile' title='" + langs.FIELD_ConferenceManual + "'>" + langs.FIELD_ConferenceManual + "</a><a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='fileDownload' title='" + langs.FIELD_DocumentsDownload + "'>" + langs.FIELD_DocumentsDownload + "</a>   ";
                         }
 
                     }
                 } else {
                     if (data.thesisName == null || data.thesisName == "" || data.thesisName == "无"){
                         if (data.meetStatusStr == "评审中") {
-                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                         } else if (data.meetStatusStr == "已取消") {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit' title='" + langs.FIELD_Revise + "'>" + langs.FIELD_Revise + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' title='" + langs.FIELD_Delete + "'>" + langs.FIELD_Delete + "</a>";
                         } else if (data.meetStatusStr == "评审通过") {
-                            return "<a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >缴费</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
+                            return "<a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' title='" + langs.FIELD_Pay + "'>" + langs.FIELD_Pay + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
                         } else if (data.meetStatusStr == "已缴费") {
                             if (data.ownForumid != "" && data.ownForumid != null){
-                                return "<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                                return "<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill' title='" + langs.FIELD_AFAI + "'>" + langs.FIELD_AFAI + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                             } else {
-                                return "<a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                                return "<a class='layui-btn layui-btn-xs' lay-event='forum' title='" + langs.FIELD_SelectConference + "'>" + langs.FIELD_SelectConference + "</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill' title='" + langs.FIELD_AFAI + "'>" + langs.FIELD_AFAI + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                             }
                         } else if (data.meetStatusStr == "已通过") {
-                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                         } else if (data.meetStatusStr == "未通过") {
-                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' title='" + langs.FIELD_Delete + "'>" + langs.FIELD_Delete + "</a>";
                         } else if (data.meetStatusStr == "已申请开票") {
                             if (data.ownForumid != "" && data.ownForumid != null){
-                                return "<a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                                return "<a class='layui-btn layui-btn-xs' lay-event='forum' title='" + langs.FIELD_SeeConference + "'>" + langs.FIELD_SeeConference + "</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill' title='" + langs.FIELD_SIOI + "'>" + langs.FIELD_SIOI + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                             } else {
-                                return "<a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                                return "<a class='layui-btn layui-btn-xs' lay-event='forum' title='" + langs.FIELD_SelectConference + "'>" + langs.FIELD_SelectConference + "</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill' title='" + langs.FIELD_SIOI + "'>" + langs.FIELD_SIOI + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                             }
                         }else {
                             return "";
                         }
                     } else {
                         if (data.meetStatusStr == "评审中") {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_PapaerDetails + "'>" + langs.FIELD_PapaerDetails + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                         } else if (data.meetStatusStr == "已取消") {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit' title='" + langs.FIELD_Revise + "'>" + langs.FIELD_Revise + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' title='" + langs.FIELD_Delete + "'>" + langs.FIELD_Delete + "</a>";
                         } else if (data.meetStatusStr == "评审通过") {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' >缴费</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_PapaerDetails + "'>" + langs.FIELD_PapaerDetails + "</a><a id='payBtn' class='layui-btn layui-btn-normal layui-btn-xs' lay-event='pay' title='" + langs.FIELD_Pay + "'>" + langs.FIELD_Pay + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";/*<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='weiXinPay' >微信缴费</a>*/
                         } else if (data.meetStatusStr == "已缴费") {
                             if (data.ownForumid != "" && data.ownForumid != null){
-                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_PapaerDetails + "'>" + langs.FIELD_PapaerDetails + "</a><a class='layui-btn layui-btn-xs' lay-event='forum' title='" + langs.FIELD_SeeConference + "'>" + langs.FIELD_SeeConference + "</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill' title='" + langs.FIELD_AFAI + "'>" + langs.FIELD_AFAI + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                             } else {
-                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill'>申请开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_PapaerDetails + "'>" + langs.FIELD_PapaerDetails + "</a><a class='layui-btn layui-btn-xs' lay-event='forum' title='" + langs.FIELD_SelectConference + "'>" + langs.FIELD_SelectConference + "</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='addBill' title='" + langs.FIELD_AFAI + "'>" + langs.FIELD_AFAI + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                             }
                         } else if (data.meetStatusStr == "已通过") {
-                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                         } else if (data.meetStatusStr == "未通过") {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_PapaerDetails + "'>" + langs.FIELD_PapaerDetails + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' title='" + langs.FIELD_Delete + "'>" + langs.FIELD_Delete + "</a>";
                         } else if (data.meetStatusStr == "已申请开票") {
                             if (data.ownForumid != "" && data.ownForumid != null){
-                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>查看论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_PapaerDetails + "'>" + langs.FIELD_PapaerDetails + "</a><a class='layui-btn layui-btn-xs' lay-event='forum' title='" + langs.FIELD_SeeConference + "'>" + langs.FIELD_SeeConference + "</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill' title='" + langs.FIELD_SIOI + "'>" + langs.FIELD_SIOI + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                             } else {
-                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a><a class='layui-btn layui-btn-xs' lay-event='forum'>选择论坛</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill'>查看开票</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet'>取消参会</a>";
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_PapaerDetails + "'>" + langs.FIELD_PapaerDetails + "</a><a class='layui-btn layui-btn-xs' lay-event='forum' title='" + langs.FIELD_SelectConference + "'>" + langs.FIELD_SelectConference + "</a><a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='editBill' title='" + langs.FIELD_SIOI + "'>" + langs.FIELD_SIOI + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancelMeet' title='" + langs.FIELD_CancelRegistration + "'>" + langs.FIELD_CancelRegistration + "</a>";
                             }
 
                         }else {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>论文详情</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' title='" + langs.FIELD_PapaerDetails + "' lay-event='detail'>" + langs.FIELD_PapaerDetails + "</a>";
                         }
                     }
                 }
@@ -112,7 +124,8 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
                 }}
         ]];
     };
-    
+
+
     // $(function () {
     //     var payObj = document.getElementById("payBtn");
     //     if(payObj != null){
@@ -387,7 +400,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
                 var data=response.data;
                 var meet = [];
                 meet = data;
-                console.log(meet)
+                //console.log(meet)
 
                 var options;
                 for (var i = 0 ;i < meet.length ;i++){

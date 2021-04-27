@@ -3,7 +3,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>忘记密码</title>
+    <title>${lang.get('FIELD_ForgotPassword','忘记密码')}</title>
     <link href="${ctxPath}/assets/common/images/icon2_11.png" rel="icon">
     <link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
     <link rel="stylesheet" href="${ctxPath}/assets/common/css/common.css" />
@@ -122,11 +122,11 @@
                     <div id="topList2" class="liulist for-cur"></div>
                     <div id="topList3" class="liulist"></div>
                     <div id="topText1" class="liutext"><em>1</em><br/>
-                        <strong>验证身份</strong></div>
+                        <strong>${lang.get('FIELD_Authentication','验证身份')}</strong></div>
                     <div id="topText2" class="liutext for-cur"><em>2</em><br/>
-                        <strong>设置新密码</strong></div>
+                        <strong>${lang.get('FIELD_SetANewPassword','设置新密码')}</strong></div>
                     <div id="topText3" class="liutext"><em>3</em><br/>
-                        <strong>完成</strong></div>
+                        <strong>${lang.get('FIELD_Done','完成')}</strong></div>
                 </div>
             </div>
         </div>
@@ -137,21 +137,21 @@
                     <input name="account" value="${account}" type="hidden"/>
                     <input name="roleId" value="3" type="hidden"/>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">${lang.get("FIELD_PASSWORD","密码")}<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">${lang.get("FIELD_Password","密码")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input name="password" id="password" placeholder="请输入密码" type="password" class="layui-input" lay-verify="required|psw" autocomplete="new-password" required/>
+                            <input name="password" id="password" placeholder="${lang.get('FIELD_PleasePassword','请输入登录密码')}" type="password" class="layui-input" lay-verify="required|psw" autocomplete="new-password" required/>
                             <span id="passwordSpan"></span>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">${lang.get("FIELD_REPEAT_PASSWORD","重复密码")}<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">${lang.get("FIELD_RepeatPassword","重复密码")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input name="rePassword" id="rePassword" placeholder="请输入重复密码" type="password" class="layui-input" autocomplete="new-password" lay-verify="required|repsw" required/>
+                            <input name="rePassword" id="rePassword" placeholder="${lang.get('FIELD_PleaseRepeatPassword','请输入重复密码')}" type="password" class="layui-input" autocomplete="new-password" lay-verify="required|repsw" required/>
                             <span id="rePasswordSpan"></span>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12" style="margin-left: 43%">
-                        <button class="layui-btn layui-bg-gray" disabled="disabled" id="btnSubmit" lay-filter="btnSubmit" style="background-color: rgb(0,172,210);" lay-submit>&emsp;提交&emsp;</button>
+                        <button class="layui-btn layui-bg-gray" disabled="disabled" id="btnSubmit" lay-filter="btnSubmit" style="background-color: rgb(0,172,210);" lay-submit>&emsp;${lang.get("FIELD_Submit","提交")}&emsp;</button>
                     </div>
                 </div>
             </form>

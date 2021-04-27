@@ -85,11 +85,11 @@ public class OwnForumServiceImpl extends ServiceImpl<OwnForumMapper, OwnForum> i
     @Override
     public Page<Map<String, Object>> findPageWrap(OwnForumParam param) {
         Page pageContext = getPageContext();
-        if (param.getForumName()==null){
+        /*if (param.getForumName()==null){
             param.setForumName("%%");
         }else {
             param.setForumName("%" + param.getForumName() + "%");
-        }
+        }*/
 
         Page page = null;
         //LoginUser user = LoginContextHolder.getContext().getUser();

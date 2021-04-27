@@ -1,9 +1,9 @@
 @layout("/common/_container.html",{title:"个人中心",css:["/assets/modular/frame/user_info.css"],js:["/assets/modular/frame/user_info.js"]}){
 <div class="layui-body-header">
-    <span class="layui-body-header-title">${lang.get("MENU_PERSONAL_INFO","个人信息")}</span>
+    <span class="layui-body-header-title">${lang.get("FIELD_PersonalInformation","个人信息")}</span>
     <span class="layui-breadcrumb pull-right">
-        <a href="${ctxPath}/system/console">${lang.get("MENU_INDEX","首页")}</a>
-        <a><cite>${lang.get("MENU_PERSONAL_INFO","个人中心")}</cite></a>
+        <a href="${ctxPath}/system/console">${lang.get("FIELD_Home","首页")}</a>
+        <a><cite>${lang.get("FIELD_Personalcenter","个人中心")}</cite></a>
     </span>
 </div>
 
@@ -66,6 +66,16 @@
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
+                                        <label class="layui-form-label">${lang.get("FIELD_weChat","微信")}:</label>
+                                        <div class="layui-input-block">
+                                            <div class="layui-input-inline">
+                                                <input type="wechatName" id="wechatName" name="wechatName" class="layui-input layui-disabled" placeholder="当前未绑定微信账号" disabled/>
+                                            </div>
+                                            <a id="weChatBand" onclick="weChatBand()" href="#" style="line-height: 36px;">绑定</a>
+                                            <a id="weChatCancelBand" onclick="weChatCancelBand()" href="#" style="line-height: 36px;">解绑</a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label">${lang.get("FIELD_SEX","性别")}:</label>
                                         <div class="layui-input-block">
                                             <input type="radio" name="sex" value="M" title="男">
@@ -75,25 +85,25 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">${lang.get("FIELD_EMAIL","邮箱")}:<span style="color: red;">*</span></label>
                                         <div class="layui-input-block">
-                                            <input type="email" name="email" class="layui-input" lay-verify="required|email" required/>
+                                            <input type="email" name="email" maxlength="40" class="layui-input" lay-verify="required|email" required/>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">${lang.get("FIELD_NAME","姓名")}:<span style="color: red;">*</span></label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="name" class="layui-input" lay-verify="required" required/>
+                                            <input type="text" name="name" maxlength="20" class="layui-input" lay-verify="required" required/>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">${lang.get("FIELD_BIRTHDAY","生日")}:<span style="color: red;">*</span></label>
+                                        <label class="layui-form-label">${lang.get("FIELD_BIRTHDAY","生日")}:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" id="birthday" name="birthday" class="layui-input" lay-verify="required" required/>
+                                            <input type="text" id="birthday" name="birthday" class="layui-input" />
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">${lang.get("FIELD_WORK_UNIT","工作单位")}:<span style="color: red;">*</span></label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="workUnit" class="layui-input" lay-verify="required" required/>
+                                            <input type="text" name="workUnit" maxlength="30" class="layui-input" lay-verify="required" required/>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -110,28 +120,38 @@
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">${lang.get("FIELD_POST","职务")}:<span style="color: red;">*</span></label>
+                                        <label class="layui-form-label">${lang.get("FIELD_POST","职务")}:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="post" class="layui-input" lay-verify="required" required/>
+                                            <input type="text" name="post" maxlength="20" class="layui-input"/>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">${lang.get("FIELD_EDUCATION","学历")}:<span style="color: red;">*</span></label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="education" class="layui-input" lay-verify="required" required/>
+                                            <!--<input type="text" name="education" class="layui-input" lay-verify="required" required/>-->
+                                            <select name="education" lay-verify="required">
+                                                <option value=""></option>
+                                                <option value="专科">专科</option>
+                                                <option value="本科">本科</option>
+                                                <option value="硕士">硕士</option>
+                                                <option value="博士">博士</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">${lang.get("FIELD_DIRECTION","研究方向")}:<span style="color: red;">*</span></label>
+                                        <label class="layui-form-label">${lang.get("FIELD_DIRECTION","研究方向")}:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="direction" class="layui-input" lay-verify="required" required/>
+                                            <input type="text" name="direction" maxlength="30" class="layui-input" />
                                         </div>
                                     </div>
 
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">${lang.get("FIELD_PHONE","手机号")}:<span style="color: red;">*</span></label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="phone" class="layui-input" lay-verify="required|phone" required/>
+                                            <input type="text" name="phone" class="layui-input layui-disabled" lay-verify="required|phone" required/>
+                                        </div>
+                                        <div class="layui-input-block">
+                                            <a onclick="setPhone()" href="#" style="line-height: 36px">修改绑定手机?</a>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -194,4 +214,87 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script>
+
+    function setPhone(){
+        layui.use(['layer', 'element', 'admin', 'index', 'ax'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var admin = layui.admin;
+            var index = layui.index;
+            var $ax = layui.ax;
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            layer.open({
+                id: 'pswForm',
+                type: 2,
+                title: "修改绑定手机",
+                area:["440px","300px"],
+                content: '${ctxPath}/system/user_chPhone'
+            });
+        });
+    }
+    /*var uuid;
+    $(document).ready(function() {
+        //步骤二 ： 页面加载完后ajax请求生成二维码图片
+        $.ajax({
+            type: "post",
+            url: "${ctxPath}/weiXin/getLinkImage",
+            success: function (data) {
+                //存储UUID
+                uuid = data.uuid;
+            }
+        });
+    });*/
+
+    function weChatBand(){
+        layui.use(['layer', 'element', 'admin', 'index', 'ax'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var admin = layui.admin;
+            var index = layui.index;
+            var $ax = layui.ax;
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            layer.open({
+                id: 'pswForm',
+                type: 2,
+                area:["300px","380px"],
+                title: "微信绑定",
+                content: '${ctxPath}/weiXin/weChatBand'
+            });
+        });
+    }
+
+    function weChatCancelBand(){
+        $.ajax({
+            type:'post',
+            url:Feng.ctxPath + "/weiXin/weChatCancelBand" ,
+            success:function(response){
+                var data=response.data;
+                window.location.reload();
+            }
+        })
+    }
+    $(document).ready(function() {
+        if ("${wechatName }" != ""){
+            $("#weChatBand").attr("style","line-height: 36px;display: none");
+            $("#weChatCancelBand").attr("style","line-height: 36px;display: inline-block");
+        }else {
+            $("#weChatCancelBand").attr("style","line-height: 36px;display: none");
+            $("#weChatBand").attr("style","line-height: 36px;display: inline-block");
+        }
+    })
+
+</script>
 @}

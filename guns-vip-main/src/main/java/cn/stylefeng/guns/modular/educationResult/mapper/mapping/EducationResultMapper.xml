@@ -88,10 +88,13 @@
             and meet_id = #{paramCondition.meetId}
         </if>
         <if test="paramCondition.checkStatus == 0">
-            and check_status != 2 and check_status != 3
+            and check_status != 2 and check_status != 3 and result_range is not null
         </if>
         <if test="paramCondition.checkStatus == 1">
             and (check_status = 2 or check_status = 3)
+        </if>
+        <if test="paramCondition.checkStatus == 2">
+            and result_range is null and check_status = 1
         </if>
     </select>
 

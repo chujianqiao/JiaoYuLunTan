@@ -15,17 +15,17 @@
                                 <div class="user-info-head" id="imgHead">
                                     <img id="avatarPreview" src="${avatar}"/>
                                 </div>
-                                <h2 style="padding-top: 20px;">${name}</h2>
+                                <h2 title="${name}" style="padding-top: 20px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${name}</h2>
                                 <p style="padding-top: 8px;">${roleName!} ${deptName!}</p>
                             </div>
                             <div class="layui-text" style="padding-top: 30px;">
                                 <div class="info-list-item">
-                                    <i class="layui-icon layui-icon-notice"></i>
-                                    <p>${email!}</p>
+                                    <i class="pc layui-icon layui-icon-notice"></i>
+                                    <p title="${email!}" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${email!}</p>
                                 </div>
 
                                 <div class="info-list-item">
-                                    <i class="layui-icon layui-icon-cellphone"></i>
+                                    <i class="pc layui-icon layui-icon-cellphone"></i>
                                     <p>${phone!}</p>
                                 </div>
                                 <!--<div class="info-list-item">
@@ -48,9 +48,9 @@
                         <div class="layui-card-body">
                             <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
                                 <ul class="layui-tab-title">
-                                    <li class="layui-this">${lang.get("MENU_BASE_INFO","基本信息")}</li>
-                                    <li id="guestLi" style="display: none">${lang.get("MENU_GUEST_INFO","嘉宾信息")}</li>
-                                    <li id="expertLi" style="display: none">${lang.get("MENU_GUEST_INFO","专家信息")}</li>
+                                    <li class="layui-this">${lang.get("FIELD_BasicInformation","基本信息")}</li>
+                                    <li id="guestLi" style="display: none">${lang.get("FIELD_ParticipantsInfo","嘉宾信息")}</li>
+                                    <li id="expertLi" style="display: none">${lang.get("FIELD_InformationExperts","专家信息")}</li>
                                 </ul>
                                 <div class="layui-tab-content">
                                     <div class="layui-form layui-tab-item layui-show" lay-filter="userInfoForm">
@@ -63,107 +63,108 @@
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_PASSWORD","密码")}:</label>
-                                                <div class="layui-input-inline" style="margin-left: 10px">
+                                                <label class="layui-form-label">${lang.get("FIELD_Password","密码")}:</label>
+                                                <div class="layui-input-inline">
                                                     <input type="text" value="********" class="layui-input layui-disabled" lay-verify="required" disabled/>
                                                 </div>
                                                 <div class="layui-input-block">
-                                                    <a onclick="setPass()" href="#" style="line-height: 36px">修改密码?</a>
+                                                    <a onclick="setPass()" href="#" style="line-height: 36px">${lang.get("FIELD_ChangePassword","修改密码")}?</a>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_weChat","微信")}:</label>
-                                                <div class="layui-input-block">
+                                                <label class="layui-form-label">${lang.get("FIELD_WeChat","微信")}:</label>
+
                                                     <div class="layui-input-inline">
                                                         <input type="wechatName" id="wechatName" name="wechatName" class="layui-input layui-disabled" placeholder="当前未绑定微信账号" disabled/>
                                                     </div>
-                                                    <a id="weChatBand" onclick="weChatBand()" href="#" style="line-height: 36px;">绑定</a>
-                                                    <a id="weChatCancelBand" onclick="weChatCancelBand()" href="#" style="line-height: 36px;">解绑</a>
+                                                <div class="layui-input-block">
+                                                    <a id="weChatBand" onclick="weChatBand()" href="#" style="line-height: 36px;">${lang.get("FIELD_Binding","绑定")}</a>
+                                                    <a id="weChatCancelBand" onclick="weChatCancelBand()" href="#" style="line-height: 36px;">${lang.get("FIELD_Unbinding","解绑")}</a>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_SEX","性别")}:</label>
+                                                <label class="layui-form-label">${lang.get("FIELD_Gender","性别")}:</label>
                                                 <div class="layui-input-block">
                                                     <input type="radio" name="sex" value="M" title="男">
                                                     <input type="radio" name="sex" value="F" title="女">
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_EMAIL","邮箱")}:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_Email","邮箱")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
-                                                    <input type="email" name="email" class="layui-input" lay-verify="required|email" required/>
+                                                    <input type="email" name="email" placeholder="请输入邮箱" maxlength="40" class="layui-input" lay-verify="required|email" required/>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
                                                 <label class="layui-form-label">${lang.get("FIELD_NAME","姓名")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
-                                                    <input type="text" name="name" class="layui-input" lay-verify="required" required/>
+                                                    <input type="text" name="name" placeholder="请输入姓名" maxlength="20" class="layui-input" lay-verify="required" required/>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_BIRTHDAY","生日")}:</label>
+                                                <label class="layui-form-label">${lang.get("FIELD_DateBirth","生日")}:</label>
                                                 <div class="layui-input-block">
-                                                    <input type="text" id="birthday" name="birthday" class="layui-input" />
+                                                    <input type="text" id="birthday" readonly placeholder="请选择生日" name="birthday" class="layui-input" />
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_WORK_UNIT","工作单位")}:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_Organization","工作单位")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
-                                                    <input type="text" name="workUnit" class="layui-input" lay-verify="required" required/>
+                                                    <input type="text" name="workUnit" class="layui-input" maxlength="30" placeholder="请输入工作单位" lay-verify="required" required/>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_TITLE","职称")}:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_Title","职称")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <!--<input type="text" name="title" class="layui-input" lay-verify="required" required/>-->
                                                     <select name="title" lay-verify="required">
                                                         <option value=""></option>
-                                                        <option value="无">无</option>
-                                                        <option value="初级">初级</option>
-                                                        <option value="中级">中级</option>
-                                                        <option value="高级">高级</option>
+                                                        <option value="无">${lang.get("FIELD_None","无")}</option>
+                                                        <option value="初级">${lang.get("FIELD_RATA","初级")}</option>
+                                                        <option value="中级">${lang.get("FIELD_AP","中级")}</option>
+                                                        <option value="高级">${lang.get("FIELD_PAP","高级")}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_POST","职务")}:</label>
+                                                <label class="layui-form-label">${lang.get("FIELD_Position","职务")}:</label>
                                                 <div class="layui-input-block">
-                                                    <input type="text" name="post" class="layui-input"/>
+                                                    <input type="text" name="post" maxlength="20" placeholder="请输入职务" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_EDUCATION","学历")}:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_EducationBackground","学历")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <!--<input type="text" name="education" class="layui-input" lay-verify="required" required/>-->
                                                     <select name="education" lay-verify="required">
                                                         <option value=""></option>
-                                                        <option value="专科">专科</option>
-                                                        <option value="本科">本科</option>
-                                                        <option value="硕士">硕士</option>
-                                                        <option value="博士">博士</option>
+                                                        <option value="专科">${lang.get("FIELD_CollegeDegree","专科")}</option>
+                                                        <option value="本科">${lang.get("FIELD_BachelorDegree","本科")}</option>
+                                                        <option value="硕士">${lang.get("FIELD_MasterDegree","硕士")}</option>
+                                                        <option value="博士">${lang.get("FIELD_DoctoralDegree","博士")}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_DIRECTION","研究方向")}:</label>
+                                                <label class="layui-form-label">${lang.get("FIELD_ResearchFields","研究方向")}:</label>
                                                 <div class="layui-input-block">
-                                                    <input type="text" name="direction" class="layui-input" />
+                                                    <input type="text" name="direction" maxlength="30" placeholder="请输入研究方向" class="layui-input" />
                                                 </div>
                                             </div>
 
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">${lang.get("FIELD_PHONE","手机号")}:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_Mobilephone","手机号")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <input type="text" name="phone" class="layui-input layui-disabled" lay-verify="required|phone" required/>
                                                 </div>
                                                 <div class="layui-input-block">
-                                                    <a onclick="setPhone()" href="#" style="line-height: 36px">修改绑定手机?</a>
+                                                    <a onclick="setPhone()" href="#" style="line-height: 36px">${lang.get("FIELD_CBMN","修改绑定手机")}?</a>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
                                                 <div class="layui-input-block">
                                                     <button class="layui-btn" lay-filter="userInfoSubmit" lay-submit>
-                                                        ${lang.get("BTN_UPDATE_INFO","保存基本信息")}
+                                                        ${lang.get("FIELD_Save","保存基本信息")}
                                                     </button>
                                                 </div>
                                             </div>
@@ -176,13 +177,13 @@
                                             <div class="bd-list-item">
                                                 <div class="bd-list-item-content">
                                                     <div class="layui-inline layui-col-md12">
-                                                        <label class="layui-form-label">上传PPT<span style="color: red;">*</span></label>
+                                                        <label class="layui-form-label">${lang.get("FIELD_UPS","上传PPT")}<span style="color: red;">*</span></label>
                                                         <div class="layui-input-block">
                                                             <input id="pptInputHidden" name="pptInputHidden" type="hidden" class="layui-input"/>
                                                             <input id="pptPath" name="pptPath" type="hidden" class="layui-input"/>
                                                             <input id="pptName" name="pptName" type="hidden" class="layui-input"/>
                                                             <div style="float: left;">
-                                                                <button type="button" class="layui-btn layui-btn-sm" id="pptBtn"><i class="layui-icon"></i>选择文件</button>
+                                                                <button type="button" class="layui-btn layui-btn-sm" id="pptBtn"><i class="layui-icon"></i>${lang.get("FIELD_SelectDocuments","选择文件")}</button>
                                                             </div>
                                                             <div style="float: left;">
                                                                 <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="pptFileNameTip"></span>
@@ -195,13 +196,13 @@
                                             <div class="bd-list-item">
                                                 <div class="bd-list-item-content">
                                                     <div class="layui-inline layui-col-md12">
-                                                        <label class="layui-form-label">上传发言稿<span style="color: red;">*</span></label>
+                                                        <label class="layui-form-label">${lang.get("FIELD_UP","上传发言稿")}<span style="color: red;">*</span></label>
                                                         <div class="layui-input-block">
                                                             <input id="wordInputHidden" name="wordInputHidden" type="hidden" class="layui-input"/>
                                                             <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
                                                             <input id="wordName" name="wordName" type="hidden" class="layui-input"/>
                                                             <div style="float: left;">
-                                                                <button type="button" class="layui-btn layui-btn-sm" id="wordBtn"><i class="layui-icon"></i>选择文件</button>
+                                                                <button type="button" class="layui-btn layui-btn-sm" id="wordBtn"><i class="layui-icon"></i>${lang.get("FIELD_SelectDocuments","选择文件")}</button>
                                                             </div>
                                                             <div style="float: left;">
                                                                 <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordFileNameTip"></span>
@@ -214,7 +215,7 @@
                                             <div class="bd-list-item">
                                                 <div class="bd-list-item-content">
                                                     <div class="layui-inline layui-col-md12">
-                                                        <label class="layui-form-label">嘉宾简介<span style="color: red;">*</span></label>
+                                                        <label class="layui-form-label">${lang.get("FIELD_IOFP","嘉宾简介")}<span style="color: red;">*</span></label>
                                                         <div class="layui-input-block" style="width: 500px;">
                                                             <textarea id="introduction" name="introduction" class="layui-textarea" lay-verify="required" required placeholder="请输入嘉宾简介"></textarea>
                                                         </div>
@@ -224,7 +225,7 @@
                                             <div class="layui-form-item">
                                                 <div class="layui-input-block">
                                                     <button class="layui-btn" lay-filter="guestInfoSubmit" lay-submit>
-                                                        保存嘉宾信息
+                                                        ${lang.get("FIELD_Save","保存嘉宾信息")}
                                                     </button>
                                                 </div>
                                             </div>
@@ -270,7 +271,7 @@
                                     <div class="layui-form layui-tab-item" lay-filter="expertInfoForm">
                                         <div class="layui-form user-info-form" style="max-width: 450px;padding-top: 25px;">
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">证件类型<span style="color: red;">*</span>:</label>
+                                                <label class="layui-form-label">${lang.get("FIELD_IDP","证件类型")}<span style="color: red;">*</span>:</label>
                                                 <div class="layui-input-block">
                                                     <select name="idCardType" lay-verify="required">
                                                         <option value="">请选择</option>
@@ -281,43 +282,43 @@
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">证件号<span style="color: red;">*</span>:</label>
+                                                <label class="layui-form-label">${lang.get("FIELD_IDPN","证件号")}:<span style="color: red;">*</span>:</label>
                                                 <div class="layui-input-block">
                                                     <input type="text" placeholder="请输入证件号" name="idCard" class="layui-input" lay-verify="required" required/>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">开户省份:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_POBA","开户省份")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <select name="accountProvince" id="selProvince" lay-filter="Province" lay-verify="required"></select>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">开户城市:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_COBA","开户城市")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <select name="accountCity" id="selCity" lay-verify="required"></select>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">银行机构:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_NameBank","银行机构")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <input type="text" placeholder="请输入银行机构" name="bank" class="layui-input" lay-verify="required" required/>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">联行号:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_CNAPS","联行号")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <input type="text" placeholder="请输入联行号" name="unionNumber" class="layui-input" lay-verify="required" required/>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">开户行:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_BankDeposit","开户行")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <input type="text" placeholder="请输入开户行" name="accountBank" class="layui-input" lay-verify="required" required/>
                                                 </div>
                                             </div>
                                             <div class="layui-form-item">
-                                                <label class="layui-form-label">个人账号:<span style="color: red;">*</span></label>
+                                                <label class="layui-form-label">${lang.get("FIELD_AccountNumber","个人账号")}:<span style="color: red;">*</span></label>
                                                 <div class="layui-input-block">
                                                     <input type="text" placeholder="请输入个人账号" name="personalAccount" class="layui-input" lay-verify="required" required/>
                                                 </div>
@@ -325,7 +326,7 @@
                                             <div class="layui-form-item">
                                                 <div class="layui-input-block">
                                                     <button class="layui-btn" lay-filter="expertInfoSubmit" lay-submit>
-                                                        保存专家信息
+                                                        ${lang.get("FIELD_Save","保存专家信息")}
                                                     </button>
                                                     </div>
                                                 </div>
@@ -365,7 +366,7 @@
             layer.open({
                 id: 'pswForm',
                 type: 2,
-                title: langs.MENU_CHANGE_PASSWORD,
+                title: langs.FIELD_ChangePassword,
                 area:["300px","350px"],
                 content: '${ctxPath}/system/user_chpwd'
             });

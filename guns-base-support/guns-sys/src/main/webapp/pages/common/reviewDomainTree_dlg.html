@@ -81,15 +81,26 @@
         $("#saveButton").bind("click", function () {
             var zTree = $.fn.zTree.getZTreeObj("zTree");
             var nodes = zTree.getCheckedNodes(true);
+            var flag = 0;
             for ( var i=0 ; i < nodes.length ; i++ ) {
                 var treeNode = nodes[i];
-                console.log(treeNode.name,treeNode.id);
+                console.log(treeNode.isParent);
+                if(!treeNode.isParent){
+                    flag = flag + 1;
+                }
                 ${formName} = ${formName} + treeNode.name + ";";
                 ${formId} = ${formId} + treeNode.id + ";";
             }
+            if (flag > 5){
+                Feng.error("专家领域最多选择5个！");
+                ${formName} = "";
+                ${formId} = "";
+            } else {
+                parent.layer.close(ZTreeDlg.index);
+            }
             /*${formName} = ZTreeDlg.tempName;
             ${formId} = ZTreeDlg.tempId;*/
-            parent.layer.close(ZTreeDlg.index);
+
         });
         var setting = {
             check: {

@@ -47,14 +47,15 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             flag = 1;
         })
         if (flag == 1){*/
-            var ajax = new $ax(Feng.ctxPath + "/collectTopic/addItem", function (data) {
-                Feng.success("征集成功！");
-                window.location.href = Feng.ctxPath + '/collectTopic'
-            }, function (data) {
-                Feng.error("征集失败！" + data.responseJSON.message)
-            });
-            ajax.set(data.field);
-            ajax.start();
+        $("#btnSubmit").css("pointer-events","none");
+        var ajax = new $ax(Feng.ctxPath + "/collectTopic/addItem", function (data) {
+            Feng.success("征集成功！");
+            window.location.href = Feng.ctxPath + '/collectTopic'
+        }, function (data) {
+            Feng.error("征集失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.start();
 
         /*}else {
             Feng.error("请先阅读并同意《论坛章程》！");

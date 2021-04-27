@@ -13,6 +13,8 @@ import cn.stylefeng.guns.modular.greatReviewMiddle.model.result.GreatReviewMiddl
 import cn.stylefeng.guns.sys.modular.system.entity.User;
 import cn.stylefeng.guns.sys.modular.system.mapper.UserMapper;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
+import cn.stylefeng.guns.thesisDomain.model.result.ThesisDomainResult;
+import cn.stylefeng.guns.thesisDomain.service.ThesisDomainService;
 import cn.stylefeng.guns.util.ToolUtil;
 import cn.stylefeng.roses.core.base.warpper.BaseControllerWrapper;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
@@ -28,7 +30,7 @@ public class EducationResultWrapper extends BaseControllerWrapper {
     private UserService userService = SpringContextHolder.getBean(UserService.class);
     private MeetService meetService = SpringContextHolder.getBean(MeetService.class);
     private EducationReviewMiddleService educationReviewMiddleService = SpringContextHolder.getBean(EducationReviewMiddleService.class);
-
+    private ThesisDomainService thesisDomainService = SpringContextHolder.getBean(ThesisDomainService.class);
 
     public EducationResultWrapper(Map<String, Object> single) {
         super(single);
@@ -104,6 +106,10 @@ public class EducationResultWrapper extends BaseControllerWrapper {
 
         }
 
+        if (checkStatus == 0){
+            map.put("reviewResult","取消申请");
+        }
+
         EducationReviewMiddleParam middleParam = new EducationReviewMiddleParam();
         LoginUser user = LoginContextHolder.getContext().getUser();
         middleParam.setUserId(user.getId());
@@ -133,6 +139,26 @@ public class EducationResultWrapper extends BaseControllerWrapper {
                 }
             }
         }
-
+        String domainObj = map.get("belongDomain").toString();
+        String belongDomainStr = "";
+        if (domainObj.equals("") || domainObj == null){
+            belongDomainStr = "";
+        }else {
+            String[] domainList = domainObj.split(",");
+            for (int i = 0;i < domainList.length;i++){
+                Long pid = Long.parseLong(domainList[i]);
+                if (pid == null) {
+                    belongDomainStr = belongDomainStr + "";
+                } else if (pid == 0L) {
+                    belongDomainStr = belongDomainStr + "顶级;";
+                } else {
+                    ThesisDomainResult thesisDomainResult = thesisDomainService.findByPid(pid);
+                    if (cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult) && cn.stylefeng.roses.core.util.ToolUtil.isNotEmpty(thesisDomainResult.getDomainName())) {
+                        belongDomainStr = belongDomainStr + thesisDomainResult.getDomainName() + "";
+                    }
+                }
+            }
+        }
+        map.put("belongDomainStr",belongDomainStr);
     }
 }

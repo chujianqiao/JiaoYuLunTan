@@ -43,15 +43,15 @@ layui.use(['form', 'upload', 'admin', 'element', 'ax', 'laydate'], function () {
             obj.preview(function (index, file, result) {
                 var fileName = file.name;
                 var fileType = fileName.substr(fileName.lastIndexOf("."));
-                if(fileType.compare(".pdf")){
+                if(fileType.compare(".ppt") || fileType.compare(".pptx")){
                     $("#pptNameTip").val(file.name);
                 }
             });
         }
         , done: function (res) {
             var type = res.data.type;
-            if(type != ".pdf"){
-                Feng.error("上传失败，文件格式不匹配，请上传pdf文件。");
+            if(type != ".ppt" && type != ".pptx"){
+                Feng.error("上传失败，文件格式不匹配，请上传ppt文件。");
             }else {
                 $("#pptInputHidden").val(res.data.fileId);
                 $("#pptPath").val(res.data.path);

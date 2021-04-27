@@ -12,43 +12,55 @@
 
     <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
     <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}" media="all"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/expand/css/style.css?v=${constants.getReleaseVersion()}" media="all"/>
     <!--<link rel="stylesheet" href="${ctxPath}/assets/expand/css/form.css?v=${constants.getReleaseVersion()}" media="all"/>-->
-    <script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
-    <script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
-    <script src="${ctxPath}/assets/common/js/custom.js"></script>
 
 </head>
+<style>
+    .overText{
+        width: 136px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+    .overText2{
+        width: 152px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+</style>
 <header>
     <div class="head mCenter widthC pr">
         <div class="pc">
             <img src="${ctxPath}/assets/common/images/logo.png" width="510" height="119" class="jykxltIcon" />
         </div>
         <div class="language-select pa">
-            <!--<img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
+            <img src="${ctxPath}/assets/common/images/icon1_03.png" class="language-select-icon" />
             <div class="language-select-box pr">
-                <div class="language fontSize16">
-                    <a href="#">中文</a>
-                    <a href="#" class="hover">英文</a>
+                <div id="languageDiv" class="language fontSize16 inlineBlock">
                 </div>
-                <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn pa" id="langSelect" />
-            </div>-->
+                <img src="${ctxPath}/assets/common/images/show.png" class="language-select-btn" id="langSelect" />
+            </div>
             <div id="userDiv" class="fontSize16" style="float:left;display: block;margin-right: 10px">
                 <a href="/mgr/toPersonCenter" target="_blank" style="color: white;margin-right: 10px;text-decoration:underline;"><i class="layui-icon">&#xe770;</i>${userName! }</a>
-                <a href="#" onclick="logout()" style="color: white">退出</a>
+                <a href="#" onclick="logout()" style="color: white">${lang.get('FIELD_Exit','退出')}</a>
             </div>
         </div>
     </div>
 </header>
 <div class="pc">
     <nav class="widthC mCenter pr">
-        <div class="inlineBlock"><a href="${ctxPath}/index" class="fontSize18 item">首页</a></div>
-        <div class="inlineBlock"><a href="${ctxPath}/mgr/toPersonCenter" id="toPersonCenter" class="fontSize18 item">个人中心</a></div>
-        <div class="inlineBlock"><a href="${ctxPath}/meetMember" id="meetMember" class="fontSize18 item">我的会议</a></div>
-        <div class="inlineBlock" id="thesisNavDiv"><a href="${ctxPath}/thesis" id="thesis" class="fontSize18 item">我的评审</a></div>
-        <div><a href="${ctxPath}/greatResult" id="greatResult" class="fontSize18 item">我的成果申请</a></div>
-        <div><a href="${ctxPath}/collectTopic" id="collectTopic" class="fontSize18 item">我的主题征集</a></div>
-        <div><a href="${ctxPath}/ownForum" id="ownForum" class="fontSize18 item">我的论坛申报</a></div>
-        <div><a href="${ctxPath}/socialForum" id="socialForum" class="fontSize18 item">我的合作意向</a></div>
+        <div class="inlineBlock"><a href="${ctxPath}/index" title="${lang.get('FIELD_Home','首页')}" class="fontSize18 item">${lang.get('FIELD_Home','首页')}</a></div>
+        <div class="inlineBlock"><a href="${ctxPath}/mgr/toPersonCenter" id="toPersonCenter" title="${lang.get('FIELD_Personalcenter','个人中心')}" class="fontSize18 overText item">${lang.get('FIELD_Personalcenter','个人中心')}</a></div>
+        <div class="inlineBlock"><a href="${ctxPath}/meetMember" id="meetMember" title="${lang.get('FIELD_MyConference','我的会议')}" class="fontSize18 overText item">${lang.get('FIELD_MyConference','我的会议')}</a></div>
+        <div class="inlineBlock" id="thesisNavDiv"><a href="${ctxPath}/thesis" id="thesis" title="${lang.get('FIELD_MyReview','我的评审')}" class="fontSize18 overText item">${lang.get('FIELD_MyReview','我的评审')}</a></div>
+        <div><a href="${ctxPath}/greatResult" id="greatResult" title="${lang.get('FIELD_MAOD','我的成果申请')}" class="fontSize18 overText2 item">${lang.get('FIELD_MAOD','我的成果申请')}</a></div>
+        <div><a href="${ctxPath}/collectTopic" id="collectTopic" title="${lang.get('FIELD_CallThemes','我的主题征集')}" class="fontSize18 overText2 item">${lang.get('FIELD_CallThemes','我的主题征集')}</a></div>
+        <div><a href="${ctxPath}/ownForum" id="ownForum" title="${lang.get('FIELD_MFA','我的论坛申报')}" class="fontSize18 overText2 item">${lang.get('FIELD_MFA','我的论坛申报')}</a></div>
+        <div><a href="${ctxPath}/socialForum" id="socialForum" title="${lang.get('FIELD_MCI','我的合作意向')}" class="fontSize18 overText2 item">${lang.get('FIELD_MCI','我的合作意向')}</a></div>
     </nav>
 </div>
 <div class="mobile" style="overflow:hidden;width:100%;">
@@ -56,19 +68,19 @@
         <div class="swiper-container mobile_swiper1" id="mobileSwiper1">
             <div class="swiper-wrapper pr fontSize32">
                 <div class="swiper-slide home">
-                    <a href="${ctxPath}/index" class="lavel1-name hover" target="_blank">首页</a>
+                    <a href="${ctxPath}/index" class="lavel1-name hover" target="_blank">${lang.get('FIELD_Home','首页')}</a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="${ctxPath}/mgr/toPersonCenter" id="toPersonCenterMo" class="lavel1-name" target="_blank">个人中心</a>
+                    <a href="${ctxPath}/mgr/toPersonCenter" id="toPersonCenterMo" class="lavel1-name" target="_blank">${lang.get('FIELD_Personalcenter','个人中心')}</a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="${ctxPath}/meetMember" id="meetMemberMo" class="lavel1-name" target="_blank">我的会议</a>
+                    <a href="${ctxPath}/meetMember" id="meetMemberMo" class="lavel1-name" target="_blank">${lang.get('FIELD_MyConference','我的会议')}</a>
                 </div>
-                <div class="swiper-slide" id="thesisNavDivMo"><a href="${ctxPath}/thesis" id="thesisMo" class="lavel1-name" target="_blank">我的评审</a></div>
-                <div class="swiper-slide"><a href="${ctxPath}/greatResult" id="greatResultMo" class="lavel1-name" target="_blank">我的成果</a></div>
-                <div class="swiper-slide"><a href="${ctxPath}/collectTopic" id="collectTopicMo" class="lavel1-name" target="_blank">我的主题</a></div>
-                <div class="swiper-slide"><a href="${ctxPath}/ownForum" id="ownForumMo" class="lavel1-name" target="_blank">我的论坛</a></div>
-                <div class="swiper-slide"><a href="${ctxPath}/socialForum" id="socialForumMo" class="lavel1-name" target="_blank">我的合作</a></div>
+                <div class="swiper-slide" id="thesisNavDivMo"><a href="${ctxPath}/thesis" id="thesisMo" class="lavel1-name" target="_blank">${lang.get('FIELD_MyReview','我的评审')}</a></div>
+                <div class="swiper-slide"><a href="${ctxPath}/greatResult" id="greatResultMo" class="lavel1-name" target="_blank">${lang.get('FIELD_MAOD','我的成果申请')}</a></div>
+                <div class="swiper-slide"><a href="${ctxPath}/collectTopic" id="collectTopicMo" class="lavel1-name" target="_blank">${lang.get('FIELD_CallThemes','我的主题征集')}</a></div>
+                <div class="swiper-slide"><a href="${ctxPath}/ownForum" id="ownForumMo" class="lavel1-name" target="_blank">${lang.get('FIELD_MFA','我的论坛申报')}</a></div>
+                <div class="swiper-slide"><a href="${ctxPath}/socialForum" id="socialForumMo" class="lavel1-name" target="_blank">${lang.get('FIELD_MCI','我的合作意向')}</a></div>
             </div>
         </div>
     </nav>
@@ -105,11 +117,17 @@
         </div>
     </div>
 </div>-->
+
+<script src="${ctxPath}/assets/common/js/jquery.min.js"></script>
+<script src="${ctxPath}/assets/common/js/swiper.min.js"></script>
+<script src="${ctxPath}/assets/common/js/custom.js"></script>
 <script>
     $(document).ready(function(){
         myJs.swiper_init();
         myJs.navTab();
         myJs.mobile_swiper_init1();
+        myJs.languageSelect('#langSelect');
+        myJs.languageSelect('#langSelect_mobile');
     });
 </script>
 <script type="text/javascript">
@@ -119,6 +137,36 @@
     };
 </script>
 <script>
+    languages();
+    function languages() {
+        $.ajax({
+            url: Feng.ctxPath + "/translation/languages",
+            success: function(response){
+                for (var i = 0; i < response.data.length; i++) {
+                    var code = response.data[i].code;
+                    var description = response.data[i].description;
+                    $("#languageDiv").append('<a id="tran-' + code + '" href="javascript:;">' + description + '</a>');
+
+                    //设置监听事件，设置点击按钮切换当前系统语言
+                    (function (code) {
+                        $('#tran-' + code).click(function () {
+                            $.ajax({
+                                url: Feng.ctxPath + "/translation/changeUserTranslation?code=" + code,
+                                success: function (response) {
+                                    layui.data('system', {
+                                        key: "lang",
+                                        value: response.data
+                                    });
+                                    window.location.reload();
+                                }
+                            });
+                        });
+                    })(code);
+                }
+            }
+        });
+    }
+
     //if ("${menuUrl }" != null && "${menuUrl }" != ""){
     $("#" + "${menuUrl }").attr("style","color:#196bc6;background:#c5def6;");
     $("#" + "${menuUrl }" + "Mo").attr("style","color:#196bc6;background:#c5def6;")
@@ -148,4 +196,5 @@
         });
         ajax.start();*/
     }
+
 </script>

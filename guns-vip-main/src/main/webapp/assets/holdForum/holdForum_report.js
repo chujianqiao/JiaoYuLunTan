@@ -95,6 +95,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             flag = 1;
         })
         if (flag == 1) {
+            $("#ownSubmit").css("pointer-events","none");
             var ajax = new $ax(Feng.ctxPath + "/ownForum/addItem", function (data) {
                 Feng.success("申报成功！");
                 window.location.href = Feng.ctxPath + '/ownForum';
@@ -150,6 +151,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             flag = 1;
         })
         if (flag == 1) {
+            $("#socialSubmit").css("pointer-events","none");
             var ajax = new $ax(Feng.ctxPath + "/socialForum/addItem", function (data) {
                 Feng.success("衷心感谢您携手中国教育科学论坛，</br>共谋中国教育改革与发展！");
                 //传给上个页面，刷新table用
@@ -188,7 +190,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             Feng.success(res.message);
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -203,13 +205,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             });
         }
         , done: function (res) {
-            $("#ownfileInputHidden").val(res.data.fileId);
-            $("#ownplanPath").val(res.data.path);
-            $("#ownplanName").val($("#ownfileNameTip").val());
-            Feng.success(res.message);
+            var status = res.data.status;
+            if (status == "大小问题" || status === "大小问题"){
+                $("#ownfileNameTip").val("");
+                $("#ownfileNameTip").html("");
+                Feng.error(res.message);
+            }else {
+                $("#ownfileInputHidden").val(res.data.fileId);
+                $("#ownplanPath").val(res.data.path);
+                $("#ownplanName").val($("#ownfileNameTip").val());
+                Feng.success(res.message);
+            }
+
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -230,7 +240,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             Feng.success(res.message);
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -251,7 +261,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             Feng.success(res.message);
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -307,4 +317,12 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
     });
 
+    form.verify({
+        creditCode: [/^[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}$/, '不是有效的统一社会信用编码！'],
+        /*repsw: function (value) {
+            if (value !== $('#userForm input[name=password]').val()) {
+                return '两次密码输入不一致';
+            }
+        }*/
+    });
 });

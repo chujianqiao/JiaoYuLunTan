@@ -10,7 +10,7 @@
                         <div class="layui-card-body">
                             <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
                                 <ul class="layui-tab-title">
-                                    <li id="guestLi" style="display: none">${lang.get("MENU_GUEST_INFO","嘉宾信息")}</li>
+                                    <li id="guestLi" style="display: none">${lang.get("FIELD_ParticipantsInfo","嘉宾信息")}</li>
                                 </ul>
                                 <div class="layui-tab-content">
                                     <!--另一个标签-->
@@ -20,13 +20,13 @@
                                             <div class="bd-list-item">
                                                 <div class="bd-list-item-content">
                                                     <div class="layui-inline layui-col-md12">
-                                                        <label class="layui-form-label">上传PPT<span style="color: red;">*</span></label>
+                                                        <label class="layui-form-label">${lang.get("FIELD_UPS","上传PPT")}<span style="color: red;">*</span></label>
                                                         <div class="layui-input-block">
                                                             <input id="pptInputHidden" name="pptInputHidden" type="hidden" class="layui-input"/>
                                                             <input id="pptPath" name="pptPath" type="hidden" class="layui-input"/>
                                                             <input id="pptName" name="pptName" type="hidden" class="layui-input"/>
                                                             <div style="float: left;">
-                                                                <button type="button" class="layui-btn layui-btn-sm" id="pptBtn"><i class="layui-icon"></i>选择文件</button>
+                                                                <button type="button" class="layui-btn layui-btn-sm" id="pptBtn"><i class="layui-icon"></i>${lang.get("FIELD_SelectDocuments","选择文件")}</button>
                                                             </div>
                                                             <div style="float: left;">
                                                                 <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="pptFileNameTip"></span>
@@ -39,13 +39,13 @@
                                             <div class="bd-list-item">
                                                 <div class="bd-list-item-content">
                                                     <div class="layui-inline layui-col-md12">
-                                                        <label class="layui-form-label">上传发言稿<span style="color: red;">*</span></label>
+                                                        <label class="layui-form-label">${lang.get("FIELD_UP","上传发言稿")}<span style="color: red;">*</span></label>
                                                         <div class="layui-input-block">
                                                             <input id="wordInputHidden" name="wordInputHidden" type="hidden" class="layui-input"/>
                                                             <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
                                                             <input id="wordName" name="wordName" type="hidden" class="layui-input"/>
                                                             <div style="float: left;">
-                                                                <button type="button" class="layui-btn layui-btn-sm" id="wordBtn"><i class="layui-icon"></i>选择文件</button>
+                                                                <button type="button" class="layui-btn layui-btn-sm" id="wordBtn"><i class="layui-icon"></i>${lang.get("FIELD_SelectDocuments","选择文件")}</button>
                                                             </div>
                                                             <div style="float: left;">
                                                                 <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="wordFileNameTip"></span>
@@ -58,7 +58,7 @@
                                             <div class="bd-list-item">
                                                 <div class="bd-list-item-content">
                                                     <div class="layui-inline layui-col-md12">
-                                                        <label class="layui-form-label">嘉宾简介<span style="color: red;">*</span></label>
+                                                        <label class="layui-form-label">${lang.get("FIELD_IOFP","嘉宾简介")}<span style="color: red;">*</span></label>
                                                         <div class="layui-input-block" style="width: 300px;">
                                                             <textarea id="introduction" name="introduction" class="layui-textarea" lay-verify="required" required placeholder="请输入嘉宾简介"></textarea>
                                                         </div>
@@ -68,7 +68,7 @@
                                             <div class="layui-form-item">
                                                 <div class="layui-input-block" style="margin: auto;text-align: center">
                                                     <button class="layui-btn" lay-filter="guestInfoSubmit" lay-submit>
-                                                        保存
+                                                        ${lang.get("FIELD_Save","保存")}
                                                     </button>
                                                 </div>
                                             </div>

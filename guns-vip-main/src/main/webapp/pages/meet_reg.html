@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="renderer" content="webkit" />
 	<meta name ="viewport" content ="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-	<title>会议注册</title>
+	<title>${lang.get("FIELD_MeetRegistration","会议注册")}</title>
 	<link href="${ctxPath}/assets/common/images/icon2_11.png" rel="icon">
 	<link rel="stylesheet" href="${ctxPath}/assets/common/css/swiper.min.css" />
 	<!--<link rel="stylesheet" href="${ctxPath}/assets/modular/frame/user_info.css" />-->
@@ -39,7 +39,7 @@
 			<div class="func-column-content mCenter mb20">
 				<div  class="form-title mCenter">
 					<span class="line inlineBlock"></span>
-					<span class="fontSize20 inlineBlock mCenter title">会议注册</span>
+					<span class="fontSize20 inlineBlock mCenter title">${lang.get("FIELD_MeetRegistration","会议注册")}</span>
 					<span class="line inlineBlock"></span>
 				</div>
 			</div>
@@ -56,13 +56,13 @@
 												<div class="pc">
 													<span class="line inlineBlock"></span>
 													<span class="line inlineBlock"></span>
-													<span class="fontSize20 inlineBlock mCenter title" style="color:red">基本信息</span>
+													<span class="fontSize20 inlineBlock mCenter title" style="color:red">${lang.get("FIELD_BasicInformation","基本信息")}</span>
 													<span class='line inlineBlock'></span>
 													<span class="line inlineBlock"></span>
 												</div>
 												<div class="mobile">
 													<span class="line inlineBlock"></span>
-													<span class="fontSize20 inlineBlock mCenter title" style="color:red">基本信息</span>
+													<span class="fontSize20 inlineBlock mCenter title" style="color:red">${lang.get("FIELD_BasicInformation","基本信息")}</span>
 													<span class='line inlineBlock'></span>
 												</div>
 											</div>
@@ -78,7 +78,7 @@
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">姓名 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="name" placeholder="请输入姓名" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
+													<input name="name" placeholder="请输入姓名" maxlength="20" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
@@ -91,13 +91,13 @@
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">邮箱 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="email" placeholder="请输入邮箱" class="layui-input" type="text" lay-verify="required|email" required autocomplete="off"/>
+													<input name="email" placeholder="请输入邮箱" maxlength="40" class="layui-input" type="text" lay-verify="required|email" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">工作单位 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="workUnit" placeholder="请输入工作单位" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
+													<input name="workUnit" placeholder="请输入工作单位" maxlength="30" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
@@ -128,7 +128,7 @@
 											<div class="layui-inline layui-col-md12">
 												<label class="layui-form-label">研究方向 ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="direction" placeholder="请输入研究方向" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
+													<input name="direction" placeholder="请输入研究方向" maxlength="30" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
@@ -162,7 +162,7 @@
 											<input type="checkbox" name="ifAgreeMeet" id="ifAgreeMeet" title="阅读并同意遵守" lay-skin="primary">
 											<span class="forumCharter" id="forumCharter" onclick="forumCharter()">《论坛章程》</span>
 											<br><br>
-											<div class="btn submit" lay-filter="btnSubmit" lay-submit>提交</div>
+											<div id="divSubmit" class="btn submit" lay-filter="btnSubmit" lay-submit>提交</div>
 										</div>
 										<div class="btns sb-btns fontSize16" id="btnNext">
 											<div class="btn submit" lay-filter="btnNext" lay-submit>下一步</div>

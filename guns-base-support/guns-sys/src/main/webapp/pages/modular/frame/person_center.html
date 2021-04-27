@@ -82,11 +82,11 @@
                         <div class="layui-card-body" style="width: 218px;height: 100px;float: left;margin-left: 40px">
                             <div class="layui-text">
                                 <h4 style="padding-top: 5px;font-size: 18px;font-weight: bold;color: rgb(41,122,187)">${name}</h4>
-                                <h4 style="padding-top: 5px;">单位：${workUnit}</h4>
-                                <h4 style="padding-top: 5px;">职务：${post}</h4>
-                                <h4 style="padding-top: 5px;">手机号：${phone}</h4>
-                                <h4 id="forumName" style="padding-top: 5px;">论坛：无</h4>
-                                <h4 id="seat" style="padding-top: 5px;cursor: pointer">座位：无</h4>
+                                <h4 style="padding-top: 5px;">${lang.get('FIELD_Organization','单位')}：${workUnit}</h4>
+                                <h4 style="padding-top: 5px;">${lang.get('FIELD_Position','职务')}：${post}</h4>
+                                <h4 style="padding-top: 5px;">${lang.get('FIELD_Mobilephone','手机号')}：${phone}</h4>
+                                <h4 id="forumName" style="padding-top: 5px;">${lang.get('FIELD_Forum','论坛')}：无</h4>
+                                <h4 id="seat" style="padding-top: 5px;cursor: pointer">${lang.get('FIELD_Seat','座位')}：未分配</h4>
                             </div>
 
                         </div>
@@ -136,11 +136,11 @@
                             <div class="layui-card-body" style="width: 168px;height: 100px;float: left;margin-left: 10px">
                                 <div class="layui-text">
                                     <h4 style="padding-top: 5px;font-size: 18px;font-weight: bold;color: rgb(41,122,187)">${name}</h4>
-                                    <h4 style="padding-top: 5px;">单位：${workUnit}</h4>
-                                    <h4 style="padding-top: 5px;">职务：${post}</h4>
-                                    <h4 style="padding-top: 5px;">手机号：${phone}</h4>
-                                    <h4 id="forumNameMo" style="padding-top: 5px;">论坛：无</h4>
-                                    <h4 id="seatMo" style="padding-top: 5px;cursor: pointer">座位：无</h4>
+                                    <h4 style="padding-top: 5px;">${lang.get('FIELD_Organization','单位')}：${workUnit}</h4>
+                                    <h4 style="padding-top: 5px;">${lang.get('FIELD_Position','职务')}：${post}</h4>
+                                    <h4 style="padding-top: 5px;">${lang.get('FIELD_Mobilephone','手机号')}：${phone}</h4>
+                                    <h4 id="forumNameMo" style="padding-top: 5px;">${lang.get('FIELD_Forum','论坛')}：${lang.get('FIELD_None','无')}</h4>
+                                    <h4 id="seatMo" style="padding-top: 5px;cursor: pointer">${lang.get('FIELD_Seat','座位')}：${lang.get('FIELD_None','无')}</h4>
                                 </div>
 
                             </div>
@@ -211,44 +211,44 @@
                         <div class="layui-col-md12">
                             <div class="layui-card">
                                 <div class="layui-tab layui-tab-brief layadmin-latestData">
-                                    <div class="layui-card-header">个人中心</div>
+                                    <div class="layui-card-header">${lang.get('FIELD_Personalcenter','个人中心')}</div>
                                     <div class="pc">
                                         <div class="layui-card-body" style="height: 244px;">
                                             <div class="layui-carousel layadmin-carousel layadmin-shortcut">
                                                 <div carousel-item style="height: 224px;">
                                                     <ul class="layui-row layui-col-space10">
                                                         <li class="layui-col-xs2">
-                                                            <a href="${ctxPath}/system/person_info">
+                                                            <a title="${lang.get('FIELD_PersonalInformation','个人信息')}" href="${ctxPath}/system/person_info">
                                                                 <i style="font-size: 60px" class="layui-icon layui-icon-friends"></i>
-                                                                <cite>个人信息</cite>
+                                                                <cite>${lang.get('FIELD_PersonalInformation','个人信息')}</cite>
                                                             </a>
                                                         </li>
                                                         <li class="layui-col-xs2">
-                                                            <a id="meetFile" target="_blank">
+                                                            <a title="${lang.get('FIELD_ConferenceManual','会议手册')}" id="meetFile" target="_blank">
                                                                 <i style="font-size: 60px;color: grey" id="iconFile" class="layui-icon layui-icon-file"></i>
-                                                                <cite>会议手册</cite>
+                                                                <cite>${lang.get('FIELD_ConferenceManual','会议手册')}</cite>
                                                             </a>
                                                         </li>
                                                         <li class="layui-col-xs2">
-                                                            <a id="pay">
+                                                            <a title="${lang.get('FIELD_ConferencePayment','会议缴费')}" id="pay">
                                                                 <i style="font-size: 60px;color: grey" id="iconNotice" class="layui-icon layui-icon-notice"></i>
-                                                                <cite>缴费提醒</cite>
+                                                                <cite>${lang.get('FIELD_ConferencePayment','会议缴费')}</cite>
                                                             </a>
-                                                            <a id="guest">
+                                                            <a title="${lang.get('FIELD_UPPS','报告/PPT上传')}" id="guest">
                                                                 <i style="font-size: 60px" id="iconGuest" class="layui-icon layui-icon-form"></i>
-                                                                <cite>报告/PPT上传</cite>
+                                                                <cite>${lang.get('FIELD_UPPS','报告/PPT上传')}</cite>
                                                             </a>
                                                         </li>
                                                         <li class="layui-col-xs2">
-                                                            <a id="forum">
+                                                            <a title="${lang.get('FIELD_ForumRegistration','论坛报名')}" id="forum">
                                                                 <i style="font-size: 60px;color: grey" id="iconEdit" class="layui-icon layui-icon-edit"></i>
-                                                                <cite>论坛报名</cite>
+                                                                <cite>${lang.get('FIELD_ForumRegistration','论坛报名')}</cite>
                                                             </a>
                                                         </li>
                                                         <li class="layui-col-xs2">
-                                                            <a id="fileDownload">
+                                                            <a title="${lang.get('FIELD_DocumentsDownload','材料下载')}" id="fileDownload">
                                                                 <i style="font-size: 60px;color: grey" id="iconDownload" class="layui-icon layui-icon-download-circle"></i>
-                                                                <cite>材料下载</cite>
+                                                                <cite>${lang.get('FIELD_DocumentsDownload','材料下载')}</cite>
                                                             </a>
                                                         </li>
 
@@ -266,35 +266,35 @@
                                                         <li class="layui-col-xs2 top20" style="width: 26.6666667%;">
                                                             <a href="${ctxPath}/system/person_info_mobile">
                                                                 <i style="font-size: 60px" class="layui-icon layui-icon-friends"></i>
-                                                                <cite>个人信息</cite>
+                                                                <cite>${lang.get('FIELD_PersonalInformation','个人信息')}</cite>
                                                             </a>
                                                         </li>
                                                         <li class="layui-col-xs2 top20" style="width: 26.6666667%;">
                                                             <a id="meetFileMo" target="_blank">
                                                                 <i style="font-size: 60px;color: grey" id="iconFileMo" class="layui-icon layui-icon-file"></i>
-                                                                <cite>会议手册</cite>
+                                                                <cite>${lang.get('FIELD_ConferenceManual','会议手册')}</cite>
                                                             </a>
                                                         </li>
                                                         <li class="layui-col-xs2 top20" style="width: 26.6666667%;">
                                                             <a id="payMo">
                                                                 <i style="font-size: 60px;color: grey" id="iconNoticeMo" class="layui-icon layui-icon-notice"></i>
-                                                                <cite>缴费提醒</cite>
+                                                                <cite>${lang.get('FIELD_ConferencePayment','会议缴费')}</cite>
                                                             </a>
                                                             <a id="guestMo">
                                                                 <i style="font-size: 60px" id="iconGuestMo" class="layui-icon layui-icon-form"></i>
-                                                                <cite>报告/PPT上传</cite>
+                                                                <cite>${lang.get('FIELD_UPPS','报告/PPT上传')}</cite>
                                                             </a>
                                                         </li>
                                                         <li class="layui-col-xs2 top20" style="width: 26.6666667%;">
                                                             <a id="forumMo">
                                                                 <i style="font-size: 60px;color: grey" id="iconEditMo" class="layui-icon layui-icon-edit"></i>
-                                                                <cite>论坛报名</cite>
+                                                                <cite>${lang.get('FIELD_ForumRegistration','论坛报名')}</cite>
                                                             </a>
                                                         </li>
                                                         <li class="layui-col-xs2 top20" style="width: 26.6666667%;">
                                                             <a id="fileDownloadMo">
                                                                 <i style="font-size: 60px;color: grey" id="iconDownloadMo" class="layui-icon layui-icon-download-circle"></i>
-                                                                <cite>材料下载</cite>
+                                                                <cite>${lang.get('FIELD_DocumentsDownload','材料下载')}</cite>
                                                             </a>
                                                         </li>
 
@@ -311,7 +311,7 @@
                 <div class="layui-col-md6">
                     <div class="layui-card">
                         <div class="layui-tab layui-tab-brief layadmin-latestData">
-                            <div class="layui-card-header">会议信息</div>
+                            <div class="layui-card-header">${lang.get('FIELD_ConferenceInformation','会议信息')}</div>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-card-body layui-show" style="height: 185px;overflow-y: scroll">
                                     <div id="meetData1" class=""></div>
@@ -327,7 +327,7 @@
                 <div class="layui-col-md6">
                     <div class="layui-card">
                         <div class="layui-tab layui-tab-brief layadmin-latestData">
-                            <div class="layui-card-header">论坛信息</div>
+                            <div class="layui-card-header">${lang.get('FIELD_ForumInformation','论坛信息')}</div>
                             <div class="layui-tab-content">
                                 <div class="layui-card-body" style="height: 185px;overflow-y: scroll">
                                     <div id="forumData1" class=""></div>
@@ -342,13 +342,14 @@
                 <div class="layui-col-md8">
                     <div class="layui-card" id="thesisDataDiv">
                         <div class="layui-tab layui-tab-brief layadmin-latestData">
-                            <div class="layui-card-header">我的论文</div>
+                            <div class="layui-card-header">${lang.get('FIELD_MySubmission','我的论文')}</div>
                             <div class="layui-tab-content">
                                 <div class="layui-card-body" style="height: 185px;overflow-y: scroll">
                                     <div id="thesisData1" class=""></div>
                                     <div id="thesisData2" class=""></div>
                                     <div id="thesisData3" class=""></div>
                                     <div id="thesisData4" class=""></div>
+                                    <div id="thesisData5" class=""></div>
                                 </div>
                             </div>
                         </div>
@@ -358,7 +359,7 @@
                 <div class="layui-col-md4">
                     <div class="layui-card" id="thesisDiv">
                         <div class="layui-tab layui-tab-brief layadmin-latestData">
-                            <div class="layui-card-header">论文评审状态</div>
+                            <div class="layui-card-header">${lang.get('FIELD_ReviewStatus','论文评审状态')}</div>
                             <div class="layui-card-body">
                                 <div class="layui-carousel layadmin-carousel layadmin-shortcut">
                                     <div carousel-item>
@@ -366,7 +367,7 @@
                                             <li class="layui-col-xs12">
                                                 <a id="thesisResult">
                                                     <i style="font-size: 60px;color: grey" id="iconThesisResult" class="layui-icon layui-icon-form"></i>
-                                                    <cite>评审报告</cite>
+                                                    <cite>${lang.get('FIELD_ReviewingReport','评审报告')}</cite>
                                                 </a>
                                             </li>
                                         </ul>
@@ -404,7 +405,7 @@ var Feng = {
 
     function editGuest(userId) {
         layer.open({
-            title: '报告/PPT上传',
+            title: "${lang.get('FIELD_UPPS','报告/PPT上传')}",
             type: 2,
             area: ['620px', '600px'],
             content: Feng.ctxPath + '/system/person_guest_info?userId=' + userId,
@@ -454,7 +455,7 @@ var Feng = {
 
     function fileDownload() {
         layer.open({
-            title: '材料下载',
+            title: "${lang.get('FIELD_DocumentsDownload','材料下载')}",
             type: 2,
             area: ['620px', '600px'],
             content: Feng.ctxPath + '/meetMaterial/toFileDownload' ,
@@ -462,7 +463,7 @@ var Feng = {
     }
     function fileDownloadMo() {
         layer.open({
-            title: '材料下载',
+            title: "${lang.get('FIELD_DocumentsDownload','材料下载')}",
             type: 2,
             area: ['350px', '550px'],
             content: Feng.ctxPath + '/meetMaterial/toFileDownload' ,

@@ -39,21 +39,21 @@
 <form class="layui-form" id="userForm" lay-filter="userForm">
     <div class="login-wrapper" style="max-width: 450px">
         <div class="layui-form" style="height: 450px">
-            <h2>用户注册</h2>
+            <h2>${lang.get("FIELD_Registration","用户注册")}</h2>
 
             <input name="userId" type="hidden"/>
             <input name="roleId" value="2" type="hidden"/>
             <div class="layui-form-item layui-input-icon-group">
                 <label class="layui-form-label">${lang.get("FIELD_ACCOUNT","账号")}<span style="color: red;">*</span></label>
                 <div class="layui-input-block" style="margin-bottom: -16px">
-                    <input name="account" id="account" placeholder="请输入账号" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+                    <input name="account" id="account" placeholder="${lang.get('FIELD_PleaseAccount','账号')}" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
                     <span id="accountSpan"></span>
                 </div>
             </div>
             <div class="layui-form-item layui-input-icon-group">
-                <label class="layui-form-label">${lang.get("FIELD_PASSWORD","密码")}<span style="color: red;">*</span></label>
+                <label class="layui-form-label">${lang.get("FIELD_Password","密码")}<span style="color: red;">*</span></label>
                 <div class="layui-input-block" style="margin-bottom: -16px">
-                    <input name="password" id="password" placeholder="请输入密码" type="password" class="layui-input" lay-verify="required|psw" autocomplete="new-password" required/>
+                    <input name="password" id="password" placeholder="${lang.get('FIELD_PleasePassword','密码')}" type="password" class="layui-input" lay-verify="required|psw" autocomplete="new-password" required/>
                     <span id="passwordSpan"></span>
                 </div>
             </div>
@@ -67,18 +67,18 @@
             <div class="layui-form-item layui-input-icon-group">
                 <label class="layui-form-label">${lang.get("FIELD_PHONE","手机号")}<span style="color: red;">*</span></label>
                 <div class="layui-input-block" style="margin-bottom: -16px">
-                    <input name="phone" id="phone" placeholder="请输入手机号" type="text" class="layui-input" lay-verify="required|phone" required autocomplete="off"/>
+                    <input name="phone" id="phone" placeholder="${lang.get('FIELD_PHONE','手机号')}" type="text" class="layui-input" lay-verify="required|phone" required autocomplete="off"/>
                     <span id="phoneSpan"></span>
                 </div>
             </div>
             <div class="layui-form-item layui-input-icon-group">
-                <label class="layui-form-label">验证码<span style="color: red;">*</span></label>
+                <label class="layui-form-label">${lang.get('FIELD_SMS','验证码')}<span style="color: red;">*</span></label>
                 <div class="layui-input-block">
                     <div style="float: left;width: 135px;">
-                        <input id="smsCode" name="smsCode" placeholder="请输入短信验证码" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+                        <input id="smsCode" name="smsCode" placeholder="${lang.get('FIELD_PleaseCode','验证码')}" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
                     </div>
                     <div style="float: left;">
-                        <button type="button" class="layui-btn layui-btn-sm" style="height:38px;" id="sentSmsCode">获取短信验证码</button>
+                        <button type="button" class="layui-btn layui-btn-sm" style="height:38px;" id="sentSmsCode">${lang.get('FIELD_ReceiveSMS','获取短信验证码')}</button>
                     </div>
                 </div>
             </div>
@@ -89,9 +89,9 @@
             <!--        </div>-->
 
             <div class="layui-form-item">
-                <button id="registerSub" disabled="disabled" class="layui-btn layui-btn-submit layui-bg-gray layui-btn-fluid" lay-filter="btnSubmit" lay-submit>注册</button>
+                <button id="registerSub" disabled="disabled" class="layui-btn layui-btn-submit layui-bg-gray layui-btn-fluid" lay-filter="btnSubmit" lay-submit>${lang.get('FIELD_Signupnow','注册')}</button>
                 <div class="layui-form-item pull-right">
-                    已有帐号？<a id="btnLogin" style="cursor: pointer" class="layui-link">登录</a>
+                    ${lang.get('FIELD_Alreadyhave','已有账号')}？<a id="btnLogin" style="cursor: pointer" class="layui-link">${lang.get('FIELD_LogInButton','登录')}</a>
                 </div>
             </div>
 

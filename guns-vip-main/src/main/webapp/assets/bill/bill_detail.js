@@ -80,7 +80,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             }
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 

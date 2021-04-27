@@ -54,7 +54,10 @@ public class TranInfoController extends BaseController {
             throw new RequestEmptyException("请求不合法！code值错误！");
         }
         UserTranslationContext.setUserCurrentTrans(translationEnum);
-        return SUCCESS_TIP;
+
+        Map<String, String> translationByLanguage = TranslationContext.getTranslationByLanguage(translationEnum);
+        return ResponseData.success(translationByLanguage);
+        //return SUCCESS_TIP;
     }
 
     /**
@@ -67,12 +70,18 @@ public class TranInfoController extends BaseController {
     @RequestMapping("/languages")
     public ResponseData languages() {
         TranslationEnum[] values = TranslationEnum.values();
-
+        String transStr = UserTranslationContext.getUserCurrentTrans().getDescription().toString();
         ArrayList<TranslationItem> results = new ArrayList<>();
         for (TranslationEnum value : values) {
-            results.add(new TranslationItem(value.getCode(), value.getDescription()));
+            if (transStr.equals(value.getDescription())){
+                results.add(new TranslationItem(value.getCode(), value.getDescription()));
+            }
         }
-
+        for (TranslationEnum value : values) {
+            if (!transStr.equals(value.getDescription())){
+                results.add(new TranslationItem(value.getCode(), value.getDescription()));
+            }
+        }
         return new SuccessResponseData(results);
     }
 

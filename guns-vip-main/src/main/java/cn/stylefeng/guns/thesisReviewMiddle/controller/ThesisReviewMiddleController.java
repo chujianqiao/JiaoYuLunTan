@@ -189,8 +189,7 @@ public class ThesisReviewMiddleController extends BaseController {
         }else {
             map.put("userNameSecond", userNameSecond);
         }
-
-        if (thesis.getStatus() == "" || thesis.getStatus() == null){
+        if (thesis.getStatus() == null || thesis.getStatus().equals("")){
             map.put("status", "未评审");
         }
         if (thesis.getIsgreat() == null){
@@ -206,12 +205,18 @@ public class ThesisReviewMiddleController extends BaseController {
             map.put("reviewResult", "未评审");
         }else {
             if (thesis.getReviewResult() == 0){
+                if (thesis.getStatus().equals("") || thesis.getStatus() == null){
+                    map.put("status", "不同意参会");
+                }
                 map.put("reviewResult", "不同意参会");
             }else if (thesis.getReviewResult() == 1){
+                if (thesis.getStatus().equals("") || thesis.getStatus() == null){
+                    map.put("status", "同意参会");
+                }
                 map.put("reviewResult", "同意参会");
             }
         }
-        if (thesis.getFinalResult() != 2){
+        if (thesis.getFinalResult() == null || thesis.getFinalResult() != 2){
             String userName = "";
             if (theses.size() == 0){
                 map.put("userNameFirst", "未分配");

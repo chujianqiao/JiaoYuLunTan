@@ -88,25 +88,25 @@
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_EMAIL","邮箱")}:<span style="color: red;">*</span></label>
                                                     <div class="layui-input-block block0" style="margin-left: 80px !important;">
-                                                        <input type="email" name="email" class="layui-input" lay-verify="required|email" required/>
+                                                        <input type="email" name="email" class="layui-input" maxlength="40" placeholder="请输入邮箱" lay-verify="required|email" required/>
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_NAME","姓名")}:<span style="color: red;">*</span></label>
                                                     <div class="layui-input-block block0" style="margin-left: 80px !important;">
-                                                        <input type="text" name="name" class="layui-input" lay-verify="required" required/>
+                                                        <input type="text" name="name" maxlength="20" placeholder="请输入姓名" class="layui-input" lay-verify="required" required/>
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_BIRTHDAY","生日")}:<span style="color: red;">*</span></label>
                                                     <div class="layui-input-block block0" style="margin-left: 80px !important;">
-                                                        <input type="text" id="birthday" name="birthday" class="layui-input" lay-verify="required" required/>
+                                                        <input type="text" id="birthday" name="birthday" readonly placeholder="请选择生日" class="layui-input" lay-verify="required" required/>
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_WORK_UNIT","工作单位")}:<span style="color: red;">*</span></label>
                                                     <div class="layui-input-block block0" style="margin-left: 80px !important;">
-                                                        <input type="text" name="workUnit" class="layui-input" lay-verify="required" required/>
+                                                        <input type="text" name="workUnit" class="layui-input" maxlength="30" placeholder="请输入工作单位" lay-verify="required" required/>
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
@@ -125,7 +125,7 @@
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_POST","职务")}:</label>
                                                     <div class="layui-input-block block0" style="margin-left: 80px !important;">
-                                                        <input type="text" name="post" class="layui-input" />
+                                                        <input type="text" name="post" maxlength="20" placeholder="请输入职务" class="layui-input" />
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
@@ -144,7 +144,7 @@
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label label0" style=" width: 70px !important;">${lang.get("FIELD_DIRECTION","研究方向")}:</label>
                                                     <div class="layui-input-block block0" style="margin-left: 80px !important;">
-                                                        <input type="text" name="direction" class="layui-input" />
+                                                        <input type="text" name="direction" maxlength="30" placeholder="请输入研究方向" class="layui-input" />
                                                     </div>
                                                 </div>
 

@@ -26,6 +26,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             {field: 'meetName', sort: true, title: '会议名称'},
             {field: 'resultName', sort: true, title: '成果名称'},
             {field: 'belongName', sort: true, title: '申请人姓名'},
+            {field: 'belongDomainStr', sort: true, title: '成果领域'},
             {field: 'reviewName', sort: true, title: '评审专家'},
             {field: 'reviewResult', sort: true, title: '评审状态'},
             {field: 'score', sort: true, title: '评审分数'},
@@ -65,6 +66,9 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
                     if (data.reviewResult == "未评审" || data.reviewResult == "未分配") {
                         return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
                             "    <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"assign\">分配专家</a>\n" +
+                            "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
+                    }else if(data.reviewResult == "取消申请"){
+                        return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"detail\">查看详情</a>\n" +
                             "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
                     }else {
                         if (data.finalResult == 1) {
@@ -343,7 +347,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
                 var data=response.data;
                 var meet = [];
                 meet = data;
-                console.log(meet)
+                //console.log(meet)
 
                 var options;
                 for (var i = 0 ;i < meet.length ;i++){

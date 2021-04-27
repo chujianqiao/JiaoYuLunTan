@@ -101,10 +101,10 @@ public class LoginController extends BaseController {
                 User user1 = userService.getById(user.getId());
                 List roles = user.getRoleList();
                 long unit = 3;
-                if (user.getName() != "" && user.getName() != null){
-                    model.addAttribute("userName", user.getName());
+                if (user1.getName() != "" && user1.getName() != null){
+                    model.addAttribute("userName", user1.getName());
                 }else {
-                    model.addAttribute("userName", user.getAccount());
+                    model.addAttribute("userName", user1.getAccount());
                 }
                 if (user1.getWechatId() != null && !user1.getWechatId().equals("")){
                     model.addAttribute("wechatSign", "yes");
@@ -223,7 +223,11 @@ public class LoginController extends BaseController {
                 model.addAllAttributes(userIndexInfo);
                 LoginUser user = LoginContextHolder.getContext().getUser();
                 if (user != null){
-                    model.addAttribute("userName",user.getName());
+                    if (user.getName() != "" && user.getName() != null){
+                        model.addAttribute("userName", user.getName());
+                    }else {
+                        model.addAttribute("userName", user.getAccount());
+                    }
                     model.addAttribute("roleNames",user.getRoleNames());
                 }
                 List roles = user.getRoleList();
@@ -390,8 +394,13 @@ public class LoginController extends BaseController {
     public String index(Model model) {
         if (LoginContextHolder.getContext().hasLogin()){
             LoginUser user = LoginContextHolder.getContext().getUser();
-            if (user != null){
-                model.addAttribute("userName",user.getName());
+            User user1 = this.userService.getById(user.getId());
+            if (user1 != null){
+                if (user1.getName() != "" && user1.getName() != null){
+                    model.addAttribute("userName", user1.getName());
+                }else {
+                    model.addAttribute("userName", user1.getAccount());
+                }
                 model.addAttribute("roleNames",user.getRoleNames());
                 List roles = user.getRoleList();
                 for (int i = 0;i < roles.size();i++){

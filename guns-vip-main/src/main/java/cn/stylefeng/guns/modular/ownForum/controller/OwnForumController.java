@@ -13,6 +13,9 @@ import cn.stylefeng.guns.modular.ownForum.model.params.OwnForumParam;
 import cn.stylefeng.guns.modular.ownForum.service.OwnForumService;
 import cn.stylefeng.guns.modular.ownForum.wrapper.OwnForumWrapper;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
+import cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam;
+import cn.stylefeng.guns.sys.modular.consts.model.result.SysConfigResult;
+import cn.stylefeng.guns.sys.modular.consts.service.SysConfigService;
 import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.util.ToolUtil;
@@ -53,6 +56,9 @@ public class OwnForumController extends BaseController {
 
     @Autowired
     private FileInfoService fileInfoService;
+
+    @Autowired
+    private SysConfigService sysConfigService;
 
     @Autowired
     private MeetService meetService;
@@ -350,11 +356,35 @@ public class OwnForumController extends BaseController {
         UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
         String fileId = uploadResult.getFileId();
 
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("fileId", fileId);
-        map.put("path",uploadResult.getFileSavePath());
+        long len  = file.getSize();
+        SysConfigParam param = new SysConfigParam();
+        param.setCode("FILE_SIZE");
+        SysConfigResult sysConfigResult = sysConfigService.findByCode(param);
+        String sysFileSize = sysConfigResult.getValue();
+        String unit = sysFileSize.substring(sysFileSize.length()-1);
+        int size = Integer.parseInt(sysFileSize.substring(0,sysFileSize.length()-1));
+        double fileSize = 0;
+        if ("B".equals(unit.toUpperCase())) {
+            fileSize = (double) len ;
+        } else if ("K".equals(unit.toUpperCase())) {
+            fileSize = (double) len  / 1024;
+        } else if ("M".equals(unit.toUpperCase())) {
+            fileSize = (double) len  / 1048576;
+        } else if ("G".equals(unit.toUpperCase())) {
+            fileSize = (double) len  / 1073741824;
+        }
 
-        return ResponseData.success(0, "上传成功", map);
+        HashMap<String, Object> map = new HashMap<>();
+        if (fileSize <= size) {
+            map.put("fileId", fileId);
+            map.put("path",uploadResult.getFileSavePath());
+            return ResponseData.success(0, "上传成功", map);
+        }else {
+            map.put("status","大小问题");
+            return ResponseData.success(0, "上传失败，文件大小超过限制，请上传"+sysFileSize+"以内的文件。", map);
+        }
+
+
     }
 }
 

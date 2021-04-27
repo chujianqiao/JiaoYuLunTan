@@ -5,7 +5,8 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
     var admin = layui.admin;
     var func = layui.func;
     var upload = layui.upload;
-
+    //获取多语言
+    var langs = layui.data('system').lang;
     /**
      * 会议材料表管理
      */
@@ -21,8 +22,8 @@ layui.use(['table', 'admin', 'ax', 'func','upload'], function () {
             {type: 'checkbox'},
             {field: 'materialId', hide: true, title: '材料ID'},
             // {field: 'matPath', sort: true, title: '材料路径'},
-            {field: 'matName', sort: true, title: '材料名称'},
-            {align: 'center', toolbar: '#tableBar', title: '操作'}
+            {field: 'matName', sort: true, title: langs.FIELD_NameDocuments},
+            {align: 'center', toolbar: '#tableBar', title: langs.FIELD_Operate}
         ]];
     };
 

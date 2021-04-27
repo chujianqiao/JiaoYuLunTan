@@ -121,10 +121,12 @@ public class CheckTokenController {
     @RequestMapping("/checkSMS")
     @ResponseBody
     public String checkSMS(String phone, HttpServletRequest request, HttpServletResponse response) {
-        //String phone = "18716002632";
         JSONObject json = new JSONObject();
-        String signName = "智慧工程";
-        String code = "SMS_96665060";
+        //String signName = "智慧工程";
+        //String code = "SMS_96665060";
+        //教科院的配置
+        String signName = "中国教育科学论坛";
+        String code = "SMS_215821048";
         String smsCode = String.valueOf(new Random().nextInt(899900) + 100000);
         log.info(smsCode);
         String param = "{\"code\":\"" + smsCode + "\"}";
@@ -135,7 +137,7 @@ public class CheckTokenController {
             json.put("smsCode", smsCode);
             json.put("createTime", System.currentTimeMillis());
             request.getSession().setAttribute("smsCode",json);
-            return smsCode;
+            return "success";
         }else {
             log.info("发送失败");
             return "error";

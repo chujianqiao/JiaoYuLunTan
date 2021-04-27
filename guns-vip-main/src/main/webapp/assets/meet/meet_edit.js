@@ -114,27 +114,57 @@ layui.use(['layer','form', 'admin', 'ax','laydate','upload','formSelects','table
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/meet/editItem", function (data) {
-            Feng.success("更新成功！");
-            window.location.href = Feng.ctxPath + '/meet'
-        }, function (data) {
-            Feng.error("更新失败！" + data.responseJSON.message)
-        });
-        ajax.set(data.field);
-        ajax.start();
+
+        var beginTime = $("#beginTime").val();
+        var endTime = $("#endTime").val();
+        var joinBegTime = $("#joinBegTime").val();
+        var joinEndTime = $("#joinEndTime").val();
+        var d1 = new Date(beginTime.replace(/\-/g, "\/"));
+        var d2 = new Date(endTime.replace(/\-/g, "\/"));
+        var d3 = new Date(joinBegTime.replace(/\-/g, "\/"));
+        var d4 = new Date(joinEndTime.replace(/\-/g, "\/"));
+        if (d1.getTime() > d2.getTime()){
+            Feng.error("会议结束时间不可以小于会议开始时间，请重新填写！")
+        }else if (d3.getTime() > d4.getTime()){
+            Feng.error("报名结束时间不可以小于报名开始时间，请重新填写！")
+        } else {
+            var ajax = new $ax(Feng.ctxPath + "/meet/editItem", function (data) {
+                Feng.success("更新成功！");
+                window.location.href = Feng.ctxPath + '/meet'
+            }, function (data) {
+                Feng.error("更新失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.start();
+        }
         return false;
     });
 
     //表单提交事件
     form.on('submit(btnSubmitAdmin)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/meet/editItem", function (data) {
-            Feng.success("更新成功！");
-            window.location.href = Feng.ctxPath + '/meet/info'
-        }, function (data) {
-            Feng.error("更新失败！" + data.responseJSON.message)
-        });
-        ajax.set(data.field);
-        ajax.start();
+        var beginTime = $("#beginTime").val();
+        var endTime = $("#endTime").val();
+        var joinBegTime = $("#joinBegTime").val();
+        var joinEndTime = $("#joinEndTime").val();
+        var d1 = new Date(beginTime.replace(/\-/g, "\/"));
+        var d2 = new Date(endTime.replace(/\-/g, "\/"));
+        var d3 = new Date(joinBegTime.replace(/\-/g, "\/"));
+        var d4 = new Date(joinEndTime.replace(/\-/g, "\/"));
+        if (d1.getTime() > d2.getTime()){
+            Feng.error("会议结束时间不可以小于会议开始时间，请重新填写！")
+        }else if (d3.getTime() > d4.getTime()){
+            Feng.error("报名结束时间不可以小于报名开始时间，请重新填写！")
+        } else {
+            var ajax = new $ax(Feng.ctxPath + "/meet/editItem", function (data) {
+                Feng.success("更新成功！");
+                window.location.href = Feng.ctxPath + '/meet/info'
+            }, function (data) {
+                Feng.error("更新失败！" + data.responseJSON.message)
+            });
+            ajax.set(data.field);
+            ajax.start();
+        }
+
         return false;
     });
 

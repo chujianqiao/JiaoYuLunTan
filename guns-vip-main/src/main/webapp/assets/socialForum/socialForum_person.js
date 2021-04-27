@@ -45,15 +45,16 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             /*{field: 'applyTime', sort: true, title: '申报时间'},
             {field: 'applyId', sort: true, title: '申报单位ID'},
             {field: 'contractName', sort: true, title: '合同条件附件名称'},*/
-            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 180, /*templet: function(data){
-                    if (data.applyStatus == 0) {
+            {align: 'center', title: '操作',minWidth: 180, templet: function(data){
+                    /*if (data.applyStatus == 0) {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew'>申请</a>";
                     }else if(data.applyStatus == 2 || data.applyStatus == 3){
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"delete\">删除</a>";
                     }else {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</a>";
-                    }
-                }*/}
+                    }*/
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
+                }}
         ]];
     };
 

@@ -110,7 +110,11 @@ public class UserMgrController extends BaseController {
 
         model.addAllAttributes(BeanUtil.beanToMap(user));
         model.addAttribute("avatar", DefaultImages.defaultAvatarUrl());
-        model.addAttribute("userName",user.getName());
+        if (user.getName() != "" && user.getName() != null){
+            model.addAttribute("userName", user.getName());
+        }else {
+            model.addAttribute("userName", user.getAccount());
+        }
         model.addAttribute("menuUrl", "toPersonCenter");
         if (user.getRoleId().indexOf("4") > -1){
             model.addAttribute("isReview", "yes");

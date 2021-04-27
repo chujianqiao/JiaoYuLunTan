@@ -47,7 +47,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
 
         layer.open({
             type: 2,
-            title: '父级领域',
+            title: '论文领域',
             area: ['300px', '400px'],
             content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             end: function () {

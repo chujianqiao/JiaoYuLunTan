@@ -81,7 +81,7 @@ public class EducationResult implements Serializable {
     private String value;
 
     /**
-     * 应用范围
+     * 评审专家
      */
     @TableField("result_range")
     private String resultRange;

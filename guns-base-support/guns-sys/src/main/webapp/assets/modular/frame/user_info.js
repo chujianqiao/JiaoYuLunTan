@@ -5,10 +5,11 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
     var element = layui.element;
     var $ax = layui.ax;
     var laydate = layui.laydate;
-
+    var nowTime = new Date().valueOf();
     //渲染时间选择框
     laydate.render({
         elem: '#birthday'
+        ,max:nowTime,
     });
 
 

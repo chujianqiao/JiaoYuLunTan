@@ -365,7 +365,11 @@ public class ThesisController extends BaseController {
             if(title != null){
                 this.thesisService.add(thesisParam);
             }else if(null == title){
-                meetMemberParam.setMeetStatus(2);
+                if (meet.getFee().compareTo(BigDecimal.ZERO) <= 0){
+                    meetMemberParam.setMeetStatus(4);
+                }else {
+                    meetMemberParam.setMeetStatus(2);
+                }
                 meetMemberParam.setThesisId(null);
             }
 
@@ -412,6 +416,27 @@ public class ThesisController extends BaseController {
             this.meetMemberService.update(meetMemberParam);
 
             if (meet.getFee().compareTo(BigDecimal.ZERO) <= 0){
+                String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+                User resultUser = userService.getById(meetMemberResult.getUserId());
+                String userWechatId = resultUser.getWechatId();
+                if (userWechatId != null && userWechatId != ""){
+                    String first = "您的论文已初评完毕，请尽快前往中国教育科学论坛网站查看。";
+                    String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                    String reviewResult = "";
+                    if (isPass == 0){
+                        reviewResult = "不同意参会";
+                    }
+                    if (isPass == 1){
+                        reviewResult = "同意参会;" + thesisParam.getStatus();
+                    }
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    String time = format.format(new Date());
+                    List<String> dataList = new ArrayList<>();
+                    dataList.add("论文");
+                    dataList.add(reviewResult);
+                    dataList.add(time);
+                    CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+                }
             }else {
                 String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
                 User resultUser = userService.getById(meetMemberResult.getUserId());
@@ -530,6 +555,27 @@ public class ThesisController extends BaseController {
             }
             this.meetMemberService.update(meetMemberParam);
             if (meet.getFee().compareTo(BigDecimal.ZERO) <= 0){
+                String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
+                User resultUser = userService.getById(meetMemberResult.getUserId());
+                String userWechatId = resultUser.getWechatId();
+                if (userWechatId != null && userWechatId != ""){
+                    String first = "您的论文已初评完毕，请尽快前往中国教育科学论坛网站查看。";
+                    String remark = "您可登录中国教育科学论坛平台查看详细信息。";
+                    String reviewResult = "";
+                    if (reviewNum == 0){
+                        reviewResult = "不同意参会";
+                    }
+                    if (reviewNum == 1){
+                        reviewResult = "同意参会;" + thesisParam.getStatus();
+                    }
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    String time = format.format(new Date());
+                    List<String> dataList = new ArrayList<>();
+                    dataList.add("论文");
+                    dataList.add(reviewResult);
+                    dataList.add(time);
+                    CommonUtil.push(appid, secret, templateId, dataList, userWechatId, first, remark);
+                }
             }else {
                 String templateId = "cLgN9uptYs5OAM6cSTeyHZxsRatqzhuJa4b6kTSRaA4";
                 User resultUser = userService.getById(meetMemberResult.getUserId());
@@ -1176,12 +1222,17 @@ public class ThesisController extends BaseController {
         //类转Map
         Map map = JSON.parseObject(JSON.toJSONString(detail), Map.class);
         Integer reviewNum = detail.getReviewResult();
-        if(reviewNum != null){
-            String reviewStr = TransTypeUtil.getIsPass().get(reviewNum).toString();
-            map.put("reviewStr",reviewStr);
+        if (detail.getFinalResult() != null && detail.getFinalResult() == 2){
+            if(reviewNum != null){
+                String reviewStr = TransTypeUtil.getIsPass().get(reviewNum).toString();
+                map.put("reviewStr",reviewStr);
+            }else {
+                map.put("reviewStr","未评审");
+            }
         }else {
             map.put("reviewStr","未评审");
         }
+
 
         Integer isGreatNum = detail.getGreat();
         if(isGreatNum != null){

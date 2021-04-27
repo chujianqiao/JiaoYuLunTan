@@ -152,7 +152,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
     form.on('submit(btnSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/reviewMajor/addAccount", function (data) {
-            console.log(data)
+            //console.log(data)
             if (data.message == 'error') {
                 Feng.error("生成失败！");
             }else {
@@ -239,7 +239,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
                 var data=response.data;
                 var meet = [];
                 meet = data;
-                console.log(meet)
+                //console.log(meet)
 
                 var options;
                 for (var i = 0 ;i < meet.length ;i++){
@@ -299,7 +299,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
         layer.open({
             type: 2,
-            title: '父级领域',
+            title: '专家领域',
             area: ['300px', '400px'],
             //content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
@@ -402,7 +402,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
             ifCanSub();
 
             var ajax = new $ax(Feng.ctxPath + "/mgr/addCheck", function (data) {
-                console.log(data)
+                //console.log(data)
                 if (data.message == 'existAccount') {
                     // 设置错误信息
                     span.className = 'error';
@@ -515,7 +515,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
             ifCanSub();
 
             var ajax = new $ax(Feng.ctxPath + "/mgr/addCheck", function (data) {
-                console.log(data)
+                //console.log(data)
                 if (data.message == 'existAccount') {
                     // 设置错误信息
                     span.className = 'error';
@@ -600,7 +600,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
     $("#phone").blur(function() {
         var phone = this.value.trim();
-        var phoneTest = /^1[34578]\d{9}$/;
+        var phoneTest = /^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8,6]|8[0-9]|9[1,8,9])\d{8}$/;
         if (phoneTest.test(phone)) {
             // 设置成功信息
             var span = this.nextElementSibling;
@@ -611,7 +611,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
             ifCanSub();
 
             var ajax = new $ax(Feng.ctxPath + "/mgr/addCheck", function (data) {
-                console.log(data)
+                //console.log(data)
                 if (data.message == 'existPhone') {
                     // 设置错误信息
                     span.className = 'error';
@@ -646,7 +646,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
     })
     $("#phoneGuest").blur(function() {
         var phone = this.value.trim();
-        var phoneTest = /^1[34578]\d{9}$/;
+        var phoneTest = /^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8,6]|8[0-9]|9[1,8,9])\d{8}$/;
         if (phoneTest.test(phone)) {
             // 设置成功信息
             var span = this.nextElementSibling;
@@ -657,7 +657,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
             ifCanSub();
 
             var ajax = new $ax(Feng.ctxPath + "/mgr/addCheck", function (data) {
-                console.log(data)
+                //console.log(data)
                 if (data.message == 'existPhone') {
                     // 设置错误信息
                     span.className = 'error';

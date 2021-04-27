@@ -1,18 +1,39 @@
 layui.use(['form', 'upload', 'element', 'laydate'], function () {
     var $ = layui.jquery;
-    var $ax = layui.ax;
     var form = layui.form;
     var upload = layui.upload;
     var element = layui.element;
     var laydate = layui.laydate;
-
 
     //渲染时间选择框
     laydate.render({
         elem: '#birthday'
     });
     meetDetail();
+    getUserTranslationAjax();
+    function getUserTranslationAjax() {
+        $.ajax({
+            type: 'post',
+            url: Feng.ctxPath + "/translation/getUserTranslation",
+            success: function (response) {
+                layui.data('system', {
+                    key: "lang",
+                    value: response.data
+                });
+            }
+        });
+    }
 
+// 加载当前语言字典并缓存
+    /*var getUserTranslationAjax = new $ax(Feng.ctxPath + "/translation/getUserTranslation", function (data) {
+        layui.data('system', {
+            key: "lang",
+            value: data.data
+        });
+    }, function (data) {
+        layer.msg("加载语言字典失败！" + data.responseJSON.message, {icon: 5, anim: 6});
+    });
+    getUserTranslationAjax.start();*/
 
 
     if ($("#roleId").val().indexOf("4") > -1 || $("#roleId").val().indexOf("5") > -1 || $("#roleId").val().indexOf("1") > -1){
@@ -34,8 +55,8 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             type: 'post',
             url: Feng.ctxPath + "/meet/detailPub",
             success: function (response) {
+                var langs = layui.data('system').lang;
                 var data = response.data;
-                console.log(data);
                 if (data.meetTimeStatusStr == "无会议"){
                     $("#meetData1").html("<h2 style='font-weight: bold;'>当前无正在进行的会议。</h2>");
                     $("#thesisData1").html("<h2 style='font-weight: bold;'>当前无正在进行的会议。</h2>");
@@ -51,23 +72,23 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                     $("#iconDownload").attr("style","font-size: 60px");
                     $("#iconDownloadMo").attr("style","font-size: 60px");
                     $("#meetData1").html("<h2 style='font-weight: bold;'>" + data.detail.meetName + "</h2>");
-                    $("#meetData2").html("会议描述：" + data.detail.meetDesc);
-                    $("#meetData3").html("会议地点：" + data.detail.place);
-                    $("#meetData4").html("会议时间：" + data.beginTime + " 至 " + data.endTime);
-                    $("#meetData5").html("报名时间：" + data.joinBegTime + " 至 " + data.joinEndTime);
+                    $("#meetData2").html(langs.FIELD_DescriptionConference + "：" + data.detail.meetDesc);
+                    $("#meetData3").html(langs.FIELD_ConferencePlace + "：" + data.detail.place);
+                    $("#meetData4").html(langs.FIELD_ConferenceDate + "：" + data.beginTime + " ~ " + data.endTime);
+                    $("#meetData5").html(langs.FIELD_RegistrationDeadline + "：" + data.joinBegTime + " ~ " + data.joinEndTime);
                     $("#meetName").html("" + data.detail.meetName);
                     $("#meetNameMo").html("" + data.detail.meetName);
                     if (data.seat != undefined){
-                        $("#seat").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
-                        $("#seatMo").html("座位：" + data.seat.seatRow + "排" + data.seat.seatCol + "号");
+                        $("#seat").html(langs.FIELD_Seat + "：" + data.seat.seatRow + langs.FIELD_SeatRow + data.seat.seatCol + langs.FIELD_SeatCol);
+                        $("#seatMo").html(langs.FIELD_Seat + "：" + data.seat.seatRow + langs.FIELD_SeatRow + data.seat.seatCol + langs.FIELD_SeatCol);
                     }
                     //绑定点击事件
                     let seatId = data.seatId;
                     ownSeat(seatId);
-                    if (data.meetSize == "big"){
+                    if (data.detail.size == "big"){
                         thesisDetail();
                     } else {
-                        $("#thesisData1").html("无");
+                        $("#thesisData1").html(langs.FIELD_None);
                     }
 
                     meetMemberDetail();
@@ -82,16 +103,18 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             type: 'post',
             url: Feng.ctxPath + "/thesis/detailPub",
             success: function (response) {
+                var langs = layui.data('system').lang;
                 var data = response.data;
                 if (data != "empty"){
                     $("#thesisData1").html("<h2 style='font-weight: bold;'>" + data.thesisTitle + "</h2>");
                     $("#thesisData2").html(data.engTitle);
-                    $("#thesisData3").html("作者：" + data.thesisUser);
-                    $("#thesisData4").html("摘要：" + data.cnAbstract);
+                    $("#thesisData3").html(langs.FIELD_Author + "：" + data.thesisUser);
+                    $("#thesisData4").html(langs.FIELD_Abstract + "：" + data.cnAbstract);
+                    $("#thesisData5").html(langs.FIELD_ReviewStatus + "：" + data.reviewStr);
                     $("#thesisResult").attr("href","javascript:thesisResult('" + data.thesisId + "')")
                     $("#iconThesisResult").attr("style","font-size: 60px");
                 }else {
-                    $("#thesisData1").html("无");
+                    $("#thesisData1").html(langs.FIELD_None);
                 }
 
             }
@@ -104,7 +127,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             url: Feng.ctxPath + '/meetMember/wraplist',
             success: function (response) {
                 var data = response.data;
-
+                var langs = layui.data('system').lang;
                 for (var i = 0;i < data.length;i++){
                     console.log(data[i]);
                     if (data[i].finalResult == 2 || data[i].thesisName == "无"){
@@ -135,7 +158,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                             $("#forumMo").attr("href","javascript:forumAdd('')");
                             $("#pay").attr("href","javascript:toPay('')");
                             $("#payMo").attr("href","javascript:toPay('')");
-                            $("#forumData1").html("无");
+                            $("#forumData1").html(langs.FIELD_None);
                             $("#forumData2").empty();
                             $("#forumData3").empty();
                             $("#forumData4").empty();
@@ -145,7 +168,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                         $("#forumMo").attr("href","javascript:forumAdd('')");
                         $("#pay").attr("href","javascript:toPay('')");
                         $("#payMo").attr("href","javascript:toPay('')");
-                        $("#forumData1").html("无");
+                        $("#forumData1").html(langs.FIELD_None);
                         $("#forumData2").empty();
                         $("#forumData3").empty();
                         $("#forumData4").empty();
@@ -163,6 +186,7 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             url:Feng.ctxPath + "/forum/wrapList" ,
             success:function(response){
                 var data=response.data;
+                var langs = layui.data('system').lang;
                 var forums = [];
                 forums = data;
                 var options;
@@ -173,14 +197,14 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                     }
                     if(ownForumid == forum.forumId){
                         $("#forumData1").html("<h2 style='font-weight: bold;'>" + forum.forumName + "</h2>");
-                        $("#forumData2").html("论坛地点：" + forum.location);
-                        $("#forumData3").html("论坛时间：" + forum.startTime + " 至 " + forum.endTime);
-                        $("#forumData4").html("报名时间：" + forum.registerStartTime + " 至 " + forum.registerEndTime);
-                        $("#forumName").html("论坛：" + forum.forumName);
-                        $("#forumNameMo").html("论坛：" + forum.forumName);
+                        $("#forumData2").html(langs.FIELD_VenueForum + "：" + forum.location);
+                        $("#forumData3").html(langs.FIELD_DateForum + "：" + forum.startTime + " ~ " + forum.endTime);
+                        //$("#forumData4").html("报名时间：" + forum.registerStartTime + " 至 " + forum.registerEndTime);
+                        $("#forumName").html(langs.FIELD_Forum + "：" + forum.forumName);
+                        $("#forumNameMo").html(langs.FIELD_Forum + "：" + forum.forumName);
                         break;
                     }else{
-                        $("#forumData1").html("无");
+                        $("#forumData1").html(langs.FIELD_None);
                         $("#forumData2").empty();
                         $("#forumData3").empty();
                         $("#forumData4").empty();
@@ -192,12 +216,13 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
 
     function ownSeat(seatId){
         $("#seat").each(function(){
+            var langs = layui.data('system').lang;
             let seatText = document.getElementById("seat").innerText;
             let index = seatText.indexOf('无');
             if(index < 0){
                 $(this).click(function(){
                     layer.open({
-                        title: '我的座位',
+                        title: langs.FIELD_MySeat,
                         type: 2,
                         area: ['1200px','580px'],
                         // resize:false,
@@ -207,12 +232,13 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
             }
         })
         $("#seatMo").each(function(){
+            var langs = layui.data('system').lang;
             let seatText = document.getElementById("seatMo").innerText;
             let index = seatText.indexOf('无');
             if(index < 0){
                 $(this).click(function(){
                     layer.open({
-                        title: '我的座位',
+                        title: langs.FIELD_MySeat,
                         type: 2,
                         area: ['1200px','580px'],
                         // resize:false,

@@ -32,6 +32,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             {field: 'thesisTitle', sort: true, title: '论文名称（中文）'},
             {field: 'engTitle', sort: true, title: '论文名称（英文）'},
             {field: 'userName', sort: true, title: '作者'},
+            {field: 'belongDomainStr', sort: true, title: '所属领域'},
             {field: 'firstName', sort: true, title: '评审专家'},
             {field: 'status', sort: true, title: '评审状态'},
             {field: 'reviewTime', sort: true, title: '评审时间'},
@@ -331,6 +332,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
             // {field: 'engTitle', sort: true, title: '英文题目'},
             // {field: 'thesisUser', sort: true, title: '论文作者ID'},
             {field: 'userName', sort: true, title: '作者'},
+            {field: 'belongDomainStr', sort: true, title: '所属领域'},
             {field: 'againName', sort: true, title: '评审专家'},
             //{field: 'unitsName', sort: true, title: '所在单位'},
             // {field: 'isgreat', sort: true, title: '是否推荐优秀'},
@@ -617,7 +619,7 @@ layui.use(['table', 'form', 'admin', 'ax', 'func'], function () {
                 var data=response.data;
                 var meet = [];
                 meet = data;
-                console.log(meet)
+                //console.log(meet)
 
                 var options;
                 for (var i = 0 ;i < meet.length ;i++){

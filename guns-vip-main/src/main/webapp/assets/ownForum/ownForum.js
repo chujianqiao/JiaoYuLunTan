@@ -78,11 +78,15 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
         queryData['forumName'] = $("#forumName").val();
         $("#forumNameExp").val($("#forumName").val());
         queryData['meetId'] = $("#meetId").val();
+        queryData['applyStatus'] = $("#applyStatus").val();
         table.reload(OwnForum.tableId, {
             where: queryData, page: {curr: 1}
         });
     };
     form.on('select(meetId)', function(data){
+        OwnForum.search();
+    });
+    form.on('select(applyStatus)', function(data){
         OwnForum.search();
     });
     /**
@@ -171,6 +175,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             data: {
                 "forumName":$('#forumNameExp').val(),
                 "meetId":$('#meetId').val(),
+                "applyStatus":$('#applyStatus').val(),
             },
             async: false,
             dataType: 'json',

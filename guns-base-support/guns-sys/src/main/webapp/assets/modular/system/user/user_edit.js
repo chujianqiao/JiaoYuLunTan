@@ -17,7 +17,7 @@ layui.use(['layer', 'form', 'admin', 'upload', 'laydate', 'ax', 'formSelects'], 
     var layer = layui.layer;
     var formSelects = layui.formSelects;
     var upload = layui.upload;
-
+    var nowTime = new Date().valueOf();
     //获取用户信息
     var ajax = new $ax(Feng.ctxPath + "/mgr/getUserInfo?userId=" + Feng.getUrlParam("userId"));
     var result = ajax.start();
@@ -57,6 +57,7 @@ layui.use(['layer', 'form', 'admin', 'upload', 'laydate', 'ax', 'formSelects'], 
     // 渲染时间选择框
     laydate.render({
         elem: '#birthday'
+        ,max: nowTime,
     });
 
     // 表单提交事件
@@ -100,7 +101,7 @@ layui.use(['layer', 'form', 'admin', 'upload', 'laydate', 'ax', 'formSelects'], 
             obj.preview(function (index, file, result) {
                 var fileName = file.name;
                 var fileType = fileName.substr(fileName.lastIndexOf("."));
-                if(fileType.compare(".pdf")){
+                if(fileType.compare(".ppt") || fileType.compare(".pptx")){
                     $("#pptNameTip").val(file.name);
                 }
 
@@ -108,8 +109,8 @@ layui.use(['layer', 'form', 'admin', 'upload', 'laydate', 'ax', 'formSelects'], 
         }
         , done: function (res) {
             var type = res.data.type;
-            if(type != ".pdf"){
-                Feng.error("上传失败，文件格式不匹配");
+            if(type != ".ppt" && type != ".pptx"){
+                Feng.error("上传失败，文件格式不匹配，请上传ppt文档");
             }else {
                 $("#pptInputHidden").val(res.data.fileId);
                 $("#pptPath").val(res.data.path);
@@ -154,8 +155,8 @@ layui.use(['layer', 'form', 'admin', 'upload', 'laydate', 'ax', 'formSelects'], 
         }
         , done: function (res) {
             var type = res.data.type;
-            if(type.compare(".doc") || type.compare(".docx")){
-                Feng.error("上传失败，文件格式不匹配");
+            if(type != ".doc" && type != ".docx"){
+                Feng.error("上传失败，文件格式不匹配，请上传word文档");
             }else {
                 $("#wordInputHidden").val(res.data.fileId);
                 $("#wordPath").val(res.data.path);

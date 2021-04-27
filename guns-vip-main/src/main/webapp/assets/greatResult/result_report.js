@@ -88,6 +88,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             flag = 1;
         })
         if (flag == 1) {
+            $("#personSubmit").css("pointer-events","none");
             if (data.field.resultType == 1) {
                 var ajax = new $ax(Feng.ctxPath + "/greatResult/addItem", function (data) {
                     Feng.success("申报成功！");
@@ -173,13 +174,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             });
         }
         , done: function (res) {
-            $("#introducefileInputHidden").val(res.data.fileId);
-            $("#introducePath").val(res.data.path);
-            $("#introduceName").val($("#introducefileNameTip").val());
-            Feng.success(res.message);
+            var status = res.data.status;
+            if (status == "大小问题" || status === "大小问题"){
+                $("#introducefileNameTip").val("");
+                $("#introducefileNameTip").html("");
+                Feng.error(res.message);
+            }else {
+                $("#introducefileInputHidden").val(res.data.fileId);
+                $("#introducePath").val(res.data.path);
+                $("#introduceName").val($("#introducefileNameTip").val());
+                Feng.success(res.message);
+            }
+
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -194,13 +203,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             });
         }
         , done: function (res) {
-            $("#letterfileInputHidden").val(res.data.fileId);
-            $("#letterPath").val(res.data.path);
-            $("#letterName").val($("#letterfileNameTip").val());
-            Feng.success(res.message);
+            var status = res.data.status;
+            if (status == "大小问题" || status === "大小问题"){
+                $("#letterfileNameTip").val("");
+                $("#letterfileNameTip").html("");
+                Feng.error(res.message);
+            }else {
+                $("#letterfileInputHidden").val(res.data.fileId);
+                $("#letterPath").val(res.data.path);
+                $("#letterName").val($("#letterfileNameTip").val());
+                Feng.success(res.message);
+            }
+
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -215,13 +232,21 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             });
         }
         , done: function (res) {
-            $("#commitfileInputHidden").val(res.data.fileId);
-            $("#commitPath").val(res.data.path);
-            $("#commitName").val($("#commitfileNameTip").val());
-            Feng.success(res.message);
+            var status = res.data.status;
+            if (status == "大小问题" || status === "大小问题"){
+                $("#commitfileNameTip").val("");
+                $("#commitfileNameTip").html("");
+                Feng.error(res.message);
+            }else {
+                $("#commitfileInputHidden").val(res.data.fileId);
+                $("#commitPath").val(res.data.path);
+                $("#commitName").val($("#commitfileNameTip").val());
+                Feng.success(res.message);
+            }
+
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -260,7 +285,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             Feng.success(res.message);
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -281,7 +306,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             Feng.success(res.message);
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -302,7 +327,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             Feng.success(res.message);
         }
         , error: function () {
-            Feng.error("上传图片失败！");
+            Feng.error("上传文件失败！");
         }
     });
 
@@ -353,7 +378,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
         layer.open({
             type: 2,
-            title: '父级领域',
+            title: '成果领域',
             area: ['300px', '400px'],
             //content: Feng.ctxPath + '/thesisDomain/thesisDomainAssign?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,

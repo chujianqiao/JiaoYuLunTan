@@ -72,10 +72,10 @@ myJs={
 			$(id).click(function(){
 				var src=$(this).attr('src');
 				if(src.includes('show')){
-					$(this).attr('src','images/hide.png');
+					$(this).attr('src','/assets/common/images/hide.png');
 					$(this).siblings('.language').css('height','auto')
 				}else{
-					$(this).attr('src','images/show.png');
+					$(this).attr('src','/assets/common/images/show.png');
 					$(this).siblings('.language').css('height','.3rem')
 				}
 			});

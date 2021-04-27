@@ -277,6 +277,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
             flag = 1;
         })
         if (flag == 1){
+            $("#divSubmit").css("pointer-events","none");
             var ajax = new $ax(Feng.ctxPath + "/thesis/addItem", function (data) {
                 Feng.success("提交成功！");
                 window.location.href = Feng.ctxPath + '/meetMember';

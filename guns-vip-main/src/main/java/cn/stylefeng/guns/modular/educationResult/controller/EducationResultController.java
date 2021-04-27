@@ -246,6 +246,10 @@ public class EducationResultController extends BaseController {
                 //param.setScore(0);
                 param.setReviewResult(2);
                 this.educationReviewMiddleService.add(param);
+                EducationResultParam educationResultParam1 = new EducationResultParam();
+                educationResultParam1.setResultId(Long.parseLong(resultId[j]));
+                educationResultParam1.setResultRange(userId+"");
+                this.educationResultService.update(educationResultParam1);
             }
 
         }
@@ -345,6 +349,13 @@ public class EducationResultController extends BaseController {
     @BussinessLog(value = "修改教改实验申报信息", key = "resultId", dict = ResultDict.class)
     @ResponseBody
     public ResponseData editItem(EducationResultParam educationResultParam) {
+        this.educationResultService.update(educationResultParam);
+        return ResponseData.success();
+    }
+    @RequestMapping("/approveItem")
+    @BussinessLog(value = "修改教改实验申报信息", key = "resultId", dict = ResultDict.class)
+    @ResponseBody
+    public ResponseData approveItem(EducationResultParam educationResultParam) {
         this.educationResultService.update(educationResultParam);
 
 

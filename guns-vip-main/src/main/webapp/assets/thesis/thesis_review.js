@@ -349,7 +349,6 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
                 var data=response.data;
                 var meet = [];
                 meet = data;
-                console.log(meet)
 
                 var options;
                 for (var i = 0 ;i < meet.length ;i++){
@@ -550,7 +549,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     GreatResult.openDetail = function (data) {
-        window.location.href = Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId;
+        window.location.href = Feng.ctxPath + '/greatResult/detailAdmin?resultId=' + data.resultId + '&applyType=' + data.applyType;
     };
 
     /**

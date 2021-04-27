@@ -55,29 +55,37 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
     var result = ajax.start();
     form.val('ownForumForm', result.data);
     if (result.data.applyType == 1){
-            $("#manaEmailDiv").attr("style","display:block");
-            $("#manaEmailDiv").children('div').children('input').attr("lay-verify","required|email");
-            $("#postDiv").attr("style","display:block");
-            $("#postDiv").children('div').children('input').attr("lay-verify","required");
-            $("#managerDiv").children('label').html("姓名：<span style='color: red;'>*</span>");
-            $("#managerDiv").children('div').children('input').attr("placeholder","请输入姓名");
-        } else {
-            $("#manaEmailDiv").attr("style","display:none");
-            $("#manaEmailDiv").children('div').children('input').attr("lay-verify","");
-            $("#postDiv").attr("style","display:none");
-            $("#postDiv").children('div').children('input').attr("lay-verify","");
-            $("#managerDiv").children('label').html("负责人：<span style='color: red;'>*</span>");
-            $("#managerDiv").children('div').children('input').attr("placeholder","请输入负责人");
-        }
+        $("#manaEmailDiv").attr("style","display:block");
+        $("#manaEmailDiv").children('div').children('input').attr("lay-verify","required|email");
+        $("#postDiv").attr("style","display:block");
+        $("#postDiv").children('div').children('input').attr("lay-verify","required");
+        $("#managerDiv").children('label').html("姓名：<span style='color: red;'>*</span>");
+        $("#managerDiv").children('div').children('input').attr("placeholder","请输入姓名");
+    } else {
+        $("#manaEmailDiv").attr("style","display:none");
+        $("#manaEmailDiv").children('div').children('input').attr("lay-verify","");
+        $("#postDiv").attr("style","display:none");
+        $("#postDiv").children('div').children('input').attr("lay-verify","");
+        $("#managerDiv").children('label').html("负责人：<span style='color: red;'>*</span>");
+        $("#managerDiv").children('div').children('input').attr("placeholder","请输入负责人");
+    }
+    if (result.data.issubject == 1){
+        $("#subjectLevDiv").attr("style","display:block");
+        $("#subjectNameDiv").attr("style","display:block");
+    } else {
+        $("#subjectLevDiv").attr("style","display:none");
+        $("#subjectNameDiv").attr("style","display:none");
+    }
 
     //表单提交事件
     form.on('submit(btnSubmit)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/ownForum/approveForum", function (data) {
             Feng.success("通过申请成功！");
             //传给上个页面，刷新table用
-            admin.putTempData('formOk', true);
+            //admin.putTempData('formOk', true);
             //关掉对话框
-            admin.closeThisDialog();
+            window.location.href = Feng.ctxPath + '/ownForum';
+            //admin.closeThisDialog();
         }, function (data) {
             Feng.error("通过申请失败！" + data.responseJSON.message)
         });
@@ -92,9 +100,10 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         var ajax = new $ax(Feng.ctxPath + "/ownForum/rejectForum", function (data) {
             Feng.success("驳回申请成功！");
             //传给上个页面，刷新table用
-            admin.putTempData('formOk', true);
+            //admin.putTempData('formOk', true);
             //关掉对话框
-            admin.closeThisDialog();
+            window.location.href = Feng.ctxPath + '/ownForum';
+            //admin.closeThisDialog();
         }, function (data) {
             Feng.error("驳回申请失败！" + data.responseJSON.message)
         });

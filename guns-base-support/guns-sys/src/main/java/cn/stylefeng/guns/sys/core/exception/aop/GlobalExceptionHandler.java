@@ -228,7 +228,8 @@ public class GlobalExceptionHandler {
         if (LoginContextHolder.getContext().hasLogin()) {
             LogManager.me().executeLog(LogTaskFactory.exceptionLog(LoginContextHolder.getContext().getUserId(), e));
         }
-        String message = String.format("服务器未知运行时异常: %s", e.getMessage());
+        //String message = String.format("服务器未知运行时异常: %s", e.getMessage());
+        String message = String.format("服务器未知运行时异常。");
         getRequest().setAttribute("tip", message);
         return new ErrorResponseData(BizExceptionEnum.SERVER_ERROR.getCode(), message);
     }

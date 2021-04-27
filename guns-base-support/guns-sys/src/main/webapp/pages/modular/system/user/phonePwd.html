@@ -114,11 +114,11 @@
                         <div id="topList2" class="liulist"></div>
                         <div id="topList3" class="liulist"></div>
                         <div id="topText1" class="liutext for-cur"><em>1</em><br/>
-                            <strong>验证身份</strong></div>
+                            <strong>${lang.get('FIELD_Authentication','验证身份')}</strong></div>
                         <div id="topText2" class="liutext"><em>2</em><br/>
-                            <strong>设置新密码</strong></div>
+                            <strong>${lang.get('FIELD_SetANewPassword','设置新密码')}</strong></div>
                         <div id="topText3" class="liutext"><em>3</em><br/>
-                            <strong>完成</strong></div>
+                            <strong>${lang.get('FIELD_Done','完成')}</strong></div>
                     </div>
                 </div>
             </div>
@@ -133,24 +133,24 @@
                             </div>
                         </div>-->
                         <div class="layui-inline layui-col-md12">
-                            <label class="layui-form-label">${lang.get("FIELD_PHONE","手机号")}<span style="color: red;">*</span></label>
+                            <label class="layui-form-label">${lang.get("FIELD_Mobilephone","手机号")}<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
                                 <input name="phone" value="${phone}" disabled="disabled" type="text" class="layui-input layui-disabled" lay-verify="required|phone" required autocomplete="off"/>
                             </div>
                         </div>
                         <div class="layui-inline layui-col-md12">
-                            <label class="layui-form-label">验证码<span style="color: red;">*</span></label>
+                            <label class="layui-form-label">${lang.get("FIELD_SMS","验证码")}<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
                                 <div style="float: left;">
-                                    <input id="smsCode" name="smsCode" placeholder="请输入短信验证码" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+                                    <input id="smsCode" name="smsCode" placeholder="${lang.get('FIELD_PleaseCode','请输入验证码')}" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
                                 </div>
                                 <div style="float: left;">
-                                    <button type="button" class="layui-btn layui-btn-sm" style="height:38px;background-color: rgb(0,172,210);" id="sentSmsCode">获取短信验证码</button>
+                                    <button type="button" class="layui-btn layui-btn-sm" style="height:38px;background-color: rgb(0,172,210);" id="sentSmsCode">${lang.get("FIELD_ReceiveSMS","获取短信验证码")}</button>
                                 </div>
                             </div>
                         </div>
                         <div class="layui-inline layui-col-md12" style="margin-left: 43%">
-                            <button class="layui-btn" style="background-color: rgb(0,172,210);" lay-filter="btnSubmit" lay-submit>&emsp;下一步&emsp;</button>
+                            <button class="layui-btn" style="background-color: rgb(0,172,210);" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("FIELD_NextStep","下一步")}&emsp;</button>
                         </div>
                     </div>
                 </form>

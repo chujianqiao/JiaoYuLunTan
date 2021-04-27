@@ -295,9 +295,6 @@ $(function () {
             "code": "HN",
             "name": "洪都拉斯 | Honduras"
         }, {
-            "code": "HK",
-            "name": "香港 | Hong Kong"
-        }, {
             "code": "HU",
             "name": "匈牙利 | Hungary"
         }, {
@@ -387,9 +384,6 @@ $(function () {
         }, {
             "code": "LU",
             "name": "卢森堡 | Luxembourg"
-        }, {
-            "code": "MO",
-            "name": "澳门 | Macao"
         }, {
             "code": "MK",
             "name": "马其顿 | Macedonia, The Former Yugoslav Republic of"

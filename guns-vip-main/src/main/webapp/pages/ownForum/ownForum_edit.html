@@ -25,8 +25,7 @@
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">论坛计划规模<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="forumSize" name="forumSize" placeholder="请输入论坛计划规模" type="text" class="layui-input" lay-verify="required" required/>
-                            <div class="layui-form-mid layui-word-aux">不超过100人</div>
+                            <input id="forumSize" name="forumSize" placeholder="请输入论坛计划规模（不超过100人）" type="number" oninput="if(value>100)value=100;if(value<0)value=0" class="layui-input" lay-verify="required" required/>
                         </div>
 
                     </div>
@@ -96,17 +95,17 @@
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">是否有课题团队<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input type="radio" name="issubject" value="1" title="是" checked/>
-                            <input type="radio" name="issubject" value="0" title="否"/>
+                            <input type="radio" lay-filter="issubject" name="issubject" value="1" title="是" checked/>
+                            <input type="radio" lay-filter="issubject" name="issubject" value="0" title="否"/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
+                    <div id="subjectLevDiv" class="layui-inline layui-col-md12">
                         <label class="layui-form-label">课题级别</label>
                         <div class="layui-input-block">
                             <input id="subjectLev" name="subjectLev" placeholder="请输入课题级别" type="text" class="layui-input"/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md12">
+                    <div id="subjectNameDiv" class="layui-inline layui-col-md12">
                         <label class="layui-form-label">课题名称</label>
                         <div class="layui-input-block">
                             <input id="subjectName" name="subjectName" placeholder="请输入课题名称" type="text" class="layui-input"/>

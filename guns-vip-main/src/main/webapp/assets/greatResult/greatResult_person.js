@@ -261,7 +261,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
                 var data=response.data;
                 var meet = [];
                 meet = data;
-                console.log(meet)
+                //console.log(meet)
 
                 var options;
                 for (var i = 0 ;i < meet.length ;i++){

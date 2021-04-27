@@ -20,7 +20,7 @@
 <body>
 <div class="login-wrapper">
     <div class="layui-form">
-        <h2>用户登录</h2>
+        <h2>${lang.get('FIELD_LogIn','用户登录')}</h2>
         @if(constants.getTenantOpen()){
         <div class="layui-form-item layui-input-icon-group">
             <i class="layui-icon layui-icon-username"></i>
@@ -31,16 +31,16 @@
         @}
         <div class="layui-form-item layui-input-icon-group">
             <i class="layui-icon layui-icon-username"></i>
-            <input class="layui-input" id="username" name="username" placeholder="请输入登录账号" autocomplete="off" lay-verType="tips" lay-verify="required" required/>
+            <input class="layui-input" id="username" name="username" placeholder="${lang.get('FIELD_PleaseAccount','请输入登录账号')}" autocomplete="off" lay-verType="tips" lay-verify="required" required/>
         </div>
         <div class="layui-form-item layui-input-icon-group">
             <i class="layui-icon layui-icon-password"></i>
-            <input class="layui-input" id="password" name="password" placeholder="请输入登录密码" type="password" lay-verType="tips" lay-verify="required" required/>
+            <input class="layui-input" id="password" name="password" placeholder="${lang.get('FIELD_PleasePassword','请输入登录密码')}" type="password" lay-verType="tips" lay-verify="required" required/>
         </div>
         @if(constants.getKaptchaOpen()){
         <div class="layui-form-item layui-input-icon-group login-captcha-group">
             <i class="layui-icon layui-icon-auz"></i>
-            <input class="layui-input" id="kaptcha" placeholder="请输入验证码" autocomplete="off" lay-verType="tips" lay-verify="required" required/>
+            <input class="layui-input" id="kaptcha" placeholder="${lang.get('FIELD_PleaseCode','请输入验证码')}" autocomplete="off" lay-verType="tips" lay-verify="required" required/>
             <img class="login-captcha" src="${ctxPath}/kaptcha" alt=""/>
         </div>
         @}
@@ -50,20 +50,20 @@
 <!--        </div>-->
 
         <div class="layui-form-item">
-            <button class="layui-btn layui-btn-submit layui-btn-fluid" id="submit">登录</button>
+            <button class="layui-btn layui-btn-submit layui-btn-fluid" id="submit">${lang.get('FIELD_LogInButton','登录')}</button>
         </div>
         <div class="layui-form-item" style="margin-top: -10px;margin-bottom: 0px">
-            <a class="layui-link" id="oauthUrl" href="#">扫码登录</a>
+            <a class="layui-link" id="oauthUrl" href="#">${lang.get('FIELD_ScanQRCode','扫码登录')}</a>
             <i class="layui-icon layui-icon-login-wechat"
                style="color: #4DAF29;font-size: 20px;"></i>
-            <a class="layui-link" style="float: right;" onclick="forgetPwd()"><span style="color: grey;text-decoration:underline;">忘记密码？</span></a>
+            <a class="layui-link" style="float: right;" onclick="forgetPwd()"><span style="color: grey;text-decoration:underline;">${lang.get('FIELD_ForgotPassword','忘记密码')}？</span></a>
         </div>
 
         <br>
         <div class="layui-form-item">
 
-            <a class="layui-link" target="_top" id="phoneLogin">手机验证码登录</a>
-            <a class="layui-link" target="_top" style="float: right" id="registePerson">立即注册</a>
+            <a class="layui-link" target="_top" id="phoneLogin">${lang.get('FIELD_LogSMS','手机验证码登录')}</a>
+            <a class="layui-link" target="_top" style="float: right" id="registePerson">${lang.get('FIELD_Signupnow','立即注册')}</a>
 
         </div>
 

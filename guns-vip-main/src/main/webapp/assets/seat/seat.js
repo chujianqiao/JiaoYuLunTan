@@ -72,7 +72,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
         layer.open({
             title: '分配座位',
             type: 2,
-            area: ['1200px','580px'],
+            area: ['1100px','480px'],
             // resize:false,
             content: Feng.ctxPath + '/meetSeat?seatId=' + data.seatId
         });
@@ -195,7 +195,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
                 var data=response.data;
                 var meet = [];
                 meet = data;
-                console.log(meet)
+                //console.log(meet)
 
                 var options;
                 for (var i = 0 ;i < meet.length ;i++){
