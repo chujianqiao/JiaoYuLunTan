@@ -42,19 +42,19 @@
 									<div class="layui-card-body mo">
 										<div class="layui-form-item layui-row">
 											<div class="layui-inline layui-col-md12">
-												<label class="layui-form-label">大会主题 ：<span style="color: red;">*</span></label>
+												<label class="layui-form-label">${lang.get("FIELD_ThemeConference","大会主题")} ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="topicName" maxlength="100" placeholder="请输入大会主题" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
+													<input name="topicName" maxlength="100"  class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
-												<label class="layui-form-label">分论坛主题 ：<span style="color: red;">*</span></label>
+												<label class="layui-form-label">${lang.get("FIELD_ThemeSubforum","分论坛主题")} ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
-													<input name="subTopic" maxlength="100" placeholder="请输入分论坛主题" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
+													<input name="subTopic" maxlength="100"  class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 												</div>
 											</div>
 											<div class="layui-inline layui-col-md12">
-												<label class="layui-form-label">选题意义 ：<span style="color: red;">*</span></label>
+												<label class="layui-form-label">${lang.get("FIELD_Rationale","选题意义")} ：<span style="color: red;">*</span></label>
 												<div class="layui-input-block">
 													<textarea name="topicDesc" maxlength="500" style="height: 200px" placeholder="请输入选题意义（500字内）" class="layui-input" type="text" lay-verify="required" required autocomplete="off"></textarea>
 												</div>
@@ -62,7 +62,7 @@
 											<div class="btns sb-btns fontSize16">
 												<!--<input type="checkbox" name="ifAgree" id="ifAgree" title="阅读并同意遵守《论坛章程》" lay-skin="primary">-->
 												<br><br>
-												<div id="btnSubmit" class="btn submit" lay-filter="btnSubmit" lay-submit>提交</div>
+												<div id="btnSubmit" class="btn submit" lay-filter="btnSubmit" lay-submit>${lang.get("FIELD_Submit","提交")}</div>
 												<!--<div class="btn cancel" id="btnCancel">取消</div>-->
 											</div>
 										</div>

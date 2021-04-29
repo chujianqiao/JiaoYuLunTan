@@ -58,23 +58,23 @@
 											<div class="layui-card-body mo">
 												<div class="layui-form-item layui-row">
 													<div class="layui-inline layui-col-md12">
-														<label class="layui-form-label">成果申报类别 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_COD","成果申报类别")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
-																<input type="radio" name="resultType" value="0" title="教改实验申报" checked/>
-																<input type="radio" name="resultType" value="1" title="著作申报"/>
+																<input type="radio" name="resultType" value="0" title="${lang.get('FIELD_AOERE','教改实验申报')}" checked/>
+																<input type="radio" name="resultType" value="1" title="${lang.get('FIELD_DeclarationWorks','著作申报')}"/>
 														</div>
 													</div>
 													<div class="layui-inline layui-col-md12">
-														<label class="layui-form-label">成果名称 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_TitleDeliverables","成果名称")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
-															<input name="resultName" placeholder="请输入成果名称" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
+															<input name="resultName"  class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 														</div>
 													</div>
 													<div class="layui-inline layui-col-md12">
-														<label class="layui-form-label">所属领域 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_SpecialisedArea","所属领域")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
 															<input id="belongDomain" name="belongDomain" type="hidden">
-                                                            <input id="pName" name="pName" readonly placeholder="请选择成果所属领域" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+                                                            <input id="pName" name="pName"  type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
 															<!--<select id="belongDomain" name="belongDomain" lay-verify="" lay-search>
 																&lt;!&ndash;<option value="">请选择专家领域</option>
                                                                 <option value="021">form</option>
@@ -83,50 +83,50 @@
 														</div>
 													</div>
 													<div class="layui-inline layui-col-md12">
-														<label class="layui-form-label">成果申报类型 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_TypeDeclaration","成果申报类型")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
-																<input type="radio" lay-filter="applyType" name="applyType" value="1" title="个人申报" checked/>
-																<input type="radio" lay-filter="applyType" name="applyType" value="2" title="单位申报"/>
+																<input type="radio" lay-filter="applyType" name="applyType" value="1" title="${lang.get('FIELD_ApplyIndividual','个人申报')}" checked/>
+																<input type="radio" lay-filter="applyType" name="applyType" value="2" title="${lang.get('FIELD_ApplyOrganization','单位申报')}"/>
 														</div>
 													</div>
 													<div id="belongNameDiv" class="layui-inline layui-col-md12">
-														<label class="layui-form-label">申请人姓名 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_NameApplicant","申请人姓名")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
-															<input name="belongName" placeholder="请输入申请人姓名" class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
+															<input name="belongName"  class="layui-input" type="text" lay-verify="required" required autocomplete="off"/>
 														</div>
 													</div>
 													<div id="manaPhoneDiv" class="layui-inline layui-col-md12">
-														<label class="layui-form-label">申请人手机号 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_TNOA","申请人手机号")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
-															<input name="manaPhone" placeholder="请输入申请人手机号" class="layui-input" type="text" lay-verify="required|phone" required autocomplete="off"/>
+															<input name="manaPhone"  class="layui-input" type="text" lay-verify="required|phone" required autocomplete="off"/>
 														</div>
 													</div>
 													<div id="manaEmailDiv" class="layui-inline layui-col-md12">
-														<label class="layui-form-label">申请人邮箱 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_EmailApplicant","申请人邮箱")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
-															<input name="manaEmail" placeholder="请输入申请人邮箱" class="layui-input" type="text" lay-verify="required|email" required autocomplete="off"/>
+															<input name="manaEmail"  class="layui-input" type="text" lay-verify="required|email" required autocomplete="off"/>
 														</div>
 													</div>
 													<div id="teamDiv" class="layui-inline layui-col-md12">
-														<label class="layui-form-label">所在单位 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_FromOrganization","所在单位")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
-															<input name="team" type="text" placeholder="请输入所在单位" class="layui-input" lay-verify="required" required autocomplete="off"/>
+															<input name="team" type="text"  class="layui-input" lay-verify="required" required autocomplete="off"/>
 														</div>
 													</div>
 													<div id="manaPostDiv" class="layui-inline layui-col-md12">
-														<label class="layui-form-label">申请人职称/职务 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_TitlePosition","申请人职称/职务")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
-															<input name="manaPost" type="text" placeholder="请输入申请人职称/职务" class="layui-input" lay-verify="required" required autocomplete="off"/>
+															<input name="manaPost" type="text"  class="layui-input" lay-verify="required" required autocomplete="off"/>
 														</div>
 													</div>
 													<div id="manaDirectDiv" class="layui-inline layui-col-md12">
-														<label class="layui-form-label">申请人研究方向 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_ResearchFieldsApply","申请人研究方向")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
-															<input name="manaDirect" type="text" placeholder="请输入申请人研究方向" class="layui-input" lay-verify="required" required autocomplete="off"/>
+															<input name="manaDirect" type="text"  class="layui-input" lay-verify="required" required autocomplete="off"/>
 														</div>
 													</div>
 													<div class="layui-inline layui-col-md12">
-														<label class="layui-form-label">优秀成果简介附件 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_AOIFOD","优秀成果简介附件")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
 															<input id="introducefileInputHidden" name="introducefileInputHidden" type="hidden" class="layui-input"/>
 															<input id="introducePath" name="introducePath" type="hidden" class="layui-input"/>
@@ -134,18 +134,18 @@
 
 
 																<!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
-															<input name="introduceName" id="introducefileNameTip" placeholder="请上传优秀成果简介附件" disabled class="layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+															<input name="introduceName" id="introducefileNameTip"  disabled class="layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
 
 															<div style="float: left;">
-																<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="introducefileBtn"><i class="layui-icon"></i>选择文件</button>
+																<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="introducefileBtn"><i class="layui-icon"></i>${lang.get('FIELD_SelectDocuments','选择文件')}</button>
 															</div>
 															<div style="float: left;">
-																<button type="button" class="layui-btn layui-btn-sm" id="downloadPlan"><i class="layui-icon"></i>模板下载</button>
+																<button type="button" class="layui-btn layui-btn-sm" id="downloadPlan"><i class="layui-icon"></i>${lang.get('FIELD_FormatDownload','模板下载')}</button>
 															</div>
 														</div>
 													</div>
 													<div class="layui-inline layui-col-md12">
-														<label class="layui-form-label">专家推荐信附件 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_AORL","专家推荐信附件")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
 															<input id="letterfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
 															<input id="letterPath" name="letterPath" type="hidden" class="layui-input"/>
@@ -153,15 +153,15 @@
 
 
 																<!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
-																<input name="letterName" id="letterfileNameTip" placeholder="请上传专家推荐信附件" disabled class="layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+																<input name="letterName" id="letterfileNameTip"  disabled class="layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
 
 															<div style="float: left;">
-																<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="letterfileBtn"><i class="layui-icon"></i>选择文件</button>
+																<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="letterfileBtn"><i class="layui-icon"></i>${lang.get('FIELD_SelectDocuments','选择文件')}</button>
 															</div>
 														</div>
 													</div>
 													<div class="layui-inline layui-col-md12">
-														<label class="layui-form-label">原创承诺书 ：<span style="color: red;">*</span></label>
+														<label class="layui-form-label">${lang.get("FIELD_OriginalityDeclaration","原创承诺书")} ：<span style="color: red;">*</span></label>
 														<div class="layui-input-block">
 															<input id="commitfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
 															<input id="commitPath" name="commitPath" type="hidden" class="layui-input"/>
@@ -169,10 +169,10 @@
 
 
 																<!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
-																<input name="commitName" id="commitfileNameTip" placeholder="请上传原创承诺书" disabled class="layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
+																<input name="commitName" id="commitfileNameTip"  disabled class="layui-upload-choose" style="padding: 4px 10px;" lay-verify="required" required/>
 
 															<div style="float: left;">
-																<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="commitfileBtn"><i class="layui-icon"></i>选择文件</button>
+																<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="commitfileBtn"><i class="layui-icon"></i>${lang.get("FIELD_SelectDocuments","选择文件")}</button>
 															</div>
 														</div>
 													</div>
@@ -180,7 +180,7 @@
 														<input type="checkbox" name="ifAgree" id="ifAgree" title="阅读并同意遵守" lay-skin="primary">
 														<span class="forumCharter" id="forumCharter" onclick="forumCharter()">《论坛章程》</span>
 														<br><br>
-														<div id="personSubmit" class="btn submit" lay-filter="personSubmit" lay-submit>提交</div>
+														<div id="personSubmit" class="btn submit" lay-filter="personSubmit" lay-submit>${lang.get("FIELD_Submit","提交")}</div>
 														<!--<div class="btn cancel" id="btnCancel">取消</div>-->
 													</div>
 												</div>
