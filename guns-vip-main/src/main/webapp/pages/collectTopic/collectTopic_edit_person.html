@@ -8,27 +8,27 @@
         <form class="layui-form" id="collectTopicForm" lay-filter="collectTopicForm">
             <div class="layui-fluid" style="padding-bottom: 75px;">
                 <div class="layui-card">
-                    <div class="layui-card-header">基本信息</div>
+                    <div class="layui-card-header">${lang.get("FIELD_BasicInformation","基本信息")}</div>
                     <div class="layui-card-body">
                         <div class="layui-form-item layui-row">
                             <input name="topicId" type="hidden"/>
 
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">大会主题<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_ThemeConference","大会主题")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
-                                    <input id="topicName" name="topicName" disabled="disabled"  placeholder="请输入大会主题" type="text" class="layui-input" lay-verify="required" required/>
+                                    <input id="topicName" name="topicName" disabled="disabled"   type="text" class="layui-input" lay-verify="required" required/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">选题意义<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_Rationale","选题意义")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
-                                    <textarea id="topicDesc" name="topicDesc" disabled="disabled"  placeholder="请输入选题意义" type="text" class="layui-input" lay-verify="required" required/></textarea>
+                                    <textarea id="topicDesc" name="topicDesc" disabled="disabled"   type="text" class="layui-input" lay-verify="required" required/></textarea>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">分论坛主题<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_ThemeSubforum","分论坛主题")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
-                                    <input id="subTopic" name="subTopic" disabled="disabled"  placeholder="请输入分论坛主题" type="text" class="layui-input" lay-verify="required" required/>
+                                    <input id="subTopic" name="subTopic" disabled="disabled"   type="text" class="layui-input" lay-verify="required" required/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">创建时间<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_CREATE_TIME","创建时间")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
                                     <input id="createTime" name="createTime" disabled="disabled"  placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                                 </div>

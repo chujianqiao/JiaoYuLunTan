@@ -6,7 +6,7 @@
         <form class="layui-form" id="meetMemberForm" lay-filter="meetMemberForm">
             <div class="layui-fluid" style="padding-bottom: 75px;">
                 <div class="layui-card">
-                    <div class="layui-card-header">基本信息</div>
+                    <div class="layui-card-header">${lang.get("FIELD_BasicInformation","基本信息")}</div>
                     <div class="layui-card-body">
                         <div class="layui-form-item layui-row">
                             <input type="hidden" name="thesisId" id="thesisId"/>
@@ -30,25 +30,25 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">中文关键词：</label>
+                                <label class="layui-form-label">${lang.get("FIELD_KWIC","中文关键词")}：</label>
                                 <div class="layui-input-block">
                                     <input name="cnKeyword" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">英文关键词：</label>
+                                <label class="layui-form-label">${lang.get("FIELD_KWIE","英文关键词")}：</label>
                                 <div class="layui-input-block">
                                     <input name="engKeyword" disabled="disabled" class="layui-input" type="text" lay-verify="required" required/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">中文摘要：</label>
+                                <label class="layui-form-label">${lang.get("FIELD_AIC","中文摘要")}：</label>
                                 <div class="layui-input-block">
                                     <textarea name="cnAbstract" required lay-verify="required" disabled="disabled" class="layui-textarea" type="text"></textarea>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">英文摘要：</label>
+                                <label class="layui-form-label">${lang.get("FIELD_AIE","英文摘要")}：</label>
                                 <div class="layui-input-block">
                                     <textarea name="engAbstract" required lay-verify="required" disabled="disabled" class="layui-textarea" type="text"></textarea>
                                 </div>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">论文PDF附件：</label>
+                                <label class="layui-form-label">${lang.get("FIELD_PDFAttachment","论文PDF附件")}：</label>
                                 <div class="layui-input-block">
                                     <input id="thesisPath" name="thesisPath" type="hidden" class="layui-input"/>
                                     <input id="fileName" name="fileName" type="hidden" class="layui-input"/>
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">论文Word附件：</label>
+                                <label class="layui-form-label">${lang.get("FIELD_WordAttachment","论文Word附件")}：</label>
                                 <div class="layui-input-block">
                                     <input id="wordPath" name="wordPath" type="hidden" class="layui-input"/>
                                     <input id="wordName" name="wordName" type="hidden" class="layui-input"/>

@@ -9,58 +9,58 @@
         <form class="layui-form" id="greatResultForm" lay-filter="greatResultForm">
             <div class="layui-fluid" style="padding-bottom: 75px;">
                 <div class="layui-card">
-                    <div class="layui-card-header">基本信息</div>
+                    <div class="layui-card-header">${lang.get("FIELD_BasicInformation","基本信息")}</div>
                     <div class="layui-card-body">
                         <div class="layui-form-item layui-row">
                             <input name="resultId" type="hidden"/>
 
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">成果名称</label>
+                                <label class="layui-form-label">${lang.get("FIELD_TitleDeliverables","成果名称")}</label>
                                 <div class="layui-input-block">
-                                    <input id="resultName" disabled name="resultName" placeholder="请输入成果名称" type="text" class="layui-input"/>
+                                    <input id="resultName" disabled name="resultName"  type="text" class="layui-input"/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">成果申报类型</label>
+                                <label class="layui-form-label">${lang.get("FIELD_TypeDeclaration","成果申报类型")}</label>
                                 <div class="layui-input-block">
-                                    <input type="radio" disabled name="applyType" value="1" title="个人申报" checked/>
-                                    <input type="radio" disabled name="applyType" value="2" title="单位申报"/>
+                                    <input type="radio" disabled name="applyType" value="1" title="${lang.get('FIELD_ApplyIndividual','个人申报')}" checked/>
+                                    <input type="radio" disabled name="applyType" value="2" title="${lang.get('FIELD_ApplyOrganization','单位申报')}"/>
                                 </div>
                             </div>
                             <div id="belongNameDiv" class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">申请人姓名</label>
+                                <label class="layui-form-label">${lang.get("FIELD_NameApplicant","申请人姓名")}</label>
                                 <div class="layui-input-block">
-                                    <input id="belongName" disabled name="belongName" placeholder="请输入负责人姓名" type="text" class="layui-input"/>
+                                    <input id="belongName" disabled name="belongName"  type="text" class="layui-input"/>
                                 </div>
                             </div>
                             <div id="manaPhoneDiv" class="layui-inline layui-col-md12">
                                 <label class="layui-form-label">申请人电话</label>
                                 <div class="layui-input-block">
-                                    <input id="manaPhone" disabled name="manaPhone" placeholder="请输入负责人电话" type="text" class="layui-input"/>
+                                    <input id="manaPhone" disabled name="manaPhone"  type="text" class="layui-input"/>
                                 </div>
                             </div>
                             <div id="manaEmailDiv" class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">申请人邮箱</label>
+                                <label class="layui-form-label">${lang.get("FIELD_EmailApplicant","申请人邮箱")}</label>
                                 <div class="layui-input-block">
-                                    <input id="manaEmail" disabled name="manaEmail" placeholder="请输入负责人邮箱" type="text" class="layui-input"/>
+                                    <input id="manaEmail" disabled name="manaEmail" type="text" class="layui-input"/>
                                 </div>
                             </div>
                             <div id="teamDiv" class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">所在单位</label>
+                                <label class="layui-form-label">${lang.get("FIELD_FromOrganization","所在单位")}</label>
                                 <div class="layui-input-block">
-                                    <input id="team" name="team" disabled placeholder="请输入所在单位" type="text" class="layui-input"/>
+                                    <input id="team" name="team" disabled  type="text" class="layui-input"/>
                                 </div>
                             </div>
                             <div id="manaPostDiv" class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">申请人职称/职务</label>
+                                <label class="layui-form-label">${lang.get("FIELD_TitlePosition","申请人职称/职务")}</label>
                                 <div class="layui-input-block">
-                                    <input id="manaPost" disabled name="manaPost" placeholder="请输入负责人职称/职务" type="text" class="layui-input"/>
+                                    <input id="manaPost" disabled name="manaPost"  type="text" class="layui-input"/>
                                 </div>
                             </div>
                             <div id="manaDirectDiv" class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">申请人研究方向</label>
+                                <label class="layui-form-label">${lang.get("FIELD_ResearchFieldsApply","申请人研究方向")}</label>
                                 <div class="layui-input-block">
-                                    <input id="manaDirect" disabled name="manaDirect" placeholder="请输入负责人研究方向" type="text" class="layui-input"/>
+                                    <input id="manaDirect" disabled name="manaDirect"  type="text" class="layui-input"/>
                                 </div>
                             </div>
 
@@ -72,13 +72,13 @@
                             </div>-->
 
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">优秀成果简介附件</label>
+                                <label class="layui-form-label">${lang.get("FIELD_AOIFOD","优秀成果简介附件")}</label>
                                 <div class="layui-input-block">
                                     <input id="introducefileInputHidden" name="introducefileInputHidden" type="hidden" class="layui-input"/>
                                     <input id="introducePath" name="introducePath" type="hidden" class="layui-input"/>
                                     <input id="introduceName" name="introduceName" type="hidden" class="layui-input"/>
                                     <div style="float: left;">
-                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadintroduce"><i class="layui-icon"></i>附件下载</button>
+                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadintroduce"><i class="layui-icon"></i>${lang.get("FIELD_AttachmentDownload","下载附件")}</button>
                                     </div>
                                     <div style="float: left;">
                                         <input name="introduceName" id="introducefileNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
@@ -86,13 +86,13 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">专家推荐信附件</label>
+                                <label class="layui-form-label">${lang.get("FIELD_AORL","专家推荐信附件")}</label>
                                 <div class="layui-input-block">
                                     <input id="letterfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
                                     <input id="letterPath" name="letterPath" type="hidden" class="layui-input"/>
                                     <input id="letterName" name="letterName" type="hidden" class="layui-input"/>
                                     <div style="float: left;">
-                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadletter"><i class="layui-icon"></i>附件下载</button>
+                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadletter"><i class="layui-icon"></i>${lang.get("FIELD_AttachmentDownload","下载附件")}</button>
                                     </div>
                                     <div style="float: left;">
                                         <input name="letterName" id="letterfileNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
@@ -101,13 +101,13 @@
                             </div>
 
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">原创承诺书</label>
+                                <label class="layui-form-label">${lang.get("FIELD_OriginalityDeclaration","原创承诺书")}</label>
                                 <div class="layui-input-block">
                                     <input id="commitfileInputHidden" name="letterfileInputHidden" type="hidden" class="layui-input"/>
                                     <input id="commitPath" name="commitPath" type="hidden" class="layui-input"/>
                                     <input id="commitName" name="commitName" type="hidden" class="layui-input"/>
                                     <div style="float: left;">
-                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadcommit"><i class="layui-icon"></i>附件下载</button>
+                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadcommit"><i class="layui-icon"></i>${lang.get("FIELD_AttachmentDownload","下载附件")}</button>
                                     </div>
                                     <div style="float: left;">
                                         <input name="commitName" id="commitfileNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
@@ -122,14 +122,14 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">评审意见</label>
+                                <label class="layui-form-label">${lang.get("FIELD_ReviewComment","评审意见")}</label>
                                 <div class="layui-input-block">
                                     <input type="radio" name="reviewResult" lay-filter="reviewResult"  value="1" title="推荐参会" checked>
                                     <input type="radio" name="reviewResult" lay-filter="reviewResult" value="0" title="不推荐参会">
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">备注</label>
+                                <label class="layui-form-label">${lang.get("FIELD_Note","备注")}</label>
                                 <div class="layui-input-block">
                                     <input id="description" name="description" disabled type="text" class="layui-input"/>
                                 </div>
