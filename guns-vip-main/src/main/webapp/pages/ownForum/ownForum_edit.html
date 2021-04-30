@@ -5,7 +5,7 @@
 <form class="layui-form" id="ownForumForm" lay-filter="ownForumForm">
     <div class="layui-fluid" style="padding-bottom: 75px;">
         <div class="layui-card">
-            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-header">${lang.get("FIELD_BasicInformation","基本信息")}</div>
             <div class="layui-card-body">
                 <div class="layui-form-item layui-row">
                     <input name="forumId" type="hidden"/>
@@ -13,7 +13,7 @@
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">论坛名称<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="forumName" name="forumName" placeholder="请输入论坛名称" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="forumName" name="forumName"  type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <!--<div class="layui-inline layui-col-md12">
@@ -30,10 +30,10 @@
 
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">论坛申报类型<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">${lang.get("FIELD_TOFA","论坛申报类型")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input type="radio" lay-filter="applyType" name="applyType" value="1" title="个人申报" checked/>
-                            <input type="radio" lay-filter="applyType" name="applyType" value="2" title="单位申报"/>
+                            <input type="radio" lay-filter="applyType" name="applyType" value="1" title="${lang.get('FIELD_ApplyIndividual','个人申报')}" checked/>
+                            <input type="radio" lay-filter="applyType" name="applyType" value="2" title="${lang.get('FIELD_ApplyOrganization','单位申报')}"/>
                         </div>
                     </div>
                     <!--<div class="layui-inline layui-col-md12">
@@ -49,27 +49,27 @@
                         </div>
                     </div>-->
                     <div id="managerDiv" class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">姓名<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">${lang.get("FIELD_NAME","姓名")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manager" name="manager" placeholder="请输入姓名" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="manager" name="manager"  type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">单位名称<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">${lang.get("FIELD_NameOrganization","单位名称")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="unitName" name="unitName" placeholder="请输入单位名称" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="unitName" name="unitName"  type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md12">
                         <label class="layui-form-label">联系电话<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manaPhone" name="manaPhone" placeholder="请输入联系电话" type="text" class="layui-input" lay-verify="required|phone" required/>
+                            <input id="manaPhone" name="manaPhone"  type="text" class="layui-input" lay-verify="required|phone" required/>
                         </div>
                     </div>
                     <div id="manaEmailDiv" class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">邮箱<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">${lang.get("FIELD_Email","邮箱")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="manaEmail" name="manaEmail" placeholder="请输入邮箱" type="text" class="layui-input" lay-verify="required|email" required/>
+                            <input id="manaEmail" name="manaEmail"  type="text" class="layui-input" lay-verify="required|email" required/>
                         </div>
                     </div>
                     <!--<div class="layui-inline layui-col-md12">
@@ -79,9 +79,9 @@
                         </div>
                     </div>-->
                     <div id="postDiv" class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">职称/职务<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">${lang.get("FIELD_Title","职称")}/${lang.get("FIELD_Position","职务")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="post" name="post" placeholder="请输入职称/职务" type="text" class="layui-input" lay-verify="required" required/>
+                            <input id="post" name="post"  type="text" class="layui-input" lay-verify="required" required/>
                         </div>
                     </div>
 
@@ -93,22 +93,22 @@
                     </div>-->
 
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">是否有课题团队<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">${lang.get("FIELD_DYAOBOARPT","是否有课题团队")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input type="radio" lay-filter="issubject" name="issubject" value="1" title="是" checked/>
                             <input type="radio" lay-filter="issubject" name="issubject" value="0" title="否"/>
                         </div>
                     </div>
                     <div id="subjectLevDiv" class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">课题级别</label>
+                        <label class="layui-form-label">${lang.get("FIELD_LevelProject","课题级别")}</label>
                         <div class="layui-input-block">
-                            <input id="subjectLev" name="subjectLev" placeholder="请输入课题级别" type="text" class="layui-input"/>
+                            <input id="subjectLev" name="subjectLev"  type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div id="subjectNameDiv" class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">课题名称</label>
+                        <label class="layui-form-label">${lang.get("FIELD_TitleProject","课题名称")}</label>
                         <div class="layui-input-block">
-                            <input id="subjectName" name="subjectName" placeholder="请输入课题名称" type="text" class="layui-input"/>
+                            <input id="subjectName" name="subjectName"  type="text" class="layui-input"/>
                         </div>
                     </div>
                     <!--<div class="layui-inline layui-col-md12">
@@ -119,20 +119,20 @@
                     </div>-->
 
                     <div class="layui-inline layui-col-md12">
-                        <label class="layui-form-label">论坛申报方案附件<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">${lang.get("FIELD_AOAP","论坛申报方案附件")}<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
                             <input id="planPath" name="planPath" type="hidden" class="layui-input"/>
                             <input id="planName" name="planName" type="hidden" class="layui-input"/>
                             <div style="float: left;">
-                                <button type="button" class="layui-btn layui-btn-sm" id="fileBtn"><i class="layui-icon"></i>选择文件</button>
+                                <button type="button" class="layui-btn layui-btn-sm" id="fileBtn"><i class="layui-icon"></i>${lang.get("FIELD_SelectDocuments","选择文件")}</button>
                             </div>
                             <div style="float: left;">
                                 <!--<span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>-->
                                 <input name="planName" id="fileNameTip" disabled class="layui-inline layui-upload-choose" style="padding: 4px 10px;"/>
                             </div>
                             <div style="float: left;">
-                                <button type="button" class="layui-btn layui-btn-sm" id="downloadPlan"><i class="layui-icon"></i>模板下载</button>
+                                <button type="button" class="layui-btn layui-btn-sm" id="downloadPlan"><i class="layui-icon"></i>${lang.get("FIELD_FormatDownload","模板下载")}</button>
                             </div>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
         </div>
     </div>
     <div class="form-group-bottom text-center">
-        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;${lang.get("FIELD_Submit","提交")}&emsp;</button>
         <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
     </div>
 

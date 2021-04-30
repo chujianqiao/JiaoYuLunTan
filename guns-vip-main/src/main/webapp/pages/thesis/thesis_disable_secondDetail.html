@@ -14,13 +14,13 @@
                             <input name="greatNum" type="hidden"/>
                             <input name="greatId" type="hidden"/>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">论文题目<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_TitlePaper","论文题目")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
                                     <input id="thesisTitle" name="thesisTitle" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">英文题目<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_EnglishTitle","英文题目")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
                                     <input id="engTitle" name="engTitle" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                                 </div>
@@ -32,25 +32,25 @@
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">中文关键词<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_KWIC","中文关键词")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
                                     <input id="cnKeyword" name="cnKeyword" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">英文关键词<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_KWIE","英文关键词")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
                                     <input id="engKeyword" name="engKeyword" disabled="disabled" placeholder="" type="text" class="layui-input" lay-verify="required" required/>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">中文摘要<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_AIC","中文摘要")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
                                     <textarea id="cnAbstract" name="cnAbstract" disabled="disabled" required lay-verify="required" placeholder="" class="layui-textarea"></textarea>
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-md12">
-                                <label class="layui-form-label">英文摘要<span style="color: red;">*</span></label>
+                                <label class="layui-form-label">${lang.get("FIELD_AIE","英文摘要")}<span style="color: red;">*</span></label>
                                 <div class="layui-input-block">
                                     <textarea id="engAbstract" name="engAbstract" disabled="disabled" required lay-verify="required" placeholder="" class="layui-textarea"></textarea>
                                 </div>
@@ -66,10 +66,10 @@
                                 <div class="layui-input-block">
                                     <input id="fileInputHidden" name="fileInputHidden" type="hidden" class="layui-input"/>
                                     <div style="float: left;">
-                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadBtn" lay-filter="btnDownload" lay-submit><i class="layui-icon"></i>下载附件</button>
+                                        <button type="button" class="layui-btn layui-btn-sm" id="downloadBtn" lay-filter="btnDownload" lay-submit><i class="layui-icon"></i>${lang.get("FIELD_AttachmentDownload","下载附件")}</button>
                                     </div>
                                     <div style="float: left;margin-left: 10px">
-                                        <button type="button" class="layui-btn layui-btn-sm" id="loadBtn" lay-filter="btnLoad" lay-submit><i class="layui-icon"></i>在线预览</button>
+                                        <button type="button" class="layui-btn layui-btn-sm" id="loadBtn" lay-filter="btnLoad" lay-submit><i class="layui-icon"></i>${lang.get("FIELD_PreviewOnline","在线预览")}</button>
                                     </div>
                                     <div style="float: left;">
                                         <span class="layui-inline layui-upload-choose" style="padding: 4px 10px;" id="fileNameTip"></span>
