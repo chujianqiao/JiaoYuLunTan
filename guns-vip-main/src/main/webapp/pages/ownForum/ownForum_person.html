@@ -1,8 +1,17 @@
 @layout("/common/_container.html",{js:["/assets/ownForum/ownForum_person.js","/assets/holdForum/holdForum_person.js"]}){
 
 <head>
-    <title>论坛申报</title>
+    <title>${lang.get("FIELD_SA","论坛申报")}</title>
 </head>
+<style>
+    .layui-btn-xs{
+        width: 60px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+</style>
 <body>
 <div class="page">
     <!-- 头部 -->
@@ -27,7 +36,7 @@
                                         <div class="layui-form toolbar">
                                             <div class="layui-form-item">
                                                 <div class="layui-inline">
-                                                    <input id="forumName" class="layui-input" type="text" placeholder="请输入论坛名称"/>
+                                                    <input id="forumName" class="layui-input" type="text" placeholder="${lang.get('FIELD_SA','论坛名称')}"/>
                                                 </div>
                                                 <div class="layui-inline">
                                                     <div class="">
@@ -36,8 +45,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="layui-inline layui-inlineMo">
-                                                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                                    <button id="btnCreate" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>论坛申报</button>
+                                                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get('FIELD_Search','搜索')}</button>
+                                                    <button id="btnCreate" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>${lang.get('FIELD_MFA','论坛申报')}</button>
                                                     <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
                                                     <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
                                                 </div>
@@ -46,7 +55,7 @@
                                         <table class="layui-table" id="ownForumTable" lay-filter="ownForumTable"></table>
                                     </div>
                                 </div><!--end of form-->
-                                <div class="form hide">
+                                <!--<div class="form hide">
                                     <div class="layui-card-body">
                                         <div class="layui-form toolbar">
                                             <div class="layui-form-item">
@@ -56,14 +65,14 @@
                                                 <div class="layui-inline">
                                                     <button id="btnSearch2" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                                     <button id="btnCreate2" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>论坛申报</button>
-                                                    <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
-                                                    <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
+                                                    &lt;!&ndash;<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>&ndash;&gt;
+                                                    &lt;!&ndash;<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>&ndash;&gt;
                                                 </div>
                                             </div>
                                         </div>
                                         <table class="layui-table" id="holdForumTable" lay-filter="holdForumTable"></table>
                                     </div>
-                                </div><!--end of form-->
+                                </div>--><!--end of form-->
                             </div>
                         </div>
                     </div>

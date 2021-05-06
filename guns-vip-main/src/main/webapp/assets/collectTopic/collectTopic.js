@@ -13,6 +13,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
         tableId: "collectTopicTable"
     };
     meetSelectOption();
+    var langs = layui.data('system').lang;
     /**
      * 初始化表格的列
      */
@@ -21,18 +22,18 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             {type: 'checkbox'},
             // {field: 'topicId', hide: true, title: '主题ID'},
             // {field: 'createUser', sort: true, title: '创建人ID'},
-            {field: 'meetName', sort: true, title: '会议名称'},
-            {field: 'topicName', sort: true, title: '大会主题'},
-            {field: 'topicDesc', sort: true, title: '选题意义'},
-            {field: 'subTopic', sort: true, title: '分论坛主题'},
+            {field: 'meetName', sort: true, title: langs.FIELD_ConferenceName},
+            {field: 'topicName', sort: true, title: langs.FIELD_ThemeConference},
+            {field: 'topicDesc', sort: true, title: langs.FIELD_Rationale},
+            {field: 'subTopic', sort: true, title: langs.FIELD_ThemeSubforum},
             // {field: 'voteNum', sort: true, title: '票数'},
-            {field: 'userName', sort: true, title: '填报人'},
-            {field: 'unitName', sort: true, title: '所在单位'},
-            {field: 'userPost', sort: true, title: '职称/职务'},
+            {field: 'userName', sort: true, title: langs.FIELD_Informant},
+            {field: 'unitName', sort: true, title: langs.FIELD_FromOrganization},
+            {field: 'userPost', sort: true, title: langs.FIELD_TPosition},
             // {field: 'createTime', sort: true, title: '创建日期'},
             // {field: 'diy1', sort: true, title: '管理员自定义备用字段1'},
             // {field: 'diy2', sort: true, title: '管理员自定义备用字段2'},
-            {align: 'center', toolbar: '#tableBar', title: '操作',minWidth: 140}
+            {align: 'center', toolbar: '#tableBar', title: langs.FIELD_Operate,minWidth: 170}
         ]];
     };
 

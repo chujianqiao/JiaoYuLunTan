@@ -13,6 +13,7 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         tableId: "thesisTable"
     };
     meetSelectOption();
+    var langs = layui.data('system').lang;
     /**
      * 初始化表格的列
      */
@@ -20,34 +21,34 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'thesisId', hide: true, title: '论文ID'},
-            {field: 'meetName', sort: true, title: '会议名称'},
+            {field: 'meetName', sort: true, title: langs.FIELD_ConferenceName},
             // {field: 'firstStatus', hide: true, title: '状态'},
             // {field: 'firstStatus', sort: true, title: '状态'},
-            {field: 'thesisTitle', sort: true, title: '论文题目'},
-            {field: 'userName', sort: true, title: '论文作者'},
-            {field: 'unitsName', sort: true, title: '所在单位'},
-            {field: 'belongDomainStr', sort: true, title: '论文领域'},
-            {field: 'firstScore', sort: true, title: '初评分数'},
-            {field: 'status', sort: true, title: '初评结果'},
+            {field: 'thesisTitle', sort: true, title: langs.FIELD_TitlePaper},
+            {field: 'userName', sort: true, title: langs.FIELD_AuthorPaper},
+            {field: 'unitsName', sort: true, title: langs.FIELD_FromOrganization},
+            {field: 'belongDomainStr', sort: true, title: langs.FIELD_RAOP},
+            {field: 'firstScore', sort: true, title: langs.FIELD_SOIR},
+            {field: 'status', sort: true, title: langs.FIELD_OOIR},
             //{field: 'finalResult', sort: true, title: '是否推优'},
-            {align: 'center', title: '操作',templet: function(data){
+            {align: 'center', title: langs.FIELD_Operate,templet: function(data){
 
                 if (data.meetTimeStatusStr == "报名中" || data.meetTimeStatusStr == "报名结束"){
                     if (data.status == "已取消参会"){
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a>";
                     }else {
                         if(data.firstStatus == "未评审"){
-                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review'>评审</a>";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review' title='" + langs.FIELD_Review + "'>" + langs.FIELD_Review + "</a>";
                         }else{
                             if (data.finalResult == 0) {
-                                return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review'>修改评审</a>";
+                                return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='review' title='" + langs.FIELD_RevisionReview + "'>" + langs.FIELD_RevisionReview + "</a>";
                             } else {
-                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
+                                return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a>";
                             }
                         }
                     }
                 } else {
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>查看详情</a>";
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='firstDetail'>" + langs.FIELD_SeeDetails + "</a>";
                 }
 
                     /*if(data.firstStatus == "未评审"){
@@ -209,23 +210,23 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'thesisId', hide: true, title: '论文ID'},
-            {field: 'meetName', sort: true, title: '会议名称'},
-            {field: 'thesisTitle', sort: true, title: '论文题目'},
-            {field: 'userName', sort: true, title: '论文作者'},
-            {field: 'unitsName', sort: true, title: '所在单位'},
-            {field: 'belongDomainStr', sort: true, title: '论文领域'},
-            {field: 'scoreStr', sort: true, title: '复评分数'},
-            {field: 'status', sort: true, title: '初评结果'},
-            {field: 'greatStr', sort: true, title: '是否推优'},
-            {align: 'center', title: '操作',templet: function(data){
+            {field: 'meetName', sort: true, title: langs.FIELD_ConferenceName},
+            {field: 'thesisTitle', sort: true, title: langs.FIELD_TitlePaper},
+            {field: 'userName', sort: true, title: langs.FIELD_AuthorPaper},
+            {field: 'unitsName', sort: true, title: langs.FIELD_FromOrganization},
+            {field: 'belongDomainStr', sort: true, title: langs.FIELD_RAOP},
+            {field: 'scoreStr', sort: true, title: langs.FIELD_SOFR},
+            {field: 'status', sort: true, title: langs.FIELD_OOIR},
+            {field: 'greatStr', sort: true, title: langs.FIELD_RecommendOrNot},
+            {align: 'center', title: langs.FIELD_Operate,templet: function(data){
                     if (data.meetTimeStatusStr == "报名中" || data.meetTimeStatusStr == "报名结束"){
                         if(data.secondStatus == "未评审"){
-                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='reviewAgain'>评审</a>";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='reviewAgain' title='" + langs.FIELD_Review + "'>" + langs.FIELD_Review + "</a>";
                         }else{
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='secondDetail'>查看详情</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='secondDetail' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a>";
                         }
                     }else {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='secondDetail'>查看详情</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='secondDetail' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a>";
                     }
 
                 }}
@@ -395,20 +396,20 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
-            {field: 'meetName', sort: true, title: '会议名称'},
-            {field: 'resultName', sort: true, title: '成果名称'},
-            {field: 'belongName', sort: true, title: '申请人姓名'},
-            {field: 'reviewName', sort: true, title: '评审专家'},
-            {field: 'reviewResult', sort: true, title: '评审状态'},
-            {field: 'score', sort: true, title: '评审分数'},
-            {align: 'center', title: '操作',templet: function(data){
+            {field: 'meetName', sort: true, title: langs.FIELD_ConferenceName},
+            {field: 'resultName', sort: true, title: langs.FIELD_TitleDeliverables},
+            {field: 'belongName', sort: true, title: langs.FIELD_NameApplicant},
+            {field: 'reviewName', sort: true, title: langs.FIELD_ReviewExperts},
+            {field: 'reviewResult', sort: true, title: langs.FIELD_Reviewstatus},
+            {field: 'score', sort: true, title: langs.FIELD_SOR},
+            {align: 'center', title: langs.FIELD_Operate,templet: function(data){
                     if(data.reviewStatus == "未评审"){
-                        return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"reviewEdu\">评审</a>";
+                        return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='reviewEdu' title='" + langs.FIELD_Review + "'>" + langs.FIELD_Review + "</a>";
                     }else{
                         if (data.finalResult == 0) {
-                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='reviewEdu'>修改评审</a>";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='reviewEdu' title='" + langs.FIELD_RevisionReview + "'>" + langs.FIELD_RevisionReview + "</a>";
                         } else {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='eduDetail'>查看详情</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='eduDetail' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a>";
                         }
                     }
                 }}
@@ -499,22 +500,22 @@ layui.use(['table', 'admin', 'form', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
-            {field: 'meetName', sort: true, title: '会议名称'},
-            {field: 'resultName', sort: true, title: '成果名称'},
-            {field: 'belongName', sort: true, title: '申请人姓名'},
-            {field: 'reviewName', sort: true, title: '评审专家'},
-            {field: 'reviewResult', sort: true, title: '评审状态'},
-            {field: 'score', sort: true, title: '评审分数'},
-            {align: 'center', title: '操作',templet: function(data){
+            {field: 'meetName', sort: true, title: langs.FIELD_ConferenceName},
+            {field: 'resultName', sort: true, title: langs.FIELD_TitleDeliverables},
+            {field: 'belongName', sort: true, title: langs.FIELD_NameApplicant},
+            {field: 'reviewName', sort: true, title: langs.FIELD_ReviewExperts},
+            {field: 'reviewResult', sort: true, title: langs.FIELD_Reviewstatus},
+            {field: 'score', sort: true, title: langs.FIELD_SOR},
+            {align: 'center', title: langs.FIELD_Operate,templet: function(data){
                     // return "<a class=\"layui-btn layui-btn-primary layui-btn-xs\" lay-event=\"reviewDetail\">查看详情</a>\n" +
                     //     "    <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"reviewGreat\">评审</a>\n";
                     if(data.reviewResult == "未评审"){
-                        return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"reviewGreat\">评审</a>";
+                        return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='reviewGreat' title='" + langs.FIELD_Review + "'>" + langs.FIELD_Review + "</a>";
                     }else{
                         if (data.finalResult == 0) {
-                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='reviewGreat'>修改评审</a>";
+                            return "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='reviewGreat' title='" + langs.FIELD_RevisionReview + "'>" + langs.FIELD_RevisionReview + "</a>";
                         } else {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reviewDetail'>查看详情</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reviewDetail' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a>";
                         }
                     }
                 }}

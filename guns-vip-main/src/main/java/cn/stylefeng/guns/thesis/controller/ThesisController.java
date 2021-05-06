@@ -284,11 +284,13 @@ public class ThesisController extends BaseController {
 
 
     @RequestMapping("/toAddItem")
-    public String toAddItem(Model model) {
+    public String toAddItem(Model model, Long ownForumid, Integer ifMeet) {
         LoginUser user = LoginContextHolder.getContext().getUser();
         model.addAttribute("userName", user.getName());
         model.addAttribute("menuUrl", "meetMember");
         model.addAttribute("userId", user.getId());
+        model.addAttribute("ownForumid", ownForumid);
+        model.addAttribute("ifMeet", ifMeet);
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
         }else {

@@ -136,6 +136,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
                     }
                 }
                 $('#ownForumid').empty();
+                $('#ownForumid').append("<option value=''>请选择论坛</option>");
                 $('#ownForumid').append(options);
                 form.render('select');
             }

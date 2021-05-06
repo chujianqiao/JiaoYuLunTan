@@ -1,7 +1,16 @@
 @layout("/common/_container.html",{js:["/assets/socialForum/socialForum_person.js"]}){
 <head>
-    <title>合作意向</title>
+    <title>${lang.get("FIELD_CI","合作意向")}</title>
 </head>
+<style>
+    .layui-btn-xs{
+        width: 60px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+</style>
 <body>
 <div class="page">
     <!-- 头部 -->
@@ -19,7 +28,7 @@
                             <div class="layui-form toolbar">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <input id="unitName" class="layui-input" type="text" placeholder="请输入企业名称"/>
+                                        <input id="unitName" class="layui-input" type="text" placeholder="${lang.get('FIELD_NOAEO','企业/单位名称')}"/>
                                     </div>
                                     <div class="layui-inline">
                                         <div class="">
@@ -28,8 +37,8 @@
                                         </div>
                                     </div>
                                     <div class="layui-inline layui-inlineMo">
-                                        <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                        <button id="btnCreate" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>合作意向</button>
+                                        <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get('FIELD_Search','搜索')}</button>
+                                        <button id="btnCreate" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>${lang.get('FIELD_CI','合作意向')}</button>
                                         <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
                                         <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
                                     </div>

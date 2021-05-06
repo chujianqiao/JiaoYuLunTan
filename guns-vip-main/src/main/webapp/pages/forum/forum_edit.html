@@ -24,9 +24,9 @@
                                         </div>
                                     </div>
                                     <div class="layui-inline layui-col-md12">
-                                        <label class="layui-form-label">参会人数限制<span style="color: red;">*</span></label>
+                                        <label class="layui-form-label">论坛人数限制<span style="color: red;">*</span></label>
                                         <div class="layui-input-block">
-                                            <input id="setNum" name="setNum" placeholder="请输入参会人数限制" type="text" class="layui-input" lay-verify="required|number" required/>
+                                            <input id="setNum" name="setNum" placeholder="请输入论坛人数限制" type="number" oninput="if(value<0)value=0" class="layui-input" lay-verify="required|number" required/>
                                         </div>
                                     </div>
                                     <!--<div class="layui-inline layui-col-md12">

@@ -1,32 +1,32 @@
 <div class="pc">
 <footer>
     <div class="widthC mCenter foot fontSize14">
-        <div class="inlineBlock d1">
+        <div class="inlineBlock d1" style="width: 3.3rem;margin-left: 50px;">
+            <p>${lang.get('FIELD_CESFARR','中国教育科学论坛 版权所有')}</p>
+            <p>Copyright  2002-2020</p>
+            <p>${lang.get('FIELD_BPS','京公网安备')}   110402430096</p>
+        </div>
+        <!--<div class="inlineBlock d1">
             <div class="fr">
                 <p>中国教育科学研究院</p>
                 <p>地址：北京市海淀区北三环中路46号</p>
                 <p>邮编：100088</p>
             </div>
+        </div>-->
+        <div class="inlineBlock d2" style="text-align: left;margin-left: -180px;line-height:.25rem;">
+            <p>${lang.get('FIELD_Tel','电话')}：010-62003430</p>
+            <p>${lang.get('FIELD_Fax','传真')}：010-62003401</p>
+            <p id="email">${lang.get('FIELD_EmailF','邮箱')}：</p>
         </div>
-        <div class="inlineBlock d2 clearfix">
+        <div class="inlineBlock d3 clearfix" style="width: 2.1rem">
             <div class="weixin fl">
                 <img src="${ctxPath}/assets/common/images/icon2_05.png" />
-                <div>院公众平台</div>
+                <!--<div>院公众平台</div>-->
             </div>
             <div class="xinlang fr">
                 <img src="${ctxPath}/assets/common/images/code2.png" />
-                <div>论坛公众平台</div>
+                <!--<div>论坛公众平台</div>-->
             </div>
-        </div>
-        <div class="inlineBlock d3">
-            <p>电话：010-62003430</p>
-            <p>传真：010-62003401</p>
-            <p id="email"></p>
-        </div>
-        <div class="inlineBlock d4">
-            <p>中国教育科学论坛 版权所有</p>
-            <p>Copyright  2002-2020</p>
-            <p>京公网安备   110402430096</p>
         </div>
     </div>
 </footer>
@@ -63,6 +63,6 @@
 </footer>
 </div>
 <script>
-    $("#email").html("邮箱：yuanban\@nies.net.cn");
+    $("#email").append("yuanban\@nies.net.cn");
     $("#phoneEmail").html("邮箱：yuanban\@nies.net.cn");
 </script>

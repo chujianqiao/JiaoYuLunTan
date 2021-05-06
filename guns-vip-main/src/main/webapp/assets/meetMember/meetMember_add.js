@@ -296,7 +296,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     form.on('submit(btnNext)', function (data) {
         var ajax = new $ax(Feng.ctxPath + "/thesis/addUserItem", function (data) {
             Feng.success("提交成功！");
-            window.location.href = Feng.ctxPath + "/thesis/toAddItem";
+            window.location.href = Feng.ctxPath + "/thesis/toAddItem?ownForumid=" + $("#ownForumid").val() + "&ifMeet=" + $("input[name='ifMeet']:checked").val();;
         }, function (data) {
             Feng.error("提交失败！" + data.responseJSON.message)
         });
@@ -409,7 +409,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
     function forumSelectOption(){
         $.ajax({
             type:'post',
-            url:Feng.ctxPath + "/ownForum/listAll" ,
+            url:Feng.ctxPath + "/forum/wrapList" ,
             success:function(response){
                 var data=response.data;
                 var forums = [];
@@ -421,6 +421,7 @@ layui.use(['layer', 'form', 'admin', 'ax','laydate','upload','formSelects'], fun
                     options += '<option value="'+ forum.forumId+ '" >'+ forum.forumName +'</option>';
                 }
                 $('#ownForumid').empty();
+                $('#ownForumid').append("<option value=''>请选择</option>");
                 $('#ownForumid').append(options);
                 form.render('select');
             }

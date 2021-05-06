@@ -1,6 +1,6 @@
 @layout("/common/_container.html",{js:["/assets/thesis/thesis_review.js","/assets/modular/frame/user_info.js"]}){
 <head>
-    <title>专家评审</title>
+    <title>${lang.get("FIELD_ER","专家评审")}</title>
 </head>
 <body>
 <div class="page">
@@ -13,9 +13,9 @@
         <div class="layui-card-body" style="padding-right: 15px">
             <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
                 <ul class="layui-tab-title">
-                    <li class="layui-this">论文评审</li>
-                    <li id="eduRes">教改实验评审</li>
-                    <li id="greatRes">优秀论著评审</li>
+                    <li class="layui-this">${lang.get("FIELD_PaperReview","论文评审")}</li>
+                    <li id="eduRes">${lang.get("FIELD_ROERE","教改实验评审")}</li>
+                    <li id="greatRes">${lang.get("FIELD_ROOP","优秀论著评审")}</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-form layui-tab-item layui-show">
@@ -26,8 +26,8 @@
                                         <div class="layui-card-body" style="padding-right: 15px">
                                             <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
                                                 <ul class="layui-tab-title">
-                                                    <li class="layui-this">专家初评</li>
-                                                    <li>专家复评</li>
+                                                    <li class="layui-this">${lang.get("FIELD_InitialReview","专家初评")}</li>
+                                                    <li>${lang.get("FIELD_FurtherReview","专家复评")}</li>
                                                 </ul>
                                                 <br>
                                                 <div class="layui-tab-content">
@@ -35,7 +35,7 @@
                                                         <div class="layui-form toolbar">
                                                             <div class="layui-form-item">
                                                                 <div class="layui-inline">
-                                                                    <input id="thesisTitle" class="layui-input" type="text" placeholder="论文题目"/>
+                                                                    <input id="thesisTitle" class="layui-input" type="text" placeholder="${lang.get('FIELD_TitlePaper','论文题目')}"/>
                                                                 </div>
                                                                 <div class="layui-inline">
                                                                     <div class="">
@@ -53,7 +53,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="layui-inline">
-                                                                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get('FIELD_Search','搜索')}</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -63,7 +63,7 @@
                                                         <div class="layui-form toolbar">
                                                             <div class="layui-form-item">
                                                                 <div class="layui-inline">
-                                                                    <input id="thesisTitleAgain" class="layui-input" type="text" placeholder="论文题目"/>
+                                                                    <input id="thesisTitleAgain" class="layui-input" type="text" placeholder="${lang.get('FIELD_TitlePaper','论文题目')}"/>
                                                                 </div>
                                                                 <div class="layui-inline">
                                                                     <div class="">
@@ -72,7 +72,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="layui-inline">
-                                                                    <button id="btnSearchAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                                    <button id="btnSearchAgain" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get('FIELD_Search','搜索')}</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -96,7 +96,7 @@
                                             <div class="layui-form toolbar">
                                                 <div class="layui-form-item">
                                                     <div class="layui-inline">
-                                                        <input id="resultName" class="layui-input" type="text" placeholder="请输入名称"/>
+                                                        <input id="resultName" class="layui-input" type="text" placeholder="${lang.get('FIELD_TitleDeliverables','成果名称')}"/>
                                                     </div>
                                                     <div class="layui-inline">
                                                         <div class="">
@@ -114,7 +114,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="layui-inline">
-                                                        <button id="btnSearchEdu" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                        <button id="btnSearchEdu" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get('FIELD_Search','搜索')}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -138,7 +138,7 @@
                                             <div class="layui-form toolbar">
                                                 <div class="layui-form-item">
                                                     <div class="layui-inline">
-                                                        <input id="greatResultName" class="layui-input" type="text" placeholder="请输入名称"/>
+                                                        <input id="greatResultName" class="layui-input" type="text" placeholder="${lang.get('FIELD_TitleDeliverables','成果名称')}"/>
                                                     </div>
                                                     <div class="layui-inline">
                                                         <div class="">
@@ -156,7 +156,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="layui-inline">
-                                                        <button id="btnSearchGreat" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                                        <button id="btnSearchGreat" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get('FIELD_Search','搜索')}</button>
                                                     </div>
                                                 </div>
                                             </div>

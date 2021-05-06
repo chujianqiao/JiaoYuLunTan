@@ -129,7 +129,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
             Feng.error('请输入手机号码');
             return;
         }
-        var reg = /^1\d{10}$/;
+        var reg = /^1(3[0-9]|4[5,7,8,9]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,2,3,5,6,7,8]|8[0-9]|9[1,3,5,6,7,8,9])\d{8}$/;
         if(!reg.test(data.phone)){
             Feng.error('请输入合法的手机号码');
             return ;
@@ -366,7 +366,8 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
     $("#phone").blur(function() {
         var phone = this.value.trim();
-        var phoneTest = /^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8,6]|8[0-9]|9[1,8,9])\d{8}$/;
+        //var phoneTest = /^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8,6]|8[0-9]|9[1,8,9])\d{8}$/;
+        var phoneTest = /^1(3[0-9]|4[5,7,8,9]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,2,3,5,6,7,8]|8[0-9]|9[1,3,5,6,7,8,9])\d{8}$/;
         if (phoneTest.test(phone)) {
             // 设置成功信息
             var span = this.nextElementSibling;

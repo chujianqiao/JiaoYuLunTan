@@ -16,6 +16,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
         }
     };
     meetSelectOption();
+    var langs = layui.data('system').lang;
     /**
      * 初始化表格的列
      */
@@ -25,15 +26,15 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             //{field: 'forumId', hide: true, title: '论坛ID'},
             //{field: 'forumName', sort: true, title: '论坛名称'},
             //{field: 'forumDesc', sort: true, title: '论坛描述'},
-            {field: 'meetName', sort: true, title: '会议名称'},
-            {field: 'unitName', sort: true, title: '企业/单位名称'},
-            {field: 'creditCode', sort: true, title: '统一社会信用代码'},
-            {field: 'manager', sort: true, title: '联系人'},
-            {field: 'manaPhone', sort: true, title: '联系电话'},
-            {field: 'manaEmail', sort: true, title: '联系邮箱'},
+            {field: 'meetName', sort: true, title: langs.FIELD_ConferenceName},
+            {field: 'unitName', sort: true, title: langs.FIELD_NOAEO},
+            {field: 'creditCode', sort: true, title: langs.FIELD_USCC},
+            {field: 'manager', sort: true, title: langs.FIELD_ContactPerson},
+            {field: 'manaPhone', sort: true, title: langs.FIELD_ContactNumber},
+            {field: 'manaEmail', sort: true, title: langs.FIELD_ContactEmail},
             /*{field: 'unitPlace', sort: true, title: '企业/单位所在地'},
             {field: 'alreadyMeet', sort: true, title: '已资助的会议'},*/
-            {field: 'supPlate', sort: true, title: '合作方式'},
+            {field: 'supPlate', sort: true, title: langs.FIELD_SFC},
             //{field: 'supMoney', sort: true, title: '资助金额'},
             //{field: 'contractPath', sort: true, title: '合同条件附件路径'},
             /*{field: 'applyStatus', sort: true, title: '申报状态', templet: function(data){
@@ -45,7 +46,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             /*{field: 'applyTime', sort: true, title: '申报时间'},
             {field: 'applyId', sort: true, title: '申报单位ID'},
             {field: 'contractName', sort: true, title: '合同条件附件名称'},*/
-            {align: 'center', title: '操作',minWidth: 180, templet: function(data){
+            {align: 'center', title: langs.FIELD_Operate,minWidth: 180, templet: function(data){
                     /*if (data.applyStatus == 0) {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew'>申请</a>";
                     }else if(data.applyStatus == 2 || data.applyStatus == 3){
@@ -53,7 +54,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
                     }else {
                         return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</a>";
                     }*/
-                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>";
+                    return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' title='" + langs.FIELD_Delete + "'>" + langs.FIELD_Delete + "</a>";
                 }}
         ]];
     };

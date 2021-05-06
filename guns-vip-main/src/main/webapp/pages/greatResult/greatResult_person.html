@@ -1,8 +1,17 @@
 @layout("/common/_container.html",{js:["/assets/greatResult/greatResult_person.js","/assets/educationResult/educationResult_person.js","/assets/modular/frame/user_info.js"]}){
 
 <head>
-    <title>成果会展申请</title>
+    <title>${lang.get("FIELD_EA","成果会展申请")}</title>
 </head>
+<style>
+    .layui-btn-xs{
+        width: 60px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+</style>
 <body>
 <div class="page">
     <!-- 头部 -->
@@ -18,15 +27,15 @@
                         <div class="forms">
                             <div class="layui-tab layui-tab-brief" lay-filter="userInfoTab">
                                 <ul class="layui-tab-title">
-                                    <li class="layui-this">著作申报</li>
-                                    <li>教改实验申报</li>
+                                    <li class="layui-this">${lang.get("FIELD_DeclarationWorks","著作申报")}</li>
+                                    <li>${lang.get("FIELD_AOERE","教改实验申报")}</li>
                                 </ul>
                                 <div class="layui-tab-content" id="formList">
                                     <div class="layui-form layui-tab-item layui-show">
                                         <div class="layui-form toolbar">
                                             <div class="layui-form-item">
                                                 <div class="layui-inline">
-                                                    <input id="resultName" class="layui-input" type="text" placeholder="请输入成果名称"/>
+                                                    <input id="resultName" class="layui-input" type="text" placeholder="${lang.get('FIELD_TitleDeliverables','成果名称')}"/>
                                                 </div>
                                                 <div class="layui-inline">
                                                     <div class="">
@@ -35,8 +44,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="layui-inline">
-                                                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                                    <button id="btnCreate" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>优秀成果会展申请</button>
+                                                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get("FIELD_Search","搜索")}</button>
+                                                    <button id="btnCreate" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>${lang.get("FIELD_EA","成果会展申请")}</button>
                                                     <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
                                                     <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
                                                 </div>
@@ -48,7 +57,7 @@
                                         <div class="layui-form toolbar">
                                             <div class="layui-form-item">
                                                 <div class="layui-inline">
-                                                    <input id="resultName2" class="layui-input" type="text" placeholder="请输入成果名称"/>
+                                                    <input id="resultName2" class="layui-input" type="text" placeholder="${lang.get('FIELD_TitleDeliverables','成果名称')}"/>
                                                 </div>
                                                 <div class="layui-inline">
                                                     <div class="">
@@ -57,8 +66,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="layui-inline">
-                                                    <button id="btnSearch2" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                                    <button id="btnCreate2" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>优秀成果会展申请</button>
+                                                    <button id="btnSearch2" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get("FIELD_Search","搜索")}</button>
+                                                    <button id="btnCreate2" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>${lang.get("FIELD_EA","成果会展申请")}</button>
                                                     <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
                                                     <!--<button id="btnExp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>-->
                                                 </div>

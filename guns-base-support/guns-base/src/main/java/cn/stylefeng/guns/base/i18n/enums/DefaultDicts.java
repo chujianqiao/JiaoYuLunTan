@@ -23,9 +23,6 @@ public enum DefaultDicts {
     FIELD_STATUS_1("FIELD_STATUS", TranslationEnum.CHINESE, "状态"),
     FIELD_STATUS_2("FIELD_STATUS", TranslationEnum.ENGLISH, "status"),
 
-    FIELD_OPERATION_1("FIELD_OPERATION", TranslationEnum.CHINESE, "操作"),
-    FIELD_OPERATION_2("FIELD_OPERATION", TranslationEnum.ENGLISH, "operation"),
-
     TITLE_ADD_USER_1("FIELD_ADD_NAME", TranslationEnum.CHINESE, "添加用户"),
     TITLE_ADD_USER_2("FIELD_ADD_NAME", TranslationEnum.ENGLISH, "add user"),
 
@@ -37,13 +34,6 @@ public enum DefaultDicts {
 
     FIELD_DEPT_1("FIELD_DEPT", TranslationEnum.CHINESE, "部门"),
     FIELD_DEPT_2("FIELD_DEPT", TranslationEnum.ENGLISH, "dept"),
-
-    MENU_PAPER_REVIEW_1("MENU_PAPER_REVIEW", TranslationEnum.CHINESE, "论文评审"),
-    MENU_PAPER_REVIEW_2("MENU_PAPER_REVIEW", TranslationEnum.ENGLISH, "paper review"),
-
-    MENU_CALL_1("MENU_CALL", TranslationEnum.CHINESE, "论坛主题征集"),
-    MENU_CALL_2("MENU_CALL", TranslationEnum.ENGLISH, "Call for theme and subthemes"),
-
 
     /*----------------------------------------------------------------*/
     FIELD_ACCOUNT_PHONE_1("FIELD_ACCOUNT_PHONE", TranslationEnum.CHINESE, "账号/手机"),
@@ -326,7 +316,22 @@ public enum DefaultDicts {
     FIELD_MyConference_2("FIELD_MyConference", TranslationEnum.ENGLISH, "My Conference"),
 
     FIELD_MeetRegistration_1("FIELD_MeetRegistration", TranslationEnum.CHINESE, "会议注册"),
-    FIELD_MeetRegistration_2("FIELD_MeetRegistration", TranslationEnum.ENGLISH, "Registration"),
+    FIELD_MeetRegistration_2("FIELD_MeetRegistration", TranslationEnum.ENGLISH, "Register Now"),
+
+    FIELD_ER_1("FIELD_ER", TranslationEnum.CHINESE, "专家评审"),
+    FIELD_ER_2("FIELD_ER", TranslationEnum.ENGLISH, "Expert Review"),
+
+    FIELD_EA_1("FIELD_EA", TranslationEnum.CHINESE, "成果会展申请"),
+    FIELD_EA_2("FIELD_EA", TranslationEnum.ENGLISH, "Exhibition Application"),
+
+    FIELD_CFT_1("FIELD_CFT", TranslationEnum.CHINESE, "主题征集"),
+    FIELD_CFT_2("FIELD_CFT", TranslationEnum.ENGLISH, "Call for Themes"),
+
+    FIELD_SA_1("FIELD_SA", TranslationEnum.CHINESE, "论坛申报"),
+    FIELD_SA_2("FIELD_SA", TranslationEnum.ENGLISH, "Session Application"),
+
+    FIELD_CI_1("FIELD_CI", TranslationEnum.CHINESE, "合作意向"),
+    FIELD_CI_2("FIELD_CI", TranslationEnum.ENGLISH, "Cooperative Intention"),
 
     FIELD_Search_1("FIELD_Search", TranslationEnum.CHINESE, "搜索"),
     FIELD_Search_2("FIELD_Search", TranslationEnum.ENGLISH, "Search"),
@@ -350,7 +355,10 @@ public enum DefaultDicts {
     FIELD_Operate_2("FIELD_Operate", TranslationEnum.ENGLISH, "Operate"),
 
     FIELD_PapaerDetails_1("FIELD_PapaerDetails", TranslationEnum.CHINESE, "论文详情"),
-    FIELD_PapaerDetails_2("FIELD_PapaerDetails", TranslationEnum.ENGLISH, "Papaer Details"),
+    FIELD_PapaerDetails_2("FIELD_PapaerDetails", TranslationEnum.ENGLISH, "Paper Details"),
+
+    FIELD_PapaerInformation_1("FIELD_PapaerInformation", TranslationEnum.CHINESE, "论文详情"),
+    FIELD_PapaerInformation_2("FIELD_PapaerInformation", TranslationEnum.ENGLISH, "Paper Information"),
 
     FIELD_Revise_1("FIELD_Revise", TranslationEnum.CHINESE, "修改"),
     FIELD_Revise_2("FIELD_Revise", TranslationEnum.ENGLISH, "Revise"),
@@ -372,6 +380,9 @@ public enum DefaultDicts {
 
     FIELD_AFAI_1("FIELD_AFAI", TranslationEnum.CHINESE, "申请开票"),
     FIELD_AFAI_2("FIELD_AFAI", TranslationEnum.ENGLISH, "Apply for an invoice"),
+
+    FIELD_Apply_1("FIELD_Apply", TranslationEnum.CHINESE, "申请"),
+    FIELD_Apply_2("FIELD_Apply", TranslationEnum.ENGLISH, "Apply"),
 
     FIELD_SIOI_1("FIELD_SIOI", TranslationEnum.CHINESE, "查看开票"),
     FIELD_SIOI_2("FIELD_SIOI", TranslationEnum.ENGLISH, "See information of invoice"),
@@ -448,6 +459,21 @@ public enum DefaultDicts {
     FIELD_SOIR_1("FIELD_SOIR", TranslationEnum.CHINESE, "初评分数"),
     FIELD_SOIR_2("FIELD_SOIR", TranslationEnum.ENGLISH, "Score of Initial Review"),
 
+    FIELD_SOFR_1("FIELD_SOFR", TranslationEnum.CHINESE, "复评分数"),
+    FIELD_SOFR_2("FIELD_SOFR", TranslationEnum.ENGLISH, "Score of Further Review"),
+
+    FIELD_Review_1("FIELD_Review", TranslationEnum.CHINESE, "评审"),
+    FIELD_Review_2("FIELD_Review", TranslationEnum.ENGLISH, "Review"),
+
+    FIELD_RevisionReview_1("FIELD_RevisionReview", TranslationEnum.CHINESE, "修改评审"),
+    FIELD_RevisionReview_2("FIELD_RevisionReview", TranslationEnum.ENGLISH, "Revision review"),
+
+    FIELD_SOR_1("FIELD_SOR", TranslationEnum.CHINESE, "评审分数"),
+    FIELD_SOR_2("FIELD_SOR", TranslationEnum.ENGLISH, "Score of Review"),
+
+    FIELD_OOR_1("FIELD_OOR", TranslationEnum.CHINESE, "评审结果"),
+    FIELD_OOR_2("FIELD_OOR", TranslationEnum.ENGLISH, "Outcome of Review"),
+
     FIELD_OOIR_1("FIELD_OOIR", TranslationEnum.CHINESE, "初评结果"),
     FIELD_OOIR_2("FIELD_OOIR", TranslationEnum.ENGLISH, "Outcome of Initial Review"),
 
@@ -517,6 +543,15 @@ public enum DefaultDicts {
     FIELD_PersonCharge_1("FIELD_PersonCharge", TranslationEnum.CHINESE, "负责人"),
     FIELD_PersonCharge_2("FIELD_PersonCharge", TranslationEnum.ENGLISH, "Person in Charge"),
 
+    FIELD_ContactPerson_1("FIELD_ContactPerson", TranslationEnum.CHINESE, "联系人"),
+    FIELD_ContactPerson_2("FIELD_ContactPerson", TranslationEnum.ENGLISH, "Contact Person"),
+
+    FIELD_ContactNumber_1("FIELD_ContactNumber", TranslationEnum.CHINESE, "联系电话"),
+    FIELD_ContactNumber_2("FIELD_ContactNumber", TranslationEnum.ENGLISH, "Contact Number"),
+
+    FIELD_ContactEmail_1("FIELD_ContactEmail", TranslationEnum.CHINESE, "联系邮箱"),
+    FIELD_ContactEmail_2("FIELD_ContactEmail", TranslationEnum.ENGLISH, "Contact Email"),
+
     FIELD_TNOPIC_1("FIELD_TNOPIC", TranslationEnum.CHINESE, "负责人手机号"),
     FIELD_TNOPIC_2("FIELD_TNOPIC", TranslationEnum.ENGLISH, "Telephone Number of Person in Charge"),
 
@@ -525,6 +560,9 @@ public enum DefaultDicts {
 
     FIELD_TitlePosition_1("FIELD_TitlePosition", TranslationEnum.CHINESE, "申请人职称/职务"),
     FIELD_TitlePosition_2("FIELD_TitlePosition", TranslationEnum.ENGLISH, "Title/Position"),
+
+    FIELD_TPosition_1("FIELD_TPosition", TranslationEnum.CHINESE, "职称/职务"),
+    FIELD_TPosition_2("FIELD_TPosition", TranslationEnum.ENGLISH, "Title/Position"),
 
     FIELD_ResearchFieldsApply_1("FIELD_ResearchFieldsApply", TranslationEnum.CHINESE, "申请人研究方向"),
     FIELD_ResearchFieldsApply_2("FIELD_ResearchFieldsApply", TranslationEnum.ENGLISH, "Research Fields"),
@@ -556,6 +594,9 @@ public enum DefaultDicts {
     FIELD_Informant_1("FIELD_Informant", TranslationEnum.CHINESE, "填报人"),
     FIELD_Informant_2("FIELD_Informant", TranslationEnum.ENGLISH, "Informant"),
 
+    FIELD_InformantS_1("FIELD_InformantS", TranslationEnum.CHINESE, "申报人"),
+    FIELD_InformantS_2("FIELD_InformantS", TranslationEnum.ENGLISH, "Informant"),
+
     FIELD_MFA_1("FIELD_MFA", TranslationEnum.CHINESE, "我的论坛申报"),
     FIELD_MFA_2("FIELD_MFA", TranslationEnum.ENGLISH, "My Forum Application"),
 
@@ -567,6 +608,12 @@ public enum DefaultDicts {
 
     FIELD_DYAOBOARPT_1("FIELD_DYAOBOARPT", TranslationEnum.CHINESE, "是否有课题团队"),
     FIELD_DYAOBOARPT_2("FIELD_DYAOBOARPT", TranslationEnum.ENGLISH, "Do you apply on behalf of a research project team"),
+
+    FIELD_Yes_1("FIELD_Yes", TranslationEnum.CHINESE, "是"),
+    FIELD_Yes_2("FIELD_Yes", TranslationEnum.ENGLISH, "Yes"),
+
+    FIELD_No_1("FIELD_No", TranslationEnum.CHINESE, "否"),
+    FIELD_No_2("FIELD_No", TranslationEnum.ENGLISH, "No"),
 
     FIELD_ApplicationOfStatus_1("FIELD_ApplicationOfStatus", TranslationEnum.CHINESE, "申报状态"),
     FIELD_ApplicationOfStatus_2("FIELD_ApplicationOfStatus", TranslationEnum.ENGLISH, "Application Status"),
@@ -601,11 +648,41 @@ public enum DefaultDicts {
     FIELD_Note_1("FIELD_Note", TranslationEnum.CHINESE, "备注"),
     FIELD_Note_2("FIELD_Note", TranslationEnum.ENGLISH, "Note"),
 
-    FIELD_SFC_1("FIELD_SFC", TranslationEnum.CHINESE, "合作环节 "),
+    FIELD_SFC_1("FIELD_SFC", TranslationEnum.CHINESE, "合作方式"),
     FIELD_SFC_2("FIELD_SFC", TranslationEnum.ENGLISH, "Session for Cooperation"),
 
     FIELD_NOMEET_1("FIELD_NOMEET", TranslationEnum.CHINESE, "当前无正在进行的会议。 "),
     FIELD_NOMEET_2("FIELD_NOMEET", TranslationEnum.ENGLISH, "There are currently no ongoing meetings"),
+
+    FIELD_CESFARR_1("FIELD_CESFARR", TranslationEnum.CHINESE, "中国教育科学论坛 版权所有"),
+    FIELD_CESFARR_2("FIELD_CESFARR", TranslationEnum.ENGLISH, "China Education Sciences Forum all rights reserved"),
+
+    FIELD_BPS_1("FIELD_BPS", TranslationEnum.CHINESE, "京公网安备"),
+    FIELD_BPS_2("FIELD_BPS", TranslationEnum.ENGLISH, "beijing Public Security"),
+
+    FIELD_Tel_1("FIELD_Tel", TranslationEnum.CHINESE, "电话"),
+    FIELD_Tel_2("FIELD_Tel", TranslationEnum.ENGLISH, "Tel"),
+
+    FIELD_Fax_1("FIELD_Fax", TranslationEnum.CHINESE, "传真"),
+    FIELD_Fax_2("FIELD_Fax", TranslationEnum.ENGLISH, "Fax"),
+
+    FIELD_EmailF_1("FIELD_EmailF", TranslationEnum.CHINESE, "邮箱"),
+    FIELD_EmailF_2("FIELD_EmailF", TranslationEnum.ENGLISH, "E-mail"),
+
+    FIELD_Item_1("FIELD_Item", TranslationEnum.CHINESE, "条"),
+    FIELD_Item_2("FIELD_Item", TranslationEnum.ENGLISH, "Item"),
+
+    FIELD_Page_1("FIELD_Page", TranslationEnum.CHINESE, "页"),
+    FIELD_Page_2("FIELD_Page", TranslationEnum.ENGLISH, "Page"),
+
+    FIELD_Total_1("FIELD_Total", TranslationEnum.CHINESE, "共"),
+    FIELD_Total_2("FIELD_Total", TranslationEnum.ENGLISH, ""),
+
+    FIELD_To_1("FIELD_To", TranslationEnum.CHINESE, "&#x5230;&#x7B2C;"),
+    FIELD_To_2("FIELD_To", TranslationEnum.ENGLISH, "To"),
+
+    FIELD_Determine_1("FIELD_Determine", TranslationEnum.CHINESE, "&#x786e;&#x5b9a;"),
+    FIELD_Determine_2("FIELD_Determine", TranslationEnum.ENGLISH, "Determine"),
 
     FIELD_Exit_1("FIELD_Exit", TranslationEnum.CHINESE, "退出"),
     FIELD_Exit_2("FIELD_Exit", TranslationEnum.ENGLISH, "Exit");

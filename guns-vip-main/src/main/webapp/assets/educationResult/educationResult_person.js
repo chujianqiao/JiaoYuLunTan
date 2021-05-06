@@ -16,6 +16,7 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
         }
     };
     meetSelectOption();
+    var langs = layui.data('system').lang;
     /**
      * 初始化表格的列
      */
@@ -23,12 +24,12 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'resultId', hide: true, title: '成果ID'},
-            {field: 'meetName', sort: true, title: '会议名称'},
-            {field: 'resultName', sort: true, title: '成果名称'},
-            {field: 'belongName', sort: true, title: '申请人姓名'},
-            {field: 'team', sort: true, title: '所在单位'},
-            {field: 'score', sort: true, title: '评审分数'},
-            {field: 'reviewResult', sort: true, title: '评审结果'},
+            {field: 'meetName', sort: true, title: langs.FIELD_ConferenceName},
+            {field: 'resultName', sort: true, title: langs.FIELD_TitleDeliverables},
+            {field: 'belongName', sort: true, title: langs.FIELD_NameApplicant},
+            {field: 'team', sort: true, title: langs.FIELD_FromOrganization},
+            {field: 'score', sort: true, title: langs.FIELD_SOR},
+            {field: 'reviewResult', sort: true, title: langs.FIELD_OOR},
             /*{field: 'applyType', sort: true, title: '申请方式; 1-个人, 2-单位'},
             {field: 'manager', sort: true, title: '负责人姓名'},
             {field: 'manaPhone', sort: true, title: '负责人电话'},
@@ -61,16 +62,16 @@ layui.use(['table', 'admin','form', 'ax', 'func'], function () {
             {field: 'refuseTime', sort: true, title: '申请驳回时间'},
             {field: 'passTime', sort: true, title: '审核通过时间'},
             {field: 'cancelTime', sort: true, title: '取消申请时间'},*/
-            {align: 'center', title: '操作',minWidth: 180, templet: function(data){
+            {align: 'center', title: langs.FIELD_Operate,minWidth: 180, templet: function(data){
                     if (data.checkStatus == 0) {
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew'>申请</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit' title='" + langs.FIELD_Revise + "'>" + langs.FIELD_Revise + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='editNew' id='editNew' title='" + langs.FIELD_Apply + "'>" + langs.FIELD_Apply + "</a>";
                     }else if(data.checkStatus == 2 || data.checkStatus == 3){
-                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
+                        return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a>";
                     }else {
                         if (data.reviewResult == "未评审") {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a>";
                         }else {
-                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail'>查看详情</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel'>取消申请</a>";
+                            return "<a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='detail' title='" + langs.FIELD_SeeDetails + "'>" + langs.FIELD_SeeDetails + "</a><a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='cancel' id='cancel' title='" + langs.FIELD_ApplicationCancelled + "'>" + langs.FIELD_ApplicationCancelled + "</a>";
                         }
                     }
                 }}

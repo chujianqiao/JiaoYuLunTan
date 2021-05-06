@@ -57,7 +57,7 @@
                 </div>
             </div>
         </header>
-        <iframe src="http://cesf.nies.net.cn:8080/pub/lt_new_6/" height="1041" width="100%"></iframe>
+        <iframe id="wcmIframe" src="http://cesf.nies.net.cn:8080/pub/lt_new_6/" height="1041" width="100%"></iframe>
 
         <div hidden class="widthC mCenter clearfix mb40">
             <div class="fl">
@@ -533,7 +533,12 @@
                 var code = data.data[i].code;
                 var description = data.data[i].description;
                 $("#languageDiv").append('<a id="tran-' + code + '" href="javascript:;">' + description + '</a>');
-
+                if (i == 0){
+                    if (description == "English"){
+                        $("#wcmIframe").attr("src","http://cesf.nies.net.cn:8080/pub/lt_new_6_en/");
+                        $("#wcmIframe").attr("height","1081");
+                    }
+                } 
                 //设置监听事件，设置点击按钮切换当前系统语言
                 (function (code) {
                     $('#tran-' + code).click(function () {

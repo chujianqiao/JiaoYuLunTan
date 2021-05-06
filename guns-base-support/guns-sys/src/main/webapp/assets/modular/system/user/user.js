@@ -41,7 +41,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
             {field: 'phone', align: "center", sort: true, title: langs.FIELD_PHONE, minWidth: 117},
             {field: 'createTime', align: "center", sort: true, title: langs.FIELD_CREATE_TIME, minWidth: 160},
             {field: 'status', align: "center", sort: true, templet: '#statusTpl', title: langs.FIELD_STATUS},
-            {align: 'center', toolbar: '#tableBar', title: langs.FIELD_OPERATION, minWidth: 280}
+            {align: 'center', toolbar: '#tableBar', title: langs.FIELD_Operate, minWidth: 280}
         ]];
     };
 
