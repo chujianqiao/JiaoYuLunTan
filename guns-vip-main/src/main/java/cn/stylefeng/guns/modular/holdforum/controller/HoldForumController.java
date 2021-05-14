@@ -299,7 +299,8 @@ public class HoldForumController extends BaseController {
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("fileId", fileId);
-        map.put("path",uploadResult.getFileSavePath());
+        //map.put("path",uploadResult.getFileSavePath());
+        map.put("path",uploadResult.getFinalName());
         map.put("type",fileType);
 
         return ResponseData.success(0, "上传成功", map);
@@ -338,7 +339,8 @@ public class HoldForumController extends BaseController {
             if (fileSize <= size) {
                 UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
                 fileId = uploadResult.getFileId();
-                pathReturn = uploadResult.getFileSavePath();
+                //pathReturn = uploadResult.getFileSavePath();
+                pathReturn = uploadResult.getFinalName();
                 map.put("sizeInfo", "yes");
             }else {
                 map.put("sizeInfo", sysFileSize);

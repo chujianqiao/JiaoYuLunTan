@@ -47,6 +47,7 @@ public class NoneAuthedResources {
             "/mgr/toForgetPwdTwo",
             "/mgr/forgetPwdOne",
             "/mgr/forgetPwdTwo",
+            "/mgr/forgetPwdOnePhone",
             "/mgr/toNewPwd",
             "/mgr/phonePwd",
             "/mgr/registerSuccess",

@@ -4,6 +4,7 @@ import cn.stylefeng.guns.modular.demos.util.SignUtil;
 import cn.stylefeng.guns.modular.email.service.EmailService;
 import cn.stylefeng.guns.modular.sms.service.SMSService;
 import cn.stylefeng.guns.modular.weixin.service.CoreService;
+import cn.stylefeng.guns.sys.modular.system.entity.User;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
@@ -121,6 +122,14 @@ public class CheckTokenController {
     @RequestMapping("/checkSMS")
     @ResponseBody
     public String checkSMS(String phone, HttpServletRequest request, HttpServletResponse response) {
+
+        User user = (User) request.getSession().getAttribute("forgetUser");
+        if (phone == null || phone.equals("")){
+            if (user != null){
+                phone = user.getPhone();
+            }
+        }
+
         JSONObject json = new JSONObject();
         //String signName = "智慧工程";
         //String code = "SMS_96665060";

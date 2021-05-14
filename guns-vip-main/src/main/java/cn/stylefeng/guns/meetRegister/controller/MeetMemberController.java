@@ -863,7 +863,8 @@ public class MeetMemberController extends BaseController {
         }*/
         HashMap<String, Object> map = new HashMap<>();
         map.put("fileId", fileId);
-        map.put("path",uploadResult.getFileSavePath());
+        //map.put("path",uploadResult.getFileSavePath());
+        map.put("path",uploadResult.getFinalName());
         map.put("type",fileType);
         return ResponseData.success(0, "上传成功", map);
     }

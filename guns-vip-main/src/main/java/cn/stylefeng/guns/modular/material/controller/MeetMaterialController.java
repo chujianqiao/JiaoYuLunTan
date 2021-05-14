@@ -303,7 +303,8 @@ public class MeetMaterialController extends BaseController {
         String fileId = uploadResult.getFileId();
         HashMap<String, Object> map = new HashMap<>();
         map.put("fileId", fileId);
-        map.put("path",uploadResult.getFileSavePath());
+        //map.put("path",uploadResult.getFileSavePath());
+        map.put("path",uploadResult.getFinalName());
 
         String fileSuffix = cn.stylefeng.roses.core.util.ToolUtil.getFileSuffix(file.getOriginalFilename());
         String finalName = uploadResult.getOriginalFilename().replace("." + fileSuffix,System.currentTimeMillis() + "." + fileSuffix);
@@ -315,7 +316,8 @@ public class MeetMaterialController extends BaseController {
         }
         meetMaterialParam.setMaterialId(materialId);
         meetMaterialParam.setMatName(finalName);
-        meetMaterialParam.setMatPath(uploadResult.getFileSavePath());
+        //meetMaterialParam.setMatPath(uploadResult.getFileSavePath());
+        meetMaterialParam.setMatPath(uploadResult.getFinalName());
 
         Meet pubMeet = this.meetService.getByStatus(1);
         meetMaterialParam.setMeetId(pubMeet.getMeetId());

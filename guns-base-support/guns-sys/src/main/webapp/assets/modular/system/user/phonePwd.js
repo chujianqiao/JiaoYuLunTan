@@ -54,8 +54,8 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
     }
     //发送短信验证码
     $("#sentSmsCode").on("click", function(){
-        var $phone = $("input[name=phone]");
         var data = {};
+        /*var $phone = $("input[name=phone]");
         data.phone = $.trim($phone.val());
         if(data.phone == ''){
             Feng.error('请输入手机号码');
@@ -65,7 +65,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
         if(!reg.test(data.phone)){
             Feng.error('请输入合法的手机号码');
             return ;
-        }
+        }*/
         $.ajax({
             url: Feng.ctxPath +"/check/checkSMS",
             async : true,
@@ -85,7 +85,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
 
 
     form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/mgr/forgetPwdOne", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/mgr/forgetPwdOnePhone", function (data) {
             if (data.message == 'codeError') {
                 Feng.error("验证码错误！");
             }else if (data.message == 'phoneError') {

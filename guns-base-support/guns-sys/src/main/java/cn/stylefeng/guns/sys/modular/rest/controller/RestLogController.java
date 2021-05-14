@@ -85,16 +85,5 @@ public class RestLogController extends BaseController {
         return new LogWrapper(stringObjectMap).wrap();
     }
 
-    /**
-     * 清空日志
-     *
-     * @author fengshuonan
-     * @Date 2018/12/23 5:34 PM
-     */
-    @BussinessLog(value = "清空业务日志")
-    @RequestMapping("/delLog")
-    public ResponseData delLog() {
-        restOperationLogService.remove(new QueryWrapper<>());
-        return SUCCESS_TIP;
-    }
+
 }

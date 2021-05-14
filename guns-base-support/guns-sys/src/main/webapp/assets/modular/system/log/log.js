@@ -76,20 +76,6 @@ layui.use(['layer', 'table', 'form', 'ax', 'laydate'], function () {
         ajax.start();
     };
 
-    /**
-     * 清空日志
-     */
-    LoginLog.cleanLog = function () {
-        Feng.confirm("是否清空所有日志?", function () {
-            var ajax = new $ax(Feng.ctxPath + "/log/delLog", function (data) {
-                Feng.success("清空日志成功!");
-                LoginLog.search();
-            }, function (data) {
-                Feng.error("清空日志失败!");
-            });
-            ajax.start();
-        });
-    };
 
 
     /**
@@ -171,10 +157,7 @@ layui.use(['layer', 'table', 'form', 'ax', 'laydate'], function () {
         LoginLog.search();
     });
 
-    // 搜索按钮点击事件
-    $('#btnClean').click(function () {
-        LoginLog.cleanLog();
-    });
+
 
     // 全部导出excel
     $('#btnExpAll').click(function () {

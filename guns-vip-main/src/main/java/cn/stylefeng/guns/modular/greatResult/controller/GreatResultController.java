@@ -702,7 +702,7 @@ public class GreatResultController extends BaseController {
         HashMap<String, Object> map = new HashMap<>();
         if (fileSize <= size) {
             map.put("fileId", fileId);
-            map.put("path",uploadResult.getFileSavePath());
+            map.put("path",uploadResult.getFinalName());
             return ResponseData.success(0, "上传成功", map);
         }else {
             map.put("status","大小问题");

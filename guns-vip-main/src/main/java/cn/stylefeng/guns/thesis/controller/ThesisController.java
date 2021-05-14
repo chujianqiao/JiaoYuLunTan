@@ -1133,7 +1133,8 @@ public class ThesisController extends BaseController {
                 UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
                 String fileId = uploadResult.getFileId();
                 map.put("fileId", fileId);
-                map.put("path",uploadResult.getFileSavePath());
+                //map.put("path",uploadResult.getFileSavePath());
+                map.put("path",uploadResult.getFinalName());
                 map.put("status","成功");
                 message = "上传成功";
                 return ResponseData.success(0, message, map);
@@ -1165,7 +1166,8 @@ public class ThesisController extends BaseController {
             UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
             String fileId = uploadResult.getFileId();
             map.put("fileId", fileId);
-            map.put("path",uploadResult.getFileSavePath());
+            //map.put("path",uploadResult.getFileSavePath());
+            map.put("path",uploadResult.getFinalName());
             map.put("status","成功");
             message = "上传成功";
             return ResponseData.success(0, message, map);

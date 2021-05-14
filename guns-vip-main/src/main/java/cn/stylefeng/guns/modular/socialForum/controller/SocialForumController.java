@@ -88,7 +88,7 @@ public class SocialForumController extends BaseController {
     public String add(Model model) {
         LoginUser user = LoginContextHolder.getContext().getUser();
         model.addAttribute("userName", user.getName());
-        model.addAttribute("menuUrl","socailForum");
+        model.addAttribute("menuUrl","socialForum");
         if (ToolUtil.isReviewRole()){
             model.addAttribute("isReview", "yes");
         }else {
@@ -303,8 +303,8 @@ public class SocialForumController extends BaseController {
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("fileId", fileId);
-        map.put("path",uploadResult.getFileSavePath());
-
+        //map.put("path",uploadResult.getFileSavePath());
+        map.put("path",uploadResult.getFinalName());
         return ResponseData.success(0, "上传成功", map);
     }
 

@@ -276,7 +276,7 @@ layui.use(['form', 'upload', 'element', 'ax', 'laydate'], function () {
     //表单提交事件
     form.on('submit(userInfoSubmit)', function (data) {
         //console.log(data)
-        var ajax = new $ax(Feng.ctxPath + "/mgr/edit", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/mgr/personEdit", function (data) {
             if (data.message == "phoneError"){
                 Feng.error("修改失败,该手机号已被绑定！");
             } else {

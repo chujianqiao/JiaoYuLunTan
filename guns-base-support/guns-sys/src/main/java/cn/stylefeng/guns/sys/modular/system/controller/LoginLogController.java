@@ -82,18 +82,5 @@ public class LoginLogController extends BaseController {
         return LayuiPageFactory.createPageInfo(page);
     }
 
-    /**
-     * 清空日志
-     *
-     * @author fengshuonan
-     * @Date 2018/12/23 5:51 PM
-     */
-    @BussinessLog("清空登录日志")
-    @RequestMapping("/delLoginLog")
-    //@Permission(Const.ADMIN_NAME)
-    @ResponseBody
-    public Object delLog() {
-        SqlExe.delete("delete from sys_login_log", null);
-        return SUCCESS_TIP;
-    }
+
 }

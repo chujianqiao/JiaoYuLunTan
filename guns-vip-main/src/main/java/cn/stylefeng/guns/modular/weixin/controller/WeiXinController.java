@@ -375,7 +375,7 @@ public class WeiXinController {
                  + "&state=STATE#wechat_redirect";
 
         response.sendRedirect(url);
-    }
+}
 
     @RequestMapping(value = "/testBand")
     public String testBand(String uuid, String userId, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -1014,11 +1014,11 @@ public class WeiXinController {
 
 
     @RequestMapping("/sentWeiXinMessage")
-    public void sentWeiXinMessage(String message){
+    public void sentWeiXinMessage(HttpServletRequest request, String message){
         String templateId = "U-i755ySZnj1Iyyrpe_jlZyic7rBeFMmkwVbX5xKcc8";
-        User user = new User();
-        if (!message.equals("") && message != null){
-            user = userService.getByAccount(message);
+        User user = (User)request.getSession().getAttribute("forgetUser");
+        request.getSession().removeAttribute("forgetUser");
+        if (user != null){
         }else {
             LoginUser loginUser = LoginContextHolder.getContext().getUser();
             user = userService.getById(loginUser.getId());

@@ -66,16 +66,5 @@ public class RestLoginLogController extends BaseController {
         return LayuiPageFactory.createPageInfo(page);
     }
 
-    /**
-     * 清空日志
-     *
-     * @author fengshuonan
-     * @Date 2018/12/23 5:51 PM
-     */
-    @BussinessLog("清空登录日志")
-    @RequestMapping("/delLoginLog")
-    public ResponseData delLog() {
-        restLoginLogService.remove(new QueryWrapper<>());
-        return SUCCESS_TIP;
-    }
+
 }

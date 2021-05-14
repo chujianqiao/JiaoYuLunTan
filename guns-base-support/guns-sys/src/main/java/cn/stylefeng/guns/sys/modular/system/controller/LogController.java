@@ -103,18 +103,5 @@ public class LogController extends BaseController {
         return super.warpObject(new LogWrapper(stringObjectMap));
     }
 
-    /**
-     * 清空日志
-     *
-     * @author fengshuonan
-     * @Date 2018/12/23 5:34 PM
-     */
-    @BussinessLog(value = "清空业务日志")
-    @RequestMapping("/delLog")
-    //@Permission(Const.ADMIN_NAME)
-    @ResponseBody
-    public Object delLog() {
-        SqlExe.delete("delete from sys_operation_log", null);
-        return SUCCESS_TIP;
-    }
+
 }

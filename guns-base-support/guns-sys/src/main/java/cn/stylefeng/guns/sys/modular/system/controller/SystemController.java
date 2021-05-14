@@ -415,6 +415,11 @@ public class SystemController extends BaseController {
             if (path == null || path.equals("")){
                 path = uploadFolder + "\\template\\" + name;
             }
+            if (path.indexOf(uploadFolder) > -1){
+
+            }else {
+                path = uploadFolder + path;
+            }
             FileDownload.fileDownload(httpServletResponse, path, name);
         } catch (Exception e) {
             e.printStackTrace();

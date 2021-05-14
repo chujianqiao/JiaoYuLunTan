@@ -98,7 +98,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function (
                 Feng.error("验证码已过期！");
             }*/else {
                 /*Feng.success("验证成功！");*/
-                window.location.href = Feng.ctxPath + "/mgr/toForgetPwdOne?account=" + data.message
+                window.location.href = Feng.ctxPath + "/mgr/toForgetPwdOne";
             }
         }, function (data) {
             Feng.error("更新失败！" + data.responseJSON.message)

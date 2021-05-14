@@ -103,7 +103,7 @@ public class UserMgrController extends BaseController {
      * @author CHU
      * @Date 2020/09/02
      */
-    @RequestMapping("toPersonCenter")
+    @RequestMapping("/toPersonCenter")
     public String toPersonCenter(Model model,HttpServletRequest request) {
         Long userId = LoginContextHolder.getContext().getUserId();
         User user = this.userService.getById(userId);
@@ -216,22 +216,37 @@ public class UserMgrController extends BaseController {
         return PREFIX + "forgetPwd.html";
     }
     @RequestMapping("/toForgetPwdOne")
-    public String toForgetPwdOne(ModelMap map, String account) {
-        User user = this.userService.getByAccount(account);
-        User userPhone = this.userService.getByPhone(account);
+    public String toForgetPwdOne(HttpServletRequest request, ModelMap map, String account) {
+        //User user = this.userService.getByAccount(account);
+        //User userPhone = this.userService.getByPhone(account);
+        User user = (User) request.getSession().getAttribute("forgetUser");
         if (user != null){
-            map.addAttribute("account", account);
-            map.addAttribute("phone", user.getPhone());
-        }else if (userPhone != null){
+            char[] m = user.getPhone().toCharArray();
+            for(int i=0; i<m.length;i++){
+                if(i>2 && i<7){
+                    m[i] = '*';
+                }
+            }
+            String phone = String.valueOf(m);
+            map.addAttribute("account", user.getAccount());
+            map.addAttribute("phone", phone);
+        }/*else if (userPhone != null){
+            char[] m = userPhone.getPhone().toCharArray();
+            for(int i=0; i<m.length;i++){
+                if(i>2 && i<7){
+                    m[i] = '*';
+                }
+            }
+            String phoneUser = String.valueOf(m);
             map.addAttribute("account", userPhone.getAccount());
-            map.addAttribute("phone", userPhone.getPhone());
-        }
+            map.addAttribute("phone", phoneUser);
+        }*/
         return PREFIX + "phonePwd.html";
 
     }
     @RequestMapping("/toNewPwd")
     public String toNewPwd(ModelMap map, String account) {
-        map.addAttribute("account", account);
+        //map.addAttribute("account", account);
         return PREFIX + "newPwd.html";
     }
     @RequestMapping("/toForgetPwdTwo")
@@ -270,7 +285,7 @@ public class UserMgrController extends BaseController {
     @RequestMapping("/forgetPwdOne")
     @ResponseBody
     public ResponseData forgetPwdOne(HttpServletRequest request, String account, String phone, String smsCode) {
-        JSONObject json = (JSONObject)request.getSession().getAttribute("smsCode");
+        //JSONObject json = (JSONObject)request.getSession().getAttribute("smsCode");
         ResponseData responseData = new ResponseData();
         User user = this.userService.getByAccount(account);
         User userPhone = this.userService.getByPhone(account);
@@ -278,14 +293,47 @@ public class UserMgrController extends BaseController {
             responseData.setMessage("userError");
             return responseData;
         }
-        responseData.setMessage(account);
+        if (user != null){
+            request.getSession().setAttribute("forgetUser",user);
+        }else if (userPhone != null){
+            request.getSession().setAttribute("forgetUser",userPhone);
+        }
+        //responseData.setMessage(account);
+        return responseData;
+    }
+    @RequestMapping("/forgetPwdOnePhone")
+    @ResponseBody
+    public ResponseData forgetPwdOnePhone(HttpServletRequest request, String account, String phone, String smsCode) {
+        JSONObject json = (JSONObject)request.getSession().getAttribute("smsCode");
+        ResponseData responseData = new ResponseData();
+        //User user = this.userService.getByAccount(account);
+        //User userPhone = this.userService.getByPhone(account);
+        User user = (User)request.getSession().getAttribute("forgetUser");
+        if (user == null){
+            responseData.setMessage("userError");
+            return responseData;
+        }
+        if(json == null){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if(!json.getString("smsCode").equals(smsCode)){
+            responseData.setMessage("codeError");
+            return responseData;
+        }
+        if((System.currentTimeMillis() - json.getLong("createTime")) > 1000 * 60 * 5){
+            responseData.setMessage("overTime");
+            return responseData;
+        }
+        //responseData.setMessage(account);
         return responseData;
     }
     @RequestMapping("/forgetPwdTwo")
     @ResponseBody
-    public ResponseData forgetPwdTwo(String password, String account) {
+    public ResponseData forgetPwdTwo(HttpServletRequest request, String password, String account) {
         ResponseData responseData = new ResponseData();
-        User user = this.userService.getByAccount(account);
+        //User user = this.userService.getByAccount(account);
+        User user = (User)request.getSession().getAttribute("forgetUser");
         if (user == null){
             responseData.setMessage("error");
             return responseData;
@@ -293,7 +341,7 @@ public class UserMgrController extends BaseController {
         user.setSalt(SaltUtil.getRandomSalt());
         user.setPassword(SaltUtil.md5Encrypt(password, user.getSalt()));
         if (this.userService.updateById(user)){
-            responseData.setMessage(account);
+            //responseData.setMessage(account);
             return responseData;
         }else {
             responseData.setMessage("error");
@@ -478,6 +526,7 @@ public class UserMgrController extends BaseController {
             responseData.setMessage("overTime");
             return responseData;
         }
+        user.setRoleId("2");
         this.userService.addUser(user);
         return SUCCESS_TIP;
     }
@@ -524,7 +573,16 @@ public class UserMgrController extends BaseController {
         this.userService.editUser(user);
         return SUCCESS_TIP;
     }
-
+    @RequestMapping("/personEdit")
+    @BussinessLog(value = "修改管理员", key = "account", dict = UserDict.class)
+    @ResponseBody
+    public ResponseData personEdit(UserDto user) {
+        user.setAccount("");
+        user.setWechatName("");
+        user.setPhone("");
+        this.userService.editUser(user);
+        return SUCCESS_TIP;
+    }
     /**
      * 删除管理员（逻辑删除）
      *
