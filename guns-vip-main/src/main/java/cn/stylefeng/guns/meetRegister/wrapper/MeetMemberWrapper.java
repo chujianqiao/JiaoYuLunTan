@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -149,6 +150,10 @@ public class MeetMemberWrapper extends BaseControllerWrapper {
 				map.put("meetTimeStatusStr","报名结束");
 			} else {
 				map.put("meetTimeStatusStr","未开始");
+			}
+
+			if (meet.getFee().compareTo(new BigDecimal(0)) == 0 && map.get("meetStatusStr").equals("已缴费")){
+				map.put("meetStatusStr","通过");
 			}
 		}
 

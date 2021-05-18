@@ -86,6 +86,15 @@ layui.use(['form', 'upload', 'element', 'laydate'], function () {
                     let seatId = data.seatId;
                     ownSeat(seatId);
                     if (data.detail.size == "big"){
+                        if (data.detail.fee == null || data.detail.fee == "") {
+                            if ($("#roleId").val().indexOf("5") > -1){
+                                $("#pay").attr("style","display:none");
+                            } else {
+                                $("#payAndGuest").remove();
+                                $("#personInfo").css("margin-left","90px");
+                            }
+
+                        }
                         thesisDetail();
                     } else {
                         $("#thesisData1").html(langs.FIELD_None);
