@@ -267,8 +267,8 @@ public enum DefaultDicts {
     FIELD_Save_1("FIELD_Save", TranslationEnum.CHINESE, "保存"),
     FIELD_Save_2("FIELD_Save", TranslationEnum.ENGLISH, "Save"),
 
-    FIELD_ParticipantsInfo_1("FIELD_ParticipantsInfo", TranslationEnum.CHINESE, "嘉宾信息"),
-    FIELD_ParticipantsInfo_2("FIELD_ParticipantsInfo", TranslationEnum.ENGLISH, "Participants Information"),
+    FIELD_ParticipantsInfo_1("FIELD_ParticipantsInfo", TranslationEnum.CHINESE, "材料上传"),
+    FIELD_ParticipantsInfo_2("FIELD_ParticipantsInfo", TranslationEnum.ENGLISH, "Documents Upload"),
 
     FIELD_UPPS_1("FIELD_UPPS", TranslationEnum.CHINESE, "上传发言稿/PPT"),
     FIELD_UPPS_2("FIELD_UPPS", TranslationEnum.ENGLISH, "Upload Presentation/PowerPoint Slides"),

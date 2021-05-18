@@ -77,10 +77,10 @@
         <if test="paramCondition.belongDomain != null and paramCondition.belongDomain != ''">
             and belong_domain like CONCAT('%',#{paramCondition.belongDomain},'%')
         </if>
-        <if test="paramCondition.reviewResult == 0">
+        <if test="paramCondition.reviewResult == 4">
             and review_result is null
         </if>
-        <if test="paramCondition.reviewResult == 1">
+        <if test="paramCondition.reviewResult == 5">
             and (review_result is not null and review_result != 2)
         </if>
         <if test="paramCondition.reviewResult == 2">
@@ -88,6 +88,12 @@
         </if>
         <if test="paramCondition.reviewResult == 3">
             and review_user is null and review_result is null
+        </if>
+        <if test="paramCondition.reviewResult == 0">
+            and review_result = 0 and final_result = 1
+        </if>
+        <if test="paramCondition.reviewResult == 1">
+            and review_result = 1 and final_result = 1
         </if>
         <if test="paramCondition.meetId != null and paramCondition.meetId != ''">
             and meet_id = #{paramCondition.meetId}
