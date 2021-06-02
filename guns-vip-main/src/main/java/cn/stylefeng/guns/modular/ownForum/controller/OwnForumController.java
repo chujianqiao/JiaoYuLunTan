@@ -352,6 +352,9 @@ public class OwnForumController extends BaseController {
     public ResponseData upload(@RequestPart("file") MultipartFile file) {
 
         String path = uploadFolder;
+        //获取文件名及文件类型
+        String fileName = file.getOriginalFilename();
+        String fileType = fileName.substring(fileName.lastIndexOf("."));
 
         UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
         String fileId = uploadResult.getFileId();
@@ -375,15 +378,21 @@ public class OwnForumController extends BaseController {
         }
 
         HashMap<String, Object> map = new HashMap<>();
-        if (fileSize <= size) {
-            map.put("fileId", fileId);
-            //map.put("path",uploadResult.getFileSavePath());
-            map.put("path",uploadResult.getFinalName());
-            return ResponseData.success(0, "上传成功", map);
-        }else {
-            map.put("status","大小问题");
-            return ResponseData.success(0, "上传失败，文件大小超过限制，请上传"+sysFileSize+"以内的文件。", map);
+        if((".doc").equalsIgnoreCase(fileType) || ".docx".equalsIgnoreCase(fileType)|| ".pdf".equalsIgnoreCase(fileType)) {
+            if (fileSize <= size) {
+                map.put("fileId", fileId);
+                //map.put("path",uploadResult.getFileSavePath());
+                map.put("path", uploadResult.getFinalName());
+                return ResponseData.success(0, "上传成功", map);
+            } else {
+                map.put("status", "大小问题");
+                return ResponseData.success(0, "上传失败，文件大小超过限制，请上传" + sysFileSize + "以内的文件。", map);
+            }
+        }else{
+            map.put("status","格式问题");
+            return ResponseData.success(0, "上传失败，文件格式不匹配", map);
         }
+
 
 
     }

@@ -297,15 +297,24 @@ public class SocialForumController extends BaseController {
     public ResponseData upload(@RequestPart("file") MultipartFile file) {
 
         String path = uploadFolder;
+        //获取文件名及文件类型
+        String fileName = file.getOriginalFilename();
+        String fileType = fileName.substring(fileName.lastIndexOf("."));
 
         UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
         String fileId = uploadResult.getFileId();
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("fileId", fileId);
-        //map.put("path",uploadResult.getFileSavePath());
-        map.put("path",uploadResult.getFinalName());
-        return ResponseData.success(0, "上传成功", map);
+        if((".doc").equalsIgnoreCase(fileType) || ".docx".equalsIgnoreCase(fileType)|| ".pdf".equalsIgnoreCase(fileType)) {
+
+            map.put("fileId", fileId);
+            //map.put("path",uploadResult.getFileSavePath());
+            map.put("path", uploadResult.getFinalName());
+            return ResponseData.success(0, "上传成功", map);
+        }else{
+            map.put("status","格式问题");
+            return ResponseData.success(0, "上传失败，文件格式不匹配", map);
+        }
     }
 
 }

@@ -184,10 +184,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             });
         }
         , done: function (res) {
-            $("#fileInputHidden").val(res.data.fileId);
-            $("#planPath").val(res.data.path);
-            $("#planName").val($("#fileNameTip").val());
-            Feng.success(res.message);
+            var status = res.data.status;
+            if(status == "格式问题" || status === "格式问题"){
+                $("#fileNameTip").val("");
+                Feng.error(res.message);
+            }else{
+                $("#fileInputHidden").val(res.data.fileId);
+                $("#planPath").val(res.data.path);
+                $("#planName").val($("#fileNameTip").val());
+                Feng.success(res.message);
+            }
+
         }
         , error: function () {
             Feng.error("上传文件失败！");
@@ -206,7 +213,10 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         }
         , done: function (res) {
             var status = res.data.status;
-            if (status == "大小问题" || status === "大小问题"){
+            if(status == "格式问题" || status === "格式问题"){
+                $("#ownfileNameTip").val("");
+                Feng.error(res.message);
+            }else  if (status == "大小问题" || status === "大小问题"){
                 $("#ownfileNameTip").val("");
                 $("#ownfileNameTip").html("");
                 Feng.error(res.message);
@@ -234,10 +244,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             });
         }
         , done: function (res) {
-            $("#unitfileInputHidden").val(res.data.fileId);
-            $("#unitplanPath").val(res.data.path);
-            $("#unitplanName").val($("#unitfileNameTip").val());
-            Feng.success(res.message);
+            var status = res.data.status;
+            if(status == "格式问题" || status === "格式问题"){
+                $("#ownfileNameTip").val("");
+                Feng.error(res.message);
+            }else{
+                $("#unitfileInputHidden").val(res.data.fileId);
+                $("#unitplanPath").val(res.data.path);
+                $("#unitplanName").val($("#unitfileNameTip").val());
+                Feng.success(res.message);
+            }
+
         }
         , error: function () {
             Feng.error("上传文件失败！");
@@ -255,10 +272,16 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             });
         }
         , done: function (res) {
-            $("#socialfileInputHidden").val(res.data.fileId);
-            $("#contractPath").val(res.data.path);
-            $("#contractName").val($("#socialfileNameTip").val());
-            Feng.success(res.message);
+            var status = res.data.status;
+            if(status == "格式问题" || status === "格式问题"){
+                $("#ownfileNameTip").val("");
+                Feng.error(res.message);
+            }else {
+                $("#socialfileInputHidden").val(res.data.fileId);
+                $("#contractPath").val(res.data.path);
+                $("#contractName").val($("#socialfileNameTip").val());
+                Feng.success(res.message);
+            }
         }
         , error: function () {
             Feng.error("上传文件失败！");

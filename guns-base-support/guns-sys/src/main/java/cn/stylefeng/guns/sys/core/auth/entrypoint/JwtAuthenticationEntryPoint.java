@@ -35,10 +35,13 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
         // GET请求跳转到主页
         if ("get".equalsIgnoreCase(request.getMethod())
                 && !request.getHeader("Accept").contains("application/json")) {
-            String url = request.getRequestURI();
-            DefaultAvatar.setLoginUrl(url);
-            response.sendRedirect(request.getContextPath() + "/global/sessionError");
-
+          //  String url = request.getRequestURI();
+//            String url = "cesf.nies.edu.cn";
+//
+//            DefaultAvatar.setLoginUrl(url);
+//            response.sendRedirect("cesf.nies.edu.cn" + "/global/sessionError");
+           // response.sendRedirect( "cesf.nies.edu.cn/global/sessionError");
+            response.sendRedirect("https://cesf.nies.edu.cn/global/sessionError");
         } else {
 
             // POST请求返回json

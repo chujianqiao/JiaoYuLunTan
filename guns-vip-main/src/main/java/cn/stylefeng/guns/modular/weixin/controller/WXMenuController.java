@@ -49,13 +49,17 @@ public class WXMenuController {
         btn11.setName("论坛简介");
         btn11.setType("view");
         //btn11.setKey("11");
-        btn11.setUrl("http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/ltjj/");
+//        btn11.setUrl("http://cesf.nies.net.cn:8080/pub/lt_new_6/gylt/ltjj/");
+        btn11.setUrl("https://cesf.nies.edu.cn/lt_new_6/gylt/ltjj/");
+
 
         CommonButton btn12 = new CommonButton();
         btn12.setName("论坛申报");
         btn12.setType("view");
         //btn12.setKey("12");
-        btn12.setUrl("http://cesf.nies.net.cn/holdForum/add");
+//        btn12.setUrl("http://cesf.nies.net.cn/holdForum/add");
+        btn12.setUrl("https://cesf.nies.edu.cn/holdForum/add");
+
 
         CommonButton btn13 = new CommonButton();
         btn13.setName("新闻速递");
@@ -66,7 +70,8 @@ public class WXMenuController {
         btn14.setName("会议日程");
         btn14.setType("view");
         /*btn14.setKey("14");*/
-        btn14.setUrl("http://cesf.nies.net.cn/meet/meetFile");
+//        btn14.setUrl("http://cesf.nies.net.cn/meet/meetFile");
+        btn14.setUrl("https://cesf.nies.edu.cn/meet/meetFile");
 
         CommonButton btn15 = new CommonButton();
         btn15.setName("问题答疑");
@@ -78,43 +83,50 @@ public class WXMenuController {
         btn21.setName("优秀论著展示");
         btn21.setType("view");
         //btn21.setKey("21");
-        btn21.setUrl("http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/yxlwj/");
+//        btn21.setUrl("http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/yxlwj/");
+        btn21.setUrl("https://cesf.nies.edu.cn/lt_new_6/ltcg/yxlwj/");
 
         CommonButton btn22 = new CommonButton();
         btn22.setName("教改实验成果展示");
         btn22.setType("view");
         //btn22.setKey("22");
-        btn22.setUrl("http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/jgsy/");
+//        btn22.setUrl("http://cesf.nies.net.cn:8080/pub/lt_new_6/ltcg/jgsy/");
+        btn22.setUrl("https://cesf.nies.edu.cn/lt_new_6/ltcg/jgsy/");
 
         CommonButton btn31 = new CommonButton();
         btn31.setName("我的信息");
         btn31.setType("view");
         //btn31.setKey("31");
-        btn31.setUrl("http://cesf.nies.net.cn/system/person_info");
+//        btn31.setUrl("http://cesf.nies.net.cn/system/person_info");
+        btn31.setUrl("https://cesf.nies.edu.cn/system/person_info");
 
         CommonButton btn32 = new CommonButton();
         btn32.setName("会议注册");
         btn32.setType("view");
         //btn32.setKey("32");
-        btn32.setUrl("http://cesf.nies.net.cn/meetMember/add");
+//        btn32.setUrl("http://cesf.nies.net.cn/meetMember/add");
+        btn32.setUrl("https://cesf.nies.edu.cn/meetMember/add");
 
         CommonButton btn33 = new CommonButton();
         btn33.setName("专家评审");
         btn33.setType("view");
         //btn33.setKey("33");
-        btn33.setUrl("http://cesf.nies.net.cn/holdForum/add");
+//        btn33.setUrl("http://cesf.nies.net.cn/holdForum/add");
+        btn33.setUrl("https://cesf.nies.edu.cn/holdForum/add");
 
         CommonButton btn34 = new CommonButton();
         btn34.setName("合作意向");
         btn34.setType("view");
         //btn34.setKey("34");
-        btn34.setUrl("http://cesf.nies.net.cn/socialForum/add");
+//        btn34.setUrl("http://cesf.nies.net.cn/socialForum/add");
+        btn34.setUrl("https://cesf.nies.edu.cn/socialForum/add");
 
         CommonButton btn35 = new CommonButton();
         btn35.setName("主题征集");
         btn35.setType("view");
         //btn35.setKey("35");
-        btn35.setUrl("http://cesf.nies.net.cn/collectTopic/add");
+//        btn35.setUrl("http://cesf.nies.net.cn/collectTopic/add");
+        btn35.setUrl("https://cesf.nies.edu.cn/collectTopic/add");
 
 
         /**
