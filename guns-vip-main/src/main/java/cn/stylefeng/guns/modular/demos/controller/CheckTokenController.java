@@ -78,6 +78,8 @@ public class CheckTokenController {
     @ApiOperation("微信公众号服务器配置校验token")
     @RequestMapping(value = "/checkToken", method = RequestMethod.POST)
     public void weiXinCore(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        log.info("post请求已到达，开始校验token");
+
 
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");

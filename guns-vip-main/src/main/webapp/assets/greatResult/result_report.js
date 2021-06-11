@@ -170,8 +170,13 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".pdf")|| fileType.compare(".doc")|| fileType.compare(".docx")){
+                    $("#introducefileNameTip").val(file.name);
+                }
 
-                $("#introducefileNameTip").val(file.name);
+                // $("#introducefileNameTip").val(file.name);
             });
         }
         , done: function (res) {
@@ -192,6 +197,7 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
 
         }
         , error: function () {
+            $("#introducefileNameTip").val("");
             Feng.error("上传文件失败！");
         }
     });
@@ -203,7 +209,12 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
-                $("#letterfileNameTip").val(file.name);
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".pdf")|| fileType.compare(".doc")|| fileType.compare(".docx")){
+                    $("#letterfileNameTip").val(file.name);
+                }
+                // $("#letterfileNameTip").val(file.name);
             });
         }
         , done: function (res) {
@@ -235,7 +246,12 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
-                $("#commitfileNameTip").val(file.name);
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".pdf")|| fileType.compare(".doc")|| fileType.compare(".docx")){
+                    $("#commitfileNameTip").val(file.name);
+                }
+                // $("#commitfileNameTip").val(file.name);
             });
         }
         , done: function (res) {
@@ -297,7 +313,6 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             var status = res.data.status;
 
             if(status == "格式问题" || status === "格式问题"){
-                alert("1");
                 $("#unitintroducefileNameTip").val("");
                 Feng.error(res.message);
             }else if(status == "大小问题" || status === "大小问题"){
@@ -445,4 +460,18 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             }
         });
     });
+
+    /**
+     * 不区分大小写比较字符串
+     * @param str
+     * @returns {boolean}
+     */
+    String.prototype.compare = function(str) {
+        //不区分大小写
+        if(this.toLowerCase() == str.toLowerCase()) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 });

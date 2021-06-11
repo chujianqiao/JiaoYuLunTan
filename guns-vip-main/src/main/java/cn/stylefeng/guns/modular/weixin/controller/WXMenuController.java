@@ -112,7 +112,7 @@ public class WXMenuController {
         btn33.setType("view");
         //btn33.setKey("33");
 //        btn33.setUrl("http://cesf.nies.net.cn/holdForum/add");
-        btn33.setUrl("https://cesf.nies.edu.cn/holdForum/add");
+        btn33.setUrl("https://cesf.nies.edu.cn/thesis");
 
         CommonButton btn34 = new CommonButton();
         btn34.setName("合作意向");

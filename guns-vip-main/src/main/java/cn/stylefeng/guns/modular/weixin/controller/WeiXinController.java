@@ -940,7 +940,8 @@ public class WeiXinController {
     public String pool(String uuid, HttpServletRequest request){
         int count = 1;
         int result = 0;
-        while (true) {
+        boolean scanFlag = false;
+        while (!scanFlag) {
             try {
                 Thread.sleep(1000);//睡眠1秒
             } catch (InterruptedException e) {
@@ -949,8 +950,8 @@ public class WeiXinController {
             System.out.println("页面传递的uuid : " + uuid);
             // 检测登录，检测手机是否已扫码
             ScanPool pool = PoolCache.cacheMap.get(uuid);
-            boolean scanFlag = pool.getScanStatus();
-            if ( scanFlag ) {
+             scanFlag = pool.getScanStatus();
+            if (scanFlag) {
                 result = 1;//认证成功
                 break;
             } else {

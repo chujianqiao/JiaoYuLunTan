@@ -451,7 +451,11 @@ public class ThesisController extends BaseController {
                         reviewResult = "不同意参会";
                     }
                     if (isPass == 1){
-                        reviewResult = "同意参会;" + thesisParam.getStatus();
+                        if(thesisParam.getStatus()!= null && thesisParam.getStatus() != ""){
+                            reviewResult = "同意参会;" + thesisParam.getStatus();
+                        }else{
+                            reviewResult = "同意参会";
+                        }
                     }
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                     String time = format.format(new Date());
@@ -1133,8 +1137,8 @@ public class ThesisController extends BaseController {
                 UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
                 String fileId = uploadResult.getFileId();
                 map.put("fileId", fileId);
-                //map.put("path",uploadResult.getFileSavePath());
-                map.put("path",uploadResult.getFinalName());
+                map.put("path",uploadResult.getFileSavePath());
+                //map.put("path",uploadResult.getFinalName());
                 map.put("status","成功");
                 message = "上传成功";
                 return ResponseData.success(0, message, map);
@@ -1166,8 +1170,8 @@ public class ThesisController extends BaseController {
             UploadResult uploadResult = this.fileInfoService.uploadFile(file, path);
             String fileId = uploadResult.getFileId();
             map.put("fileId", fileId);
-            //map.put("path",uploadResult.getFileSavePath());
-            map.put("path",uploadResult.getFinalName());
+            map.put("path",uploadResult.getFileSavePath());
+            //map.put("path",uploadResult.getFinalName());
             map.put("status","成功");
             message = "上传成功";
             return ResponseData.success(0, message, map);

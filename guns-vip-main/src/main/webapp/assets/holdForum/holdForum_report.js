@@ -180,7 +180,11 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
-                $("#fileNameTip").val(file.name);
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".pdf")|| fileType.compare(".doc")|| fileType.compare(".docx")){
+                    $("#fileNameTip").val(file.name);
+                }
             });
         }
         , done: function (res) {
@@ -208,7 +212,11 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
-                $("#ownfileNameTip").val(file.name);
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".pdf")|| fileType.compare(".doc")|| fileType.compare(".docx")){
+                    $("#ownfileNameTip").val(file.name);
+                }
             });
         }
         , done: function (res) {
@@ -240,7 +248,11 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
         , accept: 'file'
         , before: function (obj) {
             obj.preview(function (index, file, result) {
-                $("#unitfileNameTip").val(file.name);
+                var fileName = file.name;
+                var fileType = fileName.substr(fileName.lastIndexOf("."));
+                if(fileType.compare(".pdf")|| fileType.compare(".doc")|| fileType.compare(".docx")){
+                    $("#unitfileNameTip").val(file.name);
+                }
             });
         }
         , done: function (res) {
@@ -348,4 +360,17 @@ layui.use(['form', 'admin', 'ax','laydate','upload','formSelects'], function () 
             }
         }*/
     });
+    /**
+     * 不区分大小写比较字符串
+     * @param str
+     * @returns {boolean}
+     */
+    String.prototype.compare = function(str) {
+        //不区分大小写
+        if(this.toLowerCase() == str.toLowerCase()) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 });
